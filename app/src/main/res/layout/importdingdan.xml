@@ -1,0 +1,442 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:orientation="vertical"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <LinearLayout
+            android:id="@+id/yanzheng_linear"
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <LinearLayout
+        android:orientation="vertical"
+        android:layout_marginTop="3dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:gravity="center_vertical"
+            android:layout_height="100px">
+            <TextView
+                android:layout_marginLeft="42px"
+                android:textColor="@color/dingdan_tv"
+                android:text="@string/xuhao"
+                android:textSize="32px"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+            <EditText
+                android:id="@+id/dingdan_xuhao_edt"
+                 android:layout_marginLeft="190px"
+                android:clickable="false"
+                android:focusable="false"
+                android:textColorHint="@color/gray"
+                android:hint="@string/qingshuru"
+                android:inputType="number"
+                android:ems="10"
+                android:layout_width="250px"
+                android:layout_height="wrap_content"/>
+
+            <ImageView
+                android:id="@+id/iv_xuhao"
+                android:layout_marginLeft="90px"
+                android:background="@drawable/jiantou"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_marginLeft="38px"
+            android:background="@color/gray"
+            android:layout_width="match_parent"
+            android:layout_height="1px"/>
+    </LinearLayout>
+
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_marginTop="3dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:gravity="center_vertical"
+                    android:layout_height="100px">
+                    <TextView
+                        android:layout_marginLeft="42px"
+                        android:textColor="@color/dingdan_tv"
+                        android:text="@string/bieshugenzhong"
+                        android:textSize="32px"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+                    <EditText
+                        android:id="@+id/dingdan_bieshugenzhong_edt"
+                        android:layout_marginLeft="190px"
+                        android:textColorHint="@color/gray"
+                        android:hint="@string/qingshuru"
+                        android:inputType="number"
+                        android:ems="20"
+                        android:layout_width="250px"
+                        android:layout_height="wrap_content"/>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_marginLeft="38px"
+                    android:background="@color/gray"
+                    android:layout_width="match_parent"
+                    android:layout_height="1px"/>
+
+
+            </LinearLayout>
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_marginTop="3dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:gravity="center_vertical"
+            android:layout_height="100px">
+            <TextView
+                android:layout_marginLeft="42px"
+                android:textColor="@color/dingdan_tv"
+                android:text="@string/chanpinleixing"
+                android:textSize="32px"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+
+            <Spinner
+                android:layout_marginLeft="150px"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/spinner"
+                android:spinnerMode="dialog"
+                android:layout_weight="1"/>
+
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_marginLeft="38px"
+            android:background="@color/gray"
+            android:layout_width="match_parent"
+            android:layout_height="1px"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_marginTop="3dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:gravity="center_vertical"
+            android:layout_height="100px">
+            <TextView
+                android:layout_marginLeft="42px"
+                android:textColor="@color/dingdan_tv"
+                android:text="@string/chanpinbieshuxingxi"
+                android:textSize="32px"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+            <EditText
+                android:id="@+id/dingdan_chanpinbieshuxingxi_edt"
+                 android:layout_marginLeft="110px"
+                android:textColorHint="@color/gray"
+                android:hint="@string/qingshuru"
+                android:focusable="false"
+                android:clickable="false"
+                android:layout_width="250px"
+                android:layout_height="wrap_content"/>
+            <ImageView
+                android:id="@+id/iv_xiangmu"
+                android:layout_marginLeft="90px"
+                android:background="@drawable/jiantou"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_marginLeft="38px"
+            android:background="@color/gray"
+            android:layout_width="match_parent"
+            android:layout_height="1px"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_marginTop="3dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:gravity="center_vertical"
+            android:layout_height="100px">
+            <TextView
+                android:layout_marginLeft="42px"
+                android:textColor="@color/dingdan_tv"
+                android:text="@string/dinggoushuliang"
+                android:textSize="32px"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+            <EditText
+                android:id="@+id/dingdan_dinggoushuliang_edt"
+                 android:layout_marginLeft="150px"
+                android:textColorHint="@color/gray"
+                android:hint="@string/qingshuru"
+                android:inputType="number"
+                android:ems="10"
+                android:layout_width="250px"
+                android:layout_height="wrap_content"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_marginLeft="38px"
+            android:background="@color/gray"
+            android:layout_width="match_parent"
+            android:layout_height="1px"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_marginTop="3dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:gravity="center_vertical"
+            android:layout_height="100px">
+            <TextView
+                android:layout_marginLeft="42px"
+                android:textColor="@color/dingdan_tv"
+                android:text="@string/yunju"
+                android:textSize="32px"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+            <EditText
+                android:id="@+id/dingdan_yunju_edt"
+                 android:layout_marginLeft="150px"
+                android:clickable="false"
+                android:focusable="false"
+                android:textColorHint="@color/gray"
+                android:hint="@string/qingshuru"
+                android:layout_width="250px"
+                android:layout_height="wrap_content"/>
+            <ImageView
+                android:id="@+id/iv_yujun"
+                android:layout_marginLeft="90px"
+                android:background="@drawable/jiantou"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_marginLeft="38px"
+            android:background="@color/gray"
+            android:layout_width="match_parent"
+            android:layout_height="1px"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_marginTop="3dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:gravity="center_vertical"
+            android:layout_height="100px">
+            <TextView
+                android:layout_marginLeft="42px"
+                android:textColor="@color/dingdan_tv"
+                android:text="@string/cailianfei"
+                android:textSize="32px"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+            <EditText
+                android:id="@+id/dingdan_cailianfei_edt"
+                 android:layout_marginLeft="190px"
+                android:textColorHint="@color/gray"
+                android:hint="@string/qingshuru"
+                android:inputType="numberDecimal"
+                android:ems="10"
+                android:layout_width="250px"
+                android:layout_height="wrap_content"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_marginLeft="38px"
+            android:background="@color/gray"
+            android:layout_width="match_parent"
+            android:layout_height="1px"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_marginTop="3dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:gravity="center_vertical"
+            android:layout_height="100px">
+            <TextView
+                android:layout_marginLeft="42px"
+                android:textColor="@color/dingdan_tv"
+                android:text="@string/yunshufei"
+                android:textSize="32px"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+            <EditText
+                android:id="@+id/dingdan_yunshufei_edt"
+                 android:layout_marginLeft="150px"
+                android:textColorHint="@color/gray"
+                android:hint="@string/qingshuru"
+                android:layout_width="250px"
+                android:inputType="numberDecimal"
+                android:ems="10"
+                android:layout_height="wrap_content"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_marginLeft="38px"
+            android:background="@color/gray"
+            android:layout_width="match_parent"
+            android:layout_height="1px"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_marginTop="3dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:gravity="center_vertical"
+            android:layout_height="100px">
+            <TextView
+                android:layout_marginLeft="42px"
+                android:textColor="@color/dingdan_tv"
+                android:text="@string/qitafeiyong"
+                android:textSize="32px"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+            <EditText
+                android:id="@+id/dingdan_qitafeiyong_edt"
+                 android:layout_marginLeft="190px"
+                android:textColorHint="@color/gray"
+                android:hint="@string/qingshuru"
+                android:inputType="numberDecimal"
+                android:ems="10"
+                android:layout_width="250px"
+                android:layout_height="wrap_content"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_marginLeft="38px"
+            android:background="@color/gray"
+            android:layout_width="match_parent"
+            android:layout_height="1px"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_marginTop="3dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:gravity="center_vertical"
+            android:layout_height="100px">
+            <TextView
+                android:layout_marginLeft="42px"
+                android:textColor="@color/dingdan_tv"
+                android:text="@string/heijijine"
+                android:textSize="32px"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+            <EditText
+                android:id="@+id/dingdan_heijijine_edt"
+                 android:layout_marginLeft="150px"
+                android:textColorHint="@color/gray"
+                android:hint="@string/qingshuru"
+                android:layout_width="250px"
+                android:inputType="date"
+                android:ems="10"
+                android:layout_height="wrap_content"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_marginLeft="38px"
+            android:background="@color/gray"
+            android:layout_width="match_parent"
+            android:layout_height="1px"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_marginTop="3dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:gravity="center_vertical"
+            android:layout_height="100px">
+            <TextView
+                android:layout_marginLeft="42px"
+                android:textColor="@color/dingdan_tv"
+                android:text="@string/lururen"
+                android:textSize="32px"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+            <EditText
+                android:id="@+id/dingdan_lururen_edt"
+                 android:layout_marginLeft="150px"
+                android:textColorHint="@color/gray"
+                android:hint="@string/qingshuru"
+                android:layout_width="250px"
+                android:layout_height="wrap_content"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_marginLeft="38px"
+            android:background="@color/gray"
+            android:layout_width="match_parent"
+            android:layout_height="1px"/>
+    </LinearLayout>
+
+        </LinearLayout>
+    </ScrollView>
+
+</LinearLayout>

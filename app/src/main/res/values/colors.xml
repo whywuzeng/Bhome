@@ -1,0 +1,236 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:tools="http://schemas.android.com/tools">
+
+    <color name="main_guide_normal_color">#616161</color>
+    <!-- 公用背景颜色 -->
+
+    <!-- 极致灰白色 -->
+    <color name="litte_gray">#EDEDED</color>
+    <color name="twolitte_gray">#F7F8FA</color>
+
+    <color name="litte_strong_gray">#EEEEEE</color>
+    
+    <!-- 白灰色 -->
+    <color name="gray">#C3C3C3</color>
+    <!-- 灰色 -->
+    <color name="grey">#a8a8a8</color>
+    <color name="grey1">#ffb7b7b7</color>
+    <!-- tip color -->
+    <!-- 记录-item内容字体颜色 -->
+    <color name="record_line_color">#E9DDBF</color>
+    <!-- 棕色字体 -->
+    <!-- 红色字体 -->
+    <!-- 浅黑色字体 -->
+    <!-- 绿色字体 -->
+    <!-- 深黑色字体 -->
+    <!-- 绿色 -->
+    <color name="green">#B9EA80</color>
+    <!-- 蓝色 -->
+    <color name="blue2">#ff3693e3</color>
+    <!-- 首页红色 -->
+    <color name="index_red">#dd434d</color>
+    <!-- 首页红色按下 -->
+    <!-- 首页红色按下 -->
+    <!-- 红色 -->
+    <color name="red">#FE0000</color>
+    <!-- 金色 -->
+    <!-- 灰色进度条 -->
+    <!-- 红色进度条 -->
+    <!-- 橙色 -->
+    <color name="orange">#f8af00</color>
+    <!-- 白色 -->
+
+    <color name="blue1">#2e3192</color>
+    <color name="white">#FFFFFF</color>
+    <color name="blue_color">#3592e2</color>
+    <color name="red_color">#ff0000</color>
+    <color name="blue4">#3492e2</color>
+    <color name="possible_result_points">#c0ffff00</color>
+    <color name="result_view">#b0000000</color>
+    <color name="transparent">#00000000</color>
+    <color name="viewfinder_frame">#ff000000</color>
+    <color name="viewfinder_laser">#ffff0000</color>
+    <color name="viewfinder_mask">#60000000</color>
+    <color name="gray6">#f6f6f6</color>
+    <color name="gray7">#e7e7e7</color>
+    <color name="blue8">#3592e2</color>
+
+    <!-- 字体颜色 黑 -->
+    <!-- <color name="dark">#000000</color> -->
+    <!-- <color name="red">#FF0000</color> -->
+    <!-- <color name="gray">#FF888888</color> -->
+    <!-- <color name="green">#FF00FF00</color>> -->
+    <!-- <color name="blue">#FF0000FF</color> -->
+
+    <color name="color_hei">#ff000000</color>
+    <color name="window_bg">#ffeef1f3</color>
+    <!-- <color name="transparent">@color/color_hei_8</color> -->
+    <!--
+    <color name="white">#ffffffff</color>
+    <color name="black">@color/color_hei</color>
+    -->
+
+    <color name="sc_black">#ff000000</color>
+    <color name="holo_blue">#FF33E5B5</color>
+
+    <!-- 主界面背景色 -->
+
+    <!-- 版本更新 -->
+    <!--  -->
+
+    <!-- 类别 -->
+
+    <!--  -->
+
+    <!-- 友推 -->
+
+    <color name="colorPrimary">#3F51B5</color>
+
+    //toolbar
+    <color name="material_green_A200">#FD87A9</color>
+
+    //staggeredGridlayoutActivity
+    <color name="color_item_press">#ffff0000</color>
+
+    //staggeredGridlayoutActivity textcolor
+    <color name="tv_zijinfenxi">#47a0dc</color>
+    <color name="tv_yusuanfenxi">#536690</color>
+    <color name="tv_chengbenfenxi">#b5624f</color>
+    <color name="tv_chaigoufenxi">#a1d269</color>
+    <color name="tv_kucunfenxi">#ce4356</color>
+    <color name="tv_xiaoshoufenxi">#a6a6a6</color>
+    <color name="tv_zicanfenxi">#348b95</color>
+    <color name="tv_kaohefenxi">#cdcdcd</color>
+    
+    <color name="topfanhuibg">#091138</color>
+    <color name="saleanalysis">#4db6e6</color>
+    <color name="dingdan_tv">#222222</color>
+
+    <!--配色-->
+    <!--#FF5722-->
+
+    <!--配色-->
+    <color name="primary">#009688</color>
+    <color name="primary_dark">#00796B</color>
+    <color name="primary_light">#B2DFDB</color>
+    <color name="accent">#ff8f00</color><!--#FF5722-->
+    <color name="primary_text">#212121</color>
+    <color name="secondary_text">#727272</color>
+    <color name="divider">#B6B6B6</color>
+    <color name="item_color">#FAFAFA</color>
+    <color name="fab_color">#99ff8f00</color>
+
+    <color name="material_black">#000</color>
+    <color name="material_black10">#19000000</color>
+    <color name="material_black50">#80000000</color>
+    <color name="material_black55">#8c000000</color>
+    <color name="material_black65">#a5000000</color>
+    <color name="material_black70">#b2000000</color>
+    <color name="material_black75">#bf000000</color>
+    <color name="material_black80">#cc000000</color>
+    <color name="material_black95">#f2000000</color>
+    <color name="material_blue_200">#afbfff</color>
+    <color name="material_blue_300">#91a7ff</color>
+    <color name="material_blue_400">#738ffe</color>
+    <color name="material_blue_500">#5677fc</color>
+    <color name="material_blue_a700">#4d69ff</color>
+    <color name="material_blue_grey_200">#b0bef5</color>
+    <color name="material_blue_grey_400">#78909c</color>
+    <color name="material_blue_grey_500">#607d8b</color>
+    <color name="material_blue_grey_700">#455a64</color>
+    <color name="material_cyan_200">#80deea</color>
+    <color name="material_deep_orange_a200">#ff6e40</color>
+    <color name="material_deep_purple_a700">#6200ea</color>
+    <color name="material_green_a700">#12c700</color>
+    <color name="material_grey_100" tools:override="true">#f5f5f5</color>
+    <color name="material_grey_300" tools:override="true">#e0e0e0</color>
+    <color name="material_grey_400">#bdbdbd</color>
+    <color name="material_grey_50" tools:override="true">#fafafa</color>
+    <color name="material_grey_600" tools:override="true">#757575</color>
+    <color name="material_grey_700">#616161</color>
+    <color name="material_grey_800" tools:override="true">#424242</color>
+    <color name="material_grey_900" tools:override="true">#212121</color>
+    <color name="material_indigo_a400">#3d5afe</color>
+    <color name="material_purple_700">#7b1fa2</color>
+    <color name="material_white70">#b2FFFFFF</color>
+    <color name="material_white85">#d8FFFFFF</color>
+    <color name="material_white90">#e5FFFFFF</color>
+    <color name="material_white95">#f2FFFFFF</color>
+    <color name="material_yellow_800">#f9a825</color>
+
+    <color name="huise">#808080</color>
+
+    <color name="zhangred">#ff3300</color>
+
+    <color name="zhanghuise_bottom">#f1f4f8</color>
+
+    <color name="shenhuise_bottom">#EEEEEE</color>
+
+
+    <!-- 8.3加个颜色 -->
+
+    <color name="bar_color_gray_light">#ffd5d5d5</color>
+    <color name="black">@color/color_hei</color>
+    <color name="blue_dark">#ff00aeef</color>
+    <color name="blue_normal">#ff00c5ff</color>
+    <color name="header4">#ff9370c8</color>
+        <color name="header5">#ff7781c7</color>
+    <color name="line">#ffd1d1d1</color>
+    <color name="new_title_bg">#ff06a7de</color>
+    <color name="select_time_title_color">#70888888</color>
+    <color name="title">#ffffffff</color>
+
+    <item name="line_green" type="drawable">#ff3bbd79</item>
+
+    <drawable name="white">#ffffffff</drawable>
+
+    <!-- 分割线 -->
+    <color name="divide_line">#D8DDE4</color>
+
+    <!--主背景灰白很好-->
+    <color name="divide">#F2F4F6</color>
+
+    <color name="font_2">#222222</color>
+    <color name="font_6">#666666</color>
+    <color name="font_9">#999999</color>
+
+    <color name="white_pressed">#ffd5d5d5</color>
+
+    <color name="color_F6F6F6">#f6f6f6</color>
+
+    <color name="color_3BBD79">#3BBD79</color>
+
+    <color name="color_midlle_grey">#F9F9F9</color>
+
+    <color name="fc6">#ffffffff</color>
+    <color name="btn_nav_dark_disable">#ffbdbdbd</color>
+    <color name="fc5">#ff3cbaff</color>
+    <color name="button_layer_color">#1a000000</color>
+    <color name="btn_disable">#ffe9ecf1</color>
+    <color name="btn_light_disable_login">#7fffffff</color>
+
+    <color name="dividing_line">#ffe6e8ee</color>
+    <color name="stand_bg">#ffffff</color>
+
+    <color name="color_f8f8f8">#f8f8f8</color>
+    <color name="color_litterbule">#91d8ff</color>
+
+   <!-- 是给task的style-->
+    <color name="common_color_box_stroke_bg">#ececec</color>
+    <color name="common_color_layout_stroke_bg">#c9c9c9</color>
+    <color name="common_color_layout_text">#4b4b4b</color>
+    <color name="common_color_text_300">#343434</color>
+    <color name="common_color_text_50">#4b4b4b</color>
+    <color name="common_color_text_30">#8b8b8b</color>
+    <color name="common_color_text_10">#c9c9c9</color>
+    <color name="common_color_line_000001">#FEFEFE</color>
+    <color name="common_color_line_blue">#ff3cbaff</color>
+
+    <color name="common_color_parentlayout_bg">#F0F0F0</color>
+
+    <color name="fabColor">@color/fab_color</color>
+
+</resources>
+
+
+<!--<color name="common_color_line_00001">#B2B2B2</color>-->

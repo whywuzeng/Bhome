@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:id="@+id/saleanalysis_fram"
+    app:cardCornerRadius="5dp"
+    app:cardPreventCornerOverlap="true"
+    app:cardUseCompatPadding="true"
+    app:contentPadding="2dp"
+    app:cardElevation="0dp"
+    android:layout_height="wrap_content">
+
+    <!--android:background="@drawable/item_bg_sale_lan_new"-->
+
+    <LinearLayout
+        android:layout_height="72dp"
+        android:layout_width="match_parent"
+        android:orientation="horizontal"
+        >
+
+        <ImageView
+            android:id="@+id/grid_icon"
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:background="@drawable/graybottom"
+            android:src="@drawable/jiantou"
+            android:gravity="center"
+            android:layout_gravity="center"
+            >
+        </ImageView>
+
+        <TextView
+            android:layout_marginLeft="20dp"
+            android:id="@+id/grid_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:singleLine="true"
+            android:textColor="@color/material_black95"
+            android:gravity="center"
+            android:text="测试字"
+            android:layout_gravity="center"
+            android:textSize="18sp"
+            android:layout_marginTop="6dip"
+            >
+        </TextView>
+
+        <RelativeLayout
+            android:layout_gravity="center"
+            android:layout_marginRight="15dp"
+            android:gravity="right"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:layout_gravity="center"
+                android:src="@drawable/jiantou"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+        </RelativeLayout>
+    </LinearLayout>
+
+    <!--android:background="@drawable/item_bg_sale_lan"-->
+    <!--<RelativeLayout-->
+    <!--android:layout_margin="15dp"-->
+    <!--android:id="@+id/item_sale_rela"-->
+    <!--android:layout_width="wrap_content"-->
+    <!--android:layout_gravity="center"-->
+    <!--android:gravity="center"-->
+    <!--android:minWidth="40dp"-->
+    <!--android:layout_height="wrap_content">-->
+
+    <!--<TextView-->
+    <!--android:id="@+id/capture_light_btn"-->
+    <!--android:layout_width="wrap_content"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:background="@android:color/transparent"-->
+    <!--android:drawablePadding="10dp"-->
+    <!--android:drawableTop="@drawable/dingdanguanli"-->
+    <!--android:gravity="center"-->
+    <!--android:text="@string/btn_light"-->
+    <!--android:textColor="@android:color/black"-->
+    <!--android:textSize="15sp"/>-->
+
+    <!--</RelativeLayout>-->
+</android.support.v7.widget.CardView>
+
+    <!-- android:layout_marginRight="@dimen/x33"
+     android:layout_marginBottom="@dimen/y10"-->
+
+    <!--<ImageView
+    android:id="@+id/image_sale_item"
+    android:adjustViewBounds="true"
+    android:maxHeight="120dp"
+    android:maxWidth="150dp"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"/>-->

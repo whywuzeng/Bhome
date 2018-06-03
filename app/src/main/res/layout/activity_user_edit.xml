@@ -1,0 +1,20 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:tools="http://schemas.android.com/tools"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:orientation="vertical"
+              tools:context="com.system.bhouse.bhouse.setup.SetUserInfoActivity">
+    <include layout="@layout/toolbar"/>
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_margin="3dp"
+        android:layout_height="50dp"
+        android:gravity="center_vertical|start"
+        android:inputType="text"
+        android:ems="10"
+        android:hint=""
+        android:background="@drawable/line_gray_dra"
+        />
+
+</LinearLayout>

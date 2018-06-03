@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Button
+    android:id="@+id/btn_login"
+    android:text="@string/act_xt_login_btn_login_text"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    style="@style/LoginButtonRadius"
+    xmlns:android="http://schemas.android.com/apk/res/android"/>

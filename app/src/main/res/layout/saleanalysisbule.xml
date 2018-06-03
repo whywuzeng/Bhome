@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:orientation="vertical"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent">
+
+    <include layout="@layout/topfanhuititle">
+    </include>
+
+    <include layout="@layout/toolbar"
+        >
+    </include>
+
+    <android.support.v7.widget.RecyclerView
+        android:background="@drawable/broder_lay"
+        android:layout_margin="15dp"
+        android:id="@+id/id_recyclerview_saleactivity"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+</LinearLayout>

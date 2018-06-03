@@ -1,0 +1,334 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+          package="com.system.bhouse.bhouse">
+
+    <application
+        android:name="com.system.bhouse.base.App"
+        android:allowBackup="true"
+        android:icon="@mipmap/mais"
+        android:label="@string/app_name"
+        android:screenOrientation="portrait"
+        android:configChanges="orientation|keyboardHidden"
+        android:theme="@style/AppTheme.Base">
+        <activity
+            android:screenOrientation="portrait"
+            android:name=".MainActivity"
+            android:theme="@style/AppTheme.Base"
+            android:launchMode="singleTask"
+           >
+        </activity>
+        <activity
+            android:screenOrientation="portrait"
+            android:name="com.system.bhouse.bhouse.WelcomActivity">
+
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN"/>
+
+                <category android:name="android.intent.category.LAUNCHER"/>
+            </intent-filter>
+
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" /><!-- 显示数据 -->
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" /><!-- 定义成浏览器类型，有URL需要处理时会过滤 -->
+
+                <data android:scheme="bhouse" /><!-- 打开以fyfeng协议的URL,这个自己随便定义。 -->
+            </intent-filter>
+
+        </activity>
+
+        <activity
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.Base"
+            android:launchMode="singleTask"
+            android:name="com.system.bhouse.bhouse.LoginActivity">
+            <intent-filter>
+                <action android:name="INTENT_METHOD_FIRST_SINGUP"/>
+                <category android:name="android.intent.category.DEFAULT" />
+
+            </intent-filter>
+        </activity>
+
+        <activity
+            android:screenOrientation="portrait"
+            android:name="com.system.bhouse.bhouse.SaleAnalysisActivity">
+        </activity>
+        <activity
+            android:screenOrientation="portrait"
+            android:name="com.system.bhouse.bhouse.OrderInputActivity"></activity>
+
+        <activity
+            android:name="com.system.bhouse.bhouse.DingdanActivity"
+            android:screenOrientation="portrait">
+        </activity>
+
+
+        <activity
+            android:name="com.system.bhouse.bhouse.DrawerLayoutActivity"
+            android:screenOrientation="portrait">
+        </activity>
+
+        <activity
+            android:name="com.system.bhouse.bhouse.ConameActivity"
+            android:screenOrientation="portrait"></activity>
+
+        <activity
+            android:name="com.system.bhouse.bhouse.DingdanManage.DingdanManageActivity"
+            android:screenOrientation="portrait">
+        </activity>
+
+        <activity
+            android:theme="@style/Anim_fade"
+            android:name="com.system.bhouse.bhouse.DingdanManage.DingdanStateUpdateActivity"
+            android:screenOrientation="portrait">
+        </activity>
+
+        <activity
+            android:theme="@style/Anim_fade"
+            android:name=".DingdanManage.DingdanClearActivity"
+            android:screenOrientation="portrait">
+        </activity>
+
+        <activity
+            android:theme="@style/Anim_fade"
+            android:name="com.system.bhouse.bhouse.DingdanManage.DingdanSellActivity"
+            android:screenOrientation="portrait"></activity>
+
+        <activity
+            android:theme="@style/Anim_fade"
+            android:name="com.system.bhouse.bhouse.DingdanManage.DingdanCheckActivity"
+            android:screenOrientation="portrait"></activity>
+        <activity
+            android:name="com.system.bhouse.bhouse.DingdanManage.DingdanConameListActivity"
+            android:screenOrientation="portrait"></activity>
+        <activity
+            android:theme="@style/Anim_fade"
+            android:name="com.system.bhouse.bhouse.DingdanManage.KeyHandinActivity"
+            android:screenOrientation="portrait"></activity>
+        <activity android:name="com.system.bhouse.bhouse.ImageSelect.ImageSelectActivity"
+                  android:screenOrientation="portrait"></activity>
+
+        <activity android:name="com.system.bhouse.bhouse.ImageSelect.PhotoViewActivity"
+                  android:screenOrientation="portrait"></activity>
+
+
+        <activity android:name="com.system.bhouse.bhouse.DingdanManage.OneSimpleActivity"
+                  android:theme="@style/Anim_fade"
+                  android:screenOrientation="portrait"></activity>
+
+        <activity
+            android:theme="@style/Anim_fade"
+            android:name="com.system.bhouse.bhouse.DingdanManage.AcceptanceActivity"
+                  android:screenOrientation="portrait"></activity>
+
+        <activity
+            android:theme="@style/Anim_fade"
+            android:name="com.system.bhouse.bhouse.DingdanManage.BasisActivity"
+                  android:screenOrientation="portrait"></activity>
+
+
+
+        <activity
+            android:theme="@style/Anim_fade"
+            android:name="com.system.bhouse.bhouse.MoreActivity"></activity>
+
+        <!--<activity-->
+            <!--android:theme="@style/Anim_fade"-->
+            <!--android:name="com.system.bhouse.bhouse.phone.activity.ProfileEditingActivity"></activity>-->
+
+        <!--<activity-->
+            <!--android:theme="@style/Anim_fade"-->
+            <!--android:name="com.system.bhouse.bhouse.phone.activity.OrgaActivity"></activity>-->
+
+        <!--<activity-->
+            <!--android:theme="@style/Anim_fade"-->
+            <!--android:name="com.system.bhouse.bhouse.phone.activity.CheckedActivity"></activity>-->
+
+        <!--<activity-->
+            <!--android:theme="@style/Anim_fade"-->
+            <!--android:name="com.system.bhouse.bhouse.phone.activity.ListIconActivity"></activity>-->
+
+        <activity
+            android:theme="@style/Anim_fade"
+            android:name="com.system.bhouse.bhouse.phone.activity.InformationActivity"></activity>
+
+        <!--<activity android:name="com.system.bhouse.bhouse.produce.ProductionManage_"-->
+                  <!--android:theme="@style/Anim_fade"-->
+                <!--/>-->
+
+        <!--<activity android:name="com.system.bhouse.bhouse.produce.Startpreparation.StartpreActivity_"-->
+                  <!--android:theme="@style/Anim_fade"/>-->
+
+        <activity android:name="com.system.bhouse.bhouse.produce.Startpreparation.StartdetailActivity"
+                  android:theme="@style/Anim_fade"/>
+
+        <activity android:name="com.system.bhouse.bhouse.produce.Startpreparation.QDSnapHelperActivity"
+                  android:theme="@style/Anim_fade"/>
+        <activity android:name="com.system.bhouse.bhouse.setup.MyselfActivity"
+                  android:theme="@style/Anim_fade"/>
+        <activity
+            android:name=".setup.UserDetailEditActivity_"
+            android:theme="@style/Anim_fade"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".setup.WWCommon.WWBackActivity_"
+            android:theme="@style/Anim_fade"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".setup.SetUserInfoActivity_"
+            android:theme="@style/AppTheme.Base"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".task.TaskAddActivity_"
+            android:screenOrientation="portrait" />
+
+
+        <activity android:name=".task.PickProjectActivity_"
+                  android:label="选择任务"
+                  android:theme="@style/Anim_fade"
+                  android:screenOrientation="portrait"/>
+
+        <activity android:name=".task.MembersActivity_"
+                  android:label="选择成员"
+                  android:theme="@style/Anim_fade"
+                  android:screenOrientation="portrait"/>
+
+        <activity android:name=".task.TaskActivity_"
+                  android:theme="@style/Anim_fade"
+                  android:screenOrientation="portrait"/>
+
+        <activity android:name="com.system.bhouse.Common.message.MessageListActivity_"
+                  android:screenOrientation="portrait"/>
+
+        <activity android:name=".Topic.ProjectActivity_"
+                  android:screenOrientation="portrait"/>
+
+
+        <activity android:name=".CommonTask.ComTaskActivity_"
+                  android:screenOrientation="portrait"/>
+        <activity android:name=".CommonTask.SiteActivity_"
+                  android:screenOrientation="portrait"/>
+
+        <activity android:name=".CommonTask.ComTaskContentMessageActivity_"
+                  android:screenOrientation="portrait"/>
+
+        <activity android:name=".CommonTask.common.CommonPickerActivity_"
+                  android:screenOrientation="portrait"/>
+
+        <activity android:name=".CommonTask.ConfirmationReceipActivity_"
+                  android:screenOrientation="portrait"/>
+        <activity android:name=".CommonTask.ConfirmationReceip.ConfirmationContentMessageActivity_"
+                  android:screenOrientation="portrait"/>
+        <activity android:name=".CommonTask.ReturnRequire.ReturnRequireActivity_"
+                  android:screenOrientation="portrait"/>
+        <activity android:name=".CommonTask.ReturnRequire.ReturnRequireContentMessageActivity_"
+                  android:screenOrientation="portrait"/>
+        <activity android:name=".CommonTask.ReplenishmentRequire.ReplenishmentRequireActivity_"
+                  android:screenOrientation="portrait"/>
+        <activity android:name=".CommonTask.ReplenishmentRequire.ReplenishmentRequireContentMessageActivity_"
+                  android:screenOrientation="portrait"/>
+        <activity android:name=".CompanyNews.CompanyNewsDetailActivity_"
+                  android:screenOrientation="portrait"/>
+        <activity android:name=".PatchDialogActivity"
+                  android:screenOrientation="portrait"/>
+
+        <activity android:name=".CommonTask.TransportationManagement.TransportationManagementActivity_"
+                  android:screenOrientation="portrait"/>
+        <activity android:name=".CommonTask.TransportationManagement.CarManagement.CarManagementActivity_"
+                  android:screenOrientation="portrait"/>
+        <activity android:name=".CommonTask.TransportationManagement.LoadingCarOrder.LoadingCarOrderActivity_"
+                  android:screenOrientation="portrait"/>
+        <activity android:name=".CommonTask.TransportationManagement.LoadingCarOrder.LoadingCarOrderContentMessageActivity_"
+                  android:screenOrientation="portrait"/>
+        <activity android:name="com.system.bhouse.bhouse.CommonTask.TransportationManagement.TransportSendGoods.TransportSendGoodsActivity_"
+                  android:screenOrientation="portrait"/>
+        <activity android:name="com.system.bhouse.bhouse.CommonTask.TransportationManagement.TransportSendGoods.TransportSendGoodsContentMessageActivity_"
+                  android:screenOrientation="portrait"/>
+        <activity android:name="com.system.bhouse.bhouse.CommonTask.TransportationManagement.ComponentReturns.ComponentReturnsActivity_"
+                  android:screenOrientation="portrait"/>
+        <activity android:name="com.system.bhouse.bhouse.CommonTask.TransportationManagement.ComponentReturns.ComponentReturnsContentMessageActivity_"
+                  android:screenOrientation="portrait"/>
+        <activity android:name="com.system.bhouse.bhouse.CommonTask.TransportationManagement.ContainerRecycle.ContainerRecycleActivity_"
+                  android:screenOrientation="portrait"/>
+        <activity android:name="com.system.bhouse.bhouse.CommonTask.TransportationManagement.ContainerRecycle.ContainerRecycleContentMessageActivity_"
+                  android:screenOrientation="portrait"/>
+        <activity
+            android:name="com.system.bhouse.bhouse.setup.notification.MyNotificationActivity_"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW"/>
+                <category android:name="android.intent.category.DEFAULT"/>
+                <data
+                    android:scheme="xgscheme"
+                    android:host="com.xg.push"
+                    android:path="/notify_detail"/>
+            </intent-filter>
+        </activity>
+
+        <meta-data
+            android:name="design_width"
+            android:value="768">
+        </meta-data>
+        <meta-data
+            android:name="design_height"
+            android:value="1280">
+        </meta-data>
+
+        <meta-data
+            android:name="com.baidu.lbsapi.API_KEY"
+            android:value="7ipZAl1i1vRB84XGMeBdS7cDVagnFqbg"/>
+        <!--  //key:开发者申请的Key-->
+
+        <!-- B6:0A:5A:28:58:C4:E0:4B:74:2E:51:B3:8E:9E:C0:DC:6B:5C:28:11;com.system.bhouse.bhouse -->
+
+        <service android:name="com.system.bhouse.bhouse.Service.MessageService">
+        </service>
+
+        <service android:name="com.system.bhouse.bhouse.Service.DownloadService"/>
+
+
+        <!-- YOUR_PACKAGE_PATH.CustomPushReceiver需要改为自己的Receiver： -->
+        <receiver android:name="com.system.bhouse.bhouse.setup.notification.receiver.MessageReceiver"
+                  android:exported="true" >
+            <intent-filter>
+                <!-- 接收消息透传 -->
+                <action android:name="com.tencent.android.tpush.action.PUSH_MESSAGE" />
+                <!-- 监听注册、反注册、设置/删除标签、通知被点击等处理结果 -->
+                <action android:name="com.tencent.android.tpush.action.FEEDBACK" />
+            </intent-filter>
+        </receiver>
+
+    </application>
+
+    <!-- 百度-->
+    <!-- 这个权限用于进行网络定位-->
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"></uses-permission>
+    <!-- 这个权限用于访问GPS定位-->
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"></uses-permission>
+    <!-- 用于访问wifi网络信息，wifi信息会用于进行网络定位-->
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"></uses-permission>
+    <!-- 获取运营商信息，用于支持提供运营商信息相关的接口-->
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"></uses-permission>
+    <!-- 这个权限用于获取wifi的获取权限，wifi信息会用来进行网络定位-->
+    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE"></uses-permission>
+    <!-- 用于读取手机当前的状态-->
+    <uses-permission android:name="android.permission.READ_PHONE_STATE"></uses-permission>
+    <!-- 写入扩展存储，向扩展卡写入数据，用于写入离线定位数据-->
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"></uses-permission>
+    <!-- 访问网络，网络定位需要上网-->
+    <uses-permission android:name="android.permission.INTERNET" />
+    <!-- SD卡读取权限，用户写入离线定位数据-->
+    <uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS"></uses-permission>
+
+    <uses-permission android:name="android.permission.MANAGE_DOCUMENTS" />
+    <uses-permission android:name="android.permission.WAKE_LOCK"></uses-permission>
+    <uses-permission android:name="android.permission.RESTART_PACKAGES"/>
+    <uses-permission android:name="android.permission.CHANGE_CONFIGURATION"></uses-permission>
+    <uses-permission android:name="android.permission.VIBRATE"/>
+    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW"/>
+
+</manifest>

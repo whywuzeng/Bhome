@@ -1,0 +1,153 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<resources>
+
+    <string-array name="program_title">
+        <item>全部项目</item>
+        <item>我参与的</item>
+        <item>我创建的</item>
+        <item>我关注的</item>
+        <item>我收藏的</item>
+    </string-array>
+    <string-array name="program_title_pick">
+        <item>全部项目</item>
+    </string-array>
+
+    <string-array name="sexs">
+        <item>男</item>
+        <item>女</item>
+        <item>未知</item>
+    </string-array>
+
+
+    <!--商城-->
+
+    <!--<string-array name="commnet_my">-->
+    <!--<item>复制</item>-->
+    <!--<item>回复</item>-->
+    <!--</string-array>-->
+    <!-- -->
+    <!--<string-array name="commnet_other">-->
+    <!--<item>复制</item>-->
+    <!--<item>删除</item>-->
+    <!--</string-array>-->
+
+    <string-array name="important_task">
+        <item>十万火急</item>
+        <item>情况紧急</item>
+        <item>比较紧张</item>
+        <item>空闲任务</item>
+    </string-array>
+
+    <string-array name="confirmation_itemsection">
+        <item>货柜名称</item>
+        <item>物料二维码</item>
+        <item>物料编码</item>
+        <item>物料名称</item>
+        <item>规格型号</item>
+        <item>单位</item>
+        <item>需求量</item>
+        <item>收货数量</item>
+        <item>项目</item>
+        <item>栋</item>
+        <item>层</item>
+    </string-array>
+
+    <string-array name="confirmation_itemsection_return">
+        <item>物料二维码</item>
+        <item>物料编码</item>
+        <item>物料名称</item>
+        <item>规格型号</item>
+        <item>单位</item>
+        <item>退货数量</item>
+        <item>项目</item>
+        <item>栋</item>
+        <item>层</item>
+    </string-array>
+
+    <string-array name="confirmation_itemsection_replenishment">
+        <item>物料二维码</item>
+        <item>物料编码</item>
+        <item>物料名称</item>
+        <item>规格型号</item>
+        <item>单位</item>
+        <item>补货数量</item>
+        <item>项目</item>
+        <item>栋</item>
+        <item>层</item>
+        <item>质检类型</item>
+    </string-array>
+
+    <string-array name="loadingcar_itemsection_order">
+        <item>物料二维码</item>
+        <item>物料编码</item>
+        <item>物料名称</item>
+        <item>规格型号</item>
+        <item>单位</item>
+        <item>需求数量</item>
+        <item>项目</item>
+        <item>栋</item>
+        <item>层</item>
+        <item>原单类型</item>
+        <item>参与生产</item>
+    </string-array>
+
+    <string-array name="Transportsendgoods_itemsection_order">
+        <item>货柜名称</item>
+        <item>仓库名称</item>
+        <item>物料二维码</item>
+        <item>物料编码</item>
+        <item>物料名称</item>
+        <item>规格型号</item>
+        <item>单位</item>
+        <item>数量</item>
+        <item>项目</item>
+        <item>栋</item>
+        <item>层</item>
+    </string-array>
+
+    <string-array name="ComponentReturn_itemsection_order">
+        <item>物料二维码</item>
+        <item>物料编码</item>
+        <item>物料名称</item>
+        <item>规格型号</item>
+        <item>单位</item>
+        <item>质检量</item>
+        <item>质检类型</item>
+        <item>入库量</item>
+        <item>仓库</item>
+        <item>项目</item>
+        <item>栋</item>
+        <item>层</item>
+        <item>描述</item>
+    </string-array>
+
+    <string-array name="ContainerRecycle_itemsection_order">
+        <item>物料二维码</item>
+        <item>物料编码</item>
+        <item>物料名称</item>
+        <item>规格型号</item>
+        <item>单位</item>
+        <item>数量</item>
+        <item>项目</item>
+        <item>栋</item>
+        <item>层</item>
+    </string-array>
+
+    <string-array name="user_info_list_first">
+        <item>昵称</item>
+        <item>性别</item>
+        <item>生日</item>
+        <item>所在地</item>
+        <item>座右铭</item>
+        <item>公司</item>
+        <item>职位</item>
+        <item>个性标签</item>
+    </string-array>
+
+    <string-array name="task_titles">
+        <item>进行中</item>
+        <item>已完成</item>
+    </string-array>
+
+
+</resources>

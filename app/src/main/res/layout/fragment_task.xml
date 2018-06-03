@@ -1,0 +1,54 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+             xmlns:tools="http://schemas.android.com/tools"
+             android:layout_width="match_parent"
+             android:layout_height="match_parent"
+             xmlns:app="http://schemas.android.com/apk/res-auto"
+             android:orientation="vertical"
+             tools:context=" ">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/divide"
+        android:orientation="vertical">
+
+        <View
+            android:id="@+id/actionDivideLine"
+            style="@style/DivideLine"/>
+
+        <com.system.bhouse.bhouse.task.view.MyPagerSlidingTabStrip
+            android:id="@+id/tabs"
+            android:layout_width="match_parent"
+            android:layout_height="77dip"
+            android:background="@color/white"/>
+
+        <android.support.v4.view.ViewPager
+            android:id="@+id/pagerTaskFragment"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+
+    </LinearLayout>
+
+    <com.system.bhouse.bhouse.task.view.LoadingView
+        android:id="@+id/baseLoadingView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"/>
+
+    <include layout="@layout/view_task_status_filter"/>
+
+    <android.support.design.widget.FloatingActionButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|right"
+        android:layout_margin="35dp"
+        android:src="@drawable/ic_float_button_add"
+        app:backgroundTint="@color/material_blue_grey_200"
+        app:rippleColor="#33728dff"
+        app:elevation="6dp"
+        app:pressedTranslationZ="12dp"
+        />
+
+
+
+</FrameLayout>

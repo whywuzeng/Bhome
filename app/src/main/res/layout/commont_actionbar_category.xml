@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="@color/material_blue_400"
+        >
+
+        <ImageView
+            android:id="@+id/site_search_back"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_width="30dp"
+            android:layout_height="wrap_content"
+            android:src="@drawable/icon_fanhui"
+            />
+
+        <TextView
+            android:id="@+id/tv_query"
+            android:padding="10dp"
+            android:textSize="14sp"
+            android:layout_centerVertical="true"
+            android:layout_alignParentRight="true"
+            android:textColor="@color/material_white90"
+            android:text="搜索"
+            android:layout_width="50dp"
+            android:layout_height="wrap_content"/>
+
+        <LinearLayout
+            android:id="@+id/middle_search"
+            android:layout_toRightOf="@+id/site_search_back"
+            android:layout_toLeftOf="@+id/tv_query"
+            android:background="@drawable/bg_middle_search"
+            android:layout_width="match_parent"
+            android:layout_centerVertical="true"
+            android:orientation="horizontal"
+            android:layout_height="30dp">
+
+            <ImageView
+                android:src="@drawable/icon_sousuo"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_marginLeft="5dp"
+                android:layout_gravity="center_vertical"
+                android:layout_marginRight="5dp"
+                android:layout_height="wrap_content"/>
+
+            <EditText
+                android:layout_width="0dp"
+                android:id="@+id/et_search_content"
+                android:background="@null"
+                android:layout_gravity="center_vertical"
+                android:layout_marginRight="5dp"
+                android:hint="搜索单据编号"
+                android:textColorHint="@color/material_cyan_200"
+                android:textColor="#ff505050"
+                android:focusable="true"
+                android:focusableInTouchMode="true"
+                android:textSize="14sp"
+                android:layout_weight="8"
+                android:layout_height="wrap_content"/>
+        </LinearLayout>
+
+    </RelativeLayout>
+</RelativeLayout>

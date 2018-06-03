@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="50dp">
+
+    <TextView
+        android:padding="5dp"
+        android:textColor="@color/material_white90"
+        android:textSize="16sp"
+        android:layout_alignParentLeft="true"
+        android:layout_marginBottom="10dp"
+        android:layout_marginStart="10dp"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="5dp"
+        android:text="条码编料"
+        android:background="@drawable/bg_header_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+
+    <TextView
+        android:padding="5dp"
+        android:text="更多"
+        android:textColor="@color/material_white90"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:layout_marginRight="20dp"
+        android:layout_marginBottom="10dp"
+        android:drawablePadding="5dp"
+        android:background="@drawable/bg_header_tv"
+        android:drawableRight="@drawable/icon_fanhui"
+        android:textSize="16sp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_alignParentBottom="true"
+        android:background="@color/material_blue_200"
+        android:layout_height="1dp"/>
+</RelativeLayout>

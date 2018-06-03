@@ -1,0 +1,241 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:tools="http://schemas.android.com/tools"
+              android:orientation="horizontal"
+              android:background="@color/litte_strong_gray"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+    >
+
+    <LinearLayout
+        android:id="@+id/first_page_item"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:orientation="vertical">
+
+        <ImageView
+            android:id="@+id/first_page_iv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:clickable="true"
+            android:focusable="true"
+            android:layout_marginTop="5dip"
+            android:background="@drawable/bg_indexpagehuise"
+            />
+
+        <TextView
+            android:id="@+id/first_page_tv"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dip"
+            android:gravity="center_horizontal"
+
+            android:text="@string/first_page"
+            android:textColor="@drawable/main_guide_text_color_selector"
+            android:textSize="@dimen/common_text_size"/>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0dip"
+            android:layout_weight="1"/>
+
+        <ImageView
+            android:id="@+id/first_page_item_flag"
+            android:layout_width="28dip"
+            android:layout_height="4.5dip"
+            android:background="@drawable/tab_flag_selector"
+            android:visibility="visible"/>
+    </LinearLayout>
+
+    <!-- 分类 -->
+
+    <LinearLayout
+        android:id="@+id/classic_item"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:orientation="vertical">
+
+        <ImageView
+            android:id="@+id/classic_iv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:clickable="true"
+            android:focusable="true"
+            android:layout_marginTop="5dip"
+            android:background="@drawable/bg_newshuise"
+          />
+
+        <TextView
+            android:id="@+id/classic_tv"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dip"
+            android:gravity="center_horizontal"
+            android:text="@string/qiyeshuo"
+            android:textColor="@drawable/main_guide_text_color_selector"
+            android:textSize="@dimen/common_text_size"/>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0dip"
+            android:layout_weight="1"/>
+
+        <ImageView
+            android:id="@+id/classic_item_flag"
+            android:layout_width="28dip"
+            android:layout_height="4.5dip"
+            android:background="@drawable/tab_flag_selector"
+            android:visibility="gone"/>
+    </LinearLayout>
+    <!-- 购物车 -->
+
+    <RelativeLayout
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:id="@+id/shopping_car_item"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center_horizontal"
+            android:orientation="vertical">
+
+            <ImageView
+                android:id="@+id/shopping_car_iv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:visibility="gone"
+                android:layout_marginTop="5dip"
+                android:src="@drawable/task_new_add"/>
+
+            <TextView
+                android:id="@+id/shopping_car_tv"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:visibility="gone"
+                android:layout_marginTop="4dip"
+                android:gravity="center_horizontal"
+                android:text="@string/shopping_car"
+                android:textColor="@drawable/main_guide_text_color_selector"
+                android:textSize="@dimen/common_text_size"/>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0dip"
+                android:layout_weight="1"/>
+
+            <ImageView
+                android:id="@+id/shopping_car_item_flag"
+                android:layout_width="28dip"
+                android:layout_height="4.5dip"
+                android:background="@drawable/tab_flag_selector"
+                android:visibility="gone"/>
+        </LinearLayout>
+    </RelativeLayout>
+    <!-- 管家 -->
+
+
+    <RelativeLayout
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:id="@+id/my_lehu_item"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <ImageView
+                android:id="@+id/my_lehu_iv"
+                android:layout_width="22dp"
+                android:layout_height="24dp"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="6dip"
+                android:clickable="true"
+                android:focusable="true"
+                android:background="@drawable/bg_checkhuise"
+                />
+
+            <TextView
+                android:id="@+id/my_lehu_tv"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="2dip"
+                android:gravity="center_horizontal"
+                android:text="@string/checkstring"
+                android:textColor="@drawable/main_guide_text_color_selector"
+                android:textSize="@dimen/common_text_size"/>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0dip"
+                android:layout_weight="1"/>
+
+            <ImageView
+                android:id="@+id/my_lehu_item_flag"
+                android:layout_width="28dip"
+                android:layout_height="4.5dip"
+                android:background="@drawable/tab_flag_selector"
+                android:visibility="gone"/>
+        </LinearLayout>
+    </RelativeLayout>
+
+    <LinearLayout
+        android:id="@+id/house_keeper_item"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:orientation="vertical">
+
+        <ImageView
+            android:id="@+id/house_keeper_iv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:clickable="true"
+            android:focusable="true"
+            android:layout_marginTop="5dip"
+            android:background="@drawable/bg_myselfhuise"
+            />
+
+        <TextView
+            android:id="@+id/house_keeper_tv"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="2dip"
+            android:gravity="center_horizontal"
+            android:text="@string/housekeeper"
+            android:textColor="@drawable/main_guide_text_color_selector"
+            android:textSize="@dimen/common_text_size"/>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0dip"
+            android:layout_weight="1"/>
+
+        <ImageView
+            android:id="@+id/house_keeper_item_flag"
+            android:layout_width="28dip"
+            android:layout_height="4.5dip"
+            android:background="@drawable/tab_flag_selector"
+            android:visibility="gone"/>
+    </LinearLayout>
+    <!-- 我的乐虎 -->
+
+
+</LinearLayout>

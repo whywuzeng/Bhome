@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:layout_gravity="center"
+    android:background="@color/transparent">
+
+    <!--android:background="#00FFFFFF"-->
+    <!--#85FFFFFF-->
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:background="@color/transparent"
+        android:layout_height="103.33dp"
+        android:layout_centerInParent="true"
+        android:gravity="center_horizontal"
+        android:orientation="vertical">
+
+        <RelativeLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="18.33dp">
+
+            <ImageView
+                android:id="@+id/loadingIcon"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:background="@mipmap/mais" />
+
+            <ImageView
+                android:id="@+id/loadingCircle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:background="@drawable/ic_loading_round" />
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="16dp"
+            android:visibility="gone"
+            android:layout_marginRight="16dp"
+            android:layout_marginTop="5dp">
+
+            <TextView
+                android:id="@+id/tv_titlename"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="正在加载....."
+                android:textColor="@color/font_9"
+                android:textSize="13sp" />
+
+        </RelativeLayout>
+
+        <TextView
+            android:layout_width="fill_parent"
+            android:layout_height="20dip" />
+
+    </LinearLayout>
+
+</RelativeLayout>
+
+
+    <!--toptitleblue-->

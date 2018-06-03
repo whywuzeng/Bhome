@@ -68,3 +68,8 @@ fastlane/readme.md
 Thumbs.db  
 # OSX files  
 .DS_Store  
+
+MultilevelTreeLibrary/
+librarypull/
+library/
+lib_recycler/

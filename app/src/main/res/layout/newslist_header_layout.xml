@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="match_parent"
+                android:background="@color/common_color_parentlayout_bg"
+                android:layout_height="wrap_content">
+
+    <TextView
+        android:text="企业说"
+        android:textSize="15sp"
+        android:textColor="#EE1289"
+        android:padding="6dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="4dp"
+        android:layout_marginBottom="4dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+
+    <TextView
+        android:id="@+id/tv_more"
+        android:visibility="invisible"
+        android:layout_alignParentEnd="true"
+        android:text="更多 >>"
+        android:layout_marginRight="10dp"
+        android:textSize="13sp"
+        android:textColor="@color/grey1"
+        android:padding="6dp"
+        android:layout_marginTop="4dp"
+        android:layout_marginBottom="4dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+
+</RelativeLayout>

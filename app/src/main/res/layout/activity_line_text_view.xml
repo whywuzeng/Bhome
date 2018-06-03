@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/blue_normal"
+    android:orientation="vertical">
+
+    <com.system.bhouse.Custom.htextview.HTextView
+        android:id="@+id/linetextview111"
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:background="@color/blue_normal"
+        android:text="智能制造"
+        android:gravity="center"
+        android:layout_centerInParent="true"
+        android:textColor="#fff"
+        android:textSize="70sp"
+        app:animateType="line"
+        />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="80dp"
+        android:background="@color/blue_normal"
+        android:gravity="center"
+        android:text="智能制造移动云平台"
+        android:textColor="#fff"
+        android:textSize="15sp"
+        android:visibility="visible"
+        android:layout_alignParentBottom="true"
+       />
+
+</RelativeLayout>

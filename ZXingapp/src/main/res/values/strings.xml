@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">扫描Demo</string>
+    <string name="title_activity_result">ResultActivity</string>
+
+    <string name="action_settings">Settings</string>
+</resources>

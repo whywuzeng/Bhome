@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.zijunlin.Zxing.Demo"
+    >
+
+
+    <uses-permission android:name="android.permission.CAMERA" />
+
+    <uses-feature android:name="android.hardware.camera" />
+    <uses-feature android:name="android.hardware.camera.autofocus" />
+
+    <uses-permission android:name="android.permission.VIBRATE" />
+    <uses-permission android:name="android.permission.FLASHLIGHT" />
+
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+
+    <application
+        android:allowBackup="true"
+        android:supportsRtl="true">
+        <activity
+            android:name="com.zijunlin.Zxing.Demo.CaptureActivity"
+            android:configChanges="orientation|keyboardHidden"
+            android:screenOrientation="landscape"
+            android:theme="@android:style/Theme.NoTitleBar.Fullscreen"
+            android:windowSoftInputMode="stateAlwaysHidden" >
+
+        </activity>
+        <activity
+            android:name="com.zijunlin.Zxing.Demo.ResultActivity"
+            android:screenOrientation="portrait"
+            android:label="@string/title_activity_result" >
+        </activity>
+        <activity android:name="com.zijunlin.Zxing.Demo.view.enterActivity"
+            android:screenOrientation="portrait"
+            >
+        </activity>
+    </application>
+
+</manifest>

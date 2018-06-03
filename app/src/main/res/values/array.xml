@@ -1,0 +1,199 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string-array name="xiangmuleibie">
+        <item>精装</item>
+        <item>毛胚</item>
+    </string-array>
+
+
+    <string-array name="hetongxingzhi">
+        <item>标准</item>
+        <item>非标</item>
+    </string-array>
+
+    <string-array name="textname">
+        <item>序号</item>
+        <item>区域</item>
+        <item>客户名称</item>
+        <item>客户联系方式</item>
+        <item>安装地点</item>
+        <item>产品名称</item>
+        <item>数量</item>
+        <item>毛坯/精装</item>
+        <item>运距</item>
+        <item>下单时间</item>
+        <item>合同编号</item>
+        <item>合同结算价款（万元）</item>
+        <item>产品</item>
+        <item>运费</item>
+        <item>其它费用</item>
+        <item>合计</item>
+        <item>预计开工日期</item>
+        <item>预计完工日期</item>
+        <item>合同工期（天）</item>
+        <item>合同其它要求</item>
+        <item>生产工厂</item>
+        <item>合同状态</item>
+        <item>工程状态</item>
+        <item>应收货款</item>
+        <item>实收货款</item>
+        <item>途远欠款</item>
+        <item>已开票金额</item>
+        <item>结转收入状态</item>
+    </string-array>
+
+    <string-array name="textinput" >
+        <item>1</item>
+        <item>湖南</item>
+        <item>张三</item>
+        <item>18873589029</item>
+        <item>郴州市苏仙区望仙镇和平村</item>
+        <item>美式经典</item>
+        <item>1</item>
+        <item>精装</item>
+        <item>50KM</item>
+        <item>2015-3-1</item>
+        <item>2016-02-HN-0001</item>
+        <item></item>
+        <item>59.80</item>
+        <item>2.00</item>
+        <item>0.00</item>
+        <item>61.80</item>
+        <item>2015-6-30</item>
+        <item>2016-9-20</item>
+        <item>100</item>
+        <item>无</item>
+        <item>长沙</item>
+        <item>下单/已发货/已验收完成</item>
+        <item>基础状态/主体状态/装修状态</item>
+        <item>55.62</item>
+        <item>18.54</item>
+        <item>37.08</item>
+        <item>61.80</item>
+        <item>否</item>
+    </string-array>
+    
+    <string-array name="Coname_context">
+        <item>合同id</item>
+        <item>合同编号</item>
+        <item>合同性质</item>
+        <item>客户名称</item>
+        <item>联系人</item>
+        <item>联系电话</item>
+        <item>运距</item>
+        <item>产品费用</item>
+        <item>运费</item>
+        <item>其他费用</item>
+        <item>费用合计</item>
+        <item>安装地点</item>
+        <item>具体地点</item>
+        <item>省份</item>
+        <item>预计开始时间</item>
+        <item>预计结束时间</item>
+        <item>预计工期</item>
+        <item>合同及其他要求</item>
+        <item>单据状态</item>
+        <item>生产工厂</item>
+        <item>录入人</item>
+        <item>录入时间</item>
+        <item>审核人</item>
+        <item>审核时间</item>
+    </string-array>
+
+    <string-array name="dingdanDetail">
+        <item>订单编号</item>
+        <item>订单类型</item>
+        <item>客户名称</item>
+        <item>联系人</item>
+        <item>联系电话</item>
+        <item>安装地点</item>
+        <item>具体地点</item>
+        <item>省份</item>
+        <item>预计吊装开始日</item>
+        <item>预计吊装结束日</item>
+        <item>预计工期</item>
+        <item>合同及其他要求</item>
+        <item>订单状态</item>
+        <item>业务状态</item>
+        <item>管理单元名称</item>
+    </string-array>
+
+    <string-array name="colortext">
+        <item>工地管理</item>
+        <item>运输管理</item>
+        <item>生产管理</item>
+        <item>质检管理</item>
+        <item>库存管理</item>
+        <item>采购管理</item>
+        <!--<item>设备管理</item>-->
+        <!--<item>运营管理</item>-->
+        <!--<item>生产执行</item>-->
+  <!--      <item>资产分析</item>
+        <item>考核分析</item>
+        <item>工作汇报</item>
+        <item>我的文件</item>-->
+        <item></item>
+    </string-array>
+
+    <string-array name="dingdanfahuo">
+        <item>待发货</item>
+        <item>已发货</item>
+    </string-array>
+
+    <string-array name="dingdanyanshou">
+        <item>待验收</item>
+        <item>已验收</item>
+    </string-array>
+
+    <string-array name="jichuyanshouqueren">
+        <item>待确认</item>
+        <item>已确认</item>
+    </string-array>
+
+    <string-array name="yanshoushengqing">
+        <item>待申请</item>
+        <item>已申请</item>
+    </string-array>
+
+    <string-array name="dingdananzhuang">
+        <item>安装中</item>
+        <item>安装完成</item>
+    </string-array>
+
+    <string-array name="yaoshishangjiao">
+        <item>钥匙未上交</item>
+        <item>钥匙上交完成</item>
+    </string-array>
+    
+    <string-array name="dingdanzhuangtaigenghuanfanhuizhi">
+        <item>失败</item>
+        <item>成功</item>
+        <item>重复操作</item>
+        <item>无权限</item>
+        <item>KEY不存在</item>
+        <item>订单ID不符合规范!</item>
+        <item>状态ID不符合规范!</item>
+        <item>结算期间被锁定</item>
+    </string-array>
+
+    <string-array name="camera_gallery">
+        <item>相机</item>
+        <item>图片</item>
+    </string-array>
+
+    <string-array name="site_labels">
+        <item>吊装需求</item>
+        <item>收货确认</item>
+        <item>退货需求</item>
+        <item>补货需求</item>
+    </string-array>
+
+    <string-array name="transportation_labels">
+        <item>车次管理</item>
+        <item>装车订单</item>
+        <item>运输发货</item>
+        <item>构件退货</item>
+        <item>货柜回收</item>
+    </string-array>
+</resources>

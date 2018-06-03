@@ -1,0 +1,238 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:orientation="vertical"
+              android:layout_width="match_parent"
+              android:id="@+id/main_layout_ll"
+              android:layout_height="wrap_content">
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:background="@drawable/selector_layout_common_radius_v8_fang_nostroke"
+        android:paddingLeft="30dp"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:paddingLeft="1dp"
+            android:visibility="gone"
+            android:src="@drawable/comtask_cotent_item"
+            android:paddingTop="8dp"
+            android:paddingBottom="8dp"
+            android:foregroundGravity="center_vertical"
+            android:layout_height="wrap_content"/>
+
+        <TextView
+            android:layout_marginLeft="1dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/tv_task_done1"
+            android:padding="1dp"
+            android:paddingLeft="1dp"
+            android:paddingRight="1dp"
+            android:textColor="@color/common_color_text_30"
+            android:textSize="12sp"
+            android:text="规格型号"/>
+
+        <TextView
+            android:id="@+id/tv_task_done"
+            android:layout_weight="4"
+            android:layout_width="0dp"
+            android:paddingTop="10dp"
+            android:paddingBottom="10dp"
+            android:paddingLeft="5dp"
+            android:paddingRight="1dp"
+            android:textSize="12sp"
+            android:layout_marginLeft="1dp"
+            style="@style/ComTaskContentItemRight"
+            android:text="30"/>
+
+
+        <ImageView
+            android:id="@+id/iv_right_arrow"
+            android:layout_width="wrap_content"
+            android:src="@drawable/litte_grey_right_arrow"
+            android:paddingTop="8dp"
+            android:paddingBottom="8dp"
+            android:layout_marginRight="30dp"
+            android:foregroundGravity="center_vertical"
+            android:layout_height="wrap_content"
+            />
+
+
+    </LinearLayout>
+
+
+    <View
+        style="@style/DivideLine1dpGap"
+        android:layerType="software"
+        android:layout_height="2dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="20dp"
+        />
+
+
+</LinearLayout>
+
+
+
+<!--
+<LinearLayout
+android:orientation="horizontal"
+android:layout_width="match_parent"
+android:background="@color/white"
+android:layout_height="wrap_content">
+
+<TextView
+    android:layout_marginLeft="1dp"
+    android:layout_weight="2"
+    android:layout_width="0dp"
+    android:padding="1dp"
+    style="@style/ComTaskContentItemTitle"
+    android:text="@string/comtasktabletoptitleprojectName"/>
+
+<TextView
+    android:layout_weight="3"
+    android:layout_width="0dp"
+    android:layout_marginLeft="40dp"
+    style="@style/ComTaskContentItemRight"
+    android:text="30"/>
+
+<ImageView
+    android:layout_width="0dp"
+    android:layout_weight="3"
+    android:paddingLeft="50dp"
+    android:src="@drawable/litte_grey_right_arrow"
+    android:paddingTop="10dp"
+    android:paddingBottom="10dp"
+    android:foregroundGravity="center_vertical"
+    android:layout_height="wrap_content"
+    />
+
+</LinearLayout>
+
+<LinearLayout
+android:orientation="horizontal"
+android:layout_width="match_parent"
+android:background="@color/white"
+android:layout_height="wrap_content">
+
+<TextView
+    android:layout_marginLeft="1dp"
+    android:layout_weight="2"
+    android:layout_width="0dp"
+    android:padding="1dp"
+    style="@style/ComTaskContentItemTitle"
+    android:text="@string/comtasktabletoptitledong"/>
+
+<TextView
+    android:layout_weight="3"
+    android:layout_width="0dp"
+    android:layout_marginLeft="40dp"
+    style="@style/ComTaskContentItemRight"
+    android:text="30"/>
+
+<ImageView
+    android:layout_width="0dp"
+    android:layout_weight="3"
+    android:paddingLeft="50dp"
+    android:src="@drawable/litte_grey_right_arrow"
+    android:paddingTop="10dp"
+    android:paddingBottom="10dp"
+    android:foregroundGravity="center_vertical"
+    android:layout_height="wrap_content"
+    />
+
+</LinearLayout>
+
+<LinearLayout
+android:orientation="horizontal"
+android:layout_width="match_parent"
+android:background="@color/white"
+android:layout_height="wrap_content">
+
+<TextView
+    android:layout_marginLeft="1dp"
+    android:layout_weight="2"
+    android:layout_width="0dp"
+    android:padding="1dp"
+    style="@style/ComTaskContentItemTitle"
+    android:text="@string/comtasktabletoptitlerequiredate"/>
+
+<TextView
+    android:layout_weight="3"
+    android:layout_width="0dp"
+    android:layout_marginLeft="40dp"
+    style="@style/ComTaskContentItemRight"
+    android:text="30"/>
+
+<ImageView
+    android:layout_width="0dp"
+    android:layout_weight="3"
+    android:paddingLeft="50dp"
+    android:src="@drawable/litte_grey_right_arrow"
+    android:paddingTop="10dp"
+    android:paddingBottom="10dp"
+    android:foregroundGravity="center_vertical"
+    android:layout_height="wrap_content"
+    />
+
+</LinearLayout>
+
+<LinearLayout
+android:orientation="horizontal"
+android:layout_width="match_parent"
+android:background="@color/white"
+android:layout_height="wrap_content">
+
+<TextView
+    android:layout_marginLeft="1dp"
+    android:layout_weight="2"
+    android:layout_width="0dp"
+    android:padding="1dp"
+    style="@style/ComTaskContentItemTitle"
+    android:text="@string/comtasktabletoptitleceng"/>
+
+<TextView
+    android:layout_weight="3"
+    android:layout_width="0dp"
+    android:layout_marginLeft="40dp"
+    style="@style/ComTaskContentItemRight"
+    android:text="30"/>
+
+<ImageView
+    android:layout_width="0dp"
+    android:layout_weight="3"
+    android:paddingLeft="50dp"
+    android:src="@drawable/litte_grey_right_arrow"
+    android:paddingTop="10dp"
+    android:paddingBottom="10dp"
+    android:foregroundGravity="center_vertical"
+    android:layout_height="wrap_content"
+    />
+
+</LinearLayout>
+
+<LinearLayout
+android:orientation="horizontal"
+android:background="@color/white"
+android:layout_width="match_parent"
+android:layout_height="wrap_content">
+
+<TextView
+    android:layout_marginLeft="1dp"
+    android:id="@+id/tv_task_done1"
+    android:layout_weight="3"
+    android:padding="1dp"
+    style="@style/ComTaskContentItemTitle"
+    android:text="@string/comtasktabletoptitlebeizhu"/>
+
+<TextView
+    android:layout_marginLeft="30dp"
+    android:id="@+id/tv_task_done"
+    android:layout_weight="1"
+    style="@style/ComTaskContentItemRight"
+    android:text="30"/>
+
+</LinearLayout>-->

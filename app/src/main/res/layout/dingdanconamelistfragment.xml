@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.handmark.pulltorefresh.library.PullToRefreshScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+        <RelativeLayout
+            android:layout_width="fill_parent"
+            android:background="@drawable/listview_shape_item_bg"
+            android:layout_height="wrap_content">
+
+            <com.system.bhouse.ui.MListView
+                android:id="@+id/coname_list_content"
+                android:layout_width="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:layout_height="460dp">
+            </com.system.bhouse.ui.MListView>
+        </RelativeLayout>
+
+        <LinearLayout
+            android:background="@color/material_grey_700"
+            android:layout_width="match_parent"
+            android:orientation="vertical"
+            android:padding="3dp"
+            android:layout_height="wrap_content"
+            >
+
+
+            <ImageView
+                android:layout_margin="6dp"
+                android:id="@+id/iv_uploadpic"
+                android:layout_gravity="center_horizontal"
+                android:visibility="gone"
+                android:src="@mipmap/ic_fail"
+                android:scaleType="centerCrop"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+
+            <ImageView
+                android:layout_margin="6dp"
+                android:id="@+id/iv_uploadpic1"
+                android:layout_gravity="center_horizontal"
+                android:visibility="gone"
+                android:scaleType="centerCrop"
+                android:src="@mipmap/ic_fail"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+
+            <ImageView
+                android:layout_margin="6dp"
+                android:id="@+id/iv_uploadpic2"
+                android:layout_gravity="center_horizontal"
+                android:visibility="gone"
+                android:scaleType="centerCrop"
+                android:src="@mipmap/ic_fail"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+
+        </LinearLayout>
+
+        <RelativeLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content">
+
+            <com.system.bhouse.ui.MListView
+                android:id="@+id/dingdan_list_content"
+                android:layout_width="wrap_content"
+                android:divider="@null"
+                android:layout_height="460dp">
+            </com.system.bhouse.ui.MListView>
+        </RelativeLayout>
+
+        <com.system.bhouse.ui.ThreePointLoadingView
+            xmlns:app="http://schemas.android.com/apk/res-auto"
+            android:id="@+id/tpl_view"
+            app:pointColor="@color/material_indigo_a400"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:visibility="invisible"/>
+
+    </LinearLayout>
+
+
+</com.handmark.pulltorefresh.library.PullToRefreshScrollView>
+
+
+<!--
+<LinearLayout
+android:orientation="horizontal"
+android:id="@+id/ll_top"
+android:background="@color/material_white95"
+android:layout_width="match_parent"
+android:padding="1dp"
+android:layout_height="wrap_content">
+<Button
+    android:id="@+id/btn_uploadpic"
+    android:text="@string/shangchuan"
+    android:background="@drawable/btn_select_shangchun"
+    android:layout_weight="1"
+    android:layout_width="0dp"
+    android:layout_height="50dp"/>
+
+<Button
+    android:id="@+id/btn_switchstatus"
+    android:layout_marginLeft="2dp"
+    android:text="@string/dingdangenghuanzhuangtai"
+    android:background="@drawable/btn_select_shangchun"
+    android:layout_weight="1"
+    android:layout_width="0dp"
+    android:layout_height="50dp"/>
+
+<Button
+    android:background="@color/material_white95"
+    android:visibility="invisible"
+    android:layout_weight="1"
+    android:layout_width="0dp"
+    android:layout_height="50dp"/>
+
+</LinearLayout>-->

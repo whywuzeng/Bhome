@@ -1,0 +1,35 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+      xmlns:app="http://schemas.android.com/apk/res-auto"
+      xmlns:tools="http://schemas.android.com/tools"
+      tools:context=".MainActivity">
+
+
+    <item
+        android:id="@+id/action_capture"
+        android:title="@string/menu_capture"
+        android:orderInCategory="100"
+        android:icon="@drawable/organization_menu"
+        app:showAsAction="always"/>
+
+
+    <!--<item-->
+        <!--android:icon="@drawable/jiantou"-->
+        <!--android:id="@+id/action_text"-->
+        <!--android:orderInCategory="100"-->
+        <!--android:checked="false"-->
+        <!--android:enabled="false"-->
+        <!--android:titleCondensed="这个事"-->
+        <!--app:showAsAction="never"/>-->
+
+    <!--<item-->
+        <!--android:id="@+id/action_UserManagement"-->
+        <!--android:title="@string/action_yonghuguanli"-->
+        <!--android:orderInCategory="100"-->
+        <!--app:showAsAction="never"/>-->
+    <!--<item-->
+        <!--android:id="@+id/action_zhuxiao"-->
+        <!--android:title="@string/action_zhuxiao"-->
+        <!--android:orderInCategory="100"-->
+        <!--app:showAsAction="never"/>-->
+
+</menu>

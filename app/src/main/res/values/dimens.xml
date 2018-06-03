@@ -1,0 +1,79 @@
+<resources>
+    <!-- Default screen margins, per the Android Design guidelines. -->
+    <dimen name="activity_horizontal_margin">16dp</dimen>
+    <dimen name="activity_vertical_margin">16dp</dimen>
+
+    <!-- Default screen margins, per the Android Design guidelines. -->
+    <!-- 公用字体大小 -->
+    <dimen name="common_text_size">13sp</dimen>
+    <dimen name="common_lage_text_size">19sp</dimen>
+
+    <!-- 主页 -->
+    <dimen name="fragment_home_gallery_height">238px</dimen>
+
+    <!-- 促销1样式高度 -->
+
+    <!-- 智慧管家 -->
+
+    <!--  -->
+
+    <!--  -->
+    <dimen name="list_padding">10dp</dimen>
+
+    <dimen name="search_item_height_1">38dip</dimen>
+
+    <dimen name="divider_height">2dp</dimen>
+    <dimen name="leftpaint_width">3dp</dimen>
+
+    <dimen name="toast_y">64dp</dimen>
+
+    <dimen name="my_pager_sliding_tab_strip_first_padding_left">10dp</dimen>
+    <dimen name="my_pager_sliding_tab_strip">10dp</dimen>
+
+    <dimen name="padding_15">15dp</dimen>
+
+    <dimen name="task_list_item_icon">28dp</dimen>
+    <dimen name="task_add_user_icon_width">28dp</dimen>
+
+    <dimen name="divide_section_15">15dp</dimen>
+
+    <dimen name="project_icon_circle">2dp</dimen>
+    <dimen name="project_icon_edge_width">0.5dp</dimen>
+
+    <dimen name="comment_image_width">32dp</dimen>
+    <dimen name="comment_image_margin">8dp</dimen>
+
+    <dimen name="actionBarSize">49dip</dimen>
+
+    <dimen name="divide_height">0.5dp</dimen>
+    <dimen name="emoji_normal">24dp</dimen>
+    <dimen name="emoji_monkey">24dp</dimen>
+
+    <dimen name="point_width">5dp</dimen>
+    <dimen name="point_margin">8dp</dimen>
+
+    <dimen name="message_time_height">33dp</dimen>
+
+    <dimen name="image_single_width">200dp</dimen>
+    <dimen name="image_single_min_width">80dp</dimen>
+
+    <dimen name="image_single_micro_width">60dp</dimen>
+    <dimen name="image_single_min_size">150dp</dimen>
+
+    <dimen name="common_font_fs4">15.0sp</dimen>
+    <dimen name="common_font_fs2">17.0sp</dimen>
+    <dimen name="common_button_height">44.0dip</dimen>
+    <dimen name="common_font_fs8">11.0sp</dimen>
+    <dimen name="common_font_fs6">13.0sp</dimen>
+    <dimen name="search_box_cursor_width">2.0dip</dimen>
+    <dimen name="common_margin_dz2">12.0dip</dimen>
+
+    <dimen name="common_button_task_height">30.0dip</dimen>
+
+    <dimen name="common_bg_frame_line">0.5dip</dimen>
+    <dimen name="message_text_margin_bottom">5dp</dimen>
+    <!--详细的图片的高度-->
+    <dimen name="app_bar_height">250dp</dimen>
+    <dimen name="a15x">15dp</dimen>
+
+</resources>

@@ -1,0 +1,174 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:card_view="http://schemas.android.com/apk/res-auto"
+              android:orientation="vertical"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content">
+
+
+    <android.support.v7.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_margin="14dp"
+        card_view:cardBackgroundColor="@color/white"
+        card_view:cardCornerRadius="10dp"
+        card_view:cardElevation="5dp"
+        card_view:cardMaxElevation="3dp"
+        card_view:contentPadding="8dp">
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+        <RelativeLayout style="@style/button_wrapper_style">
+
+            <TextView
+                android:id="@+id/tv_jihuakaishi1"
+                android:textSize="13sp"
+                android:text="物料编码:"
+                android:layout_centerVertical="true"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+
+            <TextView
+                android:layout_marginLeft="5dp"
+                android:layout_toRightOf="@+id/tv_jihuakaishi1"
+                android:drawablePadding="5dp"
+                android:layout_marginRight="10dp"
+                android:gravity="center_vertical"
+                android:clickable="false"
+                android:focusable="false"
+                android:paddingLeft="10dp"
+                android:text=""
+                android:paddingRight="10dp"
+                android:id="@+id/detail_item_danCode"
+                android:background="#d5e1ef"
+                android:textSize="13sp"
+                android:layout_width="match_parent"
+                android:layout_height="30dp"/>
+
+        </RelativeLayout>
+
+        <RelativeLayout style="@style/button_wrapper_style">
+
+            <TextView
+                android:id="@+id/tv_jihuakaishi2"
+                android:textSize="13sp"
+                android:text="材料名称:"
+                android:layout_centerVertical="true"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+
+            <TextView
+                android:layout_marginLeft="5dp"
+                android:layout_toRightOf="@+id/tv_jihuakaishi2"
+                android:drawablePadding="5dp"
+                android:layout_marginRight="10dp"
+                android:gravity="center_vertical"
+                android:clickable="false"
+                android:focusable="false"
+                android:paddingLeft="10dp"
+                android:text=""
+                android:paddingRight="10dp"
+                android:id="@+id/detail_item_cailiao"
+                android:background="#d5e1ef"
+                android:textSize="13sp"
+                android:layout_width="match_parent"
+                android:layout_height="30dp"/>
+
+        </RelativeLayout>
+
+        <RelativeLayout style="@style/button_wrapper_style">
+
+            <TextView
+                android:id="@+id/tv_jihuakaishi3"
+                android:textSize="13sp"
+                android:text="规格型号:"
+                android:layout_centerVertical="true"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+
+            <TextView
+                android:layout_marginLeft="5dp"
+                android:layout_toRightOf="@+id/tv_jihuakaishi3"
+                android:drawablePadding="5dp"
+                android:layout_marginRight="10dp"
+                android:gravity="center_vertical"
+                android:clickable="false"
+                android:focusable="false"
+                android:paddingLeft="10dp"
+                android:text=""
+                android:paddingRight="10dp"
+                android:id="@+id/detail_item_guige"
+                android:background="#d5e1ef"
+                android:textSize="13sp"
+                android:layout_width="match_parent"
+                android:layout_height="30dp"/>
+
+        </RelativeLayout>
+
+        <RelativeLayout style="@style/button_wrapper_style">
+
+            <TextView
+                android:id="@+id/tv_jihuakaishi4"
+                android:textSize="13sp"
+                android:text="计量单位:"
+                android:layout_centerVertical="true"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+
+            <TextView
+                android:layout_marginLeft="5dp"
+                android:layout_toRightOf="@+id/tv_jihuakaishi4"
+                android:drawablePadding="5dp"
+                android:layout_marginRight="10dp"
+                android:gravity="center_vertical"
+                android:clickable="false"
+                android:focusable="false"
+                android:paddingLeft="10dp"
+                android:text=""
+                android:paddingRight="10dp"
+                android:id="@+id/detail_item_jiliang"
+                android:background="#d5e1ef"
+                android:textSize="13sp"
+                android:layout_width="match_parent"
+                android:layout_height="30dp"/>
+
+        </RelativeLayout>
+
+        <RelativeLayout style="@style/button_wrapper_style">
+
+            <TextView
+                android:id="@+id/tv_jihuakaishi5"
+                android:textSize="13sp"
+                android:text="数量:"
+                android:layout_centerVertical="true"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+
+            <TextView
+                android:layout_marginLeft="5dp"
+                android:layout_toRightOf="@+id/tv_jihuakaishi5"
+                android:drawablePadding="5dp"
+                android:layout_marginRight="10dp"
+                android:gravity="center_vertical"
+                android:clickable="false"
+                android:focusable="false"
+                android:paddingLeft="10dp"
+                android:text=""
+                android:paddingRight="10dp"
+                android:id="@+id/detail_item_sum"
+                android:background="#d5e1ef"
+                android:textSize="13sp"
+                android:layout_width="match_parent"
+                android:layout_height="30dp"/>
+
+        </RelativeLayout>
+
+        </LinearLayout>
+
+
+    </android.support.v7.widget.CardView>
+
+</LinearLayout>

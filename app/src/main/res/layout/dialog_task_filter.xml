@@ -1,0 +1,190 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:clickable="true"
+    android:orientation="vertical">
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_gravity="right"
+        android:background="@color/white">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_gravity="bottom"
+            android:orientation="vertical"
+            android:layout_height="wrap_content">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom">
+
+            <View
+                style="@style/DivideLine"/>
+
+            <TextView
+                android:id="@+id/tv_sure"
+                style="@style/TextTitle"
+                android:layout_width="match_parent"
+                android:layout_centerInParent="true"
+                android:gravity="center"
+                android:padding="15dp"
+                android:text="@string/sure"
+                android:textColor="@color/font_2"/>
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom">
+
+            <View
+                style="@style/DivideLine"/>
+
+            <TextView
+                android:id="@+id/tv_reset"
+                style="@style/TextTitle"
+                android:layout_width="match_parent"
+                android:layout_centerInParent="true"
+                android:gravity="center"
+                android:visibility="gone"
+                android:padding="15dp"
+                android:text="@string/reset"
+                android:textColor="@color/font_2"/>
+
+        </RelativeLayout>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginBottom="102dp"
+            android:orientation="vertical">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/color_f8f8f8">
+
+                <TextView
+                    style="@style/TextTitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:padding="15dp"
+                    android:tag="name"
+                    android:text="@string/title_activity_filter_tasks"
+                    android:textColor="@color/font_2"
+                    android:textSize="18sp"/>
+
+
+            </RelativeLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="2dp"
+                android:layout_alignParentBottom="true"
+                android:background="@drawable/actionbar_shadow"/>
+
+            <ScrollView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
+
+                    <com.flyco.roundview.RoundRelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp"
+                        android:layout_marginLeft="20dp"
+                        android:layout_marginRight="20dp">
+
+                        <EditText
+                            android:id="@+id/et_search"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_centerInParent="true"
+                            android:background="@null"
+                            android:drawableLeft="@drawable/ic_search_grey"
+                            android:drawablePadding="10dp"
+                            android:gravity="center_vertical|left"
+                            android:hint="查找订单编号 "
+                            android:imeOptions="actionSearch"
+                            android:paddingLeft="5dp"
+                            android:paddingRight="5dp"
+                            android:singleLine="true"
+                            android:textColor="@color/font_2"
+                            android:textColorHint="@color/font_9"
+                            android:textSize="15sp"/>
+
+                    </com.flyco.roundview.RoundRelativeLayout>
+
+                    <View style="@style/DivideLine"/>
+
+                <LinearLayout
+                    android:id="@+id/ll_status"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
+
+                    <TextView
+                        style="@style/TextViewFilterTag"
+
+                        android:text="@string/title_activity_filter_section_title"/>
+                    <View
+                        style="@style/DivideLine"
+                        android:layout_marginLeft="20dp"
+                        />
+                    <TextView
+                        android:layout_marginLeft="40dp"
+                        android:id="@+id/tv_task_doing"
+                        style="@style/TextViewFilterTag"
+                        android:drawableRight="@drawable/ic_task_status_list_check"
+                        android:text="@string/title_activity_filter_check"/>
+                    <View
+                        style="@style/DivideLine"
+                        android:layout_marginLeft="20dp"
+                        />
+                    <TextView
+                        android:layout_marginLeft="40dp"
+                        android:id="@+id/tv_task_done"
+                        style="@style/TextViewFilterTag"
+                        android:text="@string/title_activity_filter_all_project"/>
+
+                </LinearLayout>
+
+                    <com.system.bhouse.bhouse.task.view.TaskAttrItem
+                        android:id="@+id/layoutBeginline"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:taskIcon="@drawable/ic_task_deadline"
+                        app:taskText1="记录数"
+                        app:taskText2="50" />
+
+
+
+                    <LinearLayout
+                        android:id="@+id/ll_labels"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                    </LinearLayout>
+                </LinearLayout>
+            </ScrollView>
+        </LinearLayout>
+
+
+    </FrameLayout>
+
+
+</LinearLayout>

@@ -1,0 +1,380 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:app="http://schemas.android.com/apk/res-auto"
+              android:orientation="horizontal"
+              android:layout_width="match_parent"
+              android:paddingBottom="15dp"
+              android:layout_height="wrap_content">
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:orientation="vertical"
+        android:layout_marginLeft="20dp"
+        android:paddingTop="30dp"
+        android:layout_height="match_parent">
+
+        <TextView
+            android:id="@+id/tvMonthDay"
+            android:textSize="12sp"
+            android:textStyle="bold"
+            android:text="02-23"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+        <TextView
+            android:id="@+id/tvWeek"
+            android:textSize="12sp"
+            android:textStyle="bold"
+            android:text="周五"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+    </LinearLayout>
+
+    <FrameLayout
+        android:layout_width="wrap_content"
+        android:layout_marginLeft="14dp"
+        android:layout_height="match_parent">
+
+
+        <View
+            android:background="@color/common_color_box_stroke_bg"
+            android:layout_width="1dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_height="match_parent"/>
+
+        <ImageView
+            android:id="@+id/timeClock"
+            android:src="@drawable/timeclock"
+            android:layout_width="wrap_content"
+            android:layout_marginTop="38dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_height="wrap_content"/>
+    </FrameLayout>
+
+    <LinearLayout
+        android:id="@+id/main_layout"
+        android:layout_width="253dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="7dp"
+        android:paddingTop="8dp"
+        android:paddingBottom="8dp"
+        android:orientation="vertical"
+        android:gravity="center_vertical"
+        android:layout_marginRight="15dp"
+        android:background="@drawable/selector_layout_common_radius_v8"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:layout_marginRight="5dp"
+            android:layout_marginLeft="10dp"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:layout_width="match_parent"
+            android:layout_height="18dp">
+
+            <TextView
+                android:id="@+id/text_tableId"
+                android:layout_width="0dp"
+                android:layout_weight="1.3"
+                android:paddingLeft="3dp"
+                android:paddingRight="3dp"
+                android:text="单据编号:"
+                android:textSize="14sp"
+                android:textColor="@color/common_color_text_30"
+                android:layout_height="wrap_content"/>
+
+            <TextView
+                android:id="@+id/text_tableId_content"
+                android:layout_width="0dp"
+                android:layout_weight="3.2"
+                android:paddingLeft="3dp"
+                android:paddingRight="3dp"
+                android:text="DZXQ-2-223234-0001"
+                android:textSize="14sp"
+                android:textColor="@color/common_color_text_300"
+                android:layout_height="wrap_content"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_marginRight="5dp"
+            android:layout_marginLeft="10dp"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:layout_width="match_parent"
+            android:layout_height="18dp">
+
+            <TextView
+                android:id="@+id/text_projectName"
+                android:layout_width="0dp"
+                android:layout_weight="1.3"
+                android:paddingLeft="3dp"
+                android:paddingRight="3dp"
+                android:text="项目名称:"
+                android:textSize="14sp"
+                android:textColor="@color/common_color_text_30"
+                android:layout_height="wrap_content"/>
+
+            <TextView
+                android:id="@+id/text_projectName_content"
+                android:layout_width="0dp"
+                android:layout_weight="3.2"
+                android:paddingLeft="3dp"
+                android:paddingRight="3dp"
+                android:text="麓谷一期项目"
+                android:textSize="14sp"
+                android:textColor="@color/common_color_text_300"
+                android:layout_height="wrap_content"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_marginRight="5dp"
+            android:layout_marginLeft="10dp"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:layout_width="match_parent"
+            android:layout_height="18dp">
+
+            <TextView
+                android:id="@+id/text_dong"
+                android:layout_width="0dp"
+                android:layout_weight="1.3"
+                android:paddingLeft="3dp"
+                android:paddingRight="3dp"
+                android:text="栋:"
+                android:textSize="14sp"
+                android:textColor="@color/common_color_text_30"
+                android:layout_height="wrap_content"/>
+
+            <TextView
+                android:id="@+id/text_dong_content"
+                android:layout_width="0dp"
+                android:layout_weight="3.2"
+                android:paddingLeft="3dp"
+                android:paddingRight="3dp"
+                android:text="DZXQ-2-223234-0001"
+                android:textSize="14sp"
+                android:textColor="@color/common_color_text_300"
+                android:layout_height="wrap_content"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/ll_bottom_6"
+            android:layout_marginRight="5dp"
+            android:layout_marginLeft="10dp"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:layout_width="match_parent"
+            android:layout_height="18dp">
+
+            <TextView
+                android:id="@+id/text_ceng"
+                android:layout_width="0dp"
+                android:layout_weight="1.3"
+                android:paddingLeft="3dp"
+                android:paddingRight="3dp"
+                android:text="层:"
+                android:textSize="14sp"
+                android:textColor="@color/common_color_text_30"
+                android:layout_height="wrap_content"/>
+
+            <TextView
+                android:id="@+id/text_ceng_content"
+                android:layout_width="0dp"
+                android:layout_weight="3.2"
+                android:paddingLeft="3dp"
+                android:paddingRight="3dp"
+                android:text="DZXQ-2-223234-0001"
+                android:textSize="14sp"
+                android:textColor="@color/common_color_text_300"
+                android:layout_height="wrap_content"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/ll_bottom_5"
+            android:layout_marginRight="5dp"
+            android:layout_marginLeft="10dp"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:layout_width="match_parent"
+            android:layout_height="18dp">
+
+            <TextView
+                android:id="@+id/text_reqiuerDate"
+                android:layout_width="0dp"
+                android:layout_weight="1.3"
+                android:paddingLeft="3dp"
+                android:paddingRight="3dp"
+                android:text="需求日期:"
+                android:textSize="14sp"
+                android:textColor="@color/common_color_text_30"
+                android:layout_height="wrap_content"/>
+
+            <TextView
+                android:id="@+id/text_reqiuerDate_content"
+                android:layout_width="0dp"
+                android:layout_weight="3.2"
+                android:paddingLeft="3dp"
+                android:paddingRight="3dp"
+                android:text="DZXQ-2-223234-0001"
+                android:textSize="14sp"
+                android:textColor="@color/common_color_text_300"
+                android:layout_height="wrap_content"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/ll_bottom_4"
+            android:layout_marginRight="5dp"
+            android:layout_marginLeft="10dp"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:layout_width="match_parent"
+            android:layout_height="18dp">
+
+            <TextView
+                android:id="@+id/text_description"
+                android:layout_width="0dp"
+                android:layout_weight="1.3"
+                android:paddingLeft="3dp"
+                android:paddingRight="3dp"
+                android:text="描述:"
+                android:textSize="14sp"
+                android:textColor="@color/common_color_text_30"
+                android:layout_height="wrap_content"/>
+
+            <TextView
+                android:id="@+id/text_description_content"
+                android:layout_width="0dp"
+                android:layout_weight="3.2"
+                android:paddingLeft="3dp"
+                android:paddingRight="3dp"
+                android:text="DZXQ-2-223234-0001"
+                android:textSize="14sp"
+                android:textColor="@color/common_color_text_300"
+                android:layout_height="wrap_content"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/ll_bottom_3"
+            android:layout_marginRight="5dp"
+            android:layout_marginLeft="10dp"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:layout_width="match_parent"
+            android:layout_height="18dp">
+
+            <TextView
+                android:id="@+id/text_status"
+                android:layout_width="0dp"
+                android:layout_weight="1.3"
+                android:paddingLeft="3dp"
+                android:paddingRight="3dp"
+                android:text="状态:"
+                android:textSize="14sp"
+                android:textColor="@color/common_color_text_30"
+                android:layout_height="wrap_content"/>
+
+            <TextView
+                android:id="@+id/text_status_content"
+                android:layout_width="0dp"
+                android:layout_weight="3.2"
+                android:paddingLeft="3dp"
+                android:paddingRight="3dp"
+                android:text="DZXQ-2-223234-0001"
+                android:textSize="14sp"
+                android:textColor="@color/common_color_text_300"
+                android:layout_height="wrap_content"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/ll_bottom_2"
+            android:layout_marginRight="5dp"
+            android:layout_marginLeft="10dp"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:layout_width="match_parent"
+            android:layout_height="18dp"
+            >
+
+            <TextView
+                android:id="@+id/text_entryPeople"
+                android:layout_width="0dp"
+                android:layout_weight="1.3"
+                android:paddingLeft="3dp"
+                android:paddingRight="3dp"
+                android:text="录入人:"
+                android:textSize="14sp"
+                android:textColor="@color/common_color_text_30"
+                android:layout_height="wrap_content"/>
+
+            <TextView
+                android:id="@+id/text_entryPeople_content"
+                android:layout_width="0dp"
+                android:layout_weight="3.2"
+                android:paddingLeft="3dp"
+                android:paddingRight="3dp"
+                android:text="DZXQ-2-223234-0001"
+                android:textSize="14sp"
+                android:textColor="@color/common_color_text_300"
+                android:layout_height="wrap_content"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/ll_bottom_1"
+            android:layout_marginRight="5dp"
+            android:layout_marginLeft="10dp"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:layout_width="match_parent"
+            android:layout_height="18dp"
+            >
+
+            <TextView
+                android:id="@+id/text_entryTime"
+                android:layout_width="0dp"
+                android:layout_weight="1.3"
+                android:paddingLeft="3dp"
+                android:paddingRight="3dp"
+                android:text="录入时间:"
+                android:textSize="14sp"
+                android:textColor="@color/common_color_text_30"
+                android:layout_height="wrap_content"/>
+
+            <TextView
+                android:id="@+id/text_entryTime_content"
+                android:layout_width="0dp"
+                android:layout_weight="3.2"
+                android:paddingLeft="3dp"
+                android:paddingRight="3dp"
+                android:text="DZXQ-2-223234-0001"
+                android:textSize="14sp"
+                android:textColor="@color/common_color_text_300"
+                android:layout_height="wrap_content"/>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</LinearLayout>
+
+
+<!--
+<com.system.bhouse.bhouse.CommonTask.component.MultipleTextViewGroup
+android:id="@+id/main_rl"
+android:layout_width="wrap_content"
+android:layout_height="wrap_content"
+app:textSize="14sp"
+app:textWordMargin="2dp"
+app:textColor="@color/common_color_text_300"
+app:paddingLeft="5dp"
+app:paddingRight="5dp"
+app:textPaddingBottom="1dp"
+app:overspread="false" />-->

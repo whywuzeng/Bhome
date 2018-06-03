@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:orientation="vertical"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent">
+
+    <include layout="@layout/toolbar"/>
+
+    <LinearLayout
+        android:gravity="center_vertical"
+        android:layout_width="match_parent"
+        android:layout_height="75dp">
+
+        <RelativeLayout
+            android:layout_width="200dp"
+            style="@style/GreyBoxButton"
+            android:layout_marginLeft="17dp"
+            android:focusable="true"
+            android:focusableInTouchMode="true"
+            android:layout_height="wrap_content">
+
+            <Spinner
+                android:id="@+id/spDwon"
+                android:background="@drawable/rightbackground"
+                android:layout_alignParentLeft="true"
+                android:overlapAnchor="false"
+                android:layout_width="60dp"
+                android:spinnerMode="dropdown"
+                android:textSize="15sp"
+                android:textColor="@color/common_color_text_300"
+                android:gravity="center"
+                android:layout_height="37dp"
+                android:clickable="true"
+
+                />
+
+
+            <EditText
+                android:layout_toRightOf="@id/spDwon"
+                android:id="@+id/et_query"
+                android:textSize="12sp"
+                android:background="@drawable/bg_edittext_selector"
+                android:textColor="@color/common_color_text_300"
+                android:textColorHint="@color/common_color_text_10"
+                android:hint="@string/qingshuru"
+                android:paddingLeft="3dp"
+                android:layout_width="80dp"
+                android:layout_height="37dp"/>
+
+            <TextView
+                android:id="@+id/tv_Empty"
+                android:background="@drawable/leftbackground"
+                android:layout_alignParentRight="true"
+                android:textSize="15sp"
+                android:gravity="center"
+                android:clickable="true"
+                android:textColor="@color/textview_disable_style"
+                android:text="清空"
+                android:layout_width="60dp"
+                android:layout_height="37dp"/>
+
+        </RelativeLayout>
+
+    </LinearLayout>
+
+    <View
+        style="@style/DivideLine1dp"
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+       />
+
+        <com.system.bhouse.bhouse.CommonTask.Widget.LRecyclerView
+            android:id="@+id/listView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:scrollbars="none"/>
+
+</LinearLayout>
+
+
+
+<!--
+<TextView
+android:id="@+id/tv_ret"
+android:background="@drawable/rightbackground"
+android:layout_alignParentLeft="true"
+android:layout_width="60dp"
+android:clickable="true"
+android:textSize="15sp"
+android:gravity="center"
+android:textColor="@color/common_color_text_300"
+android:text="返回"
+android:layout_height="37dp"/>-->

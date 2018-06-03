@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+             android:layout_width="match_parent"
+             android:id="@+id/saleanalysis_fram"
+             android:layout_gravity="center_horizontal"
+             android:layout_margin="25dp"
+             android:layout_height="wrap_content">
+
+    <!--android:background="@drawable/item_bg_sale_lan_new"-->
+
+    <LinearLayout
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:orientation="vertical"
+        android:gravity="center"
+        >
+        <ImageView
+            android:id="@+id/grid_icon"
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:background="@drawable/graybottom"
+            android:gravity="center"
+            android:layout_gravity="center"
+            >
+        </ImageView>
+        <TextView
+            android:id="@+id/grid_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:singleLine="true"
+            android:gravity="center"
+            android:layout_gravity="center"
+            android:textSize="16sp"
+            android:layout_marginTop="6dip"
+            >
+        </TextView>
+    </LinearLayout>
+
+    <!--android:background="@drawable/item_bg_sale_lan"-->
+    <!--<RelativeLayout-->
+        <!--android:layout_margin="15dp"-->
+        <!--android:id="@+id/item_sale_rela"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_gravity="center"-->
+        <!--android:gravity="center"-->
+        <!--android:minWidth="40dp"-->
+        <!--android:layout_height="wrap_content">-->
+
+        <!--<TextView-->
+            <!--android:id="@+id/capture_light_btn"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:background="@android:color/transparent"-->
+            <!--android:drawablePadding="10dp"-->
+            <!--android:drawableTop="@drawable/dingdanguanli"-->
+            <!--android:gravity="center"-->
+            <!--android:text="@string/btn_light"-->
+            <!--android:textColor="@android:color/black"-->
+            <!--android:textSize="15sp"/>-->
+
+    <!--</RelativeLayout>-->
+</FrameLayout>
+
+    <!-- android:layout_marginRight="@dimen/x33"
+     android:layout_marginBottom="@dimen/y10"-->
+
+<!--<ImageView
+android:id="@+id/image_sale_item"
+android:adjustViewBounds="true"
+android:maxHeight="120dp"
+android:maxWidth="150dp"
+android:layout_width="wrap_content"
+android:layout_height="wrap_content"/>-->

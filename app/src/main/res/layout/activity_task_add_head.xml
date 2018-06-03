@@ -1,0 +1,180 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/divide"
+    android:orientation="vertical"
+    tools:context=".task.TaskAddActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="30dp"
+        android:background="@color/white"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingLeft="@dimen/padding_15"
+        android:paddingRight="@dimen/padding_15">
+
+        <include layout="@layout/common_ref_id" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Small Text"
+            android:textColor="@color/font_9"
+            android:textSize="12sp" />
+
+        <TextView
+            android:id="@+id/time"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_weight="1"
+            android:drawableLeft="@drawable/ic_clock"
+            android:drawablePadding="2dp"
+            android:text="Small Text"
+            android:textColor="@color/font_9"
+            android:textSize="12sp" />
+    </LinearLayout>
+
+    <include layout="@layout/divideline_12" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:background="@drawable/list_item_selector"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/descriptionButton"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_centerVertical="true"
+            android:gravity="center_vertical"
+            android:paddingLeft="@dimen/padding_15"
+            android:text="查看描述" />
+
+        <include
+            layout="@layout/list_item_common_arrow"
+            android:layout_width="16dp"
+            android:layout_height="16dp"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="@dimen/padding_15" />
+
+    </RelativeLayout>
+
+    <include
+        android:id="@+id/line1"
+        layout="@layout/divide_middle_15" />
+
+    <com.system.bhouse.bhouse.task.view.TaskAttrItem
+        android:id="@+id/layoutProjectName"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:taskIcon="@drawable/ic_task_project"
+        app:taskText1="任务名"
+        app:taskText2="未指定"
+        app:taskTopLine="false" />
+
+    <com.system.bhouse.bhouse.task.view.TaskAttrItem
+        android:id="@+id/layoutName"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:taskIcon="@drawable/ic_task_user"
+        app:taskText1="执行者"
+        app:taskText2="cc" />
+
+
+    <com.system.bhouse.bhouse.task.view.TaskAttrItem
+        android:id="@+id/layoutPriovity"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:taskIcon="@drawable/ic_task_priovity"
+        app:taskText1="优先级"
+        app:taskText2="正常处理" />
+
+    <com.system.bhouse.bhouse.task.view.TaskAttrItem
+        android:id="@+id/layoutDeadline"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:taskIcon="@drawable/ic_task_deadline"
+        app:taskText1="截止日期"
+        app:taskText2="未指定" />
+
+    <com.system.bhouse.bhouse.task.view.TaskAttrItem
+        android:id="@+id/layoutWatch"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:taskIcon="@drawable/ic_task_watch_user"
+        app:taskText1="关注者"
+        app:taskText2="" />
+
+    <com.system.bhouse.bhouse.task.view.TaskAttrItem
+        android:id="@+id/layoutPhase"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:taskIcon="@drawable/ic_task_phase"
+        app:taskText1="阶段"
+        app:taskText2="未指定" />
+
+    <LinearLayout
+        android:id="@+id/layoutRefResourceParent"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        android:orientation="vertical">
+
+        <include layout="@layout/divide_middle_15" />
+
+        <com.system.bhouse.bhouse.task.view.TaskAttrItem
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:taskIcon="@drawable/ic_task_ref_resource"
+            app:taskText1="关联资源"
+            app:taskText2="1个资源" />
+    </LinearLayout>
+    <!--<View-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="20dp"-->
+    <!--android:layout_alignParentLeft="true"-->
+    <!--android:layout_alignParentStart="true"-->
+    <!--android:layout_below="@+id/linearlayout1"-->
+    <!--android:background="@color/task_list_head" />-->
+
+    <include
+        android:id="@+id/line2_comment_off"
+        layout="@layout/divide_bottom_15" />
+
+    <include
+        android:id="@+id/line2_comment_on"
+        layout="@layout/divide_middle_15" />
+
+
+    <LinearLayout
+        android:id="@+id/descriptionLayout"
+        android:layout_width="match_parent"
+        android:layout_height="134dp"
+        android:layout_margin="@dimen/padding_15"
+        android:background="@drawable/white"
+        android:orientation="vertical"
+        android:visibility="gone">
+
+        <TextView
+            android:id="@+id/description"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="5dp"
+            android:ellipsize="end"
+            android:hint="添加描述"
+            android:lineSpacingExtra="12dp"
+            android:maxLines="3"
+            android:textColor="@color/font_9"
+            android:textSize="16sp" />
+
+    </LinearLayout>
+
+</LinearLayout>
+

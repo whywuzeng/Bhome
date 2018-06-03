@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.Toolbar
+    android:id="@+id/toolbar_com"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="?attr/actionBarSize"
+    android:background="@color/material_blue_400"
+    android:contentInsetLeft="0dp"
+    android:contentInsetStart="0dp"
+    android:elevation="1dp"
+    app:navigationIcon="@drawable/ic_keyboard_arrow_left"
+    app:theme="@style/AppTheme.Base"
+    app:popupTheme="@style/AppTheme.Base"
+    app:titleTextAppearance="@style/Toolbar.TitleText"
+    >
+
+
+    <TextView
+        android:id="@+id/toolbar_title"
+        style="@style/TextAppearance.AppCompat.Widget.ActionBar.Subtitle.Inverse"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/material_white90"
+        android:layout_gravity="center"
+        android:textSize="17sp"/>
+
+    <TextView
+        android:id="@+id/toolbar_menu_title"
+        style="@style/TextAppearance.AppCompat.Widget.ActionBar.Subtitle.Inverse"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/material_white90"
+        android:layout_gravity="start"
+        android:paddingRight="15dp"
+        android:textSize="17sp"/>
+
+</android.support.v7.widget.Toolbar>

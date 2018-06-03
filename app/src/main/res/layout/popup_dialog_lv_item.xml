@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:orientation="vertical"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent">
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:gravity="center_vertical"
+        android:layout_height="130px">
+        <TextView
+        android:id="@+id/dialog_lv_tv"
+        android:layout_marginLeft="42px"
+        android:textColor="@color/dingdan_tv"
+        android:text="@string/xuhao"
+        android:textSize="13sp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+
+        <TextView
+            android:id="@+id/dialog_lv_tv1"
+            android:layout_marginLeft="42px"
+            android:textColor="@color/dingdan_tv"
+            android:visibility="gone"
+            android:text="@string/xuhao"
+            android:textSize="13sp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+        <TextView
+            android:id="@+id/dialog_lv_tv2"
+            android:layout_marginLeft="42px"
+            android:textColor="@color/dingdan_tv"
+            android:text="@string/xuhao"
+            android:visibility="gone"
+            android:textSize="13sp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+    </LinearLayout>
+
+</LinearLayout>

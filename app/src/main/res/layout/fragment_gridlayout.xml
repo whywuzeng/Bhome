@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent" android:layout_height="match_parent"
+              xmlns:app="http://schemas.android.com/apk/res-auto"
+              xmlns:tools="http://schemas.android.com/tools"
+              android:orientation="vertical"
+    >
+
+    <com.system.bhouse.Common.widget.NhorizontalScrollView
+        android:scrollbars="none"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:orientation="vertical"
+        android:layout_height="match_parent">
+
+    <RelativeLayout
+        android:layout_below="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/fragment_home_gallery_height" >
+
+        <com.system.bhouse.ui.ViewFlow
+            android:id="@+id/mHomeViewflow"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
+
+        <com.system.bhouse.ui.CircleFlowIndicator
+            android:id="@+id/mHomeViewflowindic"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="8dip"
+            android:paddingBottom="6dip"
+            android:paddingLeft="1dip"
+            android:paddingRight="1dip"
+            android:paddingTop="6dip"
+            app:activeColor="@color/index_red"
+            app:activeType="fill"
+            app:circleSeparation="16dip"
+            app:inactiveColor="#ffbcbcbc"
+            app:inactiveType="stroke"
+            app:radius="4dip" />
+    </RelativeLayout>
+
+    <!-- 定义GridView控件 -->
+        <!--android:background="#EDEDED"-->
+        <RelativeLayout
+            android:layout_marginTop="2dp"
+            android:layout_marginBottom="2dp"
+            style="@style/GreyBoxButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+    <GridView
+        android:id="@+id/GvMain"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:background="#ffffff"
+        android:scrollbars="none"
+        android:layout_marginTop="7dp"
+        android:layout_marginBottom="7dp"
+        android:gravity="center"
+        android:horizontalSpacing="10dip"
+        android:smoothScrollbar="false"
+        android:numColumns="4"
+        android:listSelector="@color/material_white95"
+        android:stretchMode="columnWidth"
+        android:verticalSpacing="15dip" />
+
+        </RelativeLayout>
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/rv_listview"
+        android:layout_width="match_parent"
+        android:focusable="true"
+        android:clickable="true"
+        android:layout_height="wrap_content">
+    </android.support.v7.widget.RecyclerView>
+
+        <RelativeLayout
+            android:background="#EDEDED"
+            android:fitsSystemWindows="true"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <android.support.v7.widget.RecyclerView
+                android:visibility="gone"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="2dp"
+                android:id="@+id/rv_listview_task"
+                android:layout_width="match_parent"
+                android:foreground="?attr/selectableItemBackground"
+                android:background="#ffffff"
+                android:focusable="true"
+                android:clickable="true"
+                android:layout_height="wrap_content">
+            </android.support.v7.widget.RecyclerView>
+
+
+        </RelativeLayout>
+
+    </LinearLayout>
+
+    </com.system.bhouse.Common.widget.NhorizontalScrollView>
+
+
+</LinearLayout>
+
+
+<!--  android:background="@drawable/broder_lay"-->
