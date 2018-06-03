@@ -349,6 +349,7 @@ public class MainActivity<T> extends BaseActivity implements getKVforpopup, GetP
             isNotify=true;
             houseKeeperIv.setBackgroundResource(R.drawable.bg_reddot_myselfhuise);
         }
+        //测试提交提交1111111111  2018.6.3 11点
     }
 
     //处理服务器返回的版本号
