@@ -101,6 +101,13 @@ android {
         }
     }
 
+    lintOptions {
+
+        abortOnError false
+
+    }
+
+
 }
 
 buildscript {
