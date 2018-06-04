@@ -12,8 +12,6 @@ import com.system.bhouse.bean.NeteastNewsSummary;
 import com.system.bhouse.bhouse.R;
 import com.system.bhouse.ui.sectioned.Section;
 
-import org.greenrobot.greendao.annotation.NotNull;
-
 import java.util.List;
 
 import butterknife.Bind;
@@ -32,7 +30,7 @@ public class NewsListSection extends Section {
     private List<NeteastNewsSummary> newsListBeens;
     private Context mContext;
 
-    public NewsListSection(@NotNull List<NeteastNewsSummary> newsListBeens, Context mContext) {
+    public NewsListSection( List<NeteastNewsSummary> newsListBeens, Context mContext) {
         super(R.layout.newslist_header_layout, R.layout.newslist_item_resource, R.layout.layout_home_recommend_empty, R.layout.layout_home_recommend_empty);
         this.newsListBeens = newsListBeens;
         this.mContext = mContext;

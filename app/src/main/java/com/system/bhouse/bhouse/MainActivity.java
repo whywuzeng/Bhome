@@ -88,6 +88,7 @@ import java.util.Map;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import de.greenrobot.event.EventBus;
 import okhttp3.ResponseBody;
 import rx.Observable;
 import rx.Observer;
@@ -300,6 +301,11 @@ public class MainActivity<T> extends BaseActivity implements getKVforpopup, GetP
 
         gridLayoutFragment.setOnMoreClickListener(() ->  updataBottomStatu(Second));
 
+        if (App.ColumCount>0)
+        {
+            isNotify=true;
+        }
+
     }
 
     //更新apk的网络请求  这个地址已经失效。
@@ -348,8 +354,27 @@ public class MainActivity<T> extends BaseActivity implements getKVforpopup, GetP
         {
             isNotify=true;
             houseKeeperIv.setBackgroundResource(R.drawable.bg_reddot_myselfhuise);
+        }if (object instanceof Integer)
+        {
+            if (((Integer) object)<0)
+            {
+                isNotify=false;
+                houseKeeperIv.setBackgroundResource(R.drawable.bg_myselfhuise);
+            }
         }
         //测试提交提交1111111111  2018.6.3 11点
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        EventBus.getDefault().registerSticky(this);
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        EventBus.getDefault().unregister(this);
     }
 
     //处理服务器返回的版本号
@@ -536,15 +561,14 @@ public class MainActivity<T> extends BaseActivity implements getKVforpopup, GetP
 
 
     private void updataBottomStatu(int second) {
-        if (!houseKeeperIv.isSelected())
-        {
-            houseKeeperIv.setBackgroundResource(R.drawable.bg_myselfhuise);
-        }else{
-            if (isNotify) {
-                houseKeeperIv.setBackgroundResource(R.drawable.bg_reddot_myselfhuise);
-                isNotify=!isNotify;
-            }
-        }
+//        if (!houseKeeperIv.isSelected())
+//        {
+//            houseKeeperIv.setBackgroundResource(R.drawable.bg_myselfhuise);
+//        }else{
+//            if (isNotify) {
+//                houseKeeperIv.setBackgroundResource(R.drawable.bg_reddot_myselfhuise);
+//            }
+//        }
         switch (second) {
             case 0:
                 firstPageIv.setSelected(true);

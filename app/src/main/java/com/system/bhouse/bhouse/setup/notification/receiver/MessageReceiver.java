@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.util.Log;
 import android.widget.Toast;
 
+import com.system.bhouse.bhouse.setup.notification.bean.XGNotification;
 import com.tencent.android.tpush.XGPushBaseReceiver;
 import com.tencent.android.tpush.XGPushClickedResult;
 import com.tencent.android.tpush.XGPushRegisterResult;
@@ -14,6 +15,9 @@ import com.tencent.android.tpush.XGPushTextMessage;
 
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 
 import de.greenrobot.event.EventBus;
 
@@ -33,29 +37,28 @@ public class MessageReceiver extends XGPushBaseReceiver {
             return;
         }
         //消息的内容
-//        XGNotification notific = new XGNotification();
-//        notific.setMsg_id(notifiShowedRlt.getMsgId());
-//        notific.setTitle(notifiShowedRlt.getTitle());
-//        notific.setContent(notifiShowedRlt.getContent());
-//        // notificationActionType==1为Activity，2为url，3为intent
-//        notific.setNotificationActionType(notifiShowedRlt
-//                .getNotificationActionType());
-//        //Activity,url,intent都可以通过getActivity()获得
-//        notific.setActivity(notifiShowedRlt.getActivity());
-//        notific.setUpdate_time(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss")
-//                .format(Calendar.getInstance().getTime()));
-//        NotificationService.getInstance(context).save(notific);
+        XGNotification notific = new XGNotification();
+        notific.setMsg_id(notifiShowedRlt.getMsgId());
+        notific.setTitle(notifiShowedRlt.getTitle());
+        notific.setContent(notifiShowedRlt.getContent());
+        // notificationActionType==1为Activity，2为url，3为intent
+        notific.setNotificationActionType(notifiShowedRlt
+                .getNotificationActionType());
+        //Activity,url,intent都可以通过getActivity()获得
+        notific.setActivity(notifiShowedRlt.getActivity());
+        notific.setUpdate_time(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss")
+                .format(Calendar.getInstance().getTime()));
+        NotificationService.getInstance(context).save(notific);
         context.sendBroadcast(intent);
 //        show(context, "您有1条新消息, " + "通知被展示 ， " + notifiShowedRlt.toString());
 //        Log.d("LC", "+++++++++++++++++++++++++++++展示通知的回调");
         EventBus aDefault = EventBus.getDefault();
-        EventBus.getDefault().post(notifiShowedRlt);
+        EventBus.getDefault().postSticky(notifiShowedRlt);
     }
 
     @Override
     protected void finalize() throws Throwable {
         super.finalize();
-        EventBus.getDefault().unregister(this);
     }
 
     //反注册的回调
@@ -171,7 +174,6 @@ public class MessageReceiver extends XGPushBaseReceiver {
         }
         Log.d(LogTag, text);
 //        show(context, text);
-        EventBus.getDefault().register(this);
     }
 
     // 消息透传的回调

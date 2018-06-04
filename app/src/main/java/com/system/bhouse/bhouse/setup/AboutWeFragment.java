@@ -25,6 +25,7 @@ import com.system.bhouse.bhouse.Service.MessageService;
 import com.system.bhouse.bhouse.phone.activity.InformationActivity;
 import com.system.bhouse.bhouse.setup.WWCommon.WWBaseFragment;
 import com.system.bhouse.bhouse.setup.notification.MyNotificationActivity_;
+import com.system.bhouse.bhouse.setup.notification.bean.XGNotification;
 import com.system.bhouse.bhouse.setup.utils.CameraPhotoUtil;
 import com.system.bhouse.bhouse.setup.utils.FileUtil;
 import com.system.bhouse.utils.TenUtils.T;
@@ -94,6 +95,7 @@ public class AboutWeFragment extends WWBaseFragment {
         tvUsername.setText(App.menname);
         tvCompanyName.setText(App.Mancompany);
         TvCompanyName.setText(App.mpname);
+        badge.hide();
 
         setActionBarTitle("我的");
         iv_avator.setOnClickListener(new View.OnClickListener() {
@@ -193,10 +195,19 @@ public class AboutWeFragment extends WWBaseFragment {
             tvCompanyName.setText(resultOrgnazetion);
         }else if (object instanceof XGPushShowedResult)
         {
-            badge.setVisibility(View.VISIBLE);
-            count++;
-            XGPushShowedResult result = (XGPushShowedResult) object;
-            initBadgerView(count);
+            badge.show();
+            int columnsCount = App.getColumnsCount();
+            initBadgerView(columnsCount);
+        }else if (object instanceof XGNotification)
+        {
+            int columnsCount = App.getColumnsCount();
+            if (columnsCount<0)
+            {
+                badge.hide();
+                EventBus.getDefault().post(columnsCount);
+               return;
+            }
+            initBadgerView(columnsCount);
         }
     }
 

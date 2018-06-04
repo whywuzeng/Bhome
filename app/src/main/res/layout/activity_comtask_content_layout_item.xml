@@ -833,6 +833,7 @@
     <View
         style="@style/DivideLine1dp"
         android:layerType="software"
+        android:background="@color/blue_dark"
         android:layout_height="2dp"
         />
 

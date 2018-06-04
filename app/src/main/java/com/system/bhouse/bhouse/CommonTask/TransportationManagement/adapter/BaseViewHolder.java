@@ -27,6 +27,7 @@ import android.support.annotation.StringRes;
 import android.support.v7.widget.RecyclerView;
 import android.text.util.Linkify;
 import android.util.SparseArray;
+import android.view.Gravity;
 import android.view.View;
 import android.view.animation.AlphaAnimation;
 import android.widget.Adapter;
@@ -38,6 +39,8 @@ import android.widget.ProgressBar;
 import android.widget.RatingBar;
 import android.widget.TextView;
 
+import com.system.bhouse.base.App;
+import com.system.bhouse.bhouse.setup.notification.RedPointDrawable;
 
 import java.util.HashSet;
 import java.util.LinkedHashSet;
@@ -123,8 +126,24 @@ public class BaseViewHolder extends RecyclerView.ViewHolder {
     public BaseViewHolder setText(@IdRes int viewId, CharSequence value) {
         TextView view = getView(viewId);
         if (view==null)
-            return null;
+            return this;
         view.setText(value);
+        return this;
+    }
+
+    public BaseViewHolder setRedPoint(@IdRes int viewId, boolean isnew) {
+
+        if (!isnew)
+        {
+            return this;
+        }
+        ImageView view = getView(viewId);
+        if (view==null)
+            return this;
+        Drawable drawable = view.getBackground();
+        RedPointDrawable redPointDrawable = RedPointDrawable.wrap(App.getContextApp(), drawable);
+        redPointDrawable.setGravity(Gravity.LEFT);
+        view.setImageDrawable(redPointDrawable);
         return this;
     }
 

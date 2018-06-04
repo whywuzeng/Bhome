@@ -1,10 +1,9 @@
 package com.system.bhouse.bhouse.setup.notification.adapter;
 
-import android.util.Log;
-
-import com.system.bhouse.bean.BProBOM;
 import com.system.bhouse.bhouse.CommonTask.TransportationManagement.adapter.BaseViewHolder;
-import com.system.bhouse.bhouse.CommonTask.TransportationManagement.entity.MySection;
+import com.system.bhouse.bhouse.R;
+import com.system.bhouse.bhouse.setup.notification.bean.XGNotification;
+import com.system.bhouse.bhouse.setup.notification.bean.XGNotificationSectionEntity;
 
 import java.util.List;
 
@@ -16,22 +15,25 @@ import java.util.List;
  * com.system.bhouse.bhouse.CommonTask.TransportationManagement.LoadingCarOrder
  */
 
-public class NotificationSectionAdapter extends CommonBaseSectionQuickAdapter<MySection, BaseViewHolder>{
+public class NotificationSectionAdapter extends CommonBaseSectionQuickAdapter<XGNotificationSectionEntity, BaseViewHolder>{
 
     public NotificationSectionAdapter(int layoutResId, int sectionHeadResId, List data) {
         super(layoutResId, sectionHeadResId, data);
     }
 
     @Override
-    protected void convertHead(BaseViewHolder helper, MySection item) {
+    protected void convertHead(BaseViewHolder helper, XGNotificationSectionEntity item) {
 
     }
 
     @Override
-    protected void convert(BaseViewHolder helper, MySection item) {
-        BProBOM bprobom = (BProBOM) item.t;
+    protected void convert(BaseViewHolder helper, XGNotificationSectionEntity item) {
+        XGNotification bprobom = (XGNotification) item.t;
 //        helper.setText(R.id.tv_fromname,bprobom);
         int layoutPosition = helper.getLayoutPosition();
-        Log.e(TAG,layoutPosition+"");
+        helper.setVisible(R.id.iv_redpoint_item,bprobom.isNews());
+        helper.setText(R.id.tv_item_time,bprobom.getUpdate_time());
+        helper.setText(R.id.tv_content_item,bprobom.getContent());
+        helper.setText(R.id.tv_from_item,bprobom.getTitle());
     }
 }

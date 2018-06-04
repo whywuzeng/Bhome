@@ -25,7 +25,17 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"/>
 
+            <ImageView
+                android:background="@drawable/ic_redpoint"
+                android:id="@+id/iv_redpoint_item"
+                android:layout_width="10dp"
+                android:layout_height="10dp"
+                android:layout_centerVertical="true"
+                android:layout_toStartOf="@+id/tv_item_time"/>
+
+
             <TextView
+                android:id="@+id/tv_item_time"
                 android:gravity="center_vertical"
                 android:layout_marginRight="13dp"
                 android:drawableLeft="@drawable/shape_red_circle"
@@ -41,6 +51,7 @@
     </LinearLayout>
 
     <TextView
+        android:id="@+id/tv_content_item"
         android:layout_marginTop="11dp"
         android:layout_marginBottom="6dp"
         android:gravity="center_vertical"
@@ -76,6 +87,7 @@
                 android:layout_height="wrap_content"/>
 
             <TextView
+                android:id="@+id/tv_from_item"
                 android:layout_toRightOf="@+id/tv_fromto"
                 android:gravity="center_vertical"
                 android:layout_marginLeft="5dp"

@@ -181,6 +181,7 @@
             android:textColor="@color/material_black75"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"/>
+
         <com.readystatesoftware.viewbadger.BadgeView
             android:id="@+id/badge"
             android:layout_width="wrap_content"
@@ -190,6 +191,7 @@
             android:layout_marginRight="15dp"
             android:background="@drawable/ic_notify_txt1"
             android:visibility="gone"/>
+
         <RelativeLayout
             android:layout_gravity="center_vertical"
             android:layout_width="match_parent"

@@ -20,8 +20,6 @@ import com.system.bhouse.bean.CarManageBean;
 import com.system.bhouse.bhouse.R;
 import com.system.bhouse.utils.TenUtils.T;
 
-import org.greenrobot.greendao.annotation.NotNull;
-
 import java.util.ArrayList;
 
 import de.greenrobot.event.EventBus;
@@ -69,7 +67,7 @@ public class CarManagementDialogFragment extends DialogFragment {
         }
     }
 
-    public static CarManagementDialogFragment getInstanceFrg(StatusBean statusBean, @NotNull CarManageBean loadedRequires) {
+    public static CarManagementDialogFragment getInstanceFrg(StatusBean statusBean,  CarManageBean loadedRequires) {
 
         CarManagementDialogFragment viewUtils = null;
         if (viewUtils == null) {

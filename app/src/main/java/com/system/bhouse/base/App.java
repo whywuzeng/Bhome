@@ -26,6 +26,7 @@ import com.system.bhouse.bhouse.R;
 import com.system.bhouse.bhouse.phone.common.ConfigConsts;
 import com.system.bhouse.bhouse.phone.config.PropertiesConfig;
 import com.system.bhouse.bhouse.phone.modle.CheckedScope;
+import com.system.bhouse.bhouse.setup.notification.receiver.NotificationService;
 import com.system.bhouse.bhouse.setup.utils.FileUtil;
 import com.system.bhouse.bhouse.task.bean.UserObject;
 import com.system.bhouse.db.DBHelper;
@@ -150,9 +151,19 @@ public class App extends MultiDexApplication {
             Global.errorLog(e);
         }
 
-
+        getColumnsCount();
 
     }
+
+    //有多少没有阅读的消息
+    public static int ColumCount;
+
+    public static int getColumnsCount(){
+        NotificationService instance = NotificationService.getInstance(App.getContextApp());
+        ColumCount=instance.findColumCount("1");
+        return ColumCount;
+    }
+
 
     public static Gson getAppGson() {
 

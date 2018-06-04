@@ -76,4 +76,6 @@
     <dimen name="app_bar_height">250dp</dimen>
     <dimen name="a15x">15dp</dimen>
 
+    <dimen name="red_point_radius_small">5dp</dimen>
+
 </resources>
