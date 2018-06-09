@@ -370,34 +370,6 @@ public class TransportSendGoodsContentMessageActivity extends WWBackActivity imp
             Intent intent = new Intent(TransportSendGoodsContentMessageActivity.this, CaptureActivity.class);
             intent.putExtra("position",holder.getAdapterPosition());
             startActivityForResult(intent, REQUST_QRCODE);
-
-//            ApiWebService.Get_Sale_Order_CarCHE_Json(this, new ApiWebService.SuccessCall() {
-//                @Override
-//                public void SuccessBack(String result) {
-//
-//                    ArrayList<TransportSendGoodsBean> loadingcarbean = App.getAppGson().fromJson(result, new TypeToken<List<TransportSendGoodsBean>>() {
-//                    }.getType());
-//
-//                    for (TransportSendGoodsBean bean : loadingcarbean) {
-//                        bean.hNumbe = comTaskBeans.get(0).getHNumbe();
-//                        bean.Licenseplate = comTaskBeans.get(0).getLicenseplate();
-//                        bean.requireDate = comTaskBeans.get(0).getRequireDate();
-//                        bean.description = comTaskBeans.get(0).getDescription();
-//                        bean.entryPeople = comTaskBeans.get(0).getEntryPeople();
-//                    }
-//                    comTaskBeans.clear();
-//                    comTaskBeans.addAll(loadingcarbean);
-//                    mRecyclerViewAdapter.notifyDataSetChanged();
-//
-//                    getDateRefresh(comTaskBeans.get(0).cartrips, holder.getAdapterPosition(), "车次");
-//                }
-//
-//                @Override
-//                public void ErrorBack(String error) {
-//
-//                }
-//            }, "69294ad39c394fda995824ab5eeff22c");
-
         }
         else if (data.name.equals("车牌号")) {
             ShowDeviceMessageCustomDialog.Builder builder = new ShowDeviceMessageCustomDialog.Builder(this);

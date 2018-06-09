@@ -603,7 +603,7 @@ public class ConfirmationReceBean implements Parcelable {
         this.idValue.put("requireData",requireDate==null? DataFormatUtils.getCurrentTime():requireDate);
         this.idValue.put("description",description==null?"":description);
         this.idValue.put("status",status==null?"提交":status);
-        this.idValue.put("enterPeople",entryPeople==null? App.USER_INFO:entryPeople);
+        this.idValue.put("enterPeople",entryPeople==null? App.menname:entryPeople);
         this.idValue.put("entryTime",entryTime==null?DataFormatUtils.getCurrentSimpleTime():entryTime);
         this.idValue.put("checkPeople",checkPeople==null? "":checkPeople);
         this.idValue.put("checkTime",checkTime==null?"":checkTime);

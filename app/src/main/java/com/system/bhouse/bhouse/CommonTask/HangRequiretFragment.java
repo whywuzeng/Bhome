@@ -5,6 +5,8 @@ import android.support.v4.app.FragmentManager;
 import android.view.ViewGroup;
 
 import com.system.bhouse.api.ApiWebService;
+import com.system.bhouse.base.StatusBean;
+import com.system.bhouse.base.SubmitStatusBeanImpl;
 import com.system.bhouse.bhouse.CommonTask.BaseTaskFragment.BaseCommonFragment;
 import com.system.bhouse.bhouse.CommonTask.adapter.PageTaskFragment;
 import com.system.bhouse.bhouse.CommonTask.callback.TaskListParentUpdate;
@@ -59,8 +61,12 @@ public class HangRequiretFragment extends BaseCommonFragment implements TaskList
     //新建的 跳转 ->activity
     @Override
     protected void AddIntentFor() {
-        ComTaskContentMessageActivity_.intent(getActivity()).HId("").IsNew(true).start();
+        StatusBean statusBean = new StatusBean();
+        statusBean.setBean(new SubmitStatusBeanImpl().setVisSubmitBtn(true));
+        statusBean.setNewStatus(true);
+        ComTaskContentMessageActivity_.intent(getActivity()).HId("").mStatusBean(statusBean).start();
     }
+
 
     @Override
     public void taskListParentUpdate() {

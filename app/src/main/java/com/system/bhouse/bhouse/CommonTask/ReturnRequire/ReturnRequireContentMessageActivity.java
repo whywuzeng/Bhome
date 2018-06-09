@@ -23,6 +23,7 @@ import com.system.bhouse.Custom.ShowDeviceMessageCustomDialog;
 import com.system.bhouse.api.ApiWebService;
 import com.system.bhouse.base.App;
 import com.system.bhouse.base.StatusBean;
+import com.system.bhouse.base.SubmitStatusBeanImpl;
 import com.system.bhouse.bean.ConfirmationReceBean;
 import com.system.bhouse.bhouse.CommonTask.adapter.TreeWidget.TreeRecyclerAdapter;
 import com.system.bhouse.bhouse.CommonTask.adapter.TreeWidget.base.ViewHolder;
@@ -671,24 +672,30 @@ public class ReturnRequireContentMessageActivity extends WWBackActivity implemen
         TextView tvQrcode = (TextView)contentView.findViewById(R.id.tv_qrcode);
         tvQrcode.setText("构件扫码");
 
-        if (mStatus.isNewStatus()) {
-            llCheck.setVisibility(View.GONE);
-            llModify.setVisibility(View.GONE);
-            llFanCheck.setVisibility(View.GONE);
-            tvDelete.setVisibility(View.GONE);
-        }else if (mStatus.isModifyStatus())
-        {
-            llCheck.setVisibility(View.GONE);
-            llModify.setVisibility(View.GONE);
-            llFanCheck.setVisibility(View.GONE);
-            tvDelete.setVisibility(View.GONE);
-            llSubmit.setVisibility(View.VISIBLE);
-        }
-        else if (mStatus.isLookStatus()){
-            llQrcode.setVisibility(View.GONE);
-            llSubmit.setVisibility(View.GONE);
-        }
+//        if (mStatus.isNewStatus()) {
+//            llCheck.setVisibility(View.GONE);
+//            llModify.setVisibility(View.GONE);
+//            llFanCheck.setVisibility(View.GONE);
+//            tvDelete.setVisibility(View.GONE);
+//        }else if (mStatus.isModifyStatus())
+//        {
+//            llCheck.setVisibility(View.GONE);
+//            llModify.setVisibility(View.GONE);
+//            llFanCheck.setVisibility(View.GONE);
+//            tvDelete.setVisibility(View.GONE);
+//            llSubmit.setVisibility(View.VISIBLE);
+//        }
+//        else if (mStatus.isLookStatus()){
+//            llQrcode.setVisibility(View.GONE);
+//            llSubmit.setVisibility(View.GONE);
+//        }
 
+        llCheck.setVisibility(mStatus.getBean().visCheckBtn?View.VISIBLE:View.GONE);
+        llModify.setVisibility(mStatus.getBean().visModifyBtn?View.VISIBLE:View.GONE);
+        llFanCheck.setVisibility(mStatus.getBean().visCheckFBtn?View.VISIBLE:View.GONE);
+        tvDelete.setVisibility(mStatus.getBean().visDeleteBtn?View.VISIBLE:View.GONE);
+        llQrcode.setVisibility(mStatus.getBean().visQRBtn?View.VISIBLE:View.GONE);
+        llSubmit.setVisibility(mStatus.getBean().visSubmitBtn?View.VISIBLE:View.GONE);
 
         Observable.create(subscriber -> {
             tvQrcode.setOnClickListener(v ->{subscriber.onNext(v);
@@ -720,6 +727,7 @@ public class ReturnRequireContentMessageActivity extends WWBackActivity implemen
 
 
         tvModify.setOnClickListener(v -> {
+            mStatus.setBean(new SubmitStatusBeanImpl().setVisSubmitBtn(true));
             mStatus.setModifyStatus(true);
             if (mStatus.isModifyStatus()) {
                 setActionBarMidlleTitle("修改退货需求");

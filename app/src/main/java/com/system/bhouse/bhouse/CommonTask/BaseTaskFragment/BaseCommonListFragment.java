@@ -2,6 +2,7 @@ package com.system.bhouse.bhouse.CommonTask.BaseTaskFragment;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
@@ -9,6 +10,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.system.bhouse.base.CheckStatusBeanImpl;
+import com.system.bhouse.base.StatusBean;
+import com.system.bhouse.base.SubmitStatusBeanImpl;
 import com.system.bhouse.bhouse.CommonTask.Widget.LRecyclerView;
 import com.system.bhouse.bhouse.CommonTask.Widget.LoadingAdapter;
 import com.system.bhouse.bhouse.CommonTask.callback.TaskListParentUpdate;
@@ -19,6 +23,7 @@ import com.system.bhouse.bhouse.R;
 import com.system.bhouse.bhouse.setup.WWCommon.RefreshBaseFragment;
 import com.system.bhouse.bhouse.task.bean.ProjectObject;
 import com.system.bhouse.bhouse.task.bean.TaskObject;
+import com.system.bhouse.utils.TenUtils.L;
 
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.EFragment;
@@ -330,5 +335,24 @@ public abstract class BaseCommonListFragment<T extends LoadingAdapter,B> extends
 
     protected abstract void AddDeleteUpdateListData(Object object);
 
-
+    @NonNull
+    protected StatusBean getStatusBean() {
+        String DefaultStatus = TextUtils.isEmpty(mStatus) ? "提交" : mStatus;
+        StatusBean statusBean = new StatusBean();
+        //从初始化  或者  后台请求 得到状态
+        if (DefaultStatus.equals("提交")) {
+            SubmitStatusBeanImpl submitStatusBean = new SubmitStatusBeanImpl();
+            submitStatusBean.setVisCheckBtn(true).setVisDeleteBtn(true);
+            statusBean.setBean(submitStatusBean);
+        }
+        else if (DefaultStatus.equals("审核")) {
+            CheckStatusBeanImpl checkStatusBean = new CheckStatusBeanImpl();
+            checkStatusBean.setVisCheckFBtn(true);
+            statusBean.setBean(checkStatusBean);
+        }
+        else {
+            L.e("提交 和 审核值的标志位变化了");
+        }
+        return statusBean;
+    }
 }

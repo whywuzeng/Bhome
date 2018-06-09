@@ -8,7 +8,7 @@
         android:id="@+id/action_capture"
         android:title="@string/menu_capture"
         android:orderInCategory="100"
-        android:icon="@drawable/organization_menu"
+        android:icon="@drawable/ic_organization_menu"
         app:showAsAction="always"/>
 
 

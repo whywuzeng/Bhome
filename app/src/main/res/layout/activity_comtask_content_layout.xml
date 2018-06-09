@@ -7,6 +7,16 @@
 
     <include layout="@layout/toolbar"/>
 
+    <ScrollView
+        android:scrollbars="none"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:orientation="vertical"
+        android:layout_height="wrap_content">
+
     <android.support.v7.widget.RecyclerView
         android:id="@+id/topListView"
         android:paddingLeft="7dp"
@@ -51,6 +61,7 @@
         android:layout_height="wrap_content">
     </android.support.v7.widget.RecyclerView>
 
-
+    </LinearLayout>
+    </ScrollView>
 
 </LinearLayout>

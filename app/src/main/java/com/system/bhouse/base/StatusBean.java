@@ -1,7 +1,6 @@
 package com.system.bhouse.base;
 
-import android.os.Parcel;
-import android.os.Parcelable;
+import java.io.Serializable;
 
 /**
  * Created by Administrator on 2018-03-25.
@@ -11,69 +10,44 @@ import android.os.Parcelable;
  * com.system.bhouse.base
  */
 
-public class StatusBean implements Parcelable {
+public class StatusBean implements Serializable{
 
-    private boolean NewStatus=false;
-    private boolean LookStatus=false;
-    private boolean ModifyStatus=false;
+    public void setBean(StatusBeanImpl bean) {
+        this.bean = bean;
+    }
+
+    public StatusBeanImpl getBean() {
+        return bean;
+    }
+
+    private StatusBeanImpl bean;
+
 
     public boolean isNewStatus() {
-        return NewStatus;
+        return bean.isNewStatus();
     }
 
     public void setNewStatus(boolean newStatus) {
-        NewStatus = newStatus;
+        bean.setNewStatus(newStatus);
     }
 
     public boolean isLookStatus() {
-        return LookStatus;
+        return bean.isLookStatus();
     }
 
     public void setLookStatus(boolean lookStatus) {
-        LookStatus = lookStatus;
+        bean.setLookStatus(lookStatus);
     }
 
     public boolean isModifyStatus() {
-
-        return ModifyStatus&&LookStatus;
+//        return ModifyStatus&&LookStatus;
+        return bean.isModifyStatus();
     }
 
     public void setModifyStatus(boolean modifyStatus) {
-        if (LookStatus) {
-            ModifyStatus = modifyStatus;
-        }
+//        if (LookStatus) {
+//            ModifyStatus = modifyStatus;
+//        }
+        bean.setModifyStatus(modifyStatus);
     }
-
-    @Override
-    public int describeContents() {
-        return 0;
-    }
-
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
-        dest.writeByte(this.NewStatus ? (byte) 1 : (byte) 0);
-        dest.writeByte(this.LookStatus ? (byte) 1 : (byte) 0);
-        dest.writeByte(this.ModifyStatus ? (byte) 1 : (byte) 0);
-    }
-
-    public StatusBean() {
-    }
-
-    protected StatusBean(Parcel in) {
-        this.NewStatus = in.readByte() != 0;
-        this.LookStatus = in.readByte() != 0;
-        this.ModifyStatus = in.readByte() != 0;
-    }
-
-    public static final Parcelable.Creator<StatusBean> CREATOR = new Parcelable.Creator<StatusBean>() {
-        @Override
-        public StatusBean createFromParcel(Parcel source) {
-            return new StatusBean(source);
-        }
-
-        @Override
-        public StatusBean[] newArray(int size) {
-            return new StatusBean[size];
-        }
-    };
 }

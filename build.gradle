@@ -12,8 +12,10 @@ buildscript {
         // in the individual module build.gradle files
     }
 }
+
 allprojects {
     repositories {
+        maven { url 'https://dl.bintray.com/bhome/maven' }
         jcenter()
         google()
         maven {
@@ -22,6 +24,11 @@ allprojects {
         maven { url "https://jitpack.io" }
         mavenCentral()
         mavenLocal()
+
+        tasks.withType(Javadoc) {
+            options.addStringOption('Xdoclint:none', '-quiet')
+            options.addStringOption('encoding', 'UTF-8')
+        }
     }
 }
 task clean(type: Delete) {

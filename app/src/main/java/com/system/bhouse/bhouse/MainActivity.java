@@ -51,19 +51,13 @@ import com.system.bhouse.bhouse.phone.activity.InformationActivity;
 import com.system.bhouse.bhouse.setup.AboutWeFragment;
 import com.system.bhouse.bhouse.setup.AboutWeFragment_;
 import com.system.bhouse.bhouse.setup.MyselfActivity;
-import com.system.bhouse.bhouse.task.MainTask_Fragment;
-import com.system.bhouse.bhouse.task.MainTask_Fragment_;
+import com.system.bhouse.bhouse.setup.notification.bean.XGNotification;
 import com.system.bhouse.bhouse.task.TaskAddActivity_;
-import com.system.bhouse.bhouse.task.TaskFragment;
-import com.system.bhouse.bhouse.task.TaskFragment_;
 import com.system.bhouse.bhouse.task.adpter.base.SaveFragmentPagerAdapter;
 import com.system.bhouse.bhouse.task.view.TopMiddleMenu;
-import com.system.bhouse.bhouse.user.UsersListFragment;
-import com.system.bhouse.bhouse.user.UsersListFragment_;
 import com.system.bhouse.fragment.EmptyFragment;
-import com.system.bhouse.fragment.Homepagefragment;
-import com.system.bhouse.fragment.InformationFragment;
-import com.system.bhouse.fragment.ScheduleFragment;
+import com.system.bhouse.fragment.MyApprovalNotificationFragment;
+import com.system.bhouse.fragment.MyApprovalNotificationFragment_;
 import com.system.bhouse.ui.IndexViewPager;
 import com.system.bhouse.ui.ItemPopupWindow;
 import com.system.bhouse.utils.AppManager;
@@ -109,30 +103,16 @@ public class MainActivity<T> extends BaseActivity implements getKVforpopup, GetP
     private static List<Fragment> fragments = new ArrayList<>();
 
     //做提示的界面 EmptyFragment 当前界面无数据的fragment
-    EmptyFragment emptyFragment1=new EmptyFragment();
-
-
-    UsersListFragment usersListFragment = new UsersListFragment_();
-
-    TaskFragment taskFragment = new TaskFragment_();
-
-    MainTask_Fragment mainTask_fragment = new MainTask_Fragment_();
+    MyApprovalNotificationFragment emptyFragment1=new MyApprovalNotificationFragment_();
 
     NewsListFragment newsListFragment = NewsListFragment.newInstance("T1348647909107", "headline", 0);
 
     EmptyFragment emptyFragment3 = new EmptyFragment();
     AboutWeFragment aboutWeFragment=new AboutWeFragment_();
 
-    //这个两个已经没用了 灰色
-    Homepagefragment homepagefragment = new Homepagefragment();
-//    StaggeredGridLayoutFragment staggeredGridLayoutFragment = new StaggeredGridLayoutFragment();
-
     //这个是真正的界面 gridlayoutfragment
     GridLayoutFragment gridLayoutFragment = null;
 
-    InformationFragment informationFragment = new InformationFragment();
-//    OtherFragment otherFragment = new OtherFragment();
-    ScheduleFragment scheduleFragment = new ScheduleFragment();
 
     //做提示的界面 EmptyFragment
 //    EmptyFragment emptyFragment=new EmptyFragment();
@@ -245,6 +225,8 @@ public class MainActivity<T> extends BaseActivity implements getKVforpopup, GetP
     @Override
     protected void onDestroy() {
         super.onDestroy();
+        Log.e(TAG, "MainActivity onDestroy: " );
+        EventBus.getDefault().unregister(this);
         //没开就不要关
         if(connection!=null)
         unbindService(connection);
@@ -260,7 +242,12 @@ public class MainActivity<T> extends BaseActivity implements getKVforpopup, GetP
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         gridLayoutFragment = new GridLayoutFragment();
+        Log.e(TAG, "MainActivity onCreate: " );
         ButterKnife.bind(this);
+        EventBus.getDefault().register(this);
+
+        //在这里请求一次 保证值是最新的。 这里得到，未读的条数
+        App.getColumnsCount();
 
         Intent intent = getIntent();
         if (intent!=null)
@@ -304,6 +291,7 @@ public class MainActivity<T> extends BaseActivity implements getKVforpopup, GetP
         if (App.ColumCount>0)
         {
             isNotify=true;
+            houseKeeperIv.setBackgroundResource(R.drawable.bg_reddot_myselfhuise);
         }
 
     }
@@ -354,9 +342,10 @@ public class MainActivity<T> extends BaseActivity implements getKVforpopup, GetP
         {
             isNotify=true;
             houseKeeperIv.setBackgroundResource(R.drawable.bg_reddot_myselfhuise);
-        }if (object instanceof Integer)
+        }if (object instanceof XGNotification)
         {
-            if (((Integer) object)<0)
+            int columnsCount = App.getColumnsCount();
+            if (columnsCount<=0)
             {
                 isNotify=false;
                 houseKeeperIv.setBackgroundResource(R.drawable.bg_myselfhuise);
@@ -368,14 +357,16 @@ public class MainActivity<T> extends BaseActivity implements getKVforpopup, GetP
     @Override
     protected void onStart() {
         super.onStart();
-        EventBus.getDefault().registerSticky(this);
+        Log.e(TAG, "MainActivity onStart: " );
     }
 
     @Override
     protected void onStop() {
         super.onStop();
-        EventBus.getDefault().unregister(this);
+        Log.e(TAG, "MainActivity onStop: " );
     }
+
+
 
     //处理服务器返回的版本号
     private void DealwithResult(String result) {
@@ -866,7 +857,7 @@ public class MainActivity<T> extends BaseActivity implements getKVforpopup, GetP
 //                        }
 
 //                        break;
-                    //二维码扫描管理
+                    //二维码扫描管理  //组织架构的选择界面
                     case R.id.action_capture:
                         Intent intent1 = new Intent(MainActivity.this, InformationActivity.class);
                         startActivity(intent1);

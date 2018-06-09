@@ -13,7 +13,7 @@
                 xmlns:app="http://schemas.android.com/apk/res-auto"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:background="@color/material_white95"
+                android:background="@color/litte_gray"
                 tools:context=".MainActivity">
 
     <include
@@ -26,7 +26,7 @@
     <android.support.v7.widget.Toolbar
         android:id="@+id/toolbar"
         android:layout_height="85px"
-        android:background="@color/material_blue_400"
+        android:background="@color/litte_gray"
         app:theme="@style/AppTheme.Base"
         app:popupTheme="@style/AppTheme.Base"
         android:gravity="center"
@@ -39,7 +39,7 @@
         android:id="@+id/tv_toolbar_title_mid"
         android:textSize="18sp"
         android:text="@string/zhinengzhizao"
-        android:textColor="@color/white"
+        android:textColor="@color/material_black95"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"/>
     </android.support.v7.widget.Toolbar>
@@ -52,7 +52,7 @@
         android:background="@color/record_line_color"/>
 
     <com.system.bhouse.ui.IndexViewPager
-        android:background="@color/material_white95"
+        android:background="@color/litte_gray"
         android:id="@+id/content_pager"
         android:layout_width="match_parent"
         android:layout_height="match_parent"

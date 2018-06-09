@@ -7,10 +7,110 @@
               android:layout_height="match_parent">
 
     <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:gravity="center_horizontal"
+        android:background="@color/white"
+        android:layout_height="wrap_content">
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/iv_avator1"
+            android:layout_marginTop="30dp"
+            android:gravity="center"
+            app:civ_circle_background_color="@color/material_blue_200"
+            app:civ_border_width="2dp"
+            app:civ_border_color="@color/material_blue_200"
+            android:layout_width="85dp"
+            android:layout_height="85dp"/>
+
+        <TextView
+            android:id="@+id/tv_username1"
+            android:layout_marginTop="5dp"
+            android:text="小伙子"
+            android:textSize="16sp"
+            android:textColor="@color/black"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+        <TextView
+            android:id="@+id/tv_company_name1"
+            android:layout_marginTop="7dp"
+            android:text="设计总监"
+            android:textSize="13sp"
+            android:textColor="@color/material_blue_grey_400"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:gravity="center"
+            android:layout_width="match_parent"
+            android:layout_height="40dp">
+
+            <me.gujun.android.taggroup.TagGroup
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/tag_group"
+                app:atg_isAppendMode="false"
+                app:atg_inputHint="@string/BusinessVersion"
+                app:atg_borderColor="#49C120"
+                app:atg_textColor="#49C120"
+                app:atg_backgroundColor="#FFFFFF"
+                app:atg_dashBorderColor="#AAAAAA"
+                app:atg_inputHintColor="#80000000"
+                app:atg_inputTextColor="#DE000000"
+                app:atg_checkedBorderColor="#49C120"
+                app:atg_checkedTextColor="#FFFFFF"
+                app:atg_checkedMarkerColor="#FFFFFF"
+                app:atg_checkedBackgroundColor="#49C120"
+                app:atg_pressedBackgroundColor="#EDEDED"
+                app:atg_borderStrokeWidth="1dp"
+                app:atg_textSize="13sp"
+                app:atg_horizontalSpacing="8dp"
+                app:atg_verticalSpacing="4dp"
+                app:atg_horizontalPadding="12dp"
+                app:atg_verticalPadding="3dp"/>
+
+            <me.gujun.android.taggroup.TagGroup
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/tag_group1"
+                app:atg_isAppendMode="false"
+                app:atg_inputHint="@string/BusinessVersion"
+                app:atg_borderColor="@color/material_blue_300"
+                app:atg_textColor="@color/material_white90"
+                app:atg_backgroundColor="@color/material_blue_300"
+                app:atg_dashBorderColor="#AAAAAA"
+                app:atg_inputHintColor="#80000000"
+                app:atg_inputTextColor="#DE000000"
+                app:atg_checkedBorderColor="#49C120"
+                app:atg_checkedTextColor="#FFFFFF"
+                app:atg_checkedMarkerColor="#FFFFFF"
+                app:atg_checkedBackgroundColor="#49C120"
+                app:atg_pressedBackgroundColor="#EDEDED"
+                app:atg_borderStrokeWidth="1dp"
+                app:atg_textSize="13sp"
+                app:atg_horizontalSpacing="8dp"
+                app:atg_verticalSpacing="4dp"
+                app:atg_horizontalPadding="12dp"
+                app:atg_verticalPadding="3dp"/>
+
+            <!--<me.gujun.android.taggroup.TagGroup-->
+                <!--android:id="@+id/tag_group1"-->
+                <!--android:layout_width="50dp"-->
+                <!--android:layout_height="50dp"-->
+                <!--android:text="管理员"-->
+                <!--style="@style/TagGroup"/>-->
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <LinearLayout
         android:id="@+id/edit_ll_layout"
         android:orientation="horizontal"
         android:background="@color/white"
         android:layout_marginTop="2dp"
+        android:visibility="gone"
         android:layout_width="match_parent"
         android:layout_height="70dp">
 
@@ -19,6 +119,8 @@
             android:layout_marginLeft="10dp"
             android:layout_gravity="center_vertical"
             android:src="@drawable/ic_avatar_simple"
+            app:civ_border_width="2dp"
+            app:civ_border_color="@color/grey"
             android:layout_width="50dp"
             android:layout_height="50dp"/>
 
@@ -120,7 +222,7 @@
     <LinearLayout
         android:orientation="horizontal"
         android:background="@color/white"
-        android:layout_marginTop="1dp"
+        android:layout_marginTop="8dp"
         android:layout_width="match_parent"
         android:layout_height="50dp">
 
@@ -186,6 +288,7 @@
             android:id="@+id/badge"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:gravity="center"
             android:layout_marginTop="10dp"
             android:layout_alignParentLeft="true"
             android:layout_marginRight="15dp"
@@ -198,14 +301,21 @@
             android:layout_height="wrap_content">
 
 
-            <TextView
-                android:layout_marginTop="7dp"
-                android:layout_marginRight="15dp"
+            <!--<TextView-->
+                <!--android:layout_marginTop="7dp"-->
+                <!--android:layout_marginRight="15dp"-->
+                <!--android:layout_alignParentRight="true"-->
+                <!--android:layout_centerVertical="true"-->
+                <!--android:text="05/21"-->
+                <!--android:textSize="11sp"-->
+                <!--android:textColor="@color/material_blue_grey_400"-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="wrap_content"/>-->
+            <ImageView
+                android:layout_marginRight="10dp"
                 android:layout_alignParentRight="true"
-                android:layout_centerVertical="true"
-                android:text="05/21"
-                android:textSize="11sp"
-                android:textColor="@color/material_blue_grey_400"
+                android:layout_centerInParent="true"
+                android:src="@drawable/ic_keyboard_arrow_right"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"/>
 

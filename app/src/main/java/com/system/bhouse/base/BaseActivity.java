@@ -18,7 +18,7 @@ import com.system.bhouse.utils.LogUtil;
 import com.zhy.autolayout.AutoLayoutActivity;
 
 public abstract class BaseActivity extends AutoLayoutActivity {
-    private final static String TAG = "BaseActivity";
+    protected final static String TAG = "BaseActivity";
     public Context mContext;
     private ToolbarHelper mToolbarHelper;
 

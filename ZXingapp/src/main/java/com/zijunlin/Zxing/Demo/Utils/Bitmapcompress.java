@@ -66,10 +66,6 @@ public class Bitmapcompress {
     /**
      * 计算图片的缩放值
      *
-     * @param options
-     * @param reqWidth
-     * @param reqHeight
-     * @return
      */
     public static int calculateInSampleSize(BitmapFactory.Options options,
                                             int reqWidth, int reqHeight) {

@@ -9,6 +9,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.system.bhouse.base.StatusBean;
 import com.system.bhouse.bean.ComTaskBean;
 import com.system.bhouse.bhouse.R;
 import com.system.bhouse.ui.sectioned.Section;
@@ -36,7 +37,7 @@ public class ComTaskContentItemSection extends Section {
     private static final String POSITION = "position";
     private static final String VIEWHOLDER = "viewholder";
     private static final String POSITION_ADAPTER = "position_adapter";
-    private Boolean IsNew;
+    private StatusBean mStatus;
 
 
     public void setSearchHistroyBeans(ArrayList<ComTaskBean> searchHistroyBeans) {
@@ -46,10 +47,10 @@ public class ComTaskContentItemSection extends Section {
     private ArrayList<ComTaskBean> searchHistroyBeans = new ArrayList<>();
 
 
-    public ComTaskContentItemSection(ArrayList<ComTaskBean> searchHistroyBeans, Boolean IsNew) {
+    public ComTaskContentItemSection(ArrayList<ComTaskBean> searchHistroyBeans, StatusBean mStatus) {
         super(R.layout.layout_home_recommend_empty_noheight, R.layout.comtask_content_item_footer, R.layout.activity_comtask5item_content_layout_item, R.layout.layout_home_recommend_empty, R.layout.layout_home_recommend_empty);
         this.searchHistroyBeans = searchHistroyBeans;
-        this.IsNew=IsNew;
+        this.mStatus=mStatus;
     }
 
 

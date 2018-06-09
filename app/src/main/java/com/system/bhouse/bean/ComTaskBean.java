@@ -149,7 +149,7 @@ public class ComTaskBean {
         this.idValue.put("requireData",requireData==null? DataFormatUtils.getCurrentTime():requireData);
         this.idValue.put("description",description==null?"":description);
         this.idValue.put("status",status==null?"提交":status);
-        this.idValue.put("enterPeople",enterPeople==null? App.USER_INFO:enterPeople);
+        this.idValue.put("enterPeople",enterPeople==null? App.menname:enterPeople);
         this.idValue.put("entryTime",entryTime==null?DataFormatUtils.getCurrentSimpleTime():entryTime);
         this.idValue.put("checkPeople",checkPeople==null? App.USER_INFO:checkPeople);
         this.idValue.put("checkTime",checkTime==null?DataFormatUtils.getCurrentSimpleTime():checkTime);

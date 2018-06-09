@@ -7,6 +7,7 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.example.zhouwei.library.CustomPopWindow;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.footer.ClassicsFooter;
@@ -51,6 +52,7 @@ public class MyNotificationActivity extends WWBackActivity implements OnRefreshL
     private ClassicsHeader LayoutHead;
     private ClassicsFooter LayoutFooter;
     private SmartRefreshLayout layout_smartrefresh;
+    private CustomPopWindow mPopWindow;
 
     @AfterViews
     public void initCreate() {
@@ -82,6 +84,37 @@ public class MyNotificationActivity extends WWBackActivity implements OnRefreshL
                 TransportationManagementActivity_.intent(MyNotificationActivity.this).start();
             }
         });
+
+        mPopWindow = new CustomPopWindow.PopupWindowBuilder(this)
+                .setView(R.layout.smallpopwindow)
+                .enableOutsideTouchableDissmiss(true)// 设置点击PopupWindow之外的地方，popWindow不关闭，如果不设置这个属性或者为true，则关闭
+                .create();
+
+
+        notificationSectionAdapter.setOnItemChildClickListener(new BaseQuickAdapter.OnItemChildClickListener() {
+            @Override
+            public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
+                switch (view.getId())
+                {
+                    case R.id.iv_three_dot:
+                        view.setTag(position);
+                        mPopWindow.showAsDropDown(view,0,0);
+                        mPopWindow.getPopupWindow().getContentView().findViewById(R.id.ll_popwindow).setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                mPopWindow.onDismiss();
+                                scrollDataWrap.remove(position);
+                                notificationSectionAdapter.notifyItemRemoved(position);
+                                notificationSectionAdapter.notifyDataSetChanged();
+
+                            }
+                        });
+                        break;
+                }
+            }
+        });
+
+
     }
     //加载数据
     private void getNotifications(String id) {
@@ -188,6 +221,8 @@ public class MyNotificationActivity extends WWBackActivity implements OnRefreshL
             currentPage++;
             //设置显示位置
             appendNotifications(id);
+        }else{
+            layout_smartrefresh.setNoMoreData(true);
         }
     }
 }

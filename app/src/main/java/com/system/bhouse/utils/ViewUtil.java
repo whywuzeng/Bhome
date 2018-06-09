@@ -4,9 +4,13 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.pm.ActivityInfo;
 import android.content.res.ColorStateList;
+import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
+import android.graphics.Color;
+import android.graphics.Paint;
 import android.graphics.PixelFormat;
+import android.graphics.Rect;
 import android.graphics.drawable.Drawable;
 import android.support.design.widget.TabLayout;
 import android.support.v4.graphics.drawable.DrawableCompat;
@@ -152,6 +156,70 @@ public class ViewUtil {
          drawable.draw(canvas);
 
          return bitmap;
+
+    }
+
+    public static Bitmap drawTextToBitmap(Context mContext, String mText, int left, int top1, int width, int height) {
+        try {
+            Resources resources = mContext.getResources();
+            float scale = resources.getDisplayMetrics().density;
+//            Bitmap bitmap = BitmapFactory.decodeResource(resources, resourceId);
+
+//            android.graphics.Bitmap.Config bitmapConfig =   bitmap.getConfig();
+//            // set default bitmap config if none
+//            if(bitmapConfig == null) {
+//                bitmapConfig = android.graphics.Bitmap.Config.ARGB_8888;
+//            }
+            // resource bitmaps are imutable,
+            // so we need to convert it to mutable one
+//            bitmap = bitmap.copy(bitmapConfig, true);
+
+//            Canvas canvas = new Canvas(bitmap);
+            //自我创造bitmap
+            Bitmap bitmap = Bitmap.createBitmap(
+                    width,
+                    height,
+                     Bitmap.Config.ARGB_8888
+                            );
+
+            double scaleBai = 4.0 / 14.0;
+            //字体的大小
+            int Textsize = (int) (0.285 * width);
+
+            Canvas canvas = new Canvas(bitmap);
+            // new antialised Paint
+            Paint paint = new Paint(Paint.ANTI_ALIAS_FLAG);
+            // text color - #3D3D3D
+            paint.setColor(Color.rgb(255,255, 255));
+            // text size in pixels
+            paint.setTextSize((int) (Textsize * scale));
+            // text shadow
+            paint.setShadowLayer(1f, 0f, 1f, Color.DKGRAY);
+            paint.setTextAlign(Paint.Align.CENTER);
+
+            // draw text to the Canvas center
+            Rect bounds = new Rect();
+            paint.getTextBounds(mText, 0, mText.length(), bounds);
+
+
+            Paint.FontMetrics fontMetrics = paint.getFontMetrics();
+            float top = fontMetrics.top;//为基线到字体上边框的距离,即上图中的top
+            float bottom = fontMetrics.bottom;//为基线到字体下边框的距离,即上图中的bottom
+
+            int baseLineY = (int) ((height/2) - top/2 - bottom/2);//基线中间点的y轴计算公式
+
+            canvas.drawText(mText,width/2,baseLineY,paint);
+
+//            int x = (bitmap.getWidth()- bounds.width())/4;
+//            int y = (bitmap.getHeight()- bounds.height())/2;
+//
+//            canvas.drawText(mText, x * scale, y * scale, paint);
+
+            return bitmap;
+        } catch (Exception e) {
+            // TODO: handle exception
+            return null;
+        }
 
     }
 

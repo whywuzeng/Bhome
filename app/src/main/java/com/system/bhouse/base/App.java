@@ -151,8 +151,6 @@ public class App extends MultiDexApplication {
             Global.errorLog(e);
         }
 
-        getColumnsCount();
-
     }
 
     //有多少没有阅读的消息
@@ -394,7 +392,9 @@ public class App extends MultiDexApplication {
     public static int Property;
 
     public static boolean IsSub=false;
+    //名字
     public static String menname="";
+    //职位
     public static String mpname="";
 
 }

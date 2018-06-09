@@ -1,28 +1,24 @@
 package com.system.bhouse.bhouse.CommonTask;
 
-import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.helper.ItemTouchHelper;
 import android.text.TextUtils;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.EditText;
-import android.widget.LinearLayout;
-import android.widget.TextView;
 
 import com.google.gson.reflect.TypeToken;
 import com.system.bhouse.Custom.ShowDeviceMessageCustomDialog;
 import com.system.bhouse.api.ApiWebService;
 import com.system.bhouse.base.App;
+import com.system.bhouse.base.StatusBean;
 import com.system.bhouse.bean.BProBOM;
 import com.system.bhouse.bean.ComTaskBean;
+import com.system.bhouse.bhouse.CommonTask.BaseTaskFragment.BaseContentMessageActivity;
 import com.system.bhouse.bhouse.CommonTask.adapter.ComTaskContentItemSection;
 import com.system.bhouse.bhouse.CommonTask.adapter.TreeWidget.TreeRecyclerAdapter;
 import com.system.bhouse.bhouse.CommonTask.adapter.TreeWidget.base.ViewHolder;
@@ -33,9 +29,7 @@ import com.system.bhouse.bhouse.CommonTask.common.CommonDateTimePickerFragment;
 import com.system.bhouse.bhouse.CommonTask.common.CommonPickerActivity_;
 import com.system.bhouse.bhouse.CommonTask.utils.ComTaskContentItemSectionItemTouchHelper;
 import com.system.bhouse.bhouse.R;
-import com.system.bhouse.bhouse.setup.WWCommon.WWBackActivity;
 import com.system.bhouse.bhouse.setup.utils.LabelNumPickerDialog;
-import com.system.bhouse.ui.sectioned.SectionedRecyclerViewAdapter;
 import com.system.bhouse.utils.TenUtils.L;
 import com.system.bhouse.utils.TenUtils.T;
 
@@ -50,12 +44,10 @@ import org.androidannotations.annotations.ViewById;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.concurrent.TimeUnit;
 
 import de.greenrobot.event.EventBus;
 import rx.Observable;
 import rx.Subscriber;
-import rx.android.schedulers.AndroidSchedulers;
 
 /**
  * Created by Administrator on 2018-03-05.
@@ -66,7 +58,7 @@ import rx.android.schedulers.AndroidSchedulers;
  */
 @EActivity(R.layout.activity_comtask_content_layout)
 @OptionsMenu(R.menu.menu_comtask)
-public class ComTaskContentMessageActivity extends WWBackActivity implements ComTaskContentItemSection.OnItemClickListener,GroupItem.onChildItemClickListener,LabelNumPickerDialog.OnDateSetListener{
+public class ComTaskContentMessageActivity extends BaseContentMessageActivity implements ComTaskContentItemSection.OnItemClickListener,GroupItem.onChildItemClickListener,LabelNumPickerDialog.OnDateSetListener{
 
     public static final String TAG="comtaskcontentmessageactivity";
 
@@ -79,7 +71,7 @@ public class ComTaskContentMessageActivity extends WWBackActivity implements Com
     String HId;
 
     @Extra
-    Boolean IsNew;
+    StatusBean mStatusBean;
 
     private MyTaskContentAdapter mRecyclerViewAdapter;
     private ArrayList<ComTaskBean> comTaskBeans=new ArrayList<>();
@@ -100,36 +92,16 @@ public class ComTaskContentMessageActivity extends WWBackActivity implements Com
      */
     ArrayList<HashMap<String, String>> hashMaps;
     private ComTaskContentItemSection workflowSection;
-    private Dialog bottomDialog;
 
     @AfterViews
     public void initComTaskActivity(){
-        if (IsNew)
-        {
-            setActionBarMidlleTitle("新增吊装需求");
-        }else {
-            setActionBarMidlleTitle("吊装需求");
-        }
 
         mRecyclerViewAdapter=new MyTaskContentAdapter();
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
 
-        GridLayoutManager manager=new GridLayoutManager(this,1);
-        manager.setSpanSizeLookup(new GridLayoutManager.SpanSizeLookup() {
-            @Override
-            public int getSpanSize(int position) {
-                switch (mRecyclerViewAdapter.getSectionItemViewType(position)) {
-                    case SectionedRecyclerViewAdapter.VIEW_TYPE_HEADER:
-                        return 0;
-                    default:
-                        return 1;
-                }
-            }
-        });
-
         listView.setLayoutManager(linearLayoutManager);
 
-        workflowSection = new ComTaskContentItemSection(comTaskBeans,IsNew);
+        workflowSection = new ComTaskContentItemSection(comTaskBeans,mStatusBean);
         new ItemTouchHelper(new ComTaskContentItemSectionItemTouchHelper(mRecyclerViewAdapter)).attachToRecyclerView(listView);
         workflowSection.setOnItemClickListener(this);
 
@@ -141,26 +113,13 @@ public class ComTaskContentMessageActivity extends WWBackActivity implements Com
         testData();
         TopListViewInit(this.comTaskBeans);
 
+        if (mStatusBean.isNewStatus())
+        {
+            setActionBarMidlleTitle("新增吊装需求");
+        }else {
+            setActionBarMidlleTitle("吊装需求");
+        }
     }
-
-//    ID = "1ea66b7bb9674a18a8794bd943c212bb"
-//    Specification = "测试" 规格型号
-//    amount = 30            需求数量
-//    ceng = "2"             层
-//    childTableID = "599d49d6ad2c4eabb43c7314cd68a467"
-//    description = ""
-//    dong = "1"
-//    enterPeople = "管理员"
-//    entryTime = "2018/3/8 11:12:00"
-//    goodsCoding = "1002.1084.0100.003"    物料编码
-//    goodsID = "acb6fd62b2f0405292fe8c0de0737f2f"
-//    goodsName = "PC构件"                  物料名称
-//    hNumbe = "DZXQ-7-201803-0001"         单据编号
-//    measure = "块"
-//    measureID = "c8e082b5f5f34d5f934f071e6b464238"
-//    projectName = "麓谷一期项目"
-//    requireData = "2018/3/8 11:11:40"
-//    status = "审核"
 
     /**
      * 初始布局  为列表布局
@@ -200,7 +159,7 @@ public class ComTaskContentMessageActivity extends WWBackActivity implements Com
             GroupItem sortGroupItem = new GroupItem();
             sortGroupItem.TitleKey=LETTERS[i];
             sortGroupItem.setmOnChildItemClickListener(this);
-            sortGroupItem.setData(makeChlidData(keyTypes.get(i),IsNew));
+            sortGroupItem.setData(makeChlidData(keyTypes.get(i),mStatusBean));
             groupItems.add(sortGroupItem);
         }
 
@@ -213,11 +172,11 @@ public class ComTaskContentMessageActivity extends WWBackActivity implements Com
 
     /**
      * 初始化  childItem 子布局所需的数据
-     * @param data
-     * @param isNew
+     * @param
+     * @param
      * @return
      */
-    protected  ArrayList<SortChildItem.ViewModel> makeChlidData(KeyType data, Boolean isNew) {
+    protected  ArrayList<SortChildItem.ViewModel> makeChlidData(KeyType data, StatusBean mStatusBean) {
         ArrayList<SortChildItem.ViewModel> viewModels=new ArrayList<>();
         SortChildItem.ViewModel viewModel;
         if (data.key==8) {
@@ -233,7 +192,7 @@ public class ComTaskContentMessageActivity extends WWBackActivity implements Com
             viewModel.name=idNames.get("projectName");
             viewModel.value= idValue.get("projectName");
             viewModel.key="projectName";
-            if (isNew)
+            if (mStatusBean.isNewStatus())
                 viewModel.isClick=true;
             viewModels.add(viewModel);
 
@@ -241,7 +200,7 @@ public class ComTaskContentMessageActivity extends WWBackActivity implements Com
             viewModel.name=idNames.get("dong");
             viewModel.value= idValue.get("dong");
             viewModel.key="dong";
-            if (isNew)
+            if (mStatusBean.isNewStatus())
                 viewModel.isClick=true;
             viewModels.add(viewModel);
 
@@ -249,7 +208,7 @@ public class ComTaskContentMessageActivity extends WWBackActivity implements Com
             viewModel.name=idNames.get("ceng");
             viewModel.value= idValue.get("ceng");
             viewModel.key="ceng";
-            if (isNew)
+            if (mStatusBean.isNewStatus())
                 viewModel.isClick=true;
             viewModels.add(viewModel);
 
@@ -257,7 +216,7 @@ public class ComTaskContentMessageActivity extends WWBackActivity implements Com
             viewModel.name=idNames.get("requireData");
             viewModel.value= idValue.get("requireData");
             viewModel.key="requireData";
-            if (isNew)
+            if (mStatusBean.isNewStatus())
                 viewModel.isClick=true;
             viewModels.add(viewModel);
 
@@ -265,7 +224,7 @@ public class ComTaskContentMessageActivity extends WWBackActivity implements Com
             viewModel.name=idNames.get("description");
             viewModel.value= idValue.get("description");
             viewModel.key="description";
-            if (isNew)
+            if (mStatusBean.isNewStatus())
                 viewModel.isClick=true;
             viewModels.add(viewModel);
 
@@ -306,14 +265,14 @@ public class ComTaskContentMessageActivity extends WWBackActivity implements Com
 
             viewModel=new SortChildItem.ViewModel();
             viewModel.name=idNames.get("checkPeople");
-            viewModel.value= isNew?"":idValue.get("checkPeople");
+            viewModel.value= mStatusBean.isNewStatus()?"":idValue.get("checkPeople");
             viewModel.key="checkPeople";
             viewModel.isClick=false;
             viewModels.add(viewModel);
 
             viewModel=new SortChildItem.ViewModel();
             viewModel.name=idNames.get("checkTime");
-            viewModel.value= isNew?"":idValue.get("checkTime");
+            viewModel.value= mStatusBean.isNewStatus()?"":idValue.get("checkTime");
             viewModel.key="checkTime";
             viewModel.isClick=false;
             viewModels.add(viewModel);
@@ -436,23 +395,25 @@ public class ComTaskContentMessageActivity extends WWBackActivity implements Com
                         }
                         else {
 
-                            List<TreeItem> datas = treeRecyclerAdapter.getDatas();
-                            SortChildItem treeItem =(SortChildItem)datas.get(6); //需求日期
-                            SortChildItem.ViewModel viewModel = treeItem.getData();
-                            if (viewModel.name.equals("描述")) {
-                                if (!viewModel.value.equals(text))
-                                    viewModel.value = text;
-                                if (hashMaps==null||hashMaps.size()<0) {
-                                    idValue.put(viewModel.key, viewModel.value);
-                                }else {
-                                    for (int i=0;i<hashMaps.size();i++)
-                                    {
-                                        hashMaps.get(i).put(viewModel.key,viewModel.value);
-                                    }
-                                }
-                            }
-                            treeItem.setData(viewModel);
-                            treeRecyclerAdapter.notifyDataSetChanged();
+                            getDateRefresh(text,holder.getAdapterPosition(),data.name);
+
+//                            List<TreeItem> datas = treeRecyclerAdapter.getDatas();
+//                            SortChildItem treeItem =(SortChildItem)datas.get(6); //需求日期
+//                            SortChildItem.ViewModel viewModel = treeItem.getData();
+//                            if (viewModel.name.equals("描述")) {
+//                                if (!viewModel.value.equals(text))
+//                                    viewModel.value = text;
+//                                if (hashMaps==null||hashMaps.size()<0) {
+//                                    idValue.put(viewModel.key, viewModel.value);
+//                                }else {
+//                                    for (int i=0;i<hashMaps.size();i++)
+//                                    {
+//                                        hashMaps.get(i).put(viewModel.key,viewModel.value);
+//                                    }
+//                                }
+//                            }
+//                            treeItem.setData(viewModel);
+//                            treeRecyclerAdapter.notifyDataSetChanged();
                         }
                     }
                 }
@@ -587,46 +548,33 @@ public class ComTaskContentMessageActivity extends WWBackActivity implements Com
         treeItem.setData(viewModel);
     }
 
-//    @Override
-//    public void dateSetResult(String date, boolean clear) {
-//
-//        List<TreeItem> datas = treeRecyclerAdapter.getDatas();
-//
-//        SortChildItem treeItem =(SortChildItem)datas.get(5); //需求日期
-//        SortChildItem.ViewModel viewModel = treeItem.getData();
-//        if (viewModel.name.equals("需求日期")) {
-//            if (!viewModel.value.equals(date))
-//              viewModel.value = date;
-//            idValue.put(viewModel.key, viewModel.value);
-//        }
-//        treeItem.setData(viewModel);
-//        treeRecyclerAdapter.notifyDataSetChanged();
-//    }
-
     /**
      * 日期 click的回调
      * param date
      */
     @Override
     public void onDateSet(String date) {
-        List<TreeItem> datas = treeRecyclerAdapter.getDatas();
 
-        SortChildItem treeItem =(SortChildItem)datas.get(5); //需求日期
-        SortChildItem.ViewModel viewModel = treeItem.getData();
-        if (viewModel.name.equals("需求日期")) {
-            if (!viewModel.value.equals(date))
-                viewModel.value = date;
-            if (hashMaps==null||hashMaps.size()<0) {
-                idValue.put(viewModel.key, viewModel.value);
-            }else {
-                for (int i=0;i<hashMaps.size();i++)
-                {
-                    hashMaps.get(i).put(viewModel.key,viewModel.value);
-                }
-            }
-        }
-        treeItem.setData(viewModel);
-        treeRecyclerAdapter.notifyDataSetChanged();
+        getDateRefresh(date,5,"需求日期");
+
+//        List<TreeItem> datas = treeRecyclerAdapter.getDatas();
+
+//        SortChildItem treeItem =(SortChildItem)datas.get(5); //需求日期
+//        SortChildItem.ViewModel viewModel = treeItem.getData();
+//        if (viewModel.name.equals("需求日期")) {
+//            if (!viewModel.value.equals(date))
+//                viewModel.value = date;
+//            if (hashMaps==null||hashMaps.size()<0) {
+//                idValue.put(viewModel.key, viewModel.value);
+//            }else {
+//                for (int i=0;i<hashMaps.size();i++)
+//                {
+//                    hashMaps.get(i).put(viewModel.key,viewModel.value);
+//                }
+//            }
+//        }
+//        treeItem.setData(viewModel);
+//        treeRecyclerAdapter.notifyDataSetChanged();
     }
 
 
@@ -635,7 +583,59 @@ public class ComTaskContentMessageActivity extends WWBackActivity implements Com
         public String type;
     }
 
+    /**
+     * 更新data 位置
+     *
+     * @param date
+     * @param position
+     * @param typestring
+     */
+    private void getDateRefresh(String date, int position, String typestring) {
+        List<TreeItem> datas = treeRecyclerAdapter.getDatas();
 
+        SortChildItem treeItem = (SortChildItem) datas.get(position); //需求日期
+        SortChildItem.ViewModel viewModel = treeItem.getData();
+        if (viewModel.name.equals(typestring) && typestring.equals("需求日期")) {
+            if (!viewModel.value.equals(date))
+                viewModel.value = date;
+//            for (int i = 0; i < comTaskBeans.size(); i++) {
+//                comTaskBeans.get(i).requireData = viewModel.value;
+//            }
+        }
+        else if (viewModel.name.equals("车牌号")) {
+            if (!viewModel.value.equals(date))
+                viewModel.value = date;
+
+//            for (int i = 0; i < comTaskBeans.size(); i++) {
+//                comTaskBeans.get(i).Licenseplate = viewModel.value;
+//            }
+        }
+        else if (viewModel.name.equals("描述")) {
+            if (!viewModel.value.equals(date))
+                viewModel.value = date;
+
+//            for (int i = 0; i < comTaskBeans.size(); i++) {
+//                comTaskBeans.get(i).description = viewModel.value;
+//            }
+        }
+        else if (viewModel.name.equals("车次")) {
+            if (!viewModel.value.equals(date))
+                viewModel.value = date;
+//            for (int i = 0; i < comTaskBeans.size(); i++) {
+//                comTaskBeans.get(i).cartrips = viewModel.value;
+//            }
+        }
+        if (hashMaps == null || hashMaps.size() < 0) {
+            idValue.put(viewModel.key, viewModel.value);
+        }
+        else {
+            for (int i = 0; i < hashMaps.size(); i++) {
+                hashMaps.get(i).put(viewModel.key, viewModel.value);
+            }
+        }
+        treeItem.setData(viewModel);
+        treeRecyclerAdapter.notifyDataSetChanged();
+    }
 
     /**
      * 请求数据
@@ -670,7 +670,6 @@ public class ComTaskContentMessageActivity extends WWBackActivity implements Com
     @Override
     public void onImgItemDelete(int position,int positionAdapter) {
 
-
         if (isDeleteAble) {//此时为增加动画效果，刷新部分数据源，防止删除错乱
             isDeleteAble = false;//初始值为true,当点击删除按钮以后，休息0.5秒钟再让他为
             //true,起到让数据源刷新完成的作用
@@ -701,8 +700,6 @@ public class ComTaskContentMessageActivity extends WWBackActivity implements Com
     }
 }
 
-
-
     //点击增加的按钮
     @Override
     public void onImgItemAdd(View view, int position, RecyclerView.ViewHolder holder) {
@@ -732,102 +729,8 @@ public class ComTaskContentMessageActivity extends WWBackActivity implements Com
         }
     }
 
-    /**
-     * show1 展示 dialog
-     */
-    private void show1() {
-         bottomDialog = new Dialog(this, R.style.BottomDialog);
-        View contentView = LayoutInflater.from(this).inflate(R.layout.taskmessage_dialog_content_normal, null);
-        bottomDialog.setContentView(contentView);
-        LinearLayout llModify = (LinearLayout) contentView.findViewById(R.id.ll_modify);
-        LinearLayout llSubmit = (LinearLayout) contentView.findViewById(R.id.ll_submit);
-        LinearLayout llCheck = (LinearLayout) contentView.findViewById(R.id.ll_check);
-        LinearLayout llFanCheck = (LinearLayout) contentView.findViewById(R.id.ll_fanCheck);
-        LinearLayout llQrcode = (LinearLayout) contentView.findViewById(R.id.ll_qrcode);
 
-        TextView tvModify = (TextView) contentView.findViewById(R.id.tv_modify);
-        TextView tvSubmit = (TextView) contentView.findViewById(R.id.tv_submit);
-        TextView tvCheck = (TextView) contentView.findViewById(R.id.tv_check);
-        TextView tvFanCheck = (TextView) contentView.findViewById(R.id.tv_fanCheck);
-        TextView tvDelete = (TextView)contentView.findViewById(R.id.tv_delete);
-        TextView tvQrcode = (TextView)contentView.findViewById(R.id.tv_qrcode);
-
-        if (IsNew) {
-            llCheck.setVisibility(View.GONE);
-            llModify.setVisibility(View.GONE);
-            llFanCheck.setVisibility(View.GONE);
-            tvDelete.setVisibility(View.GONE);
-            llQrcode.setVisibility(View.GONE);
-        }else {
-            llModify.setVisibility(View.GONE);
-            llSubmit.setVisibility(View.GONE);
-        }
-
-
-        Observable.create(subscriber -> {
-            tvQrcode.setOnClickListener(v ->{subscriber.onNext(v);
-            });
-        }).debounce(350, TimeUnit.MILLISECONDS).observeOn(AndroidSchedulers.mainThread()).subscribe(V -> {
-            L.e("double click");
-            bottomDialog.dismiss();
-            tvQrcodeAction();
-        });
-
-
-        Observable.create(subscriber -> {
-            tvDelete.setOnClickListener(v ->{subscriber.onNext(v);
-            });
-        }).debounce(350, TimeUnit.MILLISECONDS).observeOn(AndroidSchedulers.mainThread()).subscribe(V -> {
-            L.e("double click");
-            bottomDialog.dismiss();
-            tvDeleteAction();
-        });
-
-
-        Observable.create(subscriber -> {
-            tvFanCheck.setOnClickListener(v ->{subscriber.onNext(v);
-            });
-        }).debounce(350, TimeUnit.MILLISECONDS).observeOn(AndroidSchedulers.mainThread()).subscribe(V -> {
-            L.e("double click");
-            bottomDialog.dismiss();
-            tvFanCheckAction();
-        });
-
-
-        tvModify.setOnClickListener(v -> {
-
-        });
-
-        Observable.create(subscriber -> {
-            tvSubmit.setOnClickListener(v ->{subscriber.onNext(v);
-            });
-        }).debounce(350, TimeUnit.MILLISECONDS).observeOn(AndroidSchedulers.mainThread()).subscribe(V -> {
-            L.e("double click");
-            bottomDialog.dismiss();
-            tvSubmitAction();
-        });
-
-
-        Observable.create(subscriber -> {
-            tvCheck.setOnClickListener(v ->{subscriber.onNext(v);
-            });
-        }).debounce(350, TimeUnit.MILLISECONDS).observeOn(AndroidSchedulers.mainThread()).subscribe(V -> {
-            L.e("double click");
-            bottomDialog.dismiss();
-            tvCheckAction();
-        });
-
-
-        ViewGroup.LayoutParams layoutParams = contentView.getLayoutParams();
-        layoutParams.width = getResources().getDisplayMetrics().widthPixels;
-        contentView.setLayoutParams(layoutParams);
-        bottomDialog.getWindow().setGravity(Gravity.BOTTOM);
-        bottomDialog.setCanceledOnTouchOutside(true);
-        bottomDialog.getWindow().setWindowAnimations(R.style.BottomDialog_Animation);
-        bottomDialog.show();
-    }
-
-    private void tvQrcodeAction() {
+    protected void tvQrcodeAction() {
         ApiWebService.Get_Hois_Req_QR_Code_Create(this, new ApiWebService.SuccessCall() {
             @Override
             public void SuccessBack(String result) {
@@ -848,7 +751,7 @@ public class ComTaskContentMessageActivity extends WWBackActivity implements Com
         super.onPause();
     }
 
-    private void tvSubmitAction(){
+    protected void tvSubmitAction(){
         if (TextUtils.isEmpty(idValue.get("projectName"))) {
             T.showShort(this, "项目为空不能提交");
             return;
@@ -932,7 +835,7 @@ public class ComTaskContentMessageActivity extends WWBackActivity implements Com
         },billtable, App.GSMID, App.Property, App.IsSub, App.MobileKey, App.KeyTimestring, App.USER_INFO);
     }
 
-    private void tvCheckAction(){
+    protected void tvCheckAction(){
 
         ApiWebService.Get_Hois_Req_sh(this, new ApiWebService.SuccessCall() {
             @Override
@@ -949,7 +852,7 @@ public class ComTaskContentMessageActivity extends WWBackActivity implements Com
         },idValue.get("ID"), App.USER_INFO, App.GSMID, App.Property, App.IsSub, App.MobileKey, App.KeyTimestring, App.USER_INFO);
     }
 
-    private void tvFanCheckAction(){
+    protected void tvFanCheckAction(){
         ApiWebService.Get_Hois_Req_shf(this, new ApiWebService.SuccessCall() {
             @Override
             public void SuccessBack(String result) {
@@ -965,7 +868,12 @@ public class ComTaskContentMessageActivity extends WWBackActivity implements Com
         },idValue.get("ID"), App.USER_INFO, App.GSMID, App.Property, App.IsSub, App.MobileKey, App.KeyTimestring, App.USER_INFO);
     }
 
-    private void tvDeleteAction(){
+    @Override
+    protected void tvModifyCheckAction() {
+
+    }
+
+    protected void tvDeleteAction(){
         ApiWebService.Get_Hois_Req_Del(this, new ApiWebService.SuccessCall() {
             @Override
             public void SuccessBack(String result) {
@@ -986,34 +894,11 @@ public class ComTaskContentMessageActivity extends WWBackActivity implements Com
     }
 
 
-    public static class DataBean{
-        public String wuLiao;
-        public String countUnit;
-        public String count;
-    }
-
-    private boolean isVisBottom(RecyclerView recyclerView){
-        LinearLayoutManager layoutManager = (LinearLayoutManager) recyclerView.getLayoutManager();
-        //屏幕中最后一个可见子项的position
-        int lastVisibleItemPosition = layoutManager.findLastVisibleItemPosition();
-        //当前屏幕所看到的子项个数
-        int visibleItemCount = layoutManager.getChildCount();
-        //当前RecyclerView的所有子项个数
-        int totalItemCount = layoutManager.getItemCount();
-        //RecyclerView的滑动状态
-        int state = recyclerView.getScrollState();
-        if(visibleItemCount > 0 && lastVisibleItemPosition == totalItemCount - 1 && state == recyclerView.SCROLL_STATE_IDLE){
-            return true;
-        }else {
-            return false;
-        }
-    }
-
 
     @OptionsItem
     protected final void action_operat_status(){
         Observable<Object> objectObservable = Observable.create(subscriber -> {
-            show1();
+            show1(mStatusBean);
         });
         Observable observableMobileKey = ApiWebService.Get_KeyTimestr(App.MobileKey);
         observableMobileKey.concatWith(objectObservable).subscribe(new Subscriber() {

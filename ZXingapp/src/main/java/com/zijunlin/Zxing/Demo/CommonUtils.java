@@ -22,8 +22,6 @@ public class CommonUtils {
     /**
      * return if str is empty
      *
-     * @param str
-     * @return
      */
     public static boolean isEmpty(String str) {
         if (str == null || str.length() == 0 || str.equalsIgnoreCase("null") || str.isEmpty() || str.equals("")) {
@@ -36,8 +34,6 @@ public class CommonUtils {
     /**
      * get format date
      *
-     * @param timemillis
-     * @return
      */
     public static String getFormatDate(long timemillis) {
         return new SimpleDateFormat("yyyy年MM月dd日").format(new Date(timemillis));
@@ -46,8 +42,6 @@ public class CommonUtils {
     /**
      * decode Unicode string
      *
-     * @param s
-     * @return
      */
     public static String decodeUnicodeStr(String s) {
         StringBuilder sb = new StringBuilder(s.length());
@@ -79,8 +73,6 @@ public class CommonUtils {
     /**
      * encode Unicode string
      *
-     * @param s
-     * @return
      */
     public static String encodeUnicodeStr(String s) {
         StringBuilder sb = new StringBuilder(s.length() * 3);
@@ -101,8 +93,6 @@ public class CommonUtils {
     /**
      * convert time str
      *
-     * @param time
-     * @return
      */
     public static String convertTime(int time) {
 
@@ -116,8 +106,6 @@ public class CommonUtils {
     /**
      * url is usable
      *
-     * @param url
-     * @return
      */
     public static boolean isUrlUsable(String url) {
         if (CommonUtils.isEmpty(url)) {
@@ -145,8 +133,6 @@ public class CommonUtils {
     /**
      * is url
      *
-     * @param url
-     * @return
      */
     public static boolean isUrl(String url) {
         Pattern pattern = Pattern.compile("^([hH][tT]{2}[pP]://|[hH][tT]{2}[pP][sS]://)(([A-Za-z0-9-~]+).)+([A-Za-z0-9-~\\/])+$");
@@ -156,8 +142,6 @@ public class CommonUtils {
     /**
      * get toolbar height
      *
-     * @param context
-     * @return
      */
     public static int getToolbarHeight(Context context) {
         final TypedArray styledAttributes = context.getTheme().obtainStyledAttributes(

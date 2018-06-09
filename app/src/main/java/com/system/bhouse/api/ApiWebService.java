@@ -6,7 +6,6 @@ import com.socks.library.KLog;
 import com.system.bhouse.adpter.RequestError;
 import com.system.bhouse.base.App;
 import com.system.bhouse.base.BHBaseSubscriber;
-import com.system.bhouse.base.RequestCallBack;
 import com.system.bhouse.bean.ComTaskBeanChild;
 import com.system.bhouse.utils.ProgressUtils;
 import com.system.bhouse.utils.TenUtils.L;
@@ -510,7 +509,7 @@ public class ApiWebService {
         String methodName="Get_Hois_Req_sh";
         SoapObject request = new SoapObject(NAMESPACE, methodName);
         request.addProperty("hid",hid);
-        request.addProperty("addPer",addPer);
+        request.addProperty("addPer",App.menname);
         request.addProperty("gsmid",gsmid);
         request.addProperty("property",property);
         request.addProperty("IsSubtitle",IsSubtitle);
@@ -526,7 +525,7 @@ public class ApiWebService {
         String methodName="Get_Hois_Req_shf";
         SoapObject request = new SoapObject(NAMESPACE, methodName);
         request.addProperty("hid",hid);
-        request.addProperty("addPer",addPer);
+        request.addProperty("addPer",App.menname);
         request.addProperty("gsmid",gsmid);
         request.addProperty("property",property);
         request.addProperty("IsSubtitle",IsSubtitle);
@@ -542,7 +541,7 @@ public class ApiWebService {
         String methodName="Get_Hois_Req_Del";
         SoapObject request = new SoapObject(NAMESPACE, methodName);
         request.addProperty("hid",hid);
-        request.addProperty("addPer",addPer);
+        request.addProperty("addPer", App.menname);
         request.addProperty("gsmid",gsmid);
         request.addProperty("property",property);
         request.addProperty("IsSubtitle",IsSubtitle);
@@ -558,7 +557,7 @@ public class ApiWebService {
         String methodName="Get_Hois_Req_QR_Code_Create";
         SoapObject request = new SoapObject(NAMESPACE, methodName);
         request.addProperty("hid",hid);
-        request.addProperty("addPer",addPer);
+        request.addProperty("addPer",App.menname);
         request.addProperty("gsmid",gsmid);
         request.addProperty("property",property);
         request.addProperty("IsSubtitle",IsSubtitle);
@@ -748,7 +747,7 @@ public class ApiWebService {
      * 接口名称：删除收货确认编号
      * @param mContext
      * @param call
-     * @param request
+     * @param
      * @return
      */
     public static Subscription Get_Sale_Order_Car_qr_Del(final Context mContext, final SuccessCall call,String scqid,String addPer, int gsmid, int property, boolean IsSubtitle, String Keystring,String KeyTimestring,String username)
@@ -756,7 +755,7 @@ public class ApiWebService {
         String methodName="Get_Sale_Order_Car_qr_Del";
         SoapObject request = new SoapObject(NAMESPACE, methodName);
         request.addProperty("scqid",scqid);
-        request.addProperty("addPer",addPer);
+        request.addProperty("addPer",App.menname);
         request.addProperty("gsmid",gsmid);
         request.addProperty("property",property);
         request.addProperty("IsSubtitle",IsSubtitle);
@@ -775,7 +774,7 @@ public class ApiWebService {
         String methodName="Get_Sale_Order_Car_qr_sh";
         SoapObject request = new SoapObject(NAMESPACE, methodName);
         request.addProperty("scqid",scqid);
-        request.addProperty("addPer",addPer);
+        request.addProperty("addPer",App.menname);
         request.addProperty("gsmid",gsmid);
         request.addProperty("property",property);
         request.addProperty("IsSubtitle",IsSubtitle);
@@ -804,7 +803,7 @@ public class ApiWebService {
         String methodName="Get_Sale_Order_Car_qr_shf";
         SoapObject request = new SoapObject(NAMESPACE, methodName);
         request.addProperty("scqid",scqid);
-        request.addProperty("addPer",addPer);
+        request.addProperty("addPer",App.menname);
         request.addProperty("gsmid",gsmid);
         request.addProperty("property",property);
         request.addProperty("IsSubtitle",IsSubtitle);
@@ -945,7 +944,7 @@ public class ApiWebService {
         String methodName="Get_Sale_Order_Car_qr_rn_Del";
         SoapObject request = new SoapObject(NAMESPACE, methodName);
         request.addProperty("scrid",scrid);
-        request.addProperty("addPer",addPer);
+        request.addProperty("addPer",App.menname);
         request.addProperty("gsmid",gsmid);
         request.addProperty("property",property);
         request.addProperty("IsSubtitle",IsSubtitle);
@@ -964,7 +963,7 @@ public class ApiWebService {
         String methodName="Get_Sale_Order_Car_qr_rn_sh";
         SoapObject request = new SoapObject(NAMESPACE, methodName);
         request.addProperty("scrid",scrid);
-        request.addProperty("addPer",addPer);
+        request.addProperty("addPer", App.menname);
         request.addProperty("gsmid",gsmid);
         request.addProperty("property",property);
         request.addProperty("IsSubtitle",IsSubtitle);
@@ -983,7 +982,7 @@ public class ApiWebService {
         String methodName="Get_Sale_Order_Car_qr_rn_shf";
         SoapObject request = new SoapObject(NAMESPACE, methodName);
         request.addProperty("scrid",scrid);
-        request.addProperty("addPer",addPer);
+        request.addProperty("addPer", App.menname);
         request.addProperty("gsmid",gsmid);
         request.addProperty("property",property);
         request.addProperty("IsSubtitle",IsSubtitle);
@@ -1121,7 +1120,7 @@ public class ApiWebService {
         String methodName="Get_Sale_Order_Car_qr_In_Del";
         SoapObject request = new SoapObject(NAMESPACE, methodName);
         request.addProperty("sciid",sciid);
-        request.addProperty("addPer",addPer);
+        request.addProperty("addPer", App.menname);
         request.addProperty("gsmid",gsmid);
         request.addProperty("property",property);
         request.addProperty("IsSubtitle",IsSubtitle);
@@ -1140,7 +1139,7 @@ public class ApiWebService {
         String methodName="Get_Sale_Order_Car_qr_In_sh";
         SoapObject request = new SoapObject(NAMESPACE, methodName);
         request.addProperty("sciid",sciid);
-        request.addProperty("addPer",addPer);
+        request.addProperty("addPer",App.menname);
         request.addProperty("gsmid",gsmid);
         request.addProperty("property",property);
         request.addProperty("IsSubtitle",IsSubtitle);
@@ -1159,7 +1158,7 @@ public class ApiWebService {
         String methodName="Get_Sale_Order_Car_qr_In_shf";
         SoapObject request = new SoapObject(NAMESPACE, methodName);
         request.addProperty("sciid",sciid);
-        request.addProperty("addPer",addPer);
+        request.addProperty("addPer", App.menname);
         request.addProperty("gsmid",gsmid);
         request.addProperty("property",property);
         request.addProperty("IsSubtitle",IsSubtitle);
@@ -1320,7 +1319,7 @@ public class ApiWebService {
         String methodName="Get_Car_list_Del";
         SoapObject request = new SoapObject(NAMESPACE, methodName);
         request.addProperty("Car_No_id",Car_No_id);
-        request.addProperty("addPer",addPer);
+        request.addProperty("addPer", App.menname);
         request.addProperty("gsmid",App.GSMID);
         request.addProperty("property",App.Property);
         request.addProperty("IsSubtitle",App.IsSub);
@@ -1529,7 +1528,7 @@ public class ApiWebService {
         String methodName="Get_Sale_Order_Del";
         SoapObject request = new SoapObject(NAMESPACE, methodName);
         request.addProperty("soid",soid);
-        request.addProperty("addPer",addPer);
+        request.addProperty("addPer", App.menname);
         request.addProperty("gsmid",App.GSMID);
         request.addProperty("property",App.Property);
         request.addProperty("IsSubtitle",App.IsSub);
@@ -1550,7 +1549,7 @@ public class ApiWebService {
         String methodName="Get_Sale_Order_sh";
         SoapObject request = new SoapObject(NAMESPACE, methodName);
         request.addProperty("soid",soid);
-        request.addProperty("addPer",addPer);
+        request.addProperty("addPer", App.menname);
         request.addProperty("gsmid",App.GSMID);
         request.addProperty("property",App.Property);
         request.addProperty("IsSubtitle",App.IsSub);
@@ -1571,7 +1570,7 @@ public class ApiWebService {
         String methodName="Get_Sale_Order_shf";
         SoapObject request = new SoapObject(NAMESPACE, methodName);
         request.addProperty("soid",soid);
-        request.addProperty("addPer",addPer);
+        request.addProperty("addPer", App.menname);
         request.addProperty("gsmid",App.GSMID);
         request.addProperty("property",App.Property);
         request.addProperty("IsSubtitle",App.IsSub);
@@ -1719,7 +1718,7 @@ Get_Sale_Order_Car_Del(string scid, string addPer, int gsmid, int property, bool
         String methodName="Get_Sale_Order_Car_Del";
         SoapObject request = new SoapObject(NAMESPACE, methodName);
         request.addProperty("scid",scid);
-        request.addProperty("addPer",addPer);
+        request.addProperty("addPer", App.menname);
         request.addProperty("gsmid",App.GSMID);
         request.addProperty("property",App.Property);
         request.addProperty("IsSubtitle",App.IsSub);
@@ -1740,7 +1739,7 @@ Get_Sale_Order_Car_sh(string scid, string addPer, int gsmid, int property, bool 
         String methodName="Get_Sale_Order_Car_sh";
         SoapObject request = new SoapObject(NAMESPACE, methodName);
         request.addProperty("scid",scid);
-        request.addProperty("addPer",addPer);
+        request.addProperty("addPer", App.menname);
         request.addProperty("gsmid",App.GSMID);
         request.addProperty("property",App.Property);
         request.addProperty("IsSubtitle",App.IsSub);
@@ -1760,7 +1759,7 @@ Get_Sale_Order_Car_shf(string scid, string addPer, int gsmid, int property, bool
         String methodName="Get_Sale_Order_Car_shf";
         SoapObject request = new SoapObject(NAMESPACE, methodName);
         request.addProperty("scid",scid);
-        request.addProperty("addPer",addPer);
+        request.addProperty("addPer", App.menname);
         request.addProperty("gsmid",App.GSMID);
         request.addProperty("property",App.Property);
         request.addProperty("IsSubtitle",App.IsSub);
@@ -1925,7 +1924,7 @@ Get_Sale_Order_Car_shf(string scid, string addPer, int gsmid, int property, bool
         String methodName="Get_Sale_Order_Car_check_In_Del";
         SoapObject request = new SoapObject(NAMESPACE, methodName);
         request.addProperty("sciid",sciid);
-        request.addProperty("addPer",addPer);
+        request.addProperty("addPer", App.menname);
         request.addProperty("gsmid",App.GSMID);
         request.addProperty("property",App.Property);
         request.addProperty("IsSubtitle",App.IsSub);
@@ -1946,7 +1945,7 @@ Get_Sale_Order_Car_shf(string scid, string addPer, int gsmid, int property, bool
         String methodName="Get_Sale_Order_Car_check_In_sh";
         SoapObject request = new SoapObject(NAMESPACE, methodName);
         request.addProperty("sciid",sciid);
-        request.addProperty("addPer",addPer);
+        request.addProperty("addPer", App.menname);
         request.addProperty("gsmid",App.GSMID);
         request.addProperty("property",App.Property);
         request.addProperty("IsSubtitle",App.IsSub);
@@ -1967,7 +1966,7 @@ Get_Sale_Order_Car_shf(string scid, string addPer, int gsmid, int property, bool
         String methodName="Get_Sale_Order_Car_check_In_shf";
         SoapObject request = new SoapObject(NAMESPACE, methodName);
         request.addProperty("sciid",sciid);
-        request.addProperty("addPer",addPer);
+        request.addProperty("addPer", App.menname);
         request.addProperty("gsmid",App.GSMID);
         request.addProperty("property",App.Property);
         request.addProperty("IsSubtitle",App.IsSub);
@@ -2135,7 +2134,7 @@ Get_Sale_Order_Car_shf(string scid, string addPer, int gsmid, int property, bool
         String methodName="Get_Sale_Order_Car_Container_Del";
         SoapObject request = new SoapObject(NAMESPACE, methodName);
         request.addProperty("sccid",sccid);
-        request.addProperty("addPer",addPer);
+        request.addProperty("addPer", App.menname);
         request.addProperty("gsmid",App.GSMID);
         request.addProperty("property",App.Property);
         request.addProperty("IsSubtitle",App.IsSub);
@@ -2156,7 +2155,7 @@ Get_Sale_Order_Car_shf(string scid, string addPer, int gsmid, int property, bool
         String methodName="Get_Sale_Order_Car_Container_sh";
         SoapObject request = new SoapObject(NAMESPACE, methodName);
         request.addProperty("sccid",sccid);
-        request.addProperty("addPer",addPer);
+        request.addProperty("addPer", App.menname);
         request.addProperty("gsmid",App.GSMID);
         request.addProperty("property",App.Property);
         request.addProperty("IsSubtitle",App.IsSub);
@@ -2177,7 +2176,7 @@ Get_Sale_Order_Car_shf(string scid, string addPer, int gsmid, int property, bool
         String methodName="Get_Sale_Order_Car_Container_shf";
         SoapObject request = new SoapObject(NAMESPACE, methodName);
         request.addProperty("sccid",sccid);
-        request.addProperty("addPer",addPer);
+        request.addProperty("addPer", App.menname);
         request.addProperty("gsmid",App.GSMID);
         request.addProperty("property",App.Property);
         request.addProperty("IsSubtitle",App.IsSub);

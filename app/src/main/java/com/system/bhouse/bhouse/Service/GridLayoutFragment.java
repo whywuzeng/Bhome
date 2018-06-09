@@ -31,6 +31,7 @@ import com.system.bhouse.base.RequestCallBack;
 import com.system.bhouse.bean.NeteastNewsSummary;
 import com.system.bhouse.bhouse.CommonTask.SiteActivity_;
 import com.system.bhouse.bhouse.CommonTask.TransportationManagement.TransportationManagementActivity_;
+import com.system.bhouse.bhouse.CommonTask.Widget.UpScorllLayout.SimpleStickActivity;
 import com.system.bhouse.bhouse.CompanyNews.CompanyNewsDetailActivity_;
 import com.system.bhouse.bhouse.R;
 import com.system.bhouse.bhouse.Service.NewsListUI.NewsListSection;
@@ -372,7 +373,8 @@ public class GridLayoutFragment extends Fragment implements GvMainAdapter.ImageC
 
                 break;
             case 3:
-
+                Intent intent1 = new Intent(getActivity(), SimpleStickActivity.class);
+                startActivity(intent1);
                 break;
             case 4:
                 break;

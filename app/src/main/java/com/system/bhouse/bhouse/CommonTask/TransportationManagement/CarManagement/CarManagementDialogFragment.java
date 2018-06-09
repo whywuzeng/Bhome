@@ -72,7 +72,7 @@ public class CarManagementDialogFragment extends DialogFragment {
         CarManagementDialogFragment viewUtils = null;
         if (viewUtils == null) {
             Bundle bundle = new Bundle();
-            bundle.putParcelable(CarManagementListFragment.ITEMSTATUS, statusBean);
+            bundle.putSerializable(CarManagementListFragment.ITEMSTATUS, statusBean);
             if (loadedRequires!=null) {
                 bundle.putParcelable(CarManagementListFragment.ITEMDATA, loadedRequires);
             }

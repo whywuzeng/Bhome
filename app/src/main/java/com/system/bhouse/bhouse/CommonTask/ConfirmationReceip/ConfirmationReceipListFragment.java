@@ -142,7 +142,7 @@ public class ConfirmationReceipListFragment extends BaseCommonListFragment<Confi
     @Override
     public void ItemClick(ConfirmationLoadingAdapter.ItemViewHolder holder, int position) {
         mNeedUpdate = true;
-        StatusBean statusBean = new StatusBean();
+        StatusBean statusBean = getStatusBean();
         statusBean.setLookStatus(true);
         ConfirmationContentMessageActivity_.intent(getParentFragment()).HId(mData
                 .get(position).getID() + "").receiptHnumber(mData.get(position).receiptHnumber).mStatus(statusBean).start();

@@ -5,9 +5,9 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="300dp"
         tools:context=""
-        android:gravity="center"
+        android:gravity="top"
         android:paddingLeft="10dp"
         android:paddingRight="10dp"
         android:orientation="horizontal">
@@ -16,12 +16,16 @@
         <DatePicker
             android:id="@+id/DatePicker"
             android:datePickerMode="spinner"
+            android:scrollbarSize="15dp"
+            android:scrollbarStyle="insideOverlay"
             android:layout_width="wrap_content"
             android:calendarViewShown="false"
             android:layout_height="wrap_content"/>
 
         <TimePicker
             android:id="@+id/TimePicker"
+            android:scrollbarSize="15dp"
+            android:scrollbarStyle="insideOverlay"
             android:timePickerMode="spinner"
             android:layout_width="wrap_content"
             android:calendarViewShown="false"

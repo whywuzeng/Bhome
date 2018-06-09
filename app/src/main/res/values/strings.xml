@@ -253,4 +253,9 @@
     <string name="text_close">关闭</string>
     <string name="passworderror">密码错误</string>
     <string name="pwd_is_null">密码为空</string>
+    <string name="is_sure_logout">确定要注销？</string>
+    <string name="logout">注销</string>
+    <string name="msg_zhushou">消息助手</string>
+    <string name="msg_title_from">来自标题:</string>
+    <string name="BusinessVersion">企业版</string>
 </resources>

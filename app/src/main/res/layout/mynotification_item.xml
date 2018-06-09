@@ -18,7 +18,7 @@
 
             <TextView
                 android:gravity="center_vertical"
-                android:text="流程助手"
+                android:text="@string/msg_zhushou"
                 android:layout_marginLeft="16dp"
                 android:textColor="@color/common_color_text_300"
                 android:textSize="17sp"
@@ -79,7 +79,7 @@
             <TextView
                 android:id="@+id/tv_fromto"
                 android:gravity="center_vertical"
-                android:text="来自:"
+                android:text="@string/msg_title_from"
                 android:textColor="@color/common_color_text_30"
                 android:textSize="14sp"
                 android:layout_marginLeft="16dp"
@@ -100,11 +100,12 @@
                 android:layout_height="wrap_content"/>
 
             <ImageView
+                android:id="@+id/iv_three_dot"
                 android:src="@drawable/ic_dot_more"
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
                 android:layout_marginRight="10dp"
-                android:layout_width="wrap_content"
+                android:layout_width="60dp"
                 android:layout_height="wrap_content"/>
         </RelativeLayout>
 

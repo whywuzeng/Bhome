@@ -259,15 +259,26 @@
             android:name="com.system.bhouse.bhouse.setup.notification.MyNotificationActivity_"
             android:launchMode="singleTask"
             android:screenOrientation="portrait">
-            <intent-filter>
-                <action android:name="android.intent.action.VIEW"/>
-                <category android:name="android.intent.category.DEFAULT"/>
-                <data
-                    android:scheme="xgscheme"
-                    android:host="com.xg.push"
-                    android:path="/notify_detail"/>
-            </intent-filter>
+            <!--<intent-filter>-->
+                <!--<action android:name="android.intent.action.VIEW"/>-->
+                <!--<category android:name="android.intent.category.DEFAULT"/>-->
+                <!--<data-->
+                    <!--android:scheme="xgscheme"-->
+                    <!--android:host="com.xg.push"-->
+                    <!--android:path="/notify_detail"/>-->
+            <!--</intent-filter>-->
         </activity>
+        <activity android:name="com.system.bhouse.bhouse.CommonTask.TransportationManagement.TestForUpScorll.TestForUpScorllActivity"
+                  android:screenOrientation="portrait">
+        </activity>
+
+        <activity android:name="com.system.bhouse.bhouse.CommonTask.Widget.UpScorllLayout.SimpleStickActivity"
+                  android:screenOrientation="portrait">
+        </activity>
+        <activity android:name="com.system.bhouse.bhouse.setup.notification.MyApprovalNotificationActivity_"
+                  android:screenOrientation="portrait">
+        </activity>
+
 
         <meta-data
             android:name="design_width"
@@ -330,5 +341,10 @@
     <uses-permission android:name="android.permission.CHANGE_CONFIGURATION"></uses-permission>
     <uses-permission android:name="android.permission.VIBRATE"/>
     <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW"/>
+
+    <!--华为的文档很好找，华为桌面加角标-->
+    <uses-permission android:name="com.huawei.android.launcher.permission.CHANGE_BADGE"/>
+    <uses-permission android:name="com.huawei.permission.sec.MDM"/>
+
 
 </manifest>

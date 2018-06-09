@@ -1,23 +1,9 @@
 apply plugin: 'com.android.library'
+apply plugin: 'com.novoda.bintray-release'
 
 android {
     compileSdkVersion 23
     buildToolsVersion '26.0.2'
-
-    flavorDimensions "dev"
-    productFlavors {
-        // Define separate dev and prod product flavors.
-        dev {
-            // dev utilizes minSDKVersion = 21 to allow the Android gradle plugin
-            // to pre-dex each module and produce an APK that can be tested on
-            // Android Lollipop without time consuming dex merging processes.
-            minSdkVersion 19
-        }
-        prod {
-            // The actual minSdkVersion for the application.
-            minSdkVersion 16
-        }
-    }
 
     defaultConfig {
         minSdkVersion 7
@@ -26,12 +12,6 @@ android {
         versionName "0.01"
     }
 
-    buildTypes {
-        release {
-            minifyEnabled false
-            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.txt'
-        }
-    }
 
     lintOptions {
 
@@ -40,38 +20,27 @@ android {
     }
 }
 
-
-task clearJar(type: Delete) {
-
-    delete 'libs/ZXingDemosdk.jar' //sdk是你自己jar包的名字，随便命名
-
+buildscript {
+    repositories {
+        jcenter()
+    }
+    dependencies {
+        classpath 'com.novoda:bintray-release:0.8.1'
+    }
 }
 
-task makeJar(type:org.gradle.api.tasks.bundling.Jar) {
 
-//指定生成的jar名
+publish {
 
-    baseName 'ZXingDemosdk'
-
-//从哪里打包class文件
-
-    from('build/intermediates/classes/dev/debug/com/zijunlin/Zxing/Demo/')
-
-//打包到jar后的目录结构
-
-    into('com/zijunlin/Zxing/Demo/')
-
-//去掉不需要打包的目录和文件
-
-    exclude('test/', 'BuildConfig.class', 'R.class')
-
-//去掉R开头的文件
-
-    exclude{it.name.startsWith('R$')}
-
+    userOrg = 'bhome'
+    groupId = 'com.zijunlin.Zxing.Demo'
+    artifactId = 'ZXingDemo'
+    publishVersion = '1.0.2'
+    desc = 'Oh hi, this is a nice description for a project, right?'
+    website = 'http://www.bhome.com.cn'
+    licences = ['Apache-2.0']
 }
 
-makeJar.dependsOn(clearJar, build)
 
 dependencies {
     implementation files('libs/zxing.jar')

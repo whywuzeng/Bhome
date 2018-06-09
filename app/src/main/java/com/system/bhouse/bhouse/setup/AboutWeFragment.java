@@ -3,12 +3,15 @@ package com.system.bhouse.bhouse.setup;
 import android.app.Activity;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.v7.app.AlertDialog;
 import android.text.TextUtils;
 import android.view.View;
+import android.view.ViewTreeObserver;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -16,6 +19,7 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.readystatesoftware.viewbadger.BadgeView;
+import com.system.bhouse.Custom.ShowDeviceMessageCustomDialog;
 import com.system.bhouse.base.App;
 import com.system.bhouse.base.Global;
 import com.system.bhouse.bean.EventBean.EventOrganization;
@@ -29,6 +33,7 @@ import com.system.bhouse.bhouse.setup.notification.bean.XGNotification;
 import com.system.bhouse.bhouse.setup.utils.CameraPhotoUtil;
 import com.system.bhouse.bhouse.setup.utils.FileUtil;
 import com.system.bhouse.utils.TenUtils.T;
+import com.system.bhouse.utils.ViewUtil;
 import com.system.bhouse.utils.sharedpreferencesuser;
 import com.tencent.android.tpush.XGPushShowedResult;
 
@@ -38,6 +43,8 @@ import org.androidannotations.annotations.OnActivityResult;
 import org.androidannotations.annotations.ViewById;
 
 import de.greenrobot.event.EventBus;
+import de.hdodenhof.circleimageview.CircleImageView;
+import me.gujun.android.taggroup.TagGroup;
 
 /**
  * Created by Administrator on 2018-03-19.
@@ -56,6 +63,9 @@ public class AboutWeFragment extends WWBaseFragment {
 
     @ViewById(R.id.iv_avator)
     ImageView iv_avator;
+
+    @ViewById(R.id.iv_avator1)
+    CircleImageView avatorCircleImageView;
 
     @ViewById(R.id.organization_ll_layout)
     LinearLayout organization_ll_layout;
@@ -78,10 +88,10 @@ public class AboutWeFragment extends WWBaseFragment {
     @ViewById(R.id.tv_organization_company)
     TextView tvCompanyName;
 
-    @ViewById(R.id.tv_username)
+    @ViewById(R.id.tv_username1)
     TextView tvUsername;
 
-    @ViewById(R.id.tv_company_name)
+    @ViewById(R.id.tv_company_name1)
     TextView TvCompanyName;
 
     @ViewById(R.id.badge)
@@ -89,13 +99,18 @@ public class AboutWeFragment extends WWBaseFragment {
     @ViewById(R.id.lly_notification)
     LinearLayout  lly_notification;
 
+    @ViewById(R.id.tag_group)
+    TagGroup tag_group;
+    @ViewById(R.id.tag_group1)
+    TagGroup tag_group1;
+
     @AfterViews
     public void initAboutWeFrag() {
 
         tvUsername.setText(App.menname);
         tvCompanyName.setText(App.Mancompany);
         TvCompanyName.setText(App.mpname);
-        badge.hide();
+//        badge.hide();
 
         setActionBarTitle("我的");
         iv_avator.setOnClickListener(new View.OnClickListener() {
@@ -125,13 +140,7 @@ public class AboutWeFragment extends WWBaseFragment {
         ll_myself_logout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-                Intent intent = new Intent(getActivity(), LoginActivity.class);
-                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                startActivity(intent);
-                Intent serviceIntent = new Intent( getActivity(), MessageService.class);
-                serviceIntent.setPackage("com.system.bhouse.bhouse");
-                getActivity().stopService(serviceIntent);
+                ShowLogoutDialog();
             }
         });
 
@@ -139,16 +148,65 @@ public class AboutWeFragment extends WWBaseFragment {
 
             @Override
             public void onClick(View v) {
-                count=0;
-                badge.setVisibility(View.GONE);
+//                count=0;
+//                badge.setVisibility(View.GONE);
                 MyNotificationActivity_.intent(getActivity()).start();
             }
         });
 
-        SetAvatorIcon();
+        initBadgerView(App.ColumCount);
+//        SetAvatorIcon();
+        tag_group.setTags(new String[]{"企业版"});
+        tag_group1.setTags(new String[]{App.usertype});
+
+        avatorCircleImageView.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+            @Override
+            public void onGlobalLayout() {
+                int width = avatorCircleImageView.getWidth();
+                int height = avatorCircleImageView.getHeight();
+                int top = avatorCircleImageView.getTop();
+                int left = avatorCircleImageView.getLeft();
+                int bottom = avatorCircleImageView.getBottom();
+                int right = avatorCircleImageView.getRight();
+                int length = App.menname.length();
+                String substring = App.menname.substring(length-1,length);
+                if (width>0)
+                {
+                    Drawable drawable = avatorCircleImageView.getDrawable();
+                    Bitmap textToBitmap = ViewUtil.drawTextToBitmap(getActivity(), substring,left,top,width,height);
+                    avatorCircleImageView.setImageBitmap(textToBitmap);
+                    avatorCircleImageView.getViewTreeObserver().removeOnGlobalLayoutListener(this);
+                }
+            }
+        });
+
     }
 
+    private void ShowLogoutDialog() {
+        ShowDeviceMessageCustomDialog.Builder builder = new ShowDeviceMessageCustomDialog.Builder(getActivity());
+        ShowDeviceMessageCustomDialog dialog = builder.setMessage(R.string.is_sure_logout).setTitle(R.string.logout).setPositiveButton(R.string.sure, new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+                //点击触发认证事件
+                //登录信息置空
+                App.USER_INFO="";
+                //跳转界面app
+                Intent intent = new Intent(getActivity(), LoginActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                startActivity(intent);
+                Intent serviceIntent = new Intent(getActivity(), MessageService.class);
+                serviceIntent.setPackage("com.system.bhouse.bhouse");
+                getActivity().stopService(serviceIntent);
+            }
+        }).setNegativeButton(R.string.btn_dialog_cancel,
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                }).create();
+        dialog.show();
 
+    }
 
     protected void SetAvatorIcon()
     {
@@ -187,7 +245,7 @@ public class AboutWeFragment extends WWBaseFragment {
         Intent i = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
         startActivityForResult(i, RESULT_REQUEST_PHOTO);
     }
-    int count;
+
     public void onEventMainThread(Object object) {
         if (object instanceof EventOrganization)
         {
@@ -195,21 +253,20 @@ public class AboutWeFragment extends WWBaseFragment {
             tvCompanyName.setText(resultOrgnazetion);
         }else if (object instanceof XGPushShowedResult)
         {
-            badge.show();
+//            badge.show();
+            badge.setVisibility(View.VISIBLE);
             int columnsCount = App.getColumnsCount();
             initBadgerView(columnsCount);
+            HaWeiShortcutBadger.handleBadge(columnsCount);
         }else if (object instanceof XGNotification)
         {
             int columnsCount = App.getColumnsCount();
-            if (columnsCount<0)
-            {
-                badge.hide();
-                EventBus.getDefault().post(columnsCount);
-               return;
-            }
             initBadgerView(columnsCount);
+            HaWeiShortcutBadger.handleBadge(columnsCount);
         }
     }
+
+
 
     private void initBadgerView(int count){
         badge.setFocusable(false);

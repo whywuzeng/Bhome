@@ -53,7 +53,7 @@ public class MessageReceiver extends XGPushBaseReceiver {
 //        show(context, "您有1条新消息, " + "通知被展示 ， " + notifiShowedRlt.toString());
 //        Log.d("LC", "+++++++++++++++++++++++++++++展示通知的回调");
         EventBus aDefault = EventBus.getDefault();
-        EventBus.getDefault().postSticky(notifiShowedRlt);
+        EventBus.getDefault().post(notifiShowedRlt);
     }
 
     @Override

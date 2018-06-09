@@ -149,12 +149,11 @@ dependencies {
         exclude module: 'commons-io'
     }
     implementation 'com.github.PhilJay:MPAndroidChart:v3.0.3'
-    implementation project(':ZXingapp')
     implementation files('libs/android-custom-vg.2.6.0.jar')
     implementation 'com.github.thinkcool:circletextimageview:1.0.20151218'
     implementation 'com.astuetz:pagerslidingtabstrip:1.0.1'
     implementation 'q.rorbin:badgeview:1.1.2'
-    implementation 'de.hdodenhof:circleimageview:1.3.0'
+    implementation 'de.hdodenhof:circleimageview:2.2.0'
     implementation 'de.greenrobot:eventbus:2.4.0'
     implementation 'org.apmem.tools:layouts:1.9@aar'
     implementation 'se.emilsjolander:stickylistheaders:2.7.0'
@@ -166,7 +165,6 @@ dependencies {
     //个扩展原生控件支持圆角矩形框背景的库,可以减少相关shape资源文件使用
     implementation 'zhou.widget:richtext:1.0.4'
     implementation 'com.scwang.smartrefresh:SmartRefreshLayout:1.1.0-alpha-5'
-
     //支持mutidex
     implementation 'com.android.support:multidex:1.0.1'
     //信鸽jar
@@ -175,11 +173,17 @@ dependencies {
     implementation 'com.tencent.wup:wup:1.0.0.E-release'
     //mid包
     implementation 'com.tencent.mid:mid:4.0.6-release'
-
     def AAVersion = '4.1.0'
-    annotationProcessor  "org.androidannotations:androidannotations:$AAVersion"
+    annotationProcessor "org.androidannotations:androidannotations:$AAVersion"
     implementation "org.androidannotations:androidannotations-api:$AAVersion"
-//    annotationProcessor
+    //    annotationProcessor
+    implementation 'com.zijunlin.Zxing.Demo:ZXingDemo:1.0.2'
+
+    //产品标签
+    compile 'me.gujun.android.taggroup:library:1.4@aar'
+
+    // popdialogwindow
+    compile 'com.github.pinguo-zhouwei:CustomPopwindow:2.1.1'
 }
 
 

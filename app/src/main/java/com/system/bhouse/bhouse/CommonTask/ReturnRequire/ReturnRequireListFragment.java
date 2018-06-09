@@ -142,10 +142,11 @@ public class ReturnRequireListFragment extends BaseCommonListFragment<ReturnRequ
     @Override
     public void ItemClick(ReturnRequireLoadingAdapter.ItemViewHolder holder, int position) {
         mNeedUpdate = true;
-        StatusBean statusBean = new StatusBean();
+        StatusBean statusBean = getStatusBean();
         statusBean.setLookStatus(true);
         ReturnRequireContentMessageActivity_.intent(getParentFragment()).HId(mData
                 .get(position).getID() + "").receiptHnumber(mData.get(position).receiptHnumber).mStatus(statusBean).start();
     }
+
 
 }

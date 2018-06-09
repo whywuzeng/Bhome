@@ -154,7 +154,7 @@ public class ReplenishmentRequireListFragment extends BaseCommonListFragment<Rep
     @Override
     public void ItemClick(ReplenishmentRequireLoadingAdapter.ItemViewHolder holder, int position) {
         mNeedUpdate = true;
-        StatusBean statusBean = new StatusBean();
+        StatusBean statusBean = getStatusBean();
         statusBean.setLookStatus(true);
         ReplenishmentRequireContentMessageActivity_.intent(getParentFragment()).HId(mData
                 .get(position).getID() + "").receiptHnumber(mData.get(position).receiptHnumber).mStatus(statusBean).start();

@@ -7,6 +7,7 @@ import android.view.ViewGroup;
 import com.system.bhouse.api.ApiWebService;
 import com.system.bhouse.base.App;
 import com.system.bhouse.base.StatusBean;
+import com.system.bhouse.base.SubmitStatusBeanImpl;
 import com.system.bhouse.bhouse.CommonTask.BaseTaskFragment.BaseCommonFragment;
 import com.system.bhouse.bhouse.CommonTask.adapter.PageTaskFragment;
 import com.system.bhouse.bhouse.CommonTask.callback.TaskListParentUpdate;
@@ -57,6 +58,7 @@ public class ReturnRequireFragment extends BaseCommonFragment implements TaskLis
     @Override
     protected void AddIntentFor() {
         StatusBean statusBean = new StatusBean();
+        statusBean.setBean(new SubmitStatusBeanImpl().setVisSubmitBtn(true).setVisQRBtn(true));
         statusBean.setNewStatus(true);
         ReturnRequireContentMessageActivity_.intent(getActivity()).HId("").mStatus(statusBean).start();
 
