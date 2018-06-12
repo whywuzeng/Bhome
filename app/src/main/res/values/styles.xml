@@ -352,4 +352,11 @@
         <item name="android:textColorPrimary">@color/colorPrimary</item>
     </style>
 
+    <!--//timeline 界面的背景-->
+
+    <style name="timelineButton">
+        <item name="android:background">@drawable/selector_btn_common</item>
+        <item name="android:layout_height">@dimen/common_button_height</item>
+    </style>
+
 </resources>
