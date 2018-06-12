@@ -335,9 +335,10 @@ public abstract class BaseCommonListFragment<T extends LoadingAdapter,B> extends
 
     protected abstract void AddDeleteUpdateListData(Object object);
 
+    protected String DefaultStatus;
     @NonNull
     protected StatusBean getStatusBean() {
-        String DefaultStatus = TextUtils.isEmpty(mStatus) ? "提交" : mStatus;
+        DefaultStatus= TextUtils.isEmpty(mStatus) ? "提交" : mStatus;
         StatusBean statusBean = new StatusBean();
         //从初始化  或者  后台请求 得到状态
         if (DefaultStatus.equals("提交")) {

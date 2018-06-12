@@ -45,10 +45,20 @@ public class HangRequiretFragment extends BaseCommonFragment implements TaskList
         adapter = new ConfirmationPageTaskFragment(getChildFragmentManager(),mFilterModel,statusIndex,confirmationReceiptListFragment);
         pager.setAdapter(adapter);
 
+    }
+
+    //新建的 跳转 ->activity
+    @Override
+    protected void AddIntentFor() {
+
         ApiWebService.Get_Hois_Req_h_Number(getActivity(), new ApiWebService.SuccessCall() {
             @Override
             public void SuccessBack(String result) {
                 HNumber=result;
+                StatusBean statusBean = new StatusBean();
+                statusBean.setBean(new SubmitStatusBeanImpl().setVisSubmitBtn(true));
+                statusBean.setNewStatus(true);
+                ComTaskContentMessageActivity_.intent(getActivity()).HId("").mStatusBean(statusBean).start();
             }
 
             @Override
@@ -56,15 +66,7 @@ public class HangRequiretFragment extends BaseCommonFragment implements TaskList
 
             }
         }, GSMID, Property, IsSub);
-    }
 
-    //新建的 跳转 ->activity
-    @Override
-    protected void AddIntentFor() {
-        StatusBean statusBean = new StatusBean();
-        statusBean.setBean(new SubmitStatusBeanImpl().setVisSubmitBtn(true));
-        statusBean.setNewStatus(true);
-        ComTaskContentMessageActivity_.intent(getActivity()).HId("").mStatusBean(statusBean).start();
     }
 
 

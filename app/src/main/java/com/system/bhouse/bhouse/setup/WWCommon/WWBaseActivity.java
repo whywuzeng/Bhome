@@ -14,14 +14,15 @@ import android.widget.ListView;
 import android.widget.PopupWindow;
 import android.widget.TextView;
 
+import com.system.bhouse.base.Global.StartActivity;
 import com.system.bhouse.bhouse.R;
 import com.system.bhouse.bhouse.setup.SingleToast;
 import com.system.bhouse.bhouse.setup.program.FootUpdate;
 import com.system.bhouse.bhouse.setup.utils.DialogUtil;
-import com.system.bhouse.base.Global.StartActivity;
 
 import java.util.concurrent.TimeUnit;
 
+import butterknife.ButterKnife;
 import rx.Observable;
 import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;
@@ -218,7 +219,6 @@ public class WWBaseActivity extends AppCompatActivity implements StartActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         mSingleToast = new SingleToast(this);
 
 //        networkImpl = new NetworkImpl(this, this);
@@ -240,6 +240,7 @@ public class WWBaseActivity extends AppCompatActivity implements StartActivity {
 
     @Override
     protected void onDestroy() {
+        ButterKnife.unbind(this);
         if (mProgressDialog != null) {
             mProgressDialog.dismiss();
             mProgressDialog = null;

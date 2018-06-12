@@ -41,10 +41,19 @@ public class ReturnRequireFragment extends BaseCommonFragment implements TaskLis
         adapter = new ConfirmationPageTaskFragment(getChildFragmentManager(),mFilterModel,statusIndex,confirmationReceiptListFragment);
         pager.setAdapter(adapter);
 
+    }
+
+    //新建的 跳转 ->activity
+    @Override
+    protected void AddIntentFor() {
+
         ApiWebService.Get_Sale_Order_Car_qr_rn_so_Number(getActivity(), new ApiWebService.SuccessCall() {
             @Override
             public void SuccessBack(String result) {
-                App.receiptHnumber=result;
+                StatusBean statusBean = new StatusBean();
+                statusBean.setBean(new SubmitStatusBeanImpl().setVisSubmitBtn(true).setVisQRBtn(true));
+                statusBean.setNewStatus(true);
+                ReturnRequireContentMessageActivity_.intent(getActivity()).HId("").receiptHnumber(result).mStatus(statusBean).start();
             }
 
             @Override
@@ -52,15 +61,6 @@ public class ReturnRequireFragment extends BaseCommonFragment implements TaskLis
 
             }
         }, App.GSMID, App.Property, App.IsSub);
-    }
-
-    //新建的 跳转 ->activity
-    @Override
-    protected void AddIntentFor() {
-        StatusBean statusBean = new StatusBean();
-        statusBean.setBean(new SubmitStatusBeanImpl().setVisSubmitBtn(true).setVisQRBtn(true));
-        statusBean.setNewStatus(true);
-        ReturnRequireContentMessageActivity_.intent(getActivity()).HId("").mStatus(statusBean).start();
 
     }
 

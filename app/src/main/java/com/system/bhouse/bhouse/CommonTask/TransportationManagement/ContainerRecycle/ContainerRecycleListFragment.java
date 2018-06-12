@@ -133,17 +133,6 @@ public class ContainerRecycleListFragment extends BaseCommonListFragment<Contain
     protected void AddDeleteUpdateListData(Object object) {
         if (object.toString().contains("tvSubmitAction"))
         {
-            ApiWebService.Get_Sale_Order_Car_Container_so_Number(getActivity(), new ApiWebService.SuccessCall() {
-                @Override
-                public void SuccessBack(String result) {
-                    App.receiptHnumber=result;
-                }
-
-                @Override
-                public void ErrorBack(String error) {
-
-                }
-            });
         }
         //重新加载所有
         mUpdateAll = true;
@@ -154,7 +143,10 @@ public class ContainerRecycleListFragment extends BaseCommonListFragment<Contain
     @Override
     public void ItemClick(ContainerRecycleLoadingAdapter.ItemViewHolder holder, int position) {
         mNeedUpdate = true;
-        StatusBean statusBean = new StatusBean();
+        StatusBean statusBean = getStatusBean();
+        if (DefaultStatus.equals("提交")) {
+            statusBean.getBean().setVisModifyBtn(true);
+        }
         statusBean.setLookStatus(true);
         ContainerRecycleContentMessageActivity_.intent(getParentFragment()).HId(mData
                 .get(position).getID() + "").receiptHnumber(mData.get(position).getHNumbe()).mStatus(statusBean).start();

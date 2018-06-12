@@ -23,9 +23,9 @@ public class NotificationSectionAdapter extends CommonBaseSectionQuickAdapter<XG
 
     @Override
     protected void convertHead(BaseViewHolder helper, XGNotificationSectionEntity item) {
-        if (item.isMore()){
-            helper.addOnClickListener(R.id.rl_dealWith);
-        }
+//        if (item.isMore()){
+//            helper.addOnClickListener(R.id.rl_dealWith);
+//        }
     }
 
     @Override

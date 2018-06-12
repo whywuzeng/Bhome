@@ -5,8 +5,8 @@ import android.support.v4.app.FragmentManager;
 import android.view.ViewGroup;
 
 import com.system.bhouse.api.ApiWebService;
-import com.system.bhouse.base.App;
 import com.system.bhouse.base.StatusBean;
+import com.system.bhouse.base.SubmitStatusBeanImpl;
 import com.system.bhouse.bhouse.CommonTask.BaseTaskFragment.BaseCommonFragment;
 import com.system.bhouse.bhouse.CommonTask.adapter.PageTaskFragment;
 import com.system.bhouse.bhouse.CommonTask.callback.TaskListParentUpdate;
@@ -40,10 +40,20 @@ public class ComponentReturnsFragment extends BaseCommonFragment implements Task
         adapter = new ConfirmationPageTaskFragment(getChildFragmentManager(),mFilterModel,statusIndex,confirmationReceiptListFragment);
         pager.setAdapter(adapter);
 
+
+    }
+
+    //新建的 跳转 ->activity
+    @Override
+    protected void AddIntentFor() {
+
         ApiWebService.Get_Sale_Order_Car_check_In_so_Number(getActivity(), new ApiWebService.SuccessCall() {
             @Override
             public void SuccessBack(String result) {
-                App.receiptHnumber=result;
+                StatusBean statusBean = new StatusBean();
+                statusBean.setBean(new SubmitStatusBeanImpl().setVisQRBtn(true).setVisSubmitBtn(true));
+                statusBean.setNewStatus(true);
+                ComponentReturnsContentMessageActivity_.intent(getActivity()).HId("").receiptHnumber(result).mStatus(statusBean).start();
             }
 
             @Override
@@ -51,14 +61,7 @@ public class ComponentReturnsFragment extends BaseCommonFragment implements Task
 
             }
         });
-    }
 
-    //新建的 跳转 ->activity
-    @Override
-    protected void AddIntentFor() {
-        StatusBean statusBean = new StatusBean();
-        statusBean.setNewStatus(true);
-        ComponentReturnsContentMessageActivity_.intent(getActivity()).HId("").mStatus(statusBean).start();
 
     }
 

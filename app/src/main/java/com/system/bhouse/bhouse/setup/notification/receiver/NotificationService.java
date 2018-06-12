@@ -39,9 +39,9 @@ public class NotificationService {
         db.insert("notification", null, values);
     }
 
-    public void delete(Integer id) {
+    public int delete(Integer id) {
         SQLiteDatabase db = dbOpenHelper.getWritableDatabase();
-        db.delete("notification", "id=?", new String[]{id.toString()});
+        return db.delete("notification", "id=?", new String[]{id.toString()});
     }
 
     public void deleteAll() {
@@ -139,6 +139,70 @@ public class NotificationService {
             return notifications;
         }
         finally {
+            cursor.close();
+        }
+    }
+
+    public List<XGNotification> getScrollDataForApproval(int currentPage, int lineSize,
+                                              String msg_id) {
+        String firstResult = String.valueOf((currentPage - 1) * lineSize);
+        SQLiteDatabase db = dbOpenHelper.getReadableDatabase();
+        Cursor cursor = null;
+        try {
+            try {
+                if (msg_id == null || "".equals(msg_id)) {
+                    cursor = db
+                            .query("notification",
+                                    new String[]{"id,msg_id,title,content,activity,notificationActionType,update_time,isnew"},
+                                    null, null, null, null, "update_time DESC",
+                                    firstResult + "," + lineSize);
+                } else {
+                    cursor = db
+                            .query("notification",
+                                    new String[]{"id,msg_id,title,content,activity,notificationActionType,update_time,isnew"},
+                                    "isnew = ?", new String[]{msg_id },
+                                    null, null, "update_time DESC", firstResult
+                                            + "," + lineSize);
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            List<XGNotification> notifications = new ArrayList<XGNotification>();
+            while (cursor.moveToNext()) {
+                notifications.add(new XGNotification(cursor.getInt(cursor
+                        .getColumnIndex("id")), cursor.getLong(cursor
+                        .getColumnIndex("msg_id")), cursor.getString(cursor
+                        .getColumnIndex("title")), cursor.getString(cursor
+                        .getColumnIndex("content")), cursor.getString(cursor
+                        .getColumnIndex("activity")), cursor.getInt(cursor
+                        .getColumnIndex("notificationActionType")), cursor.getString(cursor
+                        .getColumnIndex("update_time")),cursor.getString(cursor.getColumnIndex("isnew")).equals("1")));
+            }
+            return notifications;
+        }
+        finally {
+            cursor.close();
+        }
+    }
+
+    public int getNotApprovalCount() {
+        SQLiteDatabase db = dbOpenHelper.getReadableDatabase();
+        Cursor cursor = db.rawQuery("select count(*) from notification where isnew='1'", null);
+        try {
+            cursor.moveToFirst();
+            return cursor.getInt(0);
+        } finally {
+            cursor.close();
+        }
+    }
+
+    public int getApprovalCount(){
+        SQLiteDatabase db = dbOpenHelper.getReadableDatabase();
+        Cursor cursor = db.rawQuery("select count(*) from notification where isnew='0'", null);
+        try {
+            cursor.moveToFirst();
+            return cursor.getInt(0);
+        } finally {
             cursor.close();
         }
     }

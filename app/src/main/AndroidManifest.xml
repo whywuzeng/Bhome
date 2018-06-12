@@ -259,14 +259,6 @@
             android:name="com.system.bhouse.bhouse.setup.notification.MyNotificationActivity_"
             android:launchMode="singleTask"
             android:screenOrientation="portrait">
-            <!--<intent-filter>-->
-                <!--<action android:name="android.intent.action.VIEW"/>-->
-                <!--<category android:name="android.intent.category.DEFAULT"/>-->
-                <!--<data-->
-                    <!--android:scheme="xgscheme"-->
-                    <!--android:host="com.xg.push"-->
-                    <!--android:path="/notify_detail"/>-->
-            <!--</intent-filter>-->
         </activity>
         <activity android:name="com.system.bhouse.bhouse.CommonTask.TransportationManagement.TestForUpScorll.TestForUpScorllActivity"
                   android:screenOrientation="portrait">
@@ -275,9 +267,14 @@
         <activity android:name="com.system.bhouse.bhouse.CommonTask.Widget.UpScorllLayout.SimpleStickActivity"
                   android:screenOrientation="portrait">
         </activity>
-        <activity android:name="com.system.bhouse.bhouse.setup.notification.MyApprovalNotificationActivity_"
+        <activity android:name=".setup.notification.MyApprovalProcessed"
+                  android:theme="@style/Anim_fade"
                   android:screenOrientation="portrait">
+
         </activity>
+        
+        <activity android:name="com.system.bhouse.bhouse.setup.notification.MyApprovalDetailActivity"
+                  android:screenOrientation="portrait"/>
 
 
         <meta-data

@@ -24,6 +24,7 @@ import com.system.bhouse.Custom.ShowDeviceMessageCustomDialog;
 import com.system.bhouse.api.ApiWebService;
 import com.system.bhouse.base.App;
 import com.system.bhouse.base.StatusBean;
+import com.system.bhouse.base.SubmitStatusBeanImpl;
 import com.system.bhouse.bean.TransportSendGoodsBean;
 import com.system.bhouse.bhouse.CommonTask.adapter.TreeWidget.TreeRecyclerAdapter;
 import com.system.bhouse.bhouse.CommonTask.adapter.TreeWidget.base.ViewHolder;
@@ -247,7 +248,7 @@ public class TransportSendGoodsContentMessageActivity extends WWBackActivity imp
             viewModel.key = "receiptHnumber";
             viewModel.isClick = false;
             viewModels.add(viewModel);
-            comTaskBean1.hNumbe = App.receiptHnumber;
+//            comTaskBean1.hNumbe = App.receiptHnumber;
             headerProperties.put(viewModel.key,viewModel.value);
 
             viewModel = new SortChildItem.ViewModel();
@@ -799,28 +800,36 @@ public class TransportSendGoodsContentMessageActivity extends WWBackActivity imp
         TextView tvQrcode = (TextView) contentView.findViewById(R.id.tv_qrcode);
         tvQrcode.setText("吊装需求拉取");
 
-        if (mStatus.isNewStatus()) {
-            llCheck.setVisibility(View.GONE);
-            llModify.setVisibility(View.GONE);
-            llFanCheck.setVisibility(View.GONE);
-            tvDelete.setVisibility(View.GONE);
-            llQrcode.setVisibility(View.GONE);
-        }
-        else if (mStatus.isModifyStatus()) {
-            llCheck.setVisibility(View.GONE);
-            llModify.setVisibility(View.GONE);
-            llFanCheck.setVisibility(View.GONE);
-            tvDelete.setVisibility(View.GONE);
-            llQrcode.setVisibility(View.GONE);
-            llSubmit.setVisibility(View.VISIBLE);
-        }
-        else if (mStatus.isLookStatus()) {
-            llQrcode.setVisibility(View.GONE);
-            llSubmit.setVisibility(View.GONE);
-            if (!TextUtils.isEmpty(comTaskBeans.get(0).status)&&comTaskBeans.get(0).status.equals("审核")){
-                llModify.setVisibility(View.GONE);
-            }
-        }
+//        if (mStatus.isNewStatus()) {
+//            llCheck.setVisibility(View.GONE);
+//            llModify.setVisibility(View.GONE);
+//            llFanCheck.setVisibility(View.GONE);
+//            tvDelete.setVisibility(View.GONE);
+//            llQrcode.setVisibility(View.GONE);
+//        }
+//        else if (mStatus.isModifyStatus()) {
+//            llCheck.setVisibility(View.GONE);
+//            llModify.setVisibility(View.GONE);
+//            llFanCheck.setVisibility(View.GONE);
+//            tvDelete.setVisibility(View.GONE);
+//            llQrcode.setVisibility(View.GONE);
+//            llSubmit.setVisibility(View.VISIBLE);
+//        }
+//        else if (mStatus.isLookStatus()) {
+//            llQrcode.setVisibility(View.GONE);
+//            llSubmit.setVisibility(View.GONE);
+//            if (!TextUtils.isEmpty(comTaskBeans.get(0).status)&&comTaskBeans.get(0).status.equals("审核")){
+//                llModify.setVisibility(View.GONE);
+//            }
+//        }
+
+
+        llCheck.setVisibility(mStatus.getBean().visCheckBtn?View.VISIBLE:View.GONE);
+        llModify.setVisibility(mStatus.getBean().visModifyBtn?View.VISIBLE:View.GONE);
+        llFanCheck.setVisibility(mStatus.getBean().visCheckFBtn?View.VISIBLE:View.GONE);
+        tvDelete.setVisibility(mStatus.getBean().visDeleteBtn?View.VISIBLE:View.GONE);
+        llQrcode.setVisibility(mStatus.getBean().visQRBtn?View.VISIBLE:View.GONE);
+        llSubmit.setVisibility(mStatus.getBean().visSubmitBtn?View.VISIBLE:View.GONE);
 
         Observable.create(subscriber -> {
             tvQrcode.setOnClickListener(v -> {
@@ -853,6 +862,8 @@ public class TransportSendGoodsContentMessageActivity extends WWBackActivity imp
         });
 
         tvModify.setOnClickListener(v -> {
+            mStatus.setBean(new SubmitStatusBeanImpl().setVisSubmitBtn(true));
+            mStatus.setLookStatus(true);
             mStatus.setModifyStatus(true);
             if (mStatus.isModifyStatus()) {
                 setActionBarMidlleTitle("修改运输发货");

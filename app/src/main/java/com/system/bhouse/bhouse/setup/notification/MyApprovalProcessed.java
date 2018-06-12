@@ -1,5 +1,7 @@
 package com.system.bhouse.bhouse.setup.notification;
 
+import android.content.Intent;
+import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -7,14 +9,15 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.example.zhouwei.library.CustomPopWindow;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.footer.ClassicsFooter;
 import com.scwang.smartrefresh.layout.header.ClassicsHeader;
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 import com.scwang.smartrefresh.layout.listener.OnRefreshLoadMoreListener;
-import com.system.bhouse.bhouse.CommonTask.TransportationManagement.TransportationManagementActivity_;
 import com.system.bhouse.bhouse.CommonTask.TransportationManagement.adapter.BaseQuickAdapter;
+import com.system.bhouse.bhouse.CommonTask.adapter.animator.ScaleItemAnimator;
 import com.system.bhouse.bhouse.R;
 import com.system.bhouse.bhouse.setup.WWCommon.WWBackActivity;
 import com.system.bhouse.bhouse.setup.notification.adapter.MyDividerItemDecoration;
@@ -24,24 +27,20 @@ import com.system.bhouse.bhouse.setup.notification.bean.XGNotification;
 import com.system.bhouse.bhouse.setup.notification.bean.XGNotificationSectionEntity;
 import com.system.bhouse.bhouse.setup.notification.receiver.NotificationService;
 
-import org.androidannotations.annotations.AfterViews;
-import org.androidannotations.annotations.EActivity;
-
 import java.util.ArrayList;
 import java.util.List;
 
 import de.greenrobot.event.EventBus;
 
 /**
- * Created by Administrator on 2018-06-07.
+ * Created by Administrator on 2018-06-11.
  * <p>
  * by author wz
+ * 查看消息已处理
  * <p>
  * com.system.bhouse.bhouse.setup.notification
  */
-@EActivity(R.layout.my_notification_activity)
-public class MyApprovalNotificationActivity  extends WWBackActivity implements OnRefreshListener,OnRefreshLoadMoreListener {
-
+public class MyApprovalProcessed extends WWBackActivity implements OnRefreshListener, OnRefreshLoadMoreListener {
     private RecyclerView mRecyclerView;
     private List<NotificationSectionBean> mySections;
     private int allRecorders = 0;// 全部记录数
@@ -51,17 +50,23 @@ public class MyApprovalNotificationActivity  extends WWBackActivity implements O
     private ClassicsHeader LayoutHead;
     private ClassicsFooter LayoutFooter;
     private SmartRefreshLayout layout_smartrefresh;
+    private CustomPopWindow mPopWindow;
 
-    @AfterViews
-    public void initCreate() {
-        setActionBarMidlleTitle(getResources().getString(R.string.notificationtitle));
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.my_notification_activity);
+        annotationDispayHomeAsUp();
+        setActionBarMidlleTitle(getResources().getString(R.string.look_approval));
         mRecyclerView = (RecyclerView) findViewById(R.id.rv_list);
-        LayoutHead=(ClassicsHeader)findViewById(R.id.layout_head);
-        LayoutFooter=(ClassicsFooter)findViewById(R.id.layout_footer);
-        layout_smartrefresh=(SmartRefreshLayout)findViewById(R.id.layout_smartrefresh);
+        LayoutHead = (ClassicsHeader) findViewById(R.id.layout_head);
+        LayoutFooter = (ClassicsFooter) findViewById(R.id.layout_footer);
+        layout_smartrefresh = (SmartRefreshLayout) findViewById(R.id.layout_smartrefresh);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         MyDividerItemDecoration myDividerItemDecoration = new MyDividerItemDecoration();
         mRecyclerView.addItemDecoration(myDividerItemDecoration);
+        mRecyclerView.setItemAnimator(new ScaleItemAnimator());
         layout_smartrefresh.setOnRefreshListener(this);
         layout_smartrefresh.setOnLoadMoreListener(this);
 
@@ -79,14 +84,45 @@ public class MyApprovalNotificationActivity  extends WWBackActivity implements O
                 item.setNews(false);
                 notificationService.update(item);
                 EventBus.getDefault().post(item);
-                TransportationManagementActivity_.intent(MyApprovalNotificationActivity.this).start();
+                Intent intent = new Intent(MyApprovalProcessed.this, MyApprovalDetailActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        mPopWindow = new CustomPopWindow.PopupWindowBuilder(this)
+                .setView(R.layout.smallpopwindow)
+                .enableOutsideTouchableDissmiss(true)// 设置点击PopupWindow之外的地方，popWindow不关闭，如果不设置这个属性或者为true，则关闭
+                .create();
+
+
+        notificationSectionAdapter.setOnItemChildClickListener(new BaseQuickAdapter.OnItemChildClickListener() {
+            @Override
+            public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
+                switch (view.getId()) {
+                    case R.id.iv_three_dot:
+                        view.setTag(position);
+                        mPopWindow.showAsDropDown(view, 0, 0);
+                        mPopWindow.getPopupWindow().getContentView().findViewById(R.id.ll_popwindow).setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                mPopWindow.onDismiss();
+                                scrollDataWrap.remove(position);
+                                notificationSectionAdapter.notifyItemRemoved(position);
+//                                notificationSectionAdapter.notifyDataSetChanged();
+
+                            }
+                        });
+                        break;
+                }
             }
         });
     }
+
+
     //加载数据
     private void getNotifications(String id) {
         // 计算总数据条数
-        allRecorders = notificationService.getCount();
+        allRecorders = notificationService.getApprovalCount();
         getNotificationswithouthint(id);
         Toast.makeText(
                 this,
@@ -97,7 +133,7 @@ public class MyApprovalNotificationActivity  extends WWBackActivity implements O
     private void updateNotifications(String id) {
         // 计算总数据条数
         int oldAllRecorders = allRecorders;
-        allRecorders = notificationService.getCount();
+        allRecorders = notificationService.getApprovalCount();
         getNotificationswithouthint(id);
         Toast.makeText(
                 this,
@@ -113,35 +149,26 @@ public class MyApprovalNotificationActivity  extends WWBackActivity implements O
     private String id = "";// 查询条件
 
     private void getNotificationswithouthint(String id) {
-        scrollDataWrap.add(new XGNotificationSectionEntity(true,"header",true));
         // 计算总页数
         pageSize = (allRecorders + lineSize - 1) / lineSize;
 
-        scrollDataWrap=getSectionScrollData(id);
+        scrollDataWrap = getSectionScrollData(id);
 
         // 创建适配器
         notificationSectionAdapter.setNewData(scrollDataWrap);
         if (allRecorders <= lineSize) {
-//            bloadLayout.setVisibility(View.GONE);
-//            bloadInfo.setHeight(0);
-//            bloadLayout.setMinimumHeight(0);
             LayoutFooter.setVisibility(View.GONE);
-        } else {
-//            if (mRecyclerView.getFooterViewsCount() < 1) {
-//                bloadLayout.setVisibility(View.VISIBLE);
-//                bloadInfo.setHeight(50);
-//                bloadLayout.setMinimumHeight(100);
-//            }
+        }
+        else {
         }
         mRecyclerView.setAdapter(notificationSectionAdapter);
     }
-
+    //获取已处理的消息
     private List<XGNotificationSectionEntity> getSectionScrollData(String id) {
-        List<XGNotification> scrollData = NotificationService.getInstance(this).getScrollData(
-                currentPage , lineSize, id);
-        List<XGNotificationSectionEntity> scrollDataWrap =new ArrayList<>();
-        for (XGNotification item:scrollData)
-        {
+        List<XGNotification> scrollData = NotificationService.getInstance(this).getScrollDataForApproval(
+                currentPage, lineSize, "0");
+        List<XGNotificationSectionEntity> scrollDataWrap = new ArrayList<>();
+        for (XGNotification item : scrollData) {
             scrollDataWrap.add(new XGNotificationSectionEntity(item));
         }
         return scrollDataWrap;
@@ -150,23 +177,13 @@ public class MyApprovalNotificationActivity  extends WWBackActivity implements O
 
     private void appendNotifications(String id) {
         // 计算总数据条数
-        allRecorders = notificationService.getCount();
+        allRecorders = notificationService.getApprovalCount();
         // 计算总页数
         pageSize = (allRecorders + lineSize - 1) / lineSize;
         int oldsize = notificationSectionAdapter.getData().size();
 
         // 更新适配器
         notificationSectionAdapter.getData().addAll(getSectionScrollData(id));
-        // 如果到了最末尾则去掉"正在加载"
-//        if (allRecorders == notificationSectionAdapter.getData().size()) {
-//            bloadInfo.setHeight(0);
-//            bloadLayout.setMinimumHeight(0);
-//            bloadLayout.setVisibility(View.GONE);
-//        } else {
-//            bloadInfo.setHeight(50);
-//            bloadLayout.setMinimumHeight(100);
-//            bloadLayout.setVisibility(View.VISIBLE);
-//        }
         Toast.makeText(
                 this,
                 "共" + allRecorders + "条信息,加载了"
@@ -184,13 +201,14 @@ public class MyApprovalNotificationActivity  extends WWBackActivity implements O
 
     @Override
     public void onLoadMore(@NonNull RefreshLayout refreshLayout) {
-        if (currentPage<pageSize)
-        {
+        if (currentPage < pageSize) {
             currentPage++;
             //设置显示位置
             appendNotifications(id);
-        }else{
+        }
+        else {
             layout_smartrefresh.setNoMoreData(true);
         }
     }
 }
+

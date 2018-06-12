@@ -16,6 +16,7 @@ import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 import com.scwang.smartrefresh.layout.listener.OnRefreshLoadMoreListener;
 import com.system.bhouse.bhouse.CommonTask.TransportationManagement.TransportationManagementActivity_;
 import com.system.bhouse.bhouse.CommonTask.TransportationManagement.adapter.BaseQuickAdapter;
+import com.system.bhouse.bhouse.CommonTask.adapter.animator.ScaleItemAnimator;
 import com.system.bhouse.bhouse.R;
 import com.system.bhouse.bhouse.setup.WWCommon.WWBackActivity;
 import com.system.bhouse.bhouse.setup.notification.adapter.MyDividerItemDecoration;
@@ -64,6 +65,7 @@ public class MyNotificationActivity extends WWBackActivity implements OnRefreshL
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         MyDividerItemDecoration myDividerItemDecoration = new MyDividerItemDecoration();
         mRecyclerView.addItemDecoration(myDividerItemDecoration);
+        mRecyclerView.setItemAnimator(new ScaleItemAnimator());
         layout_smartrefresh.setOnRefreshListener(this);
         layout_smartrefresh.setOnLoadMoreListener(this);
 
@@ -103,17 +105,17 @@ public class MyNotificationActivity extends WWBackActivity implements OnRefreshL
                             @Override
                             public void onClick(View v) {
                                 mPopWindow.onDismiss();
+                                XGNotification item = scrollDataWrap.get(position).t;
                                 scrollDataWrap.remove(position);
                                 notificationSectionAdapter.notifyItemRemoved(position);
-                                notificationSectionAdapter.notifyDataSetChanged();
-
+//                                notificationSectionAdapter.notifyDataSetChanged();
+                                int delete = notificationService.delete(item.getId());
                             }
                         });
                         break;
                 }
             }
         });
-
 
     }
     //加载数据
@@ -154,16 +156,8 @@ public class MyNotificationActivity extends WWBackActivity implements OnRefreshL
         // 创建适配器
         notificationSectionAdapter.setNewData(scrollDataWrap);
         if (allRecorders <= lineSize) {
-//            bloadLayout.setVisibility(View.GONE);
-//            bloadInfo.setHeight(0);
-//            bloadLayout.setMinimumHeight(0);
             LayoutFooter.setVisibility(View.GONE);
         } else {
-//            if (mRecyclerView.getFooterViewsCount() < 1) {
-//                bloadLayout.setVisibility(View.VISIBLE);
-//                bloadInfo.setHeight(50);
-//                bloadLayout.setMinimumHeight(100);
-//            }
         }
         mRecyclerView.setAdapter(notificationSectionAdapter);
     }

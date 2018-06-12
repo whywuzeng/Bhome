@@ -169,7 +169,10 @@ public class AboutWeFragment extends WWBaseFragment {
                 int bottom = avatorCircleImageView.getBottom();
                 int right = avatorCircleImageView.getRight();
                 int length = App.menname.length();
-                String substring = App.menname.substring(length-1,length);
+                String substring = "系";
+                if (length>0) {
+                     substring = App.menname.substring(length - 1, length);
+                }
                 if (width>0)
                 {
                     Drawable drawable = avatorCircleImageView.getDrawable();

@@ -132,6 +132,18 @@
         <item name="android:layout_marginRight">25.0dip</item>
     </style>
 
+    <!-- 蓝色框的按钮背景-->
+
+    <style name="LoginButtonRadius" parent="@style/RightAngledButton">
+        <item name="android:textColor">@drawable/selector_btn_common_radius_textcolor</item>
+        <item name="android:background">@drawable/selector_btn_common_radius_v8</item>
+        <item name="android:layout_width">fill_parent</item>
+        <item name="android:textSize">@dimen/common_font_fs4</item>
+        <item name="android:layout_height">@dimen/common_button_task_height</item>
+        <item name="android:layout_marginLeft">25.0dip</item>
+        <item name="android:layout_marginRight">25.0dip</item>
+    </style>
+
     <style name="RightAngledButton">
         <item name="android:textSize">@dimen/common_font_fs2</item>
         <item name="android:textColor">@drawable/selector_btn_common_textcolor</item>
@@ -247,5 +259,7 @@
         <item name="android:background">@drawable/dialog_bg</item>
         <item name="android:textColorPrimary">@color/colorPrimary</item>
     </style>
+
+
 
 </resources>

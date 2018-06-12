@@ -770,7 +770,8 @@ public class ConfirmationContentMessageActivity extends WWBackActivity implement
 
 
         tvModify.setOnClickListener(v -> {
-            mStatus.setBean(new SubmitStatusBeanImpl().setVisSubmitBtn(true));
+            mStatus.setBean(new SubmitStatusBeanImpl().setVisSubmitBtn(true).setVisQRBtn(true));
+            mStatus.setLookStatus(true);
             mStatus.setModifyStatus(true);
             if (mStatus.isModifyStatus()) {
                 setActionBarMidlleTitle("修改收货确认");

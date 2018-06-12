@@ -1,5 +1,6 @@
 package com.system.bhouse.fragment;
 
+import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -7,6 +8,7 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.example.zhouwei.library.CustomPopWindow;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.footer.ClassicsFooter;
@@ -15,8 +17,10 @@ import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 import com.scwang.smartrefresh.layout.listener.OnRefreshLoadMoreListener;
 import com.system.bhouse.bhouse.CommonTask.TransportationManagement.TransportationManagementActivity_;
 import com.system.bhouse.bhouse.CommonTask.TransportationManagement.adapter.BaseQuickAdapter;
+import com.system.bhouse.bhouse.CommonTask.adapter.animator.ScaleItemAnimator;
 import com.system.bhouse.bhouse.R;
 import com.system.bhouse.bhouse.setup.WWCommon.WWBaseFragment;
+import com.system.bhouse.bhouse.setup.notification.MyApprovalProcessed;
 import com.system.bhouse.bhouse.setup.notification.adapter.MyDividerItemDecoration;
 import com.system.bhouse.bhouse.setup.notification.adapter.NotificationSectionAdapter;
 import com.system.bhouse.bhouse.setup.notification.bean.NotificationSectionBean;
@@ -54,12 +58,14 @@ public class MyApprovalNotificationFragment extends WWBaseFragment implements On
      ClassicsFooter LayoutFooter;
     @ViewById( R.id.layout_smartrefresh)
      SmartRefreshLayout layout_smartrefresh;
+    private CustomPopWindow mPopWindow;
 
     @AfterViews
     public void initCreate() {
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         MyDividerItemDecoration myDividerItemDecoration = new MyDividerItemDecoration();
         mRecyclerView.addItemDecoration(myDividerItemDecoration);
+        mRecyclerView.setItemAnimator(new ScaleItemAnimator());
         layout_smartrefresh.setOnRefreshListener(this);
         layout_smartrefresh.setOnLoadMoreListener(this);
 
@@ -76,7 +82,8 @@ public class MyApprovalNotificationFragment extends WWBaseFragment implements On
                 if (position==0)
                 {
                     //跳转到已处理
-
+                    Intent intent = new Intent(getActivity(), MyApprovalProcessed.class);
+                    startActivity(intent);
                     return;
                 }
                 ImageView viewById = (ImageView) view.findViewById(R.id.iv_redpoint_item);
@@ -88,11 +95,40 @@ public class MyApprovalNotificationFragment extends WWBaseFragment implements On
                 TransportationManagementActivity_.intent(getActivity()).start();
             }
         });
+
+        mPopWindow = new CustomPopWindow.PopupWindowBuilder(getActivity())
+                .setView(R.layout.smallpopwindow)
+                .enableOutsideTouchableDissmiss(true)// 设置点击PopupWindow之外的地方，popWindow不关闭，如果不设置这个属性或者为true，则关闭
+                .create();
+
+
+        notificationSectionAdapter.setOnItemChildClickListener(new BaseQuickAdapter.OnItemChildClickListener() {
+            @Override
+            public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
+                switch (view.getId())
+                {
+                    case R.id.iv_three_dot:
+                        view.setTag(position);
+                        mPopWindow.showAsDropDown(view,0,0);
+                        mPopWindow.getPopupWindow().getContentView().findViewById(R.id.ll_popwindow).setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                mPopWindow.onDismiss();
+                                scrollDataWrap.remove(position);
+                                notificationSectionAdapter.notifyItemRemoved(position);
+//                                notificationSectionAdapter.notifyDataSetChanged();
+
+                            }
+                        });
+                        break;
+                }
+            }
+        });
     }
     //加载数据
     private void getNotifications(String id) {
         // 计算总数据条数
-        allRecorders = notificationService.getCount();
+        allRecorders = notificationService.getNotApprovalCount();
         getNotificationswithouthint(id);
         Toast.makeText(
                 getActivity(),
@@ -103,7 +139,7 @@ public class MyApprovalNotificationFragment extends WWBaseFragment implements On
     private void updateNotifications(String id) {
         // 计算总数据条数
         int oldAllRecorders = allRecorders;
-        allRecorders = notificationService.getCount();
+        allRecorders = notificationService.getNotApprovalCount();
         getNotificationswithouthint(id);
         Toast.makeText(
                 getActivity(),
@@ -143,8 +179,8 @@ public class MyApprovalNotificationFragment extends WWBaseFragment implements On
     }
 
     private List<XGNotificationSectionEntity> getSectionScrollData(String id) {
-        List<XGNotification> scrollData = NotificationService.getInstance(getActivity()).getScrollData(
-                currentPage , lineSize, id);
+        List<XGNotification> scrollData = NotificationService.getInstance(getActivity()).getScrollDataForApproval(
+                currentPage , lineSize, "1");
         List<XGNotificationSectionEntity> scrollDataWrap =new ArrayList<>();
         for (XGNotification item:scrollData)
         {
@@ -156,7 +192,7 @@ public class MyApprovalNotificationFragment extends WWBaseFragment implements On
 
     private void appendNotifications(String id) {
         // 计算总数据条数
-        allRecorders = notificationService.getCount();
+        allRecorders = notificationService.getNotApprovalCount();
         // 计算总页数
         pageSize = (allRecorders + lineSize - 1) / lineSize;
         int oldsize = notificationSectionAdapter.getData().size();
