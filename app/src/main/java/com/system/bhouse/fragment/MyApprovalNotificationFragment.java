@@ -5,6 +5,7 @@ import android.support.annotation.NonNull;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.Toast;
 
@@ -59,6 +60,7 @@ public class MyApprovalNotificationFragment extends WWBaseFragment implements On
     @ViewById( R.id.layout_smartrefresh)
      SmartRefreshLayout layout_smartrefresh;
     private CustomPopWindow mPopWindow;
+    private View notDataView;
 
     @AfterViews
     public void initCreate() {
@@ -69,22 +71,34 @@ public class MyApprovalNotificationFragment extends WWBaseFragment implements On
         layout_smartrefresh.setOnRefreshListener(this);
         layout_smartrefresh.setOnLoadMoreListener(this);
 
+        View headView = getActivity().getLayoutInflater().inflate(R.layout.mynotification_head, mRecyclerView, false);
+
+        notDataView = getActivity().getLayoutInflater().inflate(R.layout.notificationcomon_empty_view, (ViewGroup) mRecyclerView.getParent(), false);
+        ImageView imgview = (ImageView) notDataView.findViewById(R.id.iv_tip);
+        imgview.setImageResource(R.drawable.check_nodata);
+
         notificationService = NotificationService.getInstance(getActivity());
 
         notificationSectionAdapter = new NotificationSectionAdapter(R.layout.mynotification_item, R.layout.mynotification_head, scrollDataWrap);
-
+        notificationSectionAdapter.addHeaderView(headView);
         getNotifications(id);
 
+
+        headView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //跳转到已处理
+                Intent intent = new Intent(getActivity(), MyApprovalProcessed.class);
+                startActivity(intent);
+                return;
+            }
+        });
 
         notificationSectionAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
                 if (position==0)
                 {
-                    //跳转到已处理
-                    Intent intent = new Intent(getActivity(), MyApprovalProcessed.class);
-                    startActivity(intent);
-                    return;
                 }
                 ImageView viewById = (ImageView) view.findViewById(R.id.iv_redpoint_item);
                 viewById.setVisibility(View.GONE);
@@ -157,12 +171,17 @@ public class MyApprovalNotificationFragment extends WWBaseFragment implements On
     private void getNotificationswithouthint(String id) {
         // 计算总页数
         pageSize = (allRecorders + lineSize - 1) / lineSize;
-
         scrollDataWrap=getSectionScrollData(id);
+        if (scrollDataWrap.isEmpty()) {
+            //notdataVIew 已经有父亲了 。不然添加
+            if (notDataView.getParent()==null)
+            notificationSectionAdapter.addFooterView(notDataView);
+        }
+        else {
+            // 创建适配器
+            notificationSectionAdapter.setNewData(scrollDataWrap);
+        }
 
-        scrollDataWrap.add(0,new XGNotificationSectionEntity(true,"header",true));
-        // 创建适配器
-        notificationSectionAdapter.setNewData(scrollDataWrap);
         if (allRecorders <= lineSize) {
 //            bloadLayout.setVisibility(View.GONE);
 //            bloadInfo.setHeight(0);
@@ -197,8 +216,14 @@ public class MyApprovalNotificationFragment extends WWBaseFragment implements On
         pageSize = (allRecorders + lineSize - 1) / lineSize;
         int oldsize = notificationSectionAdapter.getData().size();
 
-        // 更新适配器
-        notificationSectionAdapter.getData().addAll(getSectionScrollData(id));
+        List<XGNotificationSectionEntity> sectionScrollData = getSectionScrollData(id);
+        if (sectionScrollData.isEmpty())
+        {   //notdataVIew 已经有父亲了 。不然添加
+            if (notDataView.getParent()==null)
+            notificationSectionAdapter.addFooterView(notDataView);
+        }else {
+            notificationSectionAdapter.getData().addAll(sectionScrollData);
+        }
         // 如果到了最末尾则去掉"正在加载"
 //        if (allRecorders == notificationSectionAdapter.getData().size()) {
 //            bloadInfo.setHeight(0);

@@ -7,6 +7,7 @@ import android.view.ViewGroup;
 
 import com.system.bhouse.api.ApiWebService;
 import com.system.bhouse.base.StatusBean;
+import com.system.bhouse.base.SubmitStatusBeanImpl;
 import com.system.bhouse.bean.CarManageBean;
 import com.system.bhouse.bhouse.CommonTask.BaseTaskFragment.BaseCommonFragment;
 import com.system.bhouse.bhouse.CommonTask.adapter.PageTaskFragment;
@@ -50,6 +51,7 @@ public class CarManagementFragment extends BaseCommonFragment implements TaskLis
     @Override
     protected void AddIntentFor() {
         StatusBean statusBean = new StatusBean();
+        statusBean.setBean(new SubmitStatusBeanImpl().setVisSubmitBtn(true));
         statusBean.setNewStatus(true);
 //        CarManagementContentMessageActivity_.intent(getActivity()).HId("").mStatus(statusBean).start();
 

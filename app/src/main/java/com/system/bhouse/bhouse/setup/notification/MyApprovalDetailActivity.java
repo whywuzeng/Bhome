@@ -19,6 +19,7 @@ import java.util.List;
  * Created by Administrator on 2018-06-11.
  * <p>
  * by author wz
+ * 表单详情的界面
  * <p>
  * com.system.bhouse.bhouse.setup.notification
  */

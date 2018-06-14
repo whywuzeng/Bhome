@@ -63,7 +63,7 @@ public class CarManagementDialogFragment extends DialogFragment {
         if (arguments!=null)
         {
             parcelable = (CarManageBean) arguments.getParcelable(CarManagementListFragment.ITEMDATA);
-            statusBean = (StatusBean) arguments.getParcelable(CarManagementListFragment.ITEMSTATUS);
+            statusBean = (StatusBean) arguments.getSerializable(CarManagementListFragment.ITEMSTATUS);
         }
     }
 
@@ -184,7 +184,7 @@ public class CarManagementDialogFragment extends DialogFragment {
 
             mDialog.setCanceledOnTouchOutside(true);
             mDialog.getWindow().setGravity(Gravity.CENTER);
-            mDialog.getWindow().getAttributes().windowAnimations = R.style.fade_dialog;
+            mDialog.getWindow().getAttributes().windowAnimations = R.style.to_from_dialog;
 
             View view = mDialog.getWindow().getDecorView();
         }

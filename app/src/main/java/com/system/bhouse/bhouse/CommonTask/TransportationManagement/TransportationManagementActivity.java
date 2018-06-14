@@ -1,17 +1,16 @@
 package com.system.bhouse.bhouse.CommonTask.TransportationManagement;
 
 import android.content.Intent;
-import android.view.View;
+import android.support.v7.widget.RecyclerView;
 
 import com.system.bhouse.bhouse.CommonTask.TransportationManagement.CarManagement.CarManagementActivity_;
 import com.system.bhouse.bhouse.CommonTask.TransportationManagement.ComponentReturns.ComponentReturnsActivity_;
 import com.system.bhouse.bhouse.CommonTask.TransportationManagement.ContainerRecycle.ContainerRecycleActivity_;
 import com.system.bhouse.bhouse.CommonTask.TransportationManagement.LoadingCarOrder.LoadingCarOrderActivity_;
 import com.system.bhouse.bhouse.CommonTask.TransportationManagement.TransportSendGoods.TransportSendGoodsActivity_;
-import com.system.bhouse.bhouse.CommonTask.component.StepsView;
+import com.system.bhouse.bhouse.CommonTask.WWTimeLineActivity;
 import com.system.bhouse.bhouse.R;
 import com.system.bhouse.bhouse.phone.activity.InformationActivity;
-import com.system.bhouse.bhouse.setup.WWCommon.WWBackActivity;
 
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.EActivity;
@@ -27,23 +26,40 @@ import org.androidannotations.annotations.ViewById;
  * <p>
  * com.system.bhouse.bhouse.CommonTask.TransportationManagement
  */
-@EActivity(R.layout.transportationactivity_layout)
+@EActivity(R.layout.site_layout_activity)
 @OptionsMenu(R.menu.menu_site)
-public class TransportationManagementActivity extends WWBackActivity implements StepsView.DataClick{
+public class TransportationManagementActivity extends WWTimeLineActivity {
 
     private static final int RESULT_LOCAL = 2;
 
-    @ViewById
-    StepsView viewStepsview;
+    @ViewById(R.id.my_recycle_view)
+    RecyclerView my_recycle_view;
 
     @AfterViews
     void initSiteFragment() {
         setActionBarMidlleTitle("运输管理");
-        viewStepsview.setDataClick(this);
+        initTimeLineActivity(my_recycle_view,R.array.transportation_labels);
+
+    }
+
+
+    @OptionsItem
+    protected final void action_organize(){
+
+        Intent intent2=new Intent(this,InformationActivity.class);
+        this.startActivityForResult(intent2,RESULT_LOCAL);
+    }
+
+    @OnActivityResult(RESULT_LOCAL)
+    void resultSelectUser(int resultCode, @OnActivityResult.Extra String val)
+    {
+        if (resultCode == RESULT_OK) {
+//            T.showfunShort(this, val);
+        }
     }
 
     @Override
-    public void onDataClick(int position, View v) {
+    protected void IntentToFragment(int position) {
         switch (position)
         {
             case 0:
@@ -63,20 +79,4 @@ public class TransportationManagementActivity extends WWBackActivity implements 
                 break;
         }
     }
-
-    @OptionsItem
-    protected final void action_organize(){
-
-        Intent intent2=new Intent(this,InformationActivity.class);
-        this.startActivityForResult(intent2,RESULT_LOCAL);
-    }
-
-    @OnActivityResult(RESULT_LOCAL)
-    void resultSelectUser(int resultCode, @OnActivityResult.Extra String val)
-    {
-        if (resultCode == RESULT_OK) {
-//            T.showfunShort(this, val);
-        }
-    }
-
 }

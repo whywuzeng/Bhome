@@ -6,6 +6,15 @@
               android:background="@color/twolitte_gray"
               android:layout_height="match_parent">
 
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+    <LinearLayout
+                  android:orientation="vertical"
+                  android:layout_width="match_parent"
+                  android:background="@color/twolitte_gray"
+                  android:layout_height="wrap_content">
+
     <LinearLayout
         android:orientation="vertical"
         android:layout_width="match_parent"
@@ -14,7 +23,7 @@
         android:layout_height="wrap_content">
         <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/iv_avator1"
-            android:layout_marginTop="30dp"
+            android:layout_marginTop="25dp"
             android:gravity="center"
             app:civ_circle_background_color="@color/material_blue_200"
             app:civ_border_width="2dp"
@@ -222,7 +231,7 @@
     <LinearLayout
         android:orientation="horizontal"
         android:background="@color/white"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="1dp"
         android:layout_width="match_parent"
         android:layout_height="50dp">
 
@@ -488,6 +497,7 @@
         android:id="@+id/ll_myself_logout"
         android:orientation="horizontal"
         style="@style/GreySimpleButtonfang"
+        android:layout_marginBottom="10dp"
         android:layout_marginTop="2dp"
         android:layout_width="match_parent"
         android:layout_height="50dp">
@@ -560,4 +570,9 @@
         </RelativeLayout>
 
     </LinearLayout>
+
+    </LinearLayout>
+
+    </ScrollView>
+
 </LinearLayout>

@@ -10,6 +10,7 @@ import com.google.gson.reflect.TypeToken;
 import com.system.bhouse.api.ApiWebService;
 import com.system.bhouse.base.App;
 import com.system.bhouse.base.StatusBean;
+import com.system.bhouse.base.SubmitStatusBeanImpl;
 import com.system.bhouse.bean.CarManageBean;
 import com.system.bhouse.bhouse.CommonTask.BaseTaskFragment.BaseCommonListFragment;
 import com.system.bhouse.bhouse.R;
@@ -155,6 +156,7 @@ public class CarManagementListFragment extends BaseCommonListFragment<CarManagem
     public void ItemClick(CarManagementLoadingAdapter.ItemViewHolder holder, int position) {
         mNeedUpdate = true;
         StatusBean statusBean = new StatusBean();
+        statusBean.setBean(new SubmitStatusBeanImpl());
         statusBean.setLookStatus(true);
         statusBean.setModifyStatus(true);
 

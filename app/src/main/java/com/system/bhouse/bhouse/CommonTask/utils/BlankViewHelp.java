@@ -13,10 +13,13 @@ public class BlankViewHelp extends BlankViewDisplay {
 
     public static void setBlankLoading(View v, boolean show) {
         showLoading(v, show);
-        if (show) {
-            v.setVisibility(View.VISIBLE);
-        } else {
-            v.setVisibility(View.GONE);
+        if (v!=null) {
+            if (show) {
+                v.setVisibility(View.VISIBLE);
+            }
+            else {
+                v.setVisibility(View.GONE);
+            }
         }
     }
 

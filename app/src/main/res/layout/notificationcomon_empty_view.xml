@@ -7,13 +7,14 @@
 
     <ImageView
         android:id="@+id/iv_tip"
-        android:src="@drawable/net_error"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
+        android:src="@drawable/check_nodata"
+        android:layout_width="300dp"
+        android:layout_height="270dp"/>
     <TextView
         android:id="@+id/tv_error"
         android:textColor="@color/common_color_text_50"
         android:text="当前界面无记录"
+        android:visibility="gone"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"/>
 

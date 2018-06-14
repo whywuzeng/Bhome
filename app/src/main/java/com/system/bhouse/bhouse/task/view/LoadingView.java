@@ -31,7 +31,6 @@ public class LoadingView extends FrameLayout {
 
     private void init() {
         inflate(getContext(), R.layout.loading_view, this);
-
         initAnimator();
     }
 

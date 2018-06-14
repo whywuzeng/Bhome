@@ -60,8 +60,8 @@
                 android:layout_height="?attr/actionBarSize"
                 app:navigationIcon="@drawable/ic_keyboard_arrow_left"
                 app:layout_collapseMode="pin"
-                app:popupTheme="@style/AppTheme.Base"
-                app:theme="@style/AppTheme.Base"/>
+                app:popupTheme="@style/AppThemeTestPop.Base"
+                app:theme="@style/AppThemeTest.Base"/>
 
 
             <!--使用CollapsingToolbarLayout时必须把title设置到CollapsingToolbarLayout上，设置到Toolbar上不会显示。即：

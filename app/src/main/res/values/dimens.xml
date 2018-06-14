@@ -43,7 +43,7 @@
     <dimen name="comment_image_width">32dp</dimen>
     <dimen name="comment_image_margin">8dp</dimen>
 
-    <dimen name="actionBarSize">49dip</dimen>
+    <dimen name="actionBarSize">42dip</dimen>
 
     <dimen name="divide_height">0.5dp</dimen>
     <dimen name="emoji_normal">24dp</dimen>

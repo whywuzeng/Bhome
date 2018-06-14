@@ -77,6 +77,7 @@ public class NewsListFragment extends RefreshBaseFragment implements RequestCall
     private int mStartPage;
     private Subscription mSubscription;
     private boolean mHasInit;
+    private View emptyView;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -102,8 +103,10 @@ public class NewsListFragment extends RefreshBaseFragment implements RequestCall
     @AfterViews
     protected void initNewsListFragmentView() {
 
+        emptyView = getActivity().getLayoutInflater().inflate(R.layout.taskcomon_empty_view, null, false);
         initRefreshLayout();
         requestNewsList(this, mNewsType, mNewsId, mStartPage);
+
     }
 
     public Subscription requestNewsList(final RequestCallBack<List<NeteastNewsSummary>> callback, String type, final String id, int startPage) {
@@ -178,8 +181,12 @@ public class NewsListFragment extends RefreshBaseFragment implements RequestCall
         if (mAdapter == null) {
             initNewsList(data);
         }
+        if (data.isEmpty()) {
+            mAdapter.showEmptyView(true, "");
+        }else{
+            mAdapter.showEmptyView(false, "");
+        }
 
-        mAdapter.showEmptyView(false, "");
 
         switch (type) {
             case DataLoadType.TYPE_REFRESH_SUCCESS:

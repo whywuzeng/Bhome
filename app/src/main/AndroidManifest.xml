@@ -213,6 +213,7 @@
                   android:screenOrientation="portrait"/>
 
         <activity android:name=".CommonTask.ComTaskContentMessageActivity_"
+                  android:windowSoftInputMode="adjustNothing"
                   android:screenOrientation="portrait"/>
 
         <activity android:name=".CommonTask.common.CommonPickerActivity_"
@@ -221,14 +222,17 @@
         <activity android:name=".CommonTask.ConfirmationReceipActivity_"
                   android:screenOrientation="portrait"/>
         <activity android:name=".CommonTask.ConfirmationReceip.ConfirmationContentMessageActivity_"
+                  android:windowSoftInputMode="adjustNothing"
                   android:screenOrientation="portrait"/>
         <activity android:name=".CommonTask.ReturnRequire.ReturnRequireActivity_"
                   android:screenOrientation="portrait"/>
         <activity android:name=".CommonTask.ReturnRequire.ReturnRequireContentMessageActivity_"
+                  android:windowSoftInputMode="adjustNothing"
                   android:screenOrientation="portrait"/>
         <activity android:name=".CommonTask.ReplenishmentRequire.ReplenishmentRequireActivity_"
                   android:screenOrientation="portrait"/>
         <activity android:name=".CommonTask.ReplenishmentRequire.ReplenishmentRequireContentMessageActivity_"
+                  android:windowSoftInputMode="adjustNothing"
                   android:screenOrientation="portrait"/>
         <activity android:name=".CompanyNews.CompanyNewsDetailActivity_"
                   android:screenOrientation="portrait"/>
@@ -242,18 +246,22 @@
         <activity android:name=".CommonTask.TransportationManagement.LoadingCarOrder.LoadingCarOrderActivity_"
                   android:screenOrientation="portrait"/>
         <activity android:name=".CommonTask.TransportationManagement.LoadingCarOrder.LoadingCarOrderContentMessageActivity_"
+                  android:windowSoftInputMode="adjustNothing"
                   android:screenOrientation="portrait"/>
         <activity android:name="com.system.bhouse.bhouse.CommonTask.TransportationManagement.TransportSendGoods.TransportSendGoodsActivity_"
                   android:screenOrientation="portrait"/>
         <activity android:name="com.system.bhouse.bhouse.CommonTask.TransportationManagement.TransportSendGoods.TransportSendGoodsContentMessageActivity_"
+                  android:windowSoftInputMode="adjustNothing"
                   android:screenOrientation="portrait"/>
         <activity android:name="com.system.bhouse.bhouse.CommonTask.TransportationManagement.ComponentReturns.ComponentReturnsActivity_"
                   android:screenOrientation="portrait"/>
         <activity android:name="com.system.bhouse.bhouse.CommonTask.TransportationManagement.ComponentReturns.ComponentReturnsContentMessageActivity_"
+                  android:windowSoftInputMode="adjustNothing"
                   android:screenOrientation="portrait"/>
         <activity android:name="com.system.bhouse.bhouse.CommonTask.TransportationManagement.ContainerRecycle.ContainerRecycleActivity_"
                   android:screenOrientation="portrait"/>
         <activity android:name="com.system.bhouse.bhouse.CommonTask.TransportationManagement.ContainerRecycle.ContainerRecycleContentMessageActivity_"
+                  android:windowSoftInputMode="adjustNothing"
                   android:screenOrientation="portrait"/>
         <activity
             android:name="com.system.bhouse.bhouse.setup.notification.MyNotificationActivity_"

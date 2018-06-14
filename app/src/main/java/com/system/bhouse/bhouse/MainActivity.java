@@ -175,6 +175,8 @@ public class MainActivity<T> extends BaseActivity implements getKVforpopup, GetP
     ImageView houseKeeperItemFlag;
     @Bind(R.id.my_lehu_item_flag)
     ImageView myLehuItemFlag;
+    @Bind(R.id.tv_toolbar_title_mid)
+      TextView tv_toolbar_title_mid;
 
     FragmentManager mFragmentManager;
     //    @Bind(R.id.toolbar)
@@ -567,6 +569,8 @@ public class MainActivity<T> extends BaseActivity implements getKVforpopup, GetP
                 firstPageItem.setSelected(true);
                 contentPager.setCurrentItem(First);
                 setLinyaout(First);
+                //这里设置内容
+                tv_toolbar_title_mid.setText(firstPageTv.getText());
                 firstPageItemFlag.setVisibility(View.GONE);
                 firstPageItemFlag.setSelected(true);
 
@@ -598,6 +602,7 @@ public class MainActivity<T> extends BaseActivity implements getKVforpopup, GetP
                 classicItem.setSelected(true);
                 contentPager.setCurrentItem(Second);
                 setLinyaout(Second);
+                tv_toolbar_title_mid.setText(classicTv.getText());
                 firstPageItemFlag.setSelected(false);
                 classicItemFlag.setSelected(true);
                 classicItemFlag.setVisibility(View.GONE);
@@ -627,6 +632,7 @@ public class MainActivity<T> extends BaseActivity implements getKVforpopup, GetP
                 shoppingCarTv.setSelected(true);
                 shoppingCarItem.setSelected(true);
                 contentPager.setCurrentItem(Third);
+                tv_toolbar_title_mid.setText(shoppingCarTv.getText());
                 setLinyaout(Third);
                 firstPageItemFlag.setSelected(false);
                 classicItemFlag.setSelected(false);
@@ -658,6 +664,7 @@ public class MainActivity<T> extends BaseActivity implements getKVforpopup, GetP
                 houseKeeperTv.setSelected(true);
                 houseKeeperItem.setSelected(true);
                 contentPager.setCurrentItem(Fourth);
+                tv_toolbar_title_mid.setText(houseKeeperTv.getText());
                 setLinyaout(Fourth);
                 firstPageItemFlag.setSelected(false);
                 classicItemFlag.setSelected(false);
@@ -691,6 +698,7 @@ public class MainActivity<T> extends BaseActivity implements getKVforpopup, GetP
                 myLehuItem.setSelected(true);
 //                contentPager.setCurrentItem(Fifth);
                 contentPager.setCurrentItem(Third);
+                tv_toolbar_title_mid.setText(myLehuTv.getText());
                 setLinyaout(Fifth);
                 firstPageItemFlag.setSelected(false);
                 classicItemFlag.setSelected(false);

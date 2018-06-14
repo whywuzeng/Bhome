@@ -225,10 +225,13 @@
     <color name="common_color_text_10">#c9c9c9</color>
     <color name="common_color_line_000001">#FEFEFE</color>
     <color name="common_color_line_blue">#ff3cbaff</color>
+    <color name="common_color_line_blue_70">#1B88EE</color>
 
     <color name="common_color_parentlayout_bg">#F0F0F0</color>
 
     <color name="fabColor">@color/fab_color</color>
+    <color name="common_color_text_8">#DCE1E8</color>
+
 
 </resources>
 

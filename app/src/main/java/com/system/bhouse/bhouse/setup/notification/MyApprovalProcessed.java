@@ -6,6 +6,7 @@ import android.support.annotation.NonNull;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.Toast;
 
@@ -51,6 +52,7 @@ public class MyApprovalProcessed extends WWBackActivity implements OnRefreshList
     private ClassicsFooter LayoutFooter;
     private SmartRefreshLayout layout_smartrefresh;
     private CustomPopWindow mPopWindow;
+    private View notDataView;
 
 
     @Override
@@ -69,6 +71,7 @@ public class MyApprovalProcessed extends WWBackActivity implements OnRefreshList
         mRecyclerView.setItemAnimator(new ScaleItemAnimator());
         layout_smartrefresh.setOnRefreshListener(this);
         layout_smartrefresh.setOnLoadMoreListener(this);
+        notDataView = getLayoutInflater().inflate(R.layout.notificationcomon_empty_view, (ViewGroup) mRecyclerView.getParent(), false);
 
         notificationService = NotificationService.getInstance(this);
 
@@ -154,8 +157,13 @@ public class MyApprovalProcessed extends WWBackActivity implements OnRefreshList
 
         scrollDataWrap = getSectionScrollData(id);
 
-        // 创建适配器
-        notificationSectionAdapter.setNewData(scrollDataWrap);
+        if (scrollDataWrap.isEmpty()) {
+            notificationSectionAdapter.setEmptyView(notDataView);
+        }
+        else {
+            // 创建适配器
+            notificationSectionAdapter.setNewData(scrollDataWrap);
+        }
         if (allRecorders <= lineSize) {
             LayoutFooter.setVisibility(View.GONE);
         }
@@ -183,7 +191,13 @@ public class MyApprovalProcessed extends WWBackActivity implements OnRefreshList
         int oldsize = notificationSectionAdapter.getData().size();
 
         // 更新适配器
-        notificationSectionAdapter.getData().addAll(getSectionScrollData(id));
+        List<XGNotificationSectionEntity> sectionScrollData = getSectionScrollData(id);
+        if (sectionScrollData.isEmpty())
+        {
+            notificationSectionAdapter.setEmptyView(notDataView);
+        }else {
+            notificationSectionAdapter.getData().addAll(sectionScrollData);
+        }
         Toast.makeText(
                 this,
                 "共" + allRecorders + "条信息,加载了"

@@ -4,6 +4,7 @@ import android.support.annotation.NonNull;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.Toast;
 
@@ -54,6 +55,8 @@ public class MyNotificationActivity extends WWBackActivity implements OnRefreshL
     private ClassicsFooter LayoutFooter;
     private SmartRefreshLayout layout_smartrefresh;
     private CustomPopWindow mPopWindow;
+    private View notDataView;
+    private View errorView;
 
     @AfterViews
     public void initCreate() {
@@ -68,6 +71,11 @@ public class MyNotificationActivity extends WWBackActivity implements OnRefreshL
         mRecyclerView.setItemAnimator(new ScaleItemAnimator());
         layout_smartrefresh.setOnRefreshListener(this);
         layout_smartrefresh.setOnLoadMoreListener(this);
+
+        notDataView = getLayoutInflater().inflate(R.layout.notificationcomon_empty_view, (ViewGroup) mRecyclerView.getParent(), false);
+        errorView = getLayoutInflater().inflate(R.layout.taskcommon_error_view, (ViewGroup) mRecyclerView.getParent(), false);
+        ImageView imgview = (ImageView) notDataView.findViewById(R.id.iv_tip);
+        imgview.setImageResource(R.drawable.check_nodata);
 
         notificationService = NotificationService.getInstance(this);
 
@@ -91,7 +99,6 @@ public class MyNotificationActivity extends WWBackActivity implements OnRefreshL
                 .setView(R.layout.smallpopwindow)
                 .enableOutsideTouchableDissmiss(true)// 设置点击PopupWindow之外的地方，popWindow不关闭，如果不设置这个属性或者为true，则关闭
                 .create();
-
 
         notificationSectionAdapter.setOnItemChildClickListener(new BaseQuickAdapter.OnItemChildClickListener() {
             @Override
@@ -147,14 +154,19 @@ public class MyNotificationActivity extends WWBackActivity implements OnRefreshL
     private int currentPage = 1;// 默认第一页
     private String id = "";// 查询条件
 
+    //更新  和  初始化  数据库数据
     private void getNotificationswithouthint(String id) {
         // 计算总页数
         pageSize = (allRecorders + lineSize - 1) / lineSize;
 
         scrollDataWrap=getSectionScrollData(id);
-
-        // 创建适配器
-        notificationSectionAdapter.setNewData(scrollDataWrap);
+        if (scrollDataWrap.isEmpty()) {
+            notificationSectionAdapter.setEmptyView(notDataView);
+        }
+        else {
+            // 创建适配器
+            notificationSectionAdapter.setNewData(scrollDataWrap);
+        }
         if (allRecorders <= lineSize) {
             LayoutFooter.setVisibility(View.GONE);
         } else {
@@ -182,17 +194,14 @@ public class MyNotificationActivity extends WWBackActivity implements OnRefreshL
         int oldsize = notificationSectionAdapter.getData().size();
 
         // 更新适配器
-        notificationSectionAdapter.getData().addAll(getSectionScrollData(id));
+        List<XGNotificationSectionEntity> sectionScrollData = getSectionScrollData(id);
+        if (sectionScrollData.isEmpty())
+        {
+            notificationSectionAdapter.setEmptyView(notDataView);
+        }else {
+            notificationSectionAdapter.getData().addAll(sectionScrollData);
+        }
         // 如果到了最末尾则去掉"正在加载"
-//        if (allRecorders == notificationSectionAdapter.getData().size()) {
-//            bloadInfo.setHeight(0);
-//            bloadLayout.setMinimumHeight(0);
-//            bloadLayout.setVisibility(View.GONE);
-//        } else {
-//            bloadInfo.setHeight(50);
-//            bloadLayout.setMinimumHeight(100);
-//            bloadLayout.setVisibility(View.VISIBLE);
-//        }
         Toast.makeText(
                 this,
                 "共" + allRecorders + "条信息,加载了"
