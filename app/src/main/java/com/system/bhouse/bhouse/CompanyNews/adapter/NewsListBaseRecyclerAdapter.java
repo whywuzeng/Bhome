@@ -185,7 +185,8 @@ public abstract class NewsListBaseRecyclerAdapter<T> extends RecyclerView.Adapte
     public void addMoreData(List<T> data) {
         int startPos = mData.size();
         mData.addAll(data);
-        notifyItemRangeInserted(startPos, data.size());
+//        notifyItemRangeInserted(startPos, data.size());
+        notifyDataSetChanged();
     }
 
     public List<T> getData() {
@@ -193,7 +194,8 @@ public abstract class NewsListBaseRecyclerAdapter<T> extends RecyclerView.Adapte
     }
 
     public void setData(List<T> data) {
-        mData = data;
+        mData.clear();
+        mData.addAll(data);
         notifyDataSetChanged();
     }
 

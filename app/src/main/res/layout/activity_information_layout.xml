@@ -18,7 +18,7 @@
         android:orientation="horizontal"
         android:layout_width="match_parent"
         android:gravity="center_vertical"
-        android:background="@color/material_white90"
+        android:background="@color/material_blue_400"
         android:layout_height="?attr/actionBarSize">
 
         <TextView
@@ -60,7 +60,7 @@
             android:layout_height="wrap_content"
             android:layout_marginRight="8dp"
             android:layout_weight="1"
-            android:textColor="@color/material_grey_600"
+            android:textColor="@color/material_white90"
             android:textSize="15sp"
             />
 

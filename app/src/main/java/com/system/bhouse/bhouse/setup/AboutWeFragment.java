@@ -109,7 +109,7 @@ public class AboutWeFragment extends WWBaseFragment {
 
         tvUsername.setText(App.menname);
         tvCompanyName.setText(App.Mancompany);
-        TvCompanyName.setText(App.mpname);
+        TvCompanyName.setText(App.Mancompany+"\t"+App.mpname);
 //        badge.hide();
 
         setActionBarTitle("我的");
@@ -254,6 +254,7 @@ public class AboutWeFragment extends WWBaseFragment {
         {
             String resultOrgnazetion = ((EventOrganization)object).getMessage();
             tvCompanyName.setText(resultOrgnazetion);
+            TvCompanyName.setText(App.Mancompany+"\t"+App.mpname);
         }else if (object instanceof XGPushShowedResult)
         {
 //            badge.show();

@@ -23,17 +23,17 @@
         android:layout_height="wrap_content">
         <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/iv_avator1"
-            android:layout_marginTop="25dp"
+            android:layout_marginTop="10dp"
             android:gravity="center"
             app:civ_circle_background_color="@color/material_blue_200"
             app:civ_border_width="2dp"
             app:civ_border_color="@color/material_blue_200"
-            android:layout_width="85dp"
-            android:layout_height="85dp"/>
+            android:layout_width="76dp"
+            android:layout_height="76dp"/>
 
         <TextView
             android:id="@+id/tv_username1"
-            android:layout_marginTop="5dp"
+            android:layout_marginTop="8dp"
             android:text="小伙子"
             android:textSize="16sp"
             android:textColor="@color/black"

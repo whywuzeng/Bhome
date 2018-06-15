@@ -83,6 +83,7 @@ public class MyNotificationActivity extends WWBackActivity implements OnRefreshL
 
         getNotifications(id);
         notificationSectionAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
+            //点击发布广播
             @Override
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
                 ImageView viewById = (ImageView) view.findViewById(R.id.iv_redpoint_item);
@@ -108,7 +109,7 @@ public class MyNotificationActivity extends WWBackActivity implements OnRefreshL
                     case R.id.iv_three_dot:
                         view.setTag(position);
                         mPopWindow.showAsDropDown(view,0,0);
-                        mPopWindow.getPopupWindow().getContentView().findViewById(R.id.ll_popwindow).setOnClickListener(new View.OnClickListener() {
+                        mPopWindow.getPopupWindow().getContentView().findViewById(R.id.ll_popwindow).setOnClickListener(new View.OnClickListener() {       //忽略此消息
                             @Override
                             public void onClick(View v) {
                                 mPopWindow.onDismiss();
@@ -117,6 +118,7 @@ public class MyNotificationActivity extends WWBackActivity implements OnRefreshL
                                 notificationSectionAdapter.notifyItemRemoved(position);
 //                                notificationSectionAdapter.notifyDataSetChanged();
                                 int delete = notificationService.delete(item.getId());
+                                EventBus.getDefault().post(item);
                             }
                         });
                         break;

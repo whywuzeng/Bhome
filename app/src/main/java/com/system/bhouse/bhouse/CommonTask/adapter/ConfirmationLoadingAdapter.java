@@ -96,7 +96,7 @@ public class ConfirmationLoadingAdapter extends LoadingAdapter<ConfirmationReceB
     @NonNull
     private List<String> getListStrings(int position) {
         List<String> dataList = new ArrayList<>();
-        dataList.add("收货单编号:");
+        dataList.add("单据编号:");
         dataList.add(mComTaskBeans
                 .get(position).getReceiptHnumber() == null ? "" : mComTaskBeans
                 .get(position).getReceiptHnumber());

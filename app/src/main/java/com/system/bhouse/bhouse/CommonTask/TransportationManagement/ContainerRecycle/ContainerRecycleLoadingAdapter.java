@@ -96,7 +96,7 @@ public class ContainerRecycleLoadingAdapter extends LoadingAdapter<ContainerRecy
     @NonNull
     private List<String> getListStrings(int position) {
         List<String> dataList = new ArrayList<>();
-        dataList.add("货柜回收单编号:");
+        dataList.add("单据编号:");
         dataList.add(mComTaskBeans
                 .get(position).getHNumbe() == null ? "" : mComTaskBeans
                 .get(position).getHNumbe());

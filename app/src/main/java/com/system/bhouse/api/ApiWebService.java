@@ -141,7 +141,7 @@ public class ApiWebService {
         SoapObject request = new SoapObject(NAMESPACE, methodName);
         request.addProperty("name",admin);
         request.addProperty("pass",password);
-       return getNetworkService(mContext,call,request);
+       return getNetworkServiceNoProgress(mContext,call,request);
     }
 
     //更新订单状态

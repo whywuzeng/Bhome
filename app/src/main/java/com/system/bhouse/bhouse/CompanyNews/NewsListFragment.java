@@ -187,7 +187,6 @@ public class NewsListFragment extends RefreshBaseFragment implements RequestCall
             mAdapter.showEmptyView(false, "");
         }
 
-
         switch (type) {
             case DataLoadType.TYPE_REFRESH_SUCCESS:
                 refresh_layout.setRefreshing(true);

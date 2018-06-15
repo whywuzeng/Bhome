@@ -174,13 +174,15 @@ public class MyApprovalNotificationFragment extends WWBaseFragment implements On
         scrollDataWrap=getSectionScrollData(id);
         if (scrollDataWrap.isEmpty()) {
             //notdataVIew 已经有父亲了 。不然添加
-            if (notDataView.getParent()==null)
-            notificationSectionAdapter.addFooterView(notDataView);
+            if (notDataView.getParent()==null) {
+                notificationSectionAdapter.addFooterView(notDataView);
+            }
         }
         else {
             // 创建适配器
-            notificationSectionAdapter.setNewData(scrollDataWrap);
+            notificationSectionAdapter.removeAllFooterView();
         }
+        notificationSectionAdapter.setNewData(scrollDataWrap);
 
         if (allRecorders <= lineSize) {
 //            bloadLayout.setVisibility(View.GONE);
@@ -219,11 +221,13 @@ public class MyApprovalNotificationFragment extends WWBaseFragment implements On
         List<XGNotificationSectionEntity> sectionScrollData = getSectionScrollData(id);
         if (sectionScrollData.isEmpty())
         {   //notdataVIew 已经有父亲了 。不然添加
-            if (notDataView.getParent()==null)
-            notificationSectionAdapter.addFooterView(notDataView);
+            if (notDataView.getParent()==null) {
+                notificationSectionAdapter.addFooterView(notDataView);
+            }
         }else {
-            notificationSectionAdapter.getData().addAll(sectionScrollData);
+            notificationSectionAdapter.removeAllFooterView();
         }
+        notificationSectionAdapter.getData().addAll(sectionScrollData);
         // 如果到了最末尾则去掉"正在加载"
 //        if (allRecorders == notificationSectionAdapter.getData().size()) {
 //            bloadInfo.setHeight(0);

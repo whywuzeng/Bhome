@@ -13,6 +13,7 @@ import android.widget.TextView;
 import com.system.bhouse.base.App;
 import com.system.bhouse.bhouse.CommonTask.TransportationManagement.adapter.BaseQuickAdapter;
 import com.system.bhouse.bhouse.CommonTask.TransportationManagement.adapter.BaseViewHolder;
+import com.system.bhouse.bhouse.CommonTask.Widget.TimeLineItemTopBottomDecoration;
 import com.system.bhouse.bhouse.R;
 import com.system.bhouse.bhouse.setup.WWCommon.WWBackActivity;
 
@@ -42,6 +43,7 @@ public abstract class WWTimeLineActivity extends WWBackActivity implements BaseQ
         my_recycle_view.setLayoutManager(linearLayoutManager);
         stringArray = getResources().getStringArray(RrrayRes);
         data.addAll(Arrays.asList(stringArray));
+        my_recycle_view.addItemDecoration(new TimeLineItemTopBottomDecoration(),0);
 
         adapter = new BaseQuickAdapter<String, MyBaseViewHolder>(R.layout.timeline_item){
             @Override
@@ -54,6 +56,7 @@ public abstract class WWTimeLineActivity extends WWBackActivity implements BaseQ
 
         my_recycle_view.setAdapter(adapter);
 
+
         handler.postDelayed(new Runnable() {
             @Override
             public void run() {
@@ -62,6 +65,7 @@ public abstract class WWTimeLineActivity extends WWBackActivity implements BaseQ
         },100);
 
         adapter.setOnItemClickListener(this);
+
     }
 
     private  InnerHandle handler=new InnerHandle(this){

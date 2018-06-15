@@ -71,7 +71,7 @@
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@color/color_f8f8f8">
+                android:background="@color/material_blue_300">
 
                 <TextView
                     style="@style/TextTitle"
@@ -81,7 +81,7 @@
                     android:padding="15dp"
                     android:tag="name"
                     android:text="@string/title_activity_filter_tasks"
-                    android:textColor="@color/font_2"
+                    android:textColor="@color/white"
                     android:textSize="18sp"/>
 
 
@@ -117,7 +117,7 @@
                             android:drawableLeft="@drawable/ic_search_grey"
                             android:drawablePadding="10dp"
                             android:gravity="center_vertical|left"
-                            android:hint="查找订单编号 "
+                            android:hint="查找单据编号 "
                             android:imeOptions="actionSearch"
                             android:paddingLeft="5dp"
                             android:paddingRight="5dp"
