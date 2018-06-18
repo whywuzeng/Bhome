@@ -1,12 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.v4.widget.DrawerLayout
-    android:id="@+id/drawer_layout"
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:openDrawer="start"
-    android:fitsSystemWindows="true">
 
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
                 xmlns:tools="http://schemas.android.com/tools"
@@ -76,28 +68,13 @@
         app:radius="150dp"
         app:menu_item_image_width="100dp"
         app:menu_image_width="45dp"
-        app:menu_item_text_size="5sp"
+        app:menu_item_text_size="6sp"
         app:menu_item_text_color="@color/colorPrimary"
         android:id="@+id/mSatelliteMenuLeftTop"/>
-
-        <TextView
-            android:layout_below="@+id/mSatelliteMenuLeftTop"
-            android:id="@+id/house_keeper_tv"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="2dip"
-            android:gravity="center_horizontal"
-            android:text="@string/saoma"
-            android:textColor="@drawable/main_guide_text_color_selector"
-            android:textSize="@dimen/common_text_size"/>
 
     </RelativeLayout>
 
 </RelativeLayout>
-
-
-
-</android.support.v4.widget.DrawerLayout>
 
 
 

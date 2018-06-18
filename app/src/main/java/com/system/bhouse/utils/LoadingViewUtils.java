@@ -45,6 +45,7 @@ public class LoadingViewUtils extends DialogFragment {
             mDialog.setContentView(loadingView);
             mDialog.setCanceledOnTouchOutside(true);
             mDialog.getWindow().setGravity(Gravity.CENTER);
+            //把这个动画效果 关了 以后就怪怪的
             mDialog.getWindow().getAttributes().windowAnimations= R.style.fade_dialog;
 
             View view = mDialog.getWindow().getDecorView();

@@ -22,7 +22,7 @@ import com.system.bhouse.bhouse.R;
 import java.io.File;
 
 /**
- * Created by Oubowu on 2016/10/15 22:17.
+ * 很实用的Glide 封装
  */
 public class GlideUtils {
 

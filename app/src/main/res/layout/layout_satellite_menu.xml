@@ -20,5 +20,16 @@
         android:layout_width="45dp"
         android:layout_height="45dp" />
 
+    <TextView
+        android:layout_below="@+id/ivAdd"
+        android:id="@+id/house_keeper_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="2dip"
+        android:gravity="center_horizontal"
+        android:text="@string/saoma"
+        android:textColor="@drawable/main_guide_text_color_selector"
+        android:textSize="@dimen/common_text_size"/>
+
 
 </RelativeLayout>
