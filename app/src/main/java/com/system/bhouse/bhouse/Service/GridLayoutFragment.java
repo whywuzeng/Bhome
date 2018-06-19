@@ -29,15 +29,14 @@ import com.system.bhouse.api.manager.service.HostType;
 import com.system.bhouse.base.BaseSubscriber;
 import com.system.bhouse.base.RequestCallBack;
 import com.system.bhouse.bean.NeteastNewsSummary;
+import com.system.bhouse.bhouse.CommonTask.ProduceManagement.ProductionOrder.ProductionOrderActivity;
 import com.system.bhouse.bhouse.CommonTask.SiteActivity_;
 import com.system.bhouse.bhouse.CommonTask.TransportationManagement.TransportationManagementActivity_;
-import com.system.bhouse.bhouse.CommonTask.Widget.UpScorllLayout.SimpleStickActivity;
 import com.system.bhouse.bhouse.CompanyNews.CompanyNewsDetailActivity_;
 import com.system.bhouse.bhouse.R;
 import com.system.bhouse.bhouse.Service.NewsListUI.NewsListSection;
 import com.system.bhouse.bhouse.Service.NewsListUI.TaskListSection;
 import com.system.bhouse.bhouse.Service.adpter.GvMainAdapter;
-import com.system.bhouse.bhouse.Topic.ProjectActivity_;
 import com.system.bhouse.ui.CircleFlowIndicator;
 import com.system.bhouse.ui.ViewFlow;
 import com.system.bhouse.ui.sectioned.SectionedRecyclerViewAdapter;
@@ -373,14 +372,13 @@ public class GridLayoutFragment extends Fragment implements GvMainAdapter.ImageC
 
                 break;
             case 3:
-                Intent intent1 = new Intent(getActivity(), SimpleStickActivity.class);
-                startActivity(intent1);
+
                 break;
             case 4:
                 break;
             case 2:
-
-                ProjectActivity_.intent(this).start();
+               intent = new Intent(getActivity(), ProductionOrderActivity.class);
+               startActivity(intent);
 
                 break;
             default:

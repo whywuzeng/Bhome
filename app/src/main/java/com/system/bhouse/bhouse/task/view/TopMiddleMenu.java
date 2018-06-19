@@ -34,6 +34,7 @@ public class TopMiddleMenu extends RelativeLayout implements View.OnClickListene
 
     private List<TextView> textViews;
     private Point screenSize;
+    private TextView ParentTv;
 
     public void setNameMenuItem(List<String> nameMenuItem) {
         this.nameMenuItem = nameMenuItem;
@@ -80,6 +81,7 @@ public class TopMiddleMenu extends RelativeLayout implements View.OnClickListene
         viewMenuItem = (RelativeLayout) view.findViewById(R.id.viewMenuItem);
         rootView = (RelativeLayout) view.findViewById(R.id.rootView);
         ivAdd = (ImageView) view.findViewById(R.id.ivAdd);
+        ParentTv = (TextView) view.findViewById(R.id.house_keeper_tv);
         ivAdd.setOnClickListener(this);//设置监听事件
         screenSize = MeasureUtil.getScreenSize(mContext);
         //获取xml中自定义属性的值
@@ -206,10 +208,17 @@ public class TopMiddleMenu extends RelativeLayout implements View.OnClickListene
                     }
 
                 }
-                else {
-                    l = getWidth()/2-child.getMeasuredWidth()/2;
+                else if (child instanceof ImageView) {
+                    l = getWidth() / 2 - child.getMeasuredWidth() / 2;
+                    t = getHeight() - child.getMeasuredHeight()-ParentTv.getHeight();
+                    r = getWidth() / 2 + child.getMeasuredWidth() / 2;
+                    b = getHeight()-ParentTv.getHeight();
+                    child.layout(l, t, r, b);
+                }
+                else if (child instanceof TextView) {
+                    l = getWidth() / 2 - child.getMeasuredWidth() / 2;
                     t = getHeight() - child.getMeasuredHeight();
-                    r = getWidth()/2+child.getMeasuredWidth()/2;
+                    r = getWidth() / 2 + child.getMeasuredWidth() / 2;
                     b = getHeight();
                     child.layout(l, t, r, b);
                 }
@@ -351,12 +360,23 @@ public class TopMiddleMenu extends RelativeLayout implements View.OnClickListene
             ObjectAnimator animatorX = ObjectAnimator.ofFloat(textViews.get(i), "translationX", 0, mX);//平移动画
             ObjectAnimator animatorY = ObjectAnimator.ofFloat(textViews.get(i), "translationY", 0, mY);
 
+            ObjectAnimator animatorScaleX = ObjectAnimator.ofFloat(textViews.get(i), "scaleX", 1.0f, 1.2f,1.0f);
+            ObjectAnimator animatorScaleY = ObjectAnimator.ofFloat(textViews.get(i), "scaleY", 1.0f, 1.2f,1.0f);
+
 //            ObjectAnimator animatorRotation = ObjectAnimator.ofFloat(textViews.get(i), "rotation", 0, 720);//旋转动画
             if (!isMenuOpen) {
+
                 ObjectAnimator animatorAlpha = ObjectAnimator.ofFloat(textViews.get(i), "alpha", 1.0f, 0f);
-                animatorAlpha.setDuration(200);
-                animatorAlpha.setStartDelay(200);
-                animatorAlpha.start();
+//                animatorAlpha.setStartDelay(200);
+//                animatorAlpha.start();
+
+
+                //初始化一个集合
+                AnimatorSet mAnimatorSet = new AnimatorSet();
+//                mAnimatorSet.playTogether(animatorScaleX,animatorScaleY,animatorAlpha);
+                mAnimatorSet.play(animatorAlpha);
+                mAnimatorSet.setDuration(500);
+                mAnimatorSet.start();
 
                 animatorAlpha.addListener(new Animator.AnimatorListener() {
                     @Override
@@ -420,7 +440,7 @@ public class TopMiddleMenu extends RelativeLayout implements View.OnClickListene
             if (!isMenuOpen) {
                 mAnimatorSet.setStartDelay(200);
             }
-            //mAnimatorSet.setInterpolator(new BounceInterpolator());//动画插值器 自由落体动画效果
+//            mAnimatorSet.setInterpolator(new BounceInterpolator());//动画插值器 自由落体动画效果
             mAnimatorSet.setInterpolator(new AccelerateInterpolator());
             //mAnimatorSet.setInterpolator(new LinearInterpolator());
             //mAnimatorSet.setInterpolator(new DecelerateInterpolator());

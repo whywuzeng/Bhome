@@ -203,9 +203,6 @@
         <activity android:name="com.system.bhouse.Common.message.MessageListActivity_"
                   android:screenOrientation="portrait"/>
 
-        <activity android:name=".Topic.ProjectActivity_"
-                  android:screenOrientation="portrait"/>
-
 
         <activity android:name=".CommonTask.ComTaskActivity_"
                   android:screenOrientation="portrait"/>
@@ -272,12 +269,16 @@
         <activity android:name=".setup.notification.MyApprovalProcessed"
                   android:theme="@style/Anim_fade"
                   android:screenOrientation="portrait">
-
         </activity>
         
         <activity android:name="com.system.bhouse.bhouse.setup.notification.MyApprovalDetailActivity"
                   android:screenOrientation="portrait"/>
+        <activity android:name=".CommonTask.ProduceManagement.ProductionOrder.ProductionOrderActivity"
+                  android:screenOrientation="portrait"/>
 
+        <activity android:name="com.system.bhouse.bhouse.CommonTask.ProduceManagement.ProductionOrder.ProductionOrderContentMessageActivity_"
+                  android:windowSoftInputMode="adjustNothing"
+                  android:screenOrientation="portrait"/>
 
         <meta-data
             android:name="design_width"

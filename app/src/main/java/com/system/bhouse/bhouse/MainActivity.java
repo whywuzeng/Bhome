@@ -4,9 +4,7 @@ import android.content.ComponentName;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.ServiceConnection;
-import android.graphics.Bitmap;
 import android.graphics.Color;
-import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -15,10 +13,8 @@ import android.provider.Settings;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.view.ViewPager;
-import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.Toolbar;
-import android.text.TextUtils;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.Menu;
@@ -30,11 +26,6 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.bumptech.glide.Glide;
-import com.bumptech.glide.request.animation.GlideAnimation;
-import com.bumptech.glide.request.target.SimpleTarget;
-import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
 import com.socks.library.KLog;
 import com.system.bhouse.Custom.ShowDeviceMessageCustomDialog;
 import com.system.bhouse.api.ApiServiceUtils;
@@ -42,7 +33,6 @@ import com.system.bhouse.api.ApiWebService;
 import com.system.bhouse.base.App;
 import com.system.bhouse.base.BaseActivity;
 import com.system.bhouse.bean.UserInfo;
-import com.system.bhouse.bean.UserManagement;
 import com.system.bhouse.bhouse.CompanyNews.NewsListFragment;
 import com.system.bhouse.bhouse.Service.DownloadService;
 import com.system.bhouse.bhouse.Service.GridLayoutFragment;
@@ -59,14 +49,9 @@ import com.system.bhouse.fragment.EmptyFragment;
 import com.system.bhouse.fragment.MyApprovalNotificationFragment;
 import com.system.bhouse.fragment.MyApprovalNotificationFragment_;
 import com.system.bhouse.ui.IndexViewPager;
-import com.system.bhouse.ui.ItemPopupWindow;
 import com.system.bhouse.utils.AppManager;
-import com.system.bhouse.utils.BHEncodeUtils;
 import com.system.bhouse.utils.LogUtil;
 import com.system.bhouse.utils.MeasureUtil;
-import com.system.bhouse.utils.ProgressUtils;
-import com.system.bhouse.utils.inteface.GetPopitemProject;
-import com.system.bhouse.utils.inteface.getKVforpopup;
 import com.system.bhouse.utils.sharedpreferencesuser;
 import com.tencent.android.tpush.XGPushShowedResult;
 
@@ -77,21 +62,16 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import de.greenrobot.event.EventBus;
 import okhttp3.ResponseBody;
-import rx.Observable;
 import rx.Observer;
-import rx.Subscriber;
-import rx.android.schedulers.AndroidSchedulers;
-import rx.schedulers.Schedulers;
 
 
-public class MainActivity<T> extends BaseActivity implements getKVforpopup, GetPopitemProject<T>, TopMiddleMenu.OnMenuItemClickListener {
+public class MainActivity extends BaseActivity implements  TopMiddleMenu.OnMenuItemClickListener {
 
     private ServiceConnection connection;
     private static String Tag = "Bind";
@@ -183,20 +163,6 @@ public class MainActivity<T> extends BaseActivity implements getKVforpopup, GetP
 //    Toolbar toolbar;
     private Toolbar toolbar;
 
-    /*
-      Has_doneFragment Has_doneFragment=new Has_doneFragment();
-    Homepagefragment homepagefragment=new Homepagefragment();
-    InformationFragment informationFragment=new InformationFragment();
-    OtherFragment otherFragment=new OtherFragment();
-    ScheduleFragment scheduleFragment=new ScheduleFragment();
-     */
-
-    /**
-     * 2017.8.1 加入的Drawlayout 变量
-     */
-
-    DrawerLayout mDrawerLayout;
-
     @Bind(R.id.mSatelliteMenuLeftTop)
     TopMiddleMenu mSatelliteMenuLeftTop;
 
@@ -286,7 +252,6 @@ public class MainActivity<T> extends BaseActivity implements getKVforpopup, GetP
         getUpdateMsg();
 
         initTopMenu();
-//        App.LookDataTest(this);
 
         gridLayoutFragment.setOnMoreClickListener(() ->  updataBottomStatu(Second));
 
@@ -305,14 +270,11 @@ public class MainActivity<T> extends BaseActivity implements getKVforpopup, GetP
             @Override
             public void onCompleted() {
                 KLog.e("getUpdateMsg()  onCompleted()");
-                ProgressUtils.DisMissProgress();
             }
 
             @Override
             public void onError(Throwable e) {
-                com.system.bhouse.utils.TenUtils.T.showShort(MainActivity.this, "" + e.getLocalizedMessage());
                 KLog.e("getUpdateMsg()  onError()");
-                ProgressUtils.DisMissProgress();
             }
 
             @Override
@@ -353,7 +315,6 @@ public class MainActivity<T> extends BaseActivity implements getKVforpopup, GetP
                 houseKeeperIv.setBackgroundResource(R.drawable.bg_myselfhuise);
             }
         }
-        //测试提交提交1111111111  2018.6.3 11点
     }
 
     @Override
@@ -554,21 +515,12 @@ public class MainActivity<T> extends BaseActivity implements getKVforpopup, GetP
 
 
     private void updataBottomStatu(int second) {
-//        if (!houseKeeperIv.isSelected())
-//        {
-//            houseKeeperIv.setBackgroundResource(R.drawable.bg_myselfhuise);
-//        }else{
-//            if (isNotify) {
-//                houseKeeperIv.setBackgroundResource(R.drawable.bg_reddot_myselfhuise);
-//            }
-//        }
         switch (second) {
             case 0:
                 firstPageIv.setSelected(true);
                 firstPageTv.setSelected(true);
                 firstPageItem.setSelected(true);
                 contentPager.setCurrentItem(First);
-                setLinyaout(First);
                 //这里设置内容
                 tv_toolbar_title_mid.setText(firstPageTv.getText());
                 firstPageItemFlag.setVisibility(View.GONE);
@@ -601,7 +553,6 @@ public class MainActivity<T> extends BaseActivity implements getKVforpopup, GetP
                 classicTv.setSelected(true);
                 classicItem.setSelected(true);
                 contentPager.setCurrentItem(Second);
-                setLinyaout(Second);
                 tv_toolbar_title_mid.setText(classicTv.getText());
                 firstPageItemFlag.setSelected(false);
                 classicItemFlag.setSelected(true);
@@ -633,7 +584,6 @@ public class MainActivity<T> extends BaseActivity implements getKVforpopup, GetP
                 shoppingCarItem.setSelected(true);
                 contentPager.setCurrentItem(Third);
                 tv_toolbar_title_mid.setText(shoppingCarTv.getText());
-                setLinyaout(Third);
                 firstPageItemFlag.setSelected(false);
                 classicItemFlag.setSelected(false);
                 shoppingCarItemFlag.setSelected(true);
@@ -665,7 +615,6 @@ public class MainActivity<T> extends BaseActivity implements getKVforpopup, GetP
                 houseKeeperItem.setSelected(true);
                 contentPager.setCurrentItem(Fourth);
                 tv_toolbar_title_mid.setText(houseKeeperTv.getText());
-                setLinyaout(Fourth);
                 firstPageItemFlag.setSelected(false);
                 classicItemFlag.setSelected(false);
                 shoppingCarItemFlag.setSelected(false);
@@ -699,7 +648,6 @@ public class MainActivity<T> extends BaseActivity implements getKVforpopup, GetP
 //                contentPager.setCurrentItem(Fifth);
                 contentPager.setCurrentItem(Third);
                 tv_toolbar_title_mid.setText(myLehuTv.getText());
-                setLinyaout(Fifth);
                 firstPageItemFlag.setSelected(false);
                 classicItemFlag.setSelected(false);
                 shoppingCarItemFlag.setSelected(false);
@@ -727,95 +675,18 @@ public class MainActivity<T> extends BaseActivity implements getKVforpopup, GetP
         }
     }
 
-    /**
-     * @Bind(R.id.first_page_item) LinearLayout firstPageItem;
-     * @Bind(R.id.classic_item) LinearLayout classicItem;
-     * @Bind(R.id.shopping_car_item) LinearLayout shoppingCarItem;
-     * @Bind(R.id.house_keeper_item) LinearLayout houseKeeperItem;
-     * @Bind(R.id.my_lehu_item) LinearLayout myLehuItem;
-     * 616161
-     */
-
-    private void setLinyaout(int i) {
-
-//        int color = Color.rgb(255, 255, 185);
-////        int color1_mian = getResources().getColor(R.color.main_bule);
-//        int color1_mian = getResources().getColor(R.color.white);
-//        switch (i) {
-//            case 0:
-//                firstPageItem.setBackgroundColor(color);
-//                classicItem.setBackgroundColor(color1_mian);
-//                shoppingCarItem.setBackgroundColor(color1_mian);
-//                houseKeeperItem.setBackgroundColor(color1_mian);
-//                myLehuItem.setBackgroundColor(color1_mian);
-//                break;
-//            case 1:
-//                firstPageItem.setBackgroundColor(color1_mian);
-//                classicItem.setBackgroundColor(color);
-//                shoppingCarItem.setBackgroundColor(color1_mian);
-//                houseKeeperItem.setBackgroundColor(color1_mian);
-//                myLehuItem.setBackgroundColor(color1_mian);
-//                break;
-//            case 2:
-//                firstPageItem.setBackgroundColor(color1_mian);
-//                classicItem.setBackgroundColor(color1_mian);
-//                shoppingCarItem.setBackgroundColor(color);
-//                houseKeeperItem.setBackgroundColor(color1_mian);
-//                myLehuItem.setBackgroundColor(color1_mian);
-//                break;
-//            case 3:
-//                firstPageItem.setBackgroundColor(color1_mian);
-//                classicItem.setBackgroundColor(color1_mian);
-//                shoppingCarItem.setBackgroundColor(color1_mian);
-//                houseKeeperItem.setBackgroundColor(color);
-//                myLehuItem.setBackgroundColor(color1_mian);
-//                break;
-//            case 4:
-//                firstPageItem.setBackgroundColor(color1_mian);
-//                classicItem.setBackgroundColor(color1_mian);
-//                shoppingCarItem.setBackgroundColor(color1_mian);
-//                houseKeeperItem.setBackgroundColor(color1_mian);
-//                myLehuItem.setBackgroundColor(color);
-//                break;
-//
-//        }
-
-    }
-
-
     @Override
     protected void onResume() {
         super.onResume();
     }
 
     private void initialize() {
-        mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
-
-        actionBarDrawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout, toolbar, R.string.text_open, R.string.text_close);
-
-        mDrawerLayout.addDrawerListener(actionBarDrawerToggle);
-
-        actionBarDrawerToggle.syncState();
-
-
         toolbar = (Toolbar) findViewById(R.id.toolbar);
 
         toolbar.setTitle("");
         toolbar.setTitleTextColor(Color.WHITE);
 
         setSupportActionBar(toolbar);
-
-
-
-        toolbar.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-            }
-        });
-
-
-//        Avator_setNaviga();
-
 
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
@@ -833,38 +704,6 @@ public class MainActivity<T> extends BaseActivity implements getKVforpopup, GetP
             @Override
             public boolean onMenuItemClick(MenuItem item) {
                 switch (item.getItemId()) {
-//                    //注销
-//                    case R.id.action_zhuxiao:
-//                        Intent intent = new Intent(MainActivity.this, LoginActivity.class);
-//                        startActivity(intent);
-//                        AppManager.getAppManager().finishAllActivity();
-////                        AppManager.getAppManager().finishActivity(MainActivity.this);
-//                        Intent serviceIntent = new Intent( MainActivity.this, MessageService.class);
-//                        serviceIntent.setPackage("com.system.bhouse.bhouse");
-//                        MainActivity.this.stopService(serviceIntent);
-//                        break;
-//                    //管理单元网络请求管理
-//                    case R.id.action_UserManagement:
-//
-//                        Intent intent2=new Intent(MainActivity.this,InformationActivity.class);
-//                        (MainActivity.this).startActivityForResult(intent2,2);
-
-//                        if(Build.VERSION.SDK_INT>=23)
-//                        {
-//                            if (Settings.canDrawOverlays(MainActivity.this)) {
-//                                showfloteView();
-//                            }else
-//                            {
-//                                Intent intent1 = new Intent(Settings.ACTION_MANAGE_OVERLAY_PERMISSION);
-//                                startActivity(intent1);
-//
-//                            }
-//                        }else {
-//
-//                            showfloteView();
-//                        }
-
-//                        break;
                     //二维码扫描管理  //组织架构的选择界面
                     case R.id.action_capture:
                         Intent intent1 = new Intent(MainActivity.this, InformationActivity.class);
@@ -878,112 +717,9 @@ public class MainActivity<T> extends BaseActivity implements getKVforpopup, GetP
         });
     }
 
-    //根据网络 或者 本地 来提取头像
-    private void Avator_setNaviga() {
-
-        String avator_filefloder = sharedpreferencesuser.getAvator_filefloder(this);
-
-        if (!TextUtils.isEmpty(avator_filefloder)) {
-
-            Glide.with(this).load(avator_filefloder).asBitmap().into(new SimpleTarget<Bitmap>() {
-                @Override
-                public void onResourceReady(Bitmap resource, GlideAnimation<? super Bitmap> glideAnimation) {
-
-                    Bitmap zoomImg = MeasureUtil.zoomImg(resource, MeasureUtil.dip2px(MainActivity.this, 50), MeasureUtil.dip2px(MainActivity.this, 50));
-
-                    Bitmap roundCorner = MeasureUtil.makeRoundCorner(zoomImg);
-
-                    BitmapDrawable bitmapDrawable = new BitmapDrawable(getResources(), roundCorner);
-
-                    toolbar.setNavigationIcon(bitmapDrawable);
-                }
-            });
-
-        }
-        else {
-            //设置导航菜单
-            toolbar.setNavigationIcon(R.drawable.default_icon_hand3);
-        }
-
-    }
-
-    //访问管理单元的数据
-    private void showfloteView() {
-//        itemPopupWindow = null;
-//        setParent(toolbar);
-//        Observable<T> kehuIp = (Observable<T>) ApiServiceUtils.getInstence().getUserManagement(App.USER_INFO, BHEncodeUtils.BHEncode(App.MobileKey));
-//        getNetworkObserabletwo(kehuIp);
-
-        //改成webservice
-        ApiWebService.getUserManagement(this, new ApiWebService.SuccessCall() {
-            @Override
-            public void SuccessBack(String result) {
-                String s = result.toString();
-                KLog.e(s);
-
-                Gson gson = new Gson();
-                UserManagement[] shengfens = gson.fromJson(result, new TypeToken<UserManagement[]>() {
-                }.getType());
-
-                List<UserManagement> shengfens1 = null;
-                if (!(shengfens == null) && !TextUtils.isEmpty(shengfens.toString()) && !(shengfens.length == 0)) {
-                    Log.i("TGA", shengfens[0].toString() + "--------------------");
-//                    handler.sendMessage(obtain);
-                    shengfens1 = new ArrayList<>();
-                    for (int i = 0; i < shengfens.length; i++) {
-                        Log.i("78798798798798798", shengfens[i].toString());
-                        shengfens1.add(shengfens[i]);
-                    }
-
-                }
-                else {
-
-                }
-                showWindow(MainActivity.this.getWindow().getDecorView(), shengfens1);
-
-            }
-
-            @Override
-            public void ErrorBack(String error) {
-                Toast.makeText(MainActivity.this, error, Toast.LENGTH_SHORT).show();
-            }
-        }, App.USER_INFO, BHEncodeUtils.BHEncode(App.MobileKey));
-
-
-        ApiWebService.getGetmidfulllistdsbyusermid_Json(this, new ApiWebService.SuccessCall() {
-            @Override
-            public void SuccessBack(String result) {
-
-            }
-
-            @Override
-            public void ErrorBack(String error) {
-
-            }
-        }, App.USER_INFO, App.MID);
-
-
-    }
-
-    @Override
-    public void getpopitemproject(T temp, View temp1) {
-
-    }
-
-    //管理单元数据回调，，回调后调用toast
-    @Override
-    public void setlistKV(String s, View position, Map<String, Integer> map) {
-//        map.get(s);
-        KLog.e("你进入的公司是 : " + s + " mid  :" + map.get(s));
-        Toast.makeText(this, "你进入的公司是 : " + s, Toast.LENGTH_SHORT).show();
-        App.Mancompany = s;
-        toolbar.getMenu().findItem(R.id.action_text).setTitle(s);
-    }
-
     //middle icon menu 点击的回调
     @Override
     public void onClick(View view, int postion) {
-        Toast.makeText(MainActivity.this, "点击了菜单:" + ((TextView) view).getText(), Toast.LENGTH_LONG).show();
 
         switch (postion) {
             case 1:
@@ -1014,78 +750,6 @@ public class MainActivity<T> extends BaseActivity implements getKVforpopup, GetP
         }
     }
 
-
-    private static ItemPopupWindow itemPopupWindow;
-
-    //弹出管理单元网络  选择的对话框。。这里的对话框写的耦合。
-    @SuppressWarnings("deprecation")
-    public void showWindow(View v, List<UserManagement> ts) {
-        List<UserManagement> shengfenList1 = (List<UserManagement>) ts;
-        if (itemPopupWindow == null) {
-            itemPopupWindow = new ItemPopupWindow();
-//            if(itemPopupWindow.popupWindow.isShowing()) {
-//                itemPopupWindow.disswindow();
-//            }
-        }
-        else {
-            itemPopupWindow.disswindow();
-        }
-        itemPopupWindow.initquickadapter(MainActivity.this, v, shengfenList1);
-        itemPopupWindow.showWindow(MainActivity.this, v);
-
-    }
-
-    //管理单元网络请求管理
-    private void getNetworkObserabletwo(Observable<T> shengfenIp) {
-//        Observable<T> shengfenIp = (Observable<T>)ApiServiceUtils.getInstence().getShengfenIp("");
-        ProgressUtils.ShowProgress(this);
-        shengfenIp.subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe(new Subscriber<T>() {
-            @Override
-            public void onCompleted() {
-
-            }
-
-            @Override
-            public void onError(Throwable e) {
-
-                ProgressUtils.DisMissProgress();
-                /**
-                 * 测试
-                 */
-//                Intent intent = new Intent(LoginActivity.this, MainActivity.class);
-//                startActivity(intent);
-                com.system.bhouse.utils.TenUtils.T.showShort
-                        (MainActivity.this, e.toString());
-                e.printStackTrace();
-                e.toString();
-            }
-
-            @Override
-            public void onNext(T shengfens2) {
-                List<T> shengfens1 = null;
-                T[] shengfens = (T[]) shengfens2;
-                if (!(shengfens == null) && !TextUtils.isEmpty(shengfens.toString()) && !(shengfens.length == 0)) {
-                    Log.i("TGA", shengfens[0].toString() + "--------------------");
-//                    handler.sendMessage(obtain);
-                    shengfens1 = new ArrayList<>();
-                    for (int i = 0; i < shengfens.length; i++) {
-                        Log.i("78798798798798798", shengfens[i].toString());
-                        shengfens1.add(shengfens[i]);
-                    }
-
-
-                    ProgressUtils.DisMissProgress();
-//                    Toast.makeText(OrderInputActivity.this, "getIpInfoResponse==" + shengfens, 0).show();
-                }
-                else {
-
-                    ProgressUtils.DisMissProgress();
-                }
-//                showWindow(getparent(), shengfens1);
-            }
-
-        });
-    }
 
     //android6.0 判断权限的
     private static final int REQUEST_CODE = 1;

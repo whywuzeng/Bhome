@@ -34,6 +34,7 @@ import com.system.bhouse.bhouse.phone.view.WaveView;
 import com.system.bhouse.bhouse.setup.notification.MyNotificationActivity_;
 import com.system.bhouse.utils.AppManager;
 import com.system.bhouse.utils.DeviceMessageUtils;
+import com.system.bhouse.utils.ProgressUtils;
 import com.system.bhouse.utils.TenUtils.L;
 import com.system.bhouse.utils.TenUtils.T;
 import com.system.bhouse.utils.sharedpreferencesuser;
@@ -52,6 +53,8 @@ import java.lang.ref.WeakReference;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import rx.Observable;
+import rx.Subscriber;
 
 /**
  * Created by Administrator on 2016/3/9.
@@ -295,8 +298,11 @@ public class LoginActivity extends AutoLayoutActivity {
         }, usernumber.getText().toString(),deviceCpuID,deviceToken[0],ip,DiskID,memInfoIype);
     }
 
+    private boolean isLogin;
+
     //点击事件处理
     private void doLogin() {
+        isLogin=false;
         password = passwordBtn.getText().toString();
         usernumber1 = usernumber.getText().toString();
         if (!checkLoginInfo(usernumber1, password)) {
@@ -310,59 +316,87 @@ public class LoginActivity extends AutoLayoutActivity {
             sharedpreferencesuser.putUserpassword(this, "");
         }
 
-        ApiWebService.getLoginMsg(this, new ApiWebService.SuccessCall() {
+        Observable loginMsg = ApiWebService.getLoginMsg(usernumber1, password);
+
+        loginMsg.subscribe(new Subscriber<String>() {
+
             @Override
-            public void SuccessBack(String result) {
-                Gson gson=new Gson();
+            public void onStart() {
+                ProgressUtils.getInstance().ShowProgress(LoginActivity.this);
+            }
+
+            @Override
+            public void onCompleted() {
+
+            }
+
+            @Override
+            public void onError(Throwable e) {
+                ProgressUtils.getInstance().DisMissProgress();
+            }
+
+            @Override
+            public void onNext(String result) {
+                Gson gson = new Gson();
                 UserInfo[] getIpInfoResponse = gson.fromJson(result, UserInfo[].class);
                 if (!(getIpInfoResponse == null) && !TextUtils.isEmpty(getIpInfoResponse.toString()) && !(getIpInfoResponse.length == 0)) {
+                    isLogin = true;
 
-                    for (int i = 0; i < getIpInfoResponse.length; i++) { //就只有一个
+                    for (int j = 0; j < getIpInfoResponse.length; j++) { //就只有一个
                         //静态保存
-                        userInfo = getIpInfoResponse[i];
+                        userInfo = getIpInfoResponse[j];
                         App.USER_INFO = userInfo.getUsername();
                         App.MID = userInfo.getMid();
-                        App.GSMID= userInfo.getGsmid();
+                        App.GSMID = userInfo.getGsmid();
                         App.MobileKey = userInfo.MobileKey;
                         App.Filenum = userInfo.Filenum;
                         App.Filesize = userInfo.getFilesizeX();
                         App.Mancompany = userInfo.getManCompany();
 
-                        App.usertype=userInfo.getUsertype();
-                        App.Property=userInfo.getProperty();
-                        App.IsSub=userInfo.isIsSub();
-                        App.menname=userInfo.getMenname();
-                        App.mpname=userInfo.mpname;
+                        App.usertype = userInfo.getUsertype();
+                        App.Property = userInfo.getProperty();
+                        App.IsSub = userInfo.isIsSub();
+                        App.menname = userInfo.getMenname();
+                        App.mpname = userInfo.mpname;
                     }
-
-                    ApiWebService.Getlogin_regok_Json(LoginActivity.this, new ApiWebService.SuccessCall() {
+                    Observable regokJson = ApiWebService.Getlogin_regok_Json(deviceCpuID, deviceToken[0], ip, DiskID, memInfoIype);
+                    regokJson.subscribe(new Subscriber<String>() {
                         @Override
-                        public void SuccessBack(String result) {
-                            L.e(result);
+                        public void onCompleted() {
+                            ProgressUtils.getInstance().DisMissProgress();
+                        }
+
+                        @Override
+                        public void onError(Throwable e) {
+                            ProgressUtils.getInstance().DisMissProgress();
+                        }
+
+                        @Override
+                        public void onNext(String result) {
                             try {
-                                JSONArray jsonArray = new JSONArray(result);
-                                for (int i = 0; i< jsonArray.length(); i++) {
+                                JSONArray jsonArray = new JSONArray(result.toString());
+                                for (int i = 0; i < jsonArray.length(); i++) {
                                     //循环遍历，依次取出JSONObject对象
                                     //用getInt和getString方法取出对应键值  [{"loing_regokdr":"否"}]
                                     JSONObject jsonObject = jsonArray.getJSONObject(i);
-                                    if(jsonObject.has("stu_no")) {
+                                    if (jsonObject.has("stu_no")) {
                                         int stu_no = jsonObject.getInt("stu_no");
                                     }
                                     if (jsonObject.has("stu_sex")) {
                                         String stu_sex = jsonObject.getString("stu_sex");
                                     }
-                                    String stu_name="";
+                                    String stu_name = "";
                                     if (jsonObject.has("loing_regokdr")) {
-                                         stu_name = jsonObject.getString("loing_regokdr");
+                                        stu_name = jsonObject.getString("loing_regokdr");
                                     }
-                                    if (stu_name.equals("否"))
-                                    {
-                                        T.showShort(LoginActivity.this,"当前设备不兼容");
+                                    if (stu_name.equals("否")) {
+                                        T.showShort(LoginActivity.this, "当前设备不兼容");
                                         //handle跳转至
 //                                        Message obtain = Message.obtain();
 //                                        obtain.what = Integer.valueOf(1);
 //                                        handler.sendMessage(obtain);
-                                    }else{
+                                    }
+                                    else if (stu_name.equals("是")&&isLogin){
                                         //handle跳转至
                                         Message obtain = Message.obtain();
                                         obtain.what = Integer.valueOf(1);
@@ -373,26 +407,191 @@ public class LoginActivity extends AutoLayoutActivity {
                             } catch (JSONException e) {
                                 e.printStackTrace();
                             }
-
                         }
-
-                        @Override
-                        public void ErrorBack(String error) {
-                            L.e(error);
-                        }
-                    },deviceCpuID,deviceToken[0],ip,DiskID,memInfoIype);
-
+                    });
                 }
                 else {
+                    ProgressUtils.getInstance().DisMissProgress();
                     Toast.makeText(LoginActivity.this, R.string.passworderror, Toast.LENGTH_SHORT).show();
                 }
-            }
 
-            @Override
-            public void ErrorBack(String error) {
-                    T.showShort(LoginActivity.this,error);
             }
-        },usernumber1, password);
+        });
+
+
+//        loginMsg.concatWith(regokJson).subscribe(ApiWebService.getMutiCallback(this, new ApiWebService.ObjectSuccessCall() {
+//            @Override
+//            public void SuccessBack(Object result) {
+//
+//                try {
+//                    JSONArray jsonArray = new JSONArray(result.toString());
+//                    for (int i = 0; i < jsonArray.length(); i++) {
+//                        //循环遍历，依次取出JSONObject对象
+//                        //用getInt和getString方法取出对应键值  [{"loing_regokdr":"否"}]
+//                        JSONObject jsonObject = jsonArray.getJSONObject(i);
+//                        if (jsonObject.has("stu_no")) {
+//                            int stu_no = jsonObject.getInt("stu_no");
+//                        }
+//                        if (jsonObject.has("stu_sex")) {
+//                            String stu_sex = jsonObject.getString("stu_sex");
+//                        }
+//                        String stu_name = "";
+//                        if (jsonObject.has("loing_regokdr")) {
+//                            stu_name = jsonObject.getString("loing_regokdr");
+//                        }
+//                        if (stu_name.equals("否")) {
+//                            T.showShort(LoginActivity.this, "当前设备不兼容");
+//                            //handle跳转至
+////                                        Message obtain = Message.obtain();
+////                                        obtain.what = Integer.valueOf(1);
+////                                        handler.sendMessage(obtain);
+//                        }
+//                        else if (stu_name.equals("是")&&isLogin){
+//                            //handle跳转至
+//                            Message obtain = Message.obtain();
+//                            obtain.what = Integer.valueOf(1);
+//                            handler.sendMessage(obtain);
+//
+//                        }
+//                    }
+//                } catch (JSONException e) {
+//                    e.printStackTrace();
+//                }
+//
+//                try {
+//                    JSONArray jsonArray = new JSONArray(result.toString());
+//                    for (int i = 0; i < jsonArray.length(); i++) {
+//
+//                        JSONObject jsonObject = jsonArray.getJSONObject(i);
+//                        if (jsonObject.has("username")) {
+//
+//                            Gson gson = new Gson();
+//                            UserInfo[] getIpInfoResponse = gson.fromJson(result.toString(), UserInfo[].class);
+//                            if (!(getIpInfoResponse == null) && !TextUtils.isEmpty(getIpInfoResponse.toString()) && !(getIpInfoResponse.length == 0)) {
+//                                isLogin = true;
+//
+//                                for (int j = 0; j < getIpInfoResponse.length; j++) { //就只有一个
+//                                    //静态保存
+//                                    userInfo = getIpInfoResponse[j];
+//                                    App.USER_INFO = userInfo.getUsername();
+//                                    App.MID = userInfo.getMid();
+//                                    App.GSMID = userInfo.getGsmid();
+//                                    App.MobileKey = userInfo.MobileKey;
+//                                    App.Filenum = userInfo.Filenum;
+//                                    App.Filesize = userInfo.getFilesizeX();
+//                                    App.Mancompany = userInfo.getManCompany();
+//
+//                                    App.usertype = userInfo.getUsertype();
+//                                    App.Property = userInfo.getProperty();
+//                                    App.IsSub = userInfo.isIsSub();
+//                                    App.menname = userInfo.getMenname();
+//                                    App.mpname = userInfo.mpname;
+//                                }
+//                            }
+//                            else {
+//
+//                                Toast.makeText(LoginActivity.this, R.string.passworderror, Toast.LENGTH_SHORT).show();
+//                            }
+//                        }
+//                    }
+//                    if (jsonArray.length()<=0)
+//                    {
+//                        Toast.makeText(LoginActivity.this, R.string.passworderror, Toast.LENGTH_SHORT).show();
+//                    }
+//                } catch (JSONException e) {
+//                    e.printStackTrace();
+//                }
+//            }
+//
+//            @Override
+//            public void ErrorBack(Object error) {
+//
+//            }
+//        }));
+
+//        ApiWebService.getLoginMsg(this, new ApiWebService.SuccessCall() {
+//            @Override
+//            public void SuccessBack(String result) {
+//                Gson gson=new Gson();
+//                UserInfo[] getIpInfoResponse = gson.fromJson(result, UserInfo[].class);
+//                if (!(getIpInfoResponse == null) && !TextUtils.isEmpty(getIpInfoResponse.toString()) && !(getIpInfoResponse.length == 0)) {
+//
+//                    for (int i = 0; i < getIpInfoResponse.length; i++) { //就只有一个
+//                        //静态保存
+//                        userInfo = getIpInfoResponse[i];
+//                        App.USER_INFO = userInfo.getUsername();
+//                        App.MID = userInfo.getMid();
+//                        App.GSMID= userInfo.getGsmid();
+//                        App.MobileKey = userInfo.MobileKey;
+//                        App.Filenum = userInfo.Filenum;
+//                        App.Filesize = userInfo.getFilesizeX();
+//                        App.Mancompany = userInfo.getManCompany();
+//
+//                        App.usertype=userInfo.getUsertype();
+//                        App.Property=userInfo.getProperty();
+//                        App.IsSub=userInfo.isIsSub();
+//                        App.menname=userInfo.getMenname();
+//                        App.mpname=userInfo.mpname;
+//                    }
+//
+//                    ApiWebService.Getlogin_regok_Json(LoginActivity.this, new ApiWebService.SuccessCall() {
+//                        @Override
+//                        public void SuccessBack(String result) {
+//                            L.e(result);
+//                            try {
+//                                JSONArray jsonArray = new JSONArray(result);
+//                                for (int i = 0; i< jsonArray.length(); i++) {
+//                                    //循环遍历，依次取出JSONObject对象
+//                                    //用getInt和getString方法取出对应键值  [{"loing_regokdr":"否"}]
+//                                    JSONObject jsonObject = jsonArray.getJSONObject(i);
+//                                    if(jsonObject.has("stu_no")) {
+//                                        int stu_no = jsonObject.getInt("stu_no");
+//                                    }
+//                                    if (jsonObject.has("stu_sex")) {
+//                                        String stu_sex = jsonObject.getString("stu_sex");
+//                                    }
+//                                    String stu_name="";
+//                                    if (jsonObject.has("loing_regokdr")) {
+//                                         stu_name = jsonObject.getString("loing_regokdr");
+//                                    }
+//                                    if (stu_name.equals("否"))
+//                                    {
+//                                        T.showShort(LoginActivity.this,"当前设备不兼容");
+//                                        //handle跳转至
+////                                        Message obtain = Message.obtain();
+////                                        obtain.what = Integer.valueOf(1);
+////                                        handler.sendMessage(obtain);
+//                                    }else{
+//                                        //handle跳转至
+//                                        Message obtain = Message.obtain();
+//                                        obtain.what = Integer.valueOf(1);
+//                                        handler.sendMessage(obtain);
+//
+//                                    }
+//                                }
+//                            } catch (JSONException e) {
+//                                e.printStackTrace();
+//                            }
+//
+//                        }
+//
+//                        @Override
+//                        public void ErrorBack(String error) {
+//                            L.e(error);
+//                        }
+//                    },deviceCpuID,deviceToken[0],ip,DiskID,memInfoIype);
+//
+//                }
+//                else {
+//                    Toast.makeText(LoginActivity.this, R.string.passworderror, Toast.LENGTH_SHORT).show();
+//                }
+//            }
+//
+//            @Override
+//            public void ErrorBack(String error) {
+//                    T.showShort(LoginActivity.this,error);
+//            }
+//        },usernumber1, password);
 
 //        //访问网络  登陆接口数据接收
 //        ProgressUtils.ShowProgress(this);

@@ -135,13 +135,13 @@ public class ApiWebService {
     }
 
     //登录的接口
-    public static Subscription getLoginMsg(final Context mContext, final SuccessCall call,String admin,String password){
+    public static Observable getLoginMsg(String admin,String password){
         setUserMaindomain();
         String methodName="Getlogin_Json"; //(用户密码验证)
         SoapObject request = new SoapObject(NAMESPACE, methodName);
         request.addProperty("name",admin);
         request.addProperty("pass",password);
-       return getNetworkServiceNoProgress(mContext,call,request);
+       return getMutiNetworkService(request);
     }
 
     //更新订单状态
@@ -350,7 +350,7 @@ public class ApiWebService {
     }
 
     //设备认证校验
-    public static Subscription Getlogin_regok_Json(final Context mContext, final SuccessCall call,String CpuID, String MacAddress, String IpAddress, String DiskID, String TotalPhysicalMemory)
+    public static Observable Getlogin_regok_Json(String CpuID, String MacAddress, String IpAddress, String DiskID, String TotalPhysicalMemory)
     {
         setUserMaindomain();
         String methodName="Getlogin_regok_Json";
@@ -361,7 +361,7 @@ public class ApiWebService {
         request.addProperty("IpAddress",IpAddress);
         request.addProperty("DiskID",DiskID);
         request.addProperty("TotalPhysicalMemory",TotalPhysicalMemory);
-        return getNetworkService(mContext,call,request);
+        return getMutiNetworkService(request);
     }
 
     /**
@@ -2217,7 +2217,7 @@ Get_Sale_Order_Car_shf(string scid, string addPer, int gsmid, int property, bool
     {
         String methodName="Get_Production_orderView_Json";
         SoapObject request = new SoapObject(NAMESPACE, methodName);
-        request.addProperty("sccid",poid);
+        request.addProperty("poid",poid);
         request.addProperty("gsmid",App.GSMID);
         request.addProperty("property",App.Property);
         request.addProperty("IsSubtitle",App.IsSub);
@@ -2231,7 +2231,7 @@ Get_Sale_Order_Car_shf(string scid, string addPer, int gsmid, int property, bool
      Get_Production_order_sh(string poid, string addPer, int gsmid, int property, bool IsSubtitle, string Keystring, string KeysTimetring, string username)
 
      */
-    public static Subscription Get_Production_order_sh(final Context mContext, final SuccessCall call,String poid,String addPer)
+    public static Subscription Get_Production_order_sh(final Context mContext, final SuccessCall call,String poid)
     {
         String methodName="Get_Production_order_sh";
         SoapObject request = new SoapObject(NAMESPACE, methodName);
@@ -2274,7 +2274,7 @@ Get_Sale_Order_Car_shf(string scid, string addPer, int gsmid, int property, bool
      Get_Production_order_Del(string poid, string addPer, int gsmid, int property, bool IsSubtitle, string Keystring, string KeysTimetring, string username)
 
      */
-    public static Subscription Get_Production_order_Del(final Context mContext, final SuccessCall call,String poid,String addPer)
+    public static Subscription Get_Production_order_Del(final Context mContext, final SuccessCall call,String poid)
     {
         String methodName="Get_Production_order_Del";
         SoapObject request = new SoapObject(NAMESPACE, methodName);
@@ -2295,6 +2295,81 @@ Get_Sale_Order_Car_shf(string scid, string addPer, int gsmid, int property, bool
      接口函数：
      Get_Production_orderView_list_Json(string poid, int gsmid, int property, bool IsSubtitle, string username)
      */
+    public static Subscription Get_Production_orderView_list_Json(final Context mContext, final SuccessCall call,String poid)
+    {
+        String methodName="Get_Production_orderView_list_Json";
+        SoapObject request = new SoapObject(NAMESPACE, methodName);
+        request.addProperty("sccid",poid);
+        request.addProperty("gsmid",App.GSMID);
+        request.addProperty("property",App.Property);
+        request.addProperty("IsSubtitle",App.IsSub);
+        request.addProperty("username",App.USER_INFO);
+        return getNetworkService(mContext,call,request);
+    }
+
+    /**
+     * 接口名称：生产订单-开始备料
+     接口地址：http://192.168.11.96:7785/Service1.asmx
+     接口函数：
+     Get_Production_order_Stock_start(string poid, string addPer, int gsmid, int property, bool IsSubtitle, string Keystring, string KeysTimetring, string username)
+     */
+    public static Subscription Get_Production_order_Stock_start(final Context mContext, final SuccessCall call,String poid)
+    {
+        String methodName="Get_Production_order_Stock_start";
+        SoapObject request = new SoapObject(NAMESPACE, methodName);
+        request.addProperty("poid",poid);
+        request.addProperty("addPer", App.menname);
+        request.addProperty("gsmid",App.GSMID);
+        request.addProperty("property",App.Property);
+        request.addProperty("IsSubtitle",App.IsSub);
+        request.addProperty("Keystring",App.MobileKey);
+        request.addProperty("KeysTimetring",App.KeyTimestring);
+        request.addProperty("username",App.USER_INFO);
+        return getNetworkService(mContext,call,request);
+    }
+
+    /**
+     * 接口名称：生产订单-备料完成
+     接口地址：http://192.168.11.96:7785/Service1.asmx
+     接口函数：
+     Get_Production_order_Stock_end(string poid, string addPer, int gsmid, int property, bool IsSubtitle, string Keystring, string KeysTimetring, string username)
+     */
+    public static Subscription Get_Production_order_Stock_end(final Context mContext, final SuccessCall call,String poid)
+    {
+        String methodName="Get_Production_order_Stock_end";
+        SoapObject request = new SoapObject(NAMESPACE, methodName);
+        request.addProperty("poid",poid);
+        request.addProperty("addPer", App.menname);
+        request.addProperty("gsmid",App.GSMID);
+        request.addProperty("property",App.Property);
+        request.addProperty("IsSubtitle",App.IsSub);
+        request.addProperty("Keystring",App.MobileKey);
+        request.addProperty("KeysTimetring",App.KeyTimestring);
+        request.addProperty("username",App.USER_INFO);
+        return getNetworkService(mContext,call,request);
+    }
+
+    /**
+     * 接口名称：生产订单-取消备料
+     接口地址：http://192.168.11.96:7785/Service1.asmx
+     接口函数：
+     Get_Production_order_Stock_del(string poid, string addPer, int gsmid, int property, bool IsSubtitle, string Keystring, string KeysTimetring, string username)
+     */
+    public static Subscription Get_Production_order_Stock_del(final Context mContext, final SuccessCall call,String poid)
+    {
+        String methodName="Get_Production_order_Stock_del";
+        SoapObject request = new SoapObject(NAMESPACE, methodName);
+        request.addProperty("poid",poid);
+        request.addProperty("addPer", App.menname);
+        request.addProperty("gsmid",App.GSMID);
+        request.addProperty("property",App.Property);
+        request.addProperty("IsSubtitle",App.IsSub);
+        request.addProperty("Keystring",App.MobileKey);
+        request.addProperty("KeysTimetring",App.KeyTimestring);
+        request.addProperty("username",App.USER_INFO);
+        return getNetworkService(mContext,call,request);
+    }
+
 
 
     /**
