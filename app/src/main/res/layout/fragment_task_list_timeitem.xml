@@ -66,6 +66,7 @@
         android:layout_height="wrap_content">
 
         <LinearLayout
+            android:id="@+id/ll_text_tableId_1"
             android:layout_marginRight="5dp"
             android:layout_marginLeft="10dp"
             android:orientation="horizontal"
@@ -98,6 +99,7 @@
         </LinearLayout>
 
         <LinearLayout
+            android:id="@+id/ll_text_projectName_2"
             android:layout_marginRight="5dp"
             android:layout_marginLeft="10dp"
             android:orientation="horizontal"
@@ -130,6 +132,7 @@
         </LinearLayout>
 
         <LinearLayout
+            android:id="@+id/ll_text_dong_3"
             android:layout_marginRight="5dp"
             android:layout_marginLeft="10dp"
             android:orientation="horizontal"

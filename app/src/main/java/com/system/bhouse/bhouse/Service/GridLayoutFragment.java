@@ -29,7 +29,7 @@ import com.system.bhouse.api.manager.service.HostType;
 import com.system.bhouse.base.BaseSubscriber;
 import com.system.bhouse.base.RequestCallBack;
 import com.system.bhouse.bean.NeteastNewsSummary;
-import com.system.bhouse.bhouse.CommonTask.ProduceManagement.ProductionOrder.ProductionOrderActivity;
+import com.system.bhouse.bhouse.CommonTask.ProduceManagement.ProduceActivity;
 import com.system.bhouse.bhouse.CommonTask.SiteActivity_;
 import com.system.bhouse.bhouse.CommonTask.TransportationManagement.TransportationManagementActivity_;
 import com.system.bhouse.bhouse.CompanyNews.CompanyNewsDetailActivity_;
@@ -377,7 +377,7 @@ public class GridLayoutFragment extends Fragment implements GvMainAdapter.ImageC
             case 4:
                 break;
             case 2:
-               intent = new Intent(getActivity(), ProductionOrderActivity.class);
+               intent = new Intent(getActivity(), ProduceActivity.class);
                startActivity(intent);
 
                 break;

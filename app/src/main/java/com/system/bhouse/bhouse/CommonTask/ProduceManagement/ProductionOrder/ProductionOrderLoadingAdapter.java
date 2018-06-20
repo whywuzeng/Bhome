@@ -95,13 +95,28 @@ public class ProductionOrderLoadingAdapter extends LoadingAdapter<productionOrde
         }
     }
 
+    /**
+     * 1--->ll_text_tableId_1 -- text_tableId -- text_tableId_content
+     *  2--->ll_text_projectName_2 -- text_projectName -- text_projectName_content
+     *   3--->ll_text_dong_3 -- text_dong -- text_dong_content
+     *    4--->ll_bottom_6 -- text_ceng -- text_ceng_content
+     *     5--->ll_bottom_5 -- text_reqiuerDate -- text_reqiuerDate_content
+     *      6--->ll_bottom_4 -- text_description -- text_description_content
+     *       7--->ll_bottom_3 -- text_status -- text_status_content
+     *        8--->ll_bottom_2 -- text_entryPeople -- text_entryPeople_content
+     *         9--->ll_bottom_1 -- text_entryTime -- text_entryTime_content
+     *         //只有9个Item
+     *          10--->ll_text_tableId_1 -- text_tableId -- text_tableId_content
+     *
+     */
+
     @NonNull
     private List<String> getListStrings(int position) {
         List<String> dataList = new ArrayList<>();
         dataList.add("单据编号:");
         dataList.add(mComTaskBeans
-                .get(position).getHNumbe() == null ? "" : mComTaskBeans
-                .get(position).getHNumbe());
+                .get(position).gethNumbe() == null ? "" : mComTaskBeans
+                .get(position).gethNumbe());
         dataList.add("业务日期:");
         dataList.add(mComTaskBeans
                 .get(position).getRequireDate() == null ? "" : mComTaskBeans

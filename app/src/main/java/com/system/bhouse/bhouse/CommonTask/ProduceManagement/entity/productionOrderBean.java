@@ -1,5 +1,8 @@
 package com.system.bhouse.bhouse.CommonTask.ProduceManagement.entity;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import com.google.gson.annotations.SerializedName;
 import com.system.bhouse.bean.BaseBean;
 
@@ -11,7 +14,7 @@ import com.system.bhouse.bean.BaseBean;
  * com.system.bhouse.bhouse.CommonTask.ProduceManagement.entity
  */
 
-public class productionOrderBean extends BaseBean {
+public class productionOrderBean extends BaseBean implements Parcelable {
 
     /**
      * ID : 16c5357b9c6f41198c783cf755e9cf4c
@@ -177,4 +180,74 @@ public class productionOrderBean extends BaseBean {
     private String measureUnitID;
 
 
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(this.ID);
+        dest.writeString(this.Qrcode);
+        dest.writeString(this.subDirectoryID);
+        dest.writeString(this.hNumbe);
+        dest.writeDouble(this.amount);
+        dest.writeString(this.sourceType);
+        dest.writeString(this.materialsID);
+        dest.writeString(this.materialsNames);
+        dest.writeString(this.materialsNumber);
+        dest.writeString(this.Specification);
+        dest.writeString(this.planStartDate);
+        dest.writeString(this.planEndDate);
+        dest.writeString(this.measureUnit);
+        dest.writeString(this.measureUnitID);
+        dest.writeByte(this.disableDelete ? (byte) 1 : (byte) 0);
+        dest.writeString(this.requireDate);
+        dest.writeString(this.description);
+        dest.writeString(this.checkPeople);
+        dest.writeString(this.checkTime);
+        dest.writeString(this.entryPeople);
+        dest.writeString(this.entryTime);
+        dest.writeString(this.status);
+    }
+
+    public productionOrderBean() {
+    }
+
+    protected productionOrderBean(Parcel in) {
+        this.ID = in.readString();
+        this.Qrcode = in.readString();
+        this.subDirectoryID = in.readString();
+        this.hNumbe = in.readString();
+        this.amount = in.readDouble();
+        this.sourceType = in.readString();
+        this.materialsID = in.readString();
+        this.materialsNames = in.readString();
+        this.materialsNumber = in.readString();
+        this.Specification = in.readString();
+        this.planStartDate = in.readString();
+        this.planEndDate = in.readString();
+        this.measureUnit = in.readString();
+        this.measureUnitID = in.readString();
+        this.disableDelete = in.readByte() != 0;
+        this.requireDate = in.readString();
+        this.description = in.readString();
+        this.checkPeople = in.readString();
+        this.checkTime = in.readString();
+        this.entryPeople = in.readString();
+        this.entryTime = in.readString();
+        this.status = in.readString();
+    }
+
+    public static final Parcelable.Creator<productionOrderBean> CREATOR = new Parcelable.Creator<productionOrderBean>() {
+        @Override
+        public productionOrderBean createFromParcel(Parcel source) {
+            return new productionOrderBean(source);
+        }
+
+        @Override
+        public productionOrderBean[] newArray(int size) {
+            return new productionOrderBean[size];
+        }
+    };
 }

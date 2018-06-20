@@ -151,7 +151,7 @@ public class ProductionOrderListFragment extends BaseCommonListFragment<Producti
         }
         statusBean.setLookStatus(true);
         ComponentReturnsContentMessageActivity_.intent(getParentFragment()).HId(mData
-                .get(position).getID() + "").receiptHnumber(mData.get(position).getHNumbe()).mStatus(statusBean).start();
+                .get(position).getID() + "").receiptHnumber(mData.get(position).gethNumbe()).mStatus(statusBean).start();
     }
 
 }

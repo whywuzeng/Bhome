@@ -13,6 +13,7 @@ import com.system.bhouse.utils.MeasureUtil;
  * Created by Administrator on 2018-06-15.
  * <p>
  * by author wz
+ * 底 和 高加距离的 Decoration
  * <p>
  * com.system.bhouse.bhouse.CommonTask.Widget
  */
