@@ -267,7 +267,7 @@ public abstract class BaseCommonListFragment<T extends LoadingAdapter,B> extends
         urlAll = "";
 
         taskListUpdate(true);
-        taskFragmentLoading(true);
+//        taskFragmentLoading(true);
     }
 
     private void updateFootStyle() {
@@ -311,7 +311,16 @@ public abstract class BaseCommonListFragment<T extends LoadingAdapter,B> extends
         EventBus.getDefault().unregister(this);
     }
 
+    /**
+     *  String[] statusContent = {"", "提交", "审核"};
+     */
+    protected void setStatusContent(String[] statusContent) {
+        this.statusContent = statusContent;
+    }
+
     String[] statusContent = {"", "提交", "审核"};
+
+
 
     //筛选后刷新  刷新这个listFragment
     public void onEventMainThread(Object object) {
@@ -338,15 +347,15 @@ public abstract class BaseCommonListFragment<T extends LoadingAdapter,B> extends
     protected String DefaultStatus;
     @NonNull
     protected StatusBean getStatusBean() {
-        DefaultStatus= TextUtils.isEmpty(mStatus) ? "提交" : mStatus;
+        DefaultStatus= TextUtils.isEmpty(mStatus) ? statusContent[1] : mStatus;
         StatusBean statusBean = new StatusBean();
         //从初始化  或者  后台请求 得到状态
-        if (DefaultStatus.equals("提交")) {
+        if (DefaultStatus.equals(statusContent[1])) {
             SubmitStatusBeanImpl submitStatusBean = new SubmitStatusBeanImpl();
             submitStatusBean.setVisCheckBtn(true).setVisDeleteBtn(true);
             statusBean.setBean(submitStatusBean);
         }
-        else if (DefaultStatus.equals("审核")) {
+        else if (DefaultStatus.equals(statusContent[2])) {
             CheckStatusBeanImpl checkStatusBean = new CheckStatusBeanImpl();
             checkStatusBean.setVisCheckFBtn(true);
             statusBean.setBean(checkStatusBean);

@@ -149,5 +149,55 @@
         <item>已完成</item>
     </string-array>
 
+    <!--生产订单 分录详细-->
+    <string-array name="productionOrder_itemsection_order">
+        <item>物料编码</item>
+        <item>物料二维码</item>
+        <item>物料名称</item>
+        <item>规格型号</item>
+        <item>单位</item>
+        <item>计划数量</item>
+    </string-array>
+
+    <!--领料出库 表头详情-->
+    <string-array name="pickingout_Basic_order">
+        <item>生产订单号</item>
+        <item>领料编号</item>
+        <item>状态</item>
+        <item>录入时间</item>
+        <item>录入人</item>
+        <item>业务日期</item>
+    </string-array>
+
+    <!--领料出库 分录详情-->
+    <string-array name="pickingout_itemsection_order">
+        <item>物料编码</item>
+        <item>物料名称</item>
+        <item>规格型号</item>
+        <item>单位</item>
+        <item>仓库名称</item>
+        <item>出库数量</item>
+    </string-array>
+
+    <!--完工入库 表头详情-->
+    <string-array name="finished_storage_order">
+        <item>订单编号</item>
+        <item>生产订单</item>
+        <item>状态</item>
+        <item>录入时间</item>
+        <item>录入人</item>
+        <item>业务日期</item>
+    </string-array>
+
+    <!--完工入库  分录详情-->
+    <string-array name="finished_itemsection_order">
+        <item>物料编码</item>
+        <item>二维码</item>
+        <item>物料名称</item>
+        <item>规格型号</item>
+        <item>单位</item>
+        <item>仓库名称</item>
+        <item>入库数量</item>
+    </string-array>
 
 </resources>

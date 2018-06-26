@@ -109,22 +109,6 @@ android {
 
 }
 
-buildscript {
-    repositories {
-        jcenter()
-        google()
-        maven {
-            url 'https://maven.google.com'
-        }
-        mavenCentral()
-        mavenLocal()
-    }
-    dependencies {
-        classpath 'com.android.tools.build:gradle:3.0.1'
-        //classpath 'com.neenbedankt.gradle.plugins:android-apt:1.8'
-    }
-}
-
 dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
     testCompile 'junit:junit:4.12'
@@ -178,7 +162,7 @@ dependencies {
     annotationProcessor "org.androidannotations:androidannotations:$AAVersion"
     implementation "org.androidannotations:androidannotations-api:$AAVersion"
     //    annotationProcessor
-    implementation 'com.zijunlin.Zxing.Demo:ZXingDemo:1.0.2'
+    implementation 'com.zijunlin.Zxing.Demo:ZXingDemo:1.0.3'
 
     //产品标签
     implementation 'me.gujun.android.taggroup:library:1.4@aar'

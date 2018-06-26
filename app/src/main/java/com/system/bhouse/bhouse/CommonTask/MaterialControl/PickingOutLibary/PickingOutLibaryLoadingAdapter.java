@@ -1,4 +1,4 @@
-package com.system.bhouse.bhouse.CommonTask.ProduceManagement.ProductionOrder;
+package com.system.bhouse.bhouse.CommonTask.MaterialControl.PickingOutLibary;
 
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
@@ -11,7 +11,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.system.bhouse.base.App;
-import com.system.bhouse.bhouse.CommonTask.ProduceManagement.entity.productionOrderBean;
+import com.system.bhouse.bhouse.CommonTask.MaterialControl.entity.PickingOutBean;
 import com.system.bhouse.bhouse.CommonTask.Widget.LoadingAdapter;
 import com.system.bhouse.bhouse.R;
 
@@ -32,18 +32,19 @@ import butterknife.ButterKnife;
  * com.system.bhouse.bhouse.ConfirmationReceipt.adapter
  */
 
-public class ProductionOrderLoadingAdapter extends LoadingAdapter<productionOrderBean> {
+public class PickingOutLibaryLoadingAdapter extends LoadingAdapter<PickingOutBean> {
 
-    private ArrayList<productionOrderBean> mComTaskBeans = new ArrayList<>();
+    private final String[] TitlestringArray;
+    private ArrayList<PickingOutBean> mComTaskBeans = new ArrayList<>();
 
-    public ProductionOrderLoadingAdapter(ArrayList<productionOrderBean> mComTaskBeans) {
+    public PickingOutLibaryLoadingAdapter(ArrayList<PickingOutBean> mComTaskBeans) {
         this.mComTaskBeans = mComTaskBeans;
+        TitlestringArray = App.getContextApp().getResources().getStringArray(R.array.pickingout_Basic_order);
     }
 
     @Override
     public RecyclerView.ViewHolder onCreateHolder(ViewGroup parent, int viewType) {
         return new ItemViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.fragment_task_list_timeitem, parent, false));
-
     }
 
 
@@ -52,20 +53,11 @@ public class ProductionOrderLoadingAdapter extends LoadingAdapter<productionOrde
         if (holder instanceof ItemViewHolder) {
             ItemViewHolder itemViewHolder = (ItemViewHolder) holder;
             initViewForData(itemViewHolder);
+            //给content设置Data数据
             List<TextView> tagContent = setContentstag(itemViewHolder);
             List<String> dataList = getListStrings(position,tagContent);
-            setCountViewShow(itemViewHolder,9);
-
-//            TextView[] tvViews = {itemViewHolder.textTableId, itemViewHolder.textTableIdContent, itemViewHolder.textProjectName, itemViewHolder.textProjectNameContent, itemViewHolder.textDong, itemViewHolder.textDongContent, itemViewHolder.textCeng, itemViewHolder.textCengContent, itemViewHolder.textReqiuerDate, itemViewHolder.textReqiuerDateContent, itemViewHolder.textDescription, itemViewHolder.textDescriptionContent, itemViewHolder.textStatus, itemViewHolder.textStatusContent, itemViewHolder.textEntryPeople, itemViewHolder.textEntryPeopleContent};
-//
-//            itemViewHolder.llBottom1.setVisibility(View.GONE);
-//            itemViewHolder.llBottom2.setVisibility(View.GONE);
-//            itemViewHolder.llBottom3.setVisibility(View.GONE);
-//
-//            for (int i = 0; i < dataList.size(); i++) {
-//                tvViews[i].setText(dataList.get(i));
-//            }
-
+            //设置 显示的Item和数据
+            setCountViewShow(itemViewHolder,TitlestringArray.length);
 
             itemViewHolder.mainLayout.setOnClickListener(v -> {
                 mOnItemClickListener.ItemClick(itemViewHolder, position);
@@ -105,17 +97,19 @@ public class ProductionOrderLoadingAdapter extends LoadingAdapter<productionOrde
         {
             llid.setVisibility(View.GONE);
         }
-
+        //给Item 设置title数据
         List<TextView> titlesTag = setTitlesTag(itemViewHolder);
-        titlesTag.get(0).setText("订单编号");
-        titlesTag.get(1).setText("备料完成");
-        titlesTag.get(2).setText("完工入库");
-        titlesTag.get(3).setText("开始备料");
-        titlesTag.get(4).setText("领料配送");
-        titlesTag.get(5).setText("录入人");
-        titlesTag.get(6).setText("状态");
-        titlesTag.get(7).setText("计划开始日");
-        titlesTag.get(8).setText("计划结束日");
+        for (int i=0;i<TitlestringArray.length;i++)
+        {
+            titlesTag.get(i).setText(TitlestringArray[i]);
+        }
+//        titlesTag.get(0).setText("生产订单号");
+//        titlesTag.get(1).setText("领料单编号");
+//        titlesTag.get(2).setText("状态");
+//        titlesTag.get(3).setText("录入时间");
+//        titlesTag.get(4).setText("录入人");
+//        titlesTag.get(5).setText("业务日期");
+
     }
 
     private void setCountViewShow(ItemViewHolder itemViewHolder,int countItem){
@@ -137,7 +131,6 @@ public class ProductionOrderLoadingAdapter extends LoadingAdapter<productionOrde
      *        8--->ll_bottom_2 -- text_entryPeople -- text_entryPeople_content
      *         9--->ll_bottom_1 -- text_entryTime -- text_entryTime_content
      *         //只有9个Item
-     *
      */
 
     /**
@@ -194,31 +187,27 @@ public class ProductionOrderLoadingAdapter extends LoadingAdapter<productionOrde
     private List<String> getListStrings(int position, List<TextView> tagContent) {
         List<String> dataList = new ArrayList<>();
         tagContent.get(0).setText(mComTaskBeans
-                .get(position).gethNumbe() == null ? "" : mComTaskBeans
-                .get(position).gethNumbe());
+                .get(position).getProductionOriderID() == null ? "" : mComTaskBeans
+                .get(position).getProductionOriderID());
 
         tagContent.get(1).setText(mComTaskBeans
-                .get(position).isBeiliaoCompleted() ? "是" : "否");
+                .get(position).getPickingOriderID() == null ? "" : mComTaskBeans
+                .get(position).getPickingOriderID());
         tagContent.get(2).setText(mComTaskBeans
-                .get(position).isWangongLibrary() ? "是" : "否");
-        tagContent.get(3).setText(mComTaskBeans
-                .get(position).isStartbeiliao() ? "是" : "否");
-        tagContent.get(4).setText(mComTaskBeans
-                .get(position).isLingliaoSend() ? "是" : "否");
-        tagContent.get(5).setText(mComTaskBeans
-                .get(position).getEntryPeople() == null ? "" : mComTaskBeans
-                .get(position).getEntryPeople());
-        tagContent.get(6).setText(mComTaskBeans
                 .get(position).getStatus() == null ? "" : mComTaskBeans
                 .get(position).getStatus());
 
-        tagContent.get(7).setText(mComTaskBeans
-                .get(position).getPlanStartDate() == null ? "" : mComTaskBeans
-                .get(position).getPlanStartDate());
+        tagContent.get(3).setText(mComTaskBeans
+                .get(position).getEntryTime() == null ? "" : mComTaskBeans
+                .get(position).getEntryTime());
 
-        tagContent.get(8).setText(mComTaskBeans
-                .get(position).getPlanEndDate() == null ? "" : mComTaskBeans
-                .get(position).getPlanEndDate());
+        tagContent.get(4).setText(mComTaskBeans
+                .get(position).getEntryPeople() == null ? "" : mComTaskBeans
+                .get(position).getEntryPeople());
+
+        tagContent.get(5).setText(mComTaskBeans
+                .get(position).getRequireDate() == null ? "" : mComTaskBeans
+                .get(position).getRequireDate());
 
 //        tagContent.get(position).setText(mComTaskBeans
 //                .get(position).getEntryTime() == null ? "" : mComTaskBeans

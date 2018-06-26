@@ -1,9 +1,12 @@
-package com.system.bhouse.bhouse.CommonTask.ProduceManagement.ProductionOrder;
+package com.system.bhouse.bhouse.CommonTask.MaterialControl.FinishedStorage;
 
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.view.ViewGroup;
 
+import com.system.bhouse.api.ApiWebService;
+import com.system.bhouse.base.StatusBean;
+import com.system.bhouse.base.SubmitStatusBeanImpl;
 import com.system.bhouse.bhouse.CommonTask.BaseTaskFragment.BaseCommonFragment;
 import com.system.bhouse.bhouse.CommonTask.adapter.PageTaskFragment;
 import com.system.bhouse.bhouse.CommonTask.callback.TaskListParentUpdate;
@@ -21,19 +24,19 @@ import java.util.List;
  * Created by Administrator on 2018-03-19.
  * <p>
  * by author wz
- * 生产订单
+ * 完工入库
  * <p>
  * com.system.bhouse.bhouse.ConfirmationReceipt
  */
 @EFragment(R.layout.comfragment_task)
-public class ProductionOrderFragment extends BaseCommonFragment implements TaskListParentUpdate {
+public class FinishedStorageFragment extends BaseCommonFragment implements TaskListParentUpdate {
 
     private ConfirmationPageTaskFragment adapter;
 
     @AfterViews
     void initConfirmationReceiptFragment(){
         initPagerView();
-        ProductionOrderListFragment confirmationReceiptListFragment = new ProductionOrderListFragment_();
+        FinishedStorageListFragment confirmationReceiptListFragment = new FinishedStorageListFragment_();
         adapter = new ConfirmationPageTaskFragment(getChildFragmentManager(),mFilterModel,statusIndex,confirmationReceiptListFragment);
         pager.setAdapter(adapter);
     }
@@ -42,22 +45,20 @@ public class ProductionOrderFragment extends BaseCommonFragment implements TaskL
     @Override
     protected void AddIntentFor() {
 
-//        ApiWebService.Get_Production_order_Json(getActivity(), new ApiWebService.SuccessCall() {
-//            @Override
-//            public void SuccessBack(String result) {
-//                StatusBean statusBean = new StatusBean();
-//                statusBean.setBean(new SubmitStatusBeanImpl().setVisQRBtn(true).setVisSubmitBtn(true));
-//                statusBean.setNewStatus(true);
-//                ProductionOrderContentMessageActivity_.intent(getActivity()).HId("").receiptHnumber(result).mStatus(statusBean).start();
-//            }
-//
-//            @Override
-//            public void ErrorBack(String error) {
-//
-//            }
-//        });
+        ApiWebService.Get_Production_order_In_po_Number(getActivity(), new ApiWebService.SuccessCall() {
+            @Override
+            public void SuccessBack(String result) {
+                StatusBean statusBean = new StatusBean();
+                statusBean.setBean(new SubmitStatusBeanImpl().setVisSubmitBtn(true));
+                statusBean.setNewStatus(true);
+                FinishedStorageContentMessageActivity_.intent(getActivity()).HId("").receiptHnumber(result).mStatus(statusBean).start();
+            }
 
+            @Override
+            public void ErrorBack(String error) {
 
+            }
+        });
     }
 
     @Override
@@ -79,8 +80,8 @@ public class ProductionOrderFragment extends BaseCommonFragment implements TaskL
 
         @Override
         public Object instantiateItem(ViewGroup container, int position) {
-            ProductionOrderListFragment fragment = (ProductionOrderListFragment) super.instantiateItem(container, position);
-            fragment.setParent(ProductionOrderFragment.this);
+            FinishedStorageListFragment fragment = (FinishedStorageListFragment) super.instantiateItem(container, position);
+            fragment.setParent(FinishedStorageFragment.this);
             return fragment;
         }
     }

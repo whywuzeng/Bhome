@@ -279,7 +279,29 @@
         <activity android:name="com.system.bhouse.bhouse.CommonTask.ProduceManagement.ProductionOrder.ProductionOrderContentMessageActivity_"
                   android:windowSoftInputMode="adjustNothing"
                   android:screenOrientation="portrait"/>
-        <activity android:name=".CommonTask.ProduceManagement.ProduceActivity"/>
+
+        <activity android:name=".CommonTask.ProduceManagement.ProduceActivity"
+                  android:screenOrientation="portrait"
+            />
+
+        <activity android:name=".CommonTask.ProduceManagement.ProductionOrder.DetailProductionOrder.ProductionOrderViewActivity"
+                  android:windowSoftInputMode="adjustNothing"
+                  android:screenOrientation="portrait"
+            />
+
+        <activity android:name=".CommonTask.MaterialControl.PickingOutLibary.PickingOutLibaryActivity"
+            android:screenOrientation="portrait"
+            />
+        <activity android:name="com.system.bhouse.bhouse.CommonTask.MaterialControl.PickingOutLibary.PickingOutLibaryContentMessageActivity_"
+                  android:screenOrientation="portrait"
+                  />
+        <activity android:name=".CommonTask.MaterialControl.FinishedStorage.FinishedStorageActivity"
+                  android:screenOrientation="portrait"
+            />
+
+        <activity android:name="com.system.bhouse.bhouse.CommonTask.MaterialControl.FinishedStorage.FinishedStorageContentMessageActivity_"
+                  android:screenOrientation="portrait"
+                  android:windowSoftInputMode="adjustNothing"/>
 
         <meta-data
             android:name="design_width"

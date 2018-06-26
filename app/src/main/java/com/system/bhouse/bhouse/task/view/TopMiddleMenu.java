@@ -12,6 +12,7 @@ import android.graphics.drawable.Drawable;
 import android.util.AttributeSet;
 import android.view.Gravity;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.AccelerateInterpolator;
@@ -19,6 +20,7 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.system.bhouse.base.App;
 import com.system.bhouse.bhouse.R;
 import com.system.bhouse.utils.MeasureUtil;
 
@@ -84,6 +86,12 @@ public class TopMiddleMenu extends RelativeLayout implements View.OnClickListene
         ParentTv = (TextView) view.findViewById(R.id.house_keeper_tv);
         ivAdd.setOnClickListener(this);//设置监听事件
         screenSize = MeasureUtil.getScreenSize(mContext);
+
+        //scale dpi
+        final float scale = context.getResources().getDisplayMetrics().density;
+
+        int densityDpi = context.getResources().getDisplayMetrics().densityDpi;
+
         //获取xml中自定义属性的值
         TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.SatelliteMenu);
         mRadius = a.getDimension(R.styleable.SatelliteMenu_menu_radius, 200);
@@ -144,6 +152,11 @@ public class TopMiddleMenu extends RelativeLayout implements View.OnClickListene
         animMenuItem();
     }
 
+    @Override
+    public boolean onInterceptTouchEvent(MotionEvent ev) {
+
+        return super.onInterceptTouchEvent(ev);
+    }
 
     /**
      * 菜单点击回调,提供给外部
@@ -311,9 +324,9 @@ public class TopMiddleMenu extends RelativeLayout implements View.OnClickListene
         int x = screenSize.x;
         int y = screenSize.y;
 
-        int dap=7;
+        int dap=dip2px(App.getContextApp(),5);
 
-        int originX = x / 8;
+        int originX = x / 9;
 
         int originY = y / 10;
 
@@ -544,7 +557,7 @@ public class TopMiddleMenu extends RelativeLayout implements View.OnClickListene
                 tv.setCompoundDrawables(null, drawable, null, null);//设置TextView的drawableleft
                 //tv.setCompoundDrawablePadding(2);//设置图片和text之间的间距
                 tv.setText(nameMenuItem.get(i));
-                tv.setTextSize(mMenuItemTextSize);
+//                tv.setTextSize(mMenuItemTextSize);
                 tv.setTextColor(mMenuItemTextColor);
                 tv.setText(name);
                 tv.setGravity(Gravity.CENTER_HORIZONTAL);

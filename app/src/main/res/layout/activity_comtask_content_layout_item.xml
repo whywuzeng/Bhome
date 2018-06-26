@@ -6,6 +6,7 @@
               android:layout_height="wrap_content">
 
     <LinearLayout
+        android:id="@+id/ll_top1_deleteIv"
         android:orientation="horizontal"
         android:layout_width="match_parent"
         android:background="@color/common_color_line_000001"
@@ -62,6 +63,7 @@
     </LinearLayout>
 
     <View
+        android:id="@+id/vv_top1_deleteIv"
         style="@style/DivideLine1dpGap"
         android:layerType="software"
         android:layout_height="2dp"
@@ -135,6 +137,7 @@
         />
 
     <LinearLayout
+        android:id="@+id/ll_top2"
         android:orientation="horizontal"
         android:layout_width="match_parent"
         android:background="@color/white"
@@ -191,6 +194,7 @@
 
 
     <View
+        android:id="@+id/vv_top_22"
         style="@style/DivideLine1dpGap"
         android:layerType="software"
         android:layout_height="2dp"
@@ -199,6 +203,7 @@
         />
 
     <LinearLayout
+        android:id="@+id/ll_top3"
         android:orientation="horizontal"
         android:layout_width="match_parent"
         android:background="@color/white"
@@ -255,6 +260,7 @@
 
 
     <View
+        android:id="@+id/vv_top_3"
         style="@style/DivideLine1dpGap"
         android:layerType="software"
         android:layout_height="2dp"
@@ -263,6 +269,7 @@
         />
 
     <LinearLayout
+        android:id="@+id/ll_top4"
         android:orientation="horizontal"
         android:layout_width="match_parent"
         android:background="@color/white"
@@ -318,6 +325,7 @@
     </LinearLayout>
 
     <View
+        android:id="@+id/vv_top_4"
         style="@style/DivideLine1dpGap"
         android:layerType="software"
         android:layout_height="2dp"
@@ -326,6 +334,7 @@
         />
 
     <LinearLayout
+        android:id="@+id/ll_top5"
         android:orientation="horizontal"
         android:layout_width="match_parent"
         android:background="@color/white"
@@ -381,6 +390,7 @@
     </LinearLayout>
 
     <View
+        android:id="@+id/vv_top_5"
         style="@style/DivideLine1dpGap"
         android:layerType="software"
         android:layout_height="2dp"
@@ -388,6 +398,7 @@
         android:layout_marginRight="20dp"
         />
     <LinearLayout
+        android:id="@+id/ll_top6"
         android:orientation="horizontal"
         android:layout_width="match_parent"
         android:background="@color/white"
@@ -443,6 +454,7 @@
     </LinearLayout>
 
     <View
+        android:id="@+id/vv_top_6"
         style="@style/DivideLine1dpGap"
         android:layerType="software"
         android:layout_height="2dp"
@@ -571,6 +583,7 @@
     </LinearLayout>
 
     <View
+        android:id="@+id/vv_projectName"
         style="@style/DivideLine1dpGap"
         android:layerType="software"
         android:layout_height="2dp"
@@ -578,6 +591,7 @@
         android:layout_marginRight="20dp"
         />
     <LinearLayout
+        android:id="@+id/ll_ll_view_4"
         android:orientation="horizontal"
         android:layout_width="match_parent"
         android:background="@color/white"
@@ -831,6 +845,7 @@
     </LinearLayout>
 
     <View
+        android:id="@+id/vvvv_bottom_2"
         style="@style/DivideLine1dp"
         android:layerType="software"
         android:background="@color/blue_dark"

@@ -32,7 +32,10 @@ import com.system.bhouse.api.ApiServiceUtils;
 import com.system.bhouse.api.ApiWebService;
 import com.system.bhouse.base.App;
 import com.system.bhouse.base.BaseActivity;
+import com.system.bhouse.base.StatusBean;
+import com.system.bhouse.base.SubmitStatusBeanImpl;
 import com.system.bhouse.bean.UserInfo;
+import com.system.bhouse.bhouse.CommonTask.ProduceManagement.ProductionOrder.DetailProductionOrder.ProductionOrderViewActivity;
 import com.system.bhouse.bhouse.CompanyNews.NewsListFragment;
 import com.system.bhouse.bhouse.Service.DownloadService;
 import com.system.bhouse.bhouse.Service.GridLayoutFragment;
@@ -42,7 +45,6 @@ import com.system.bhouse.bhouse.setup.AboutWeFragment;
 import com.system.bhouse.bhouse.setup.AboutWeFragment_;
 import com.system.bhouse.bhouse.setup.MyselfActivity;
 import com.system.bhouse.bhouse.setup.notification.bean.XGNotification;
-import com.system.bhouse.bhouse.task.TaskAddActivity_;
 import com.system.bhouse.bhouse.task.adpter.base.SaveFragmentPagerAdapter;
 import com.system.bhouse.bhouse.task.view.TopMiddleMenu;
 import com.system.bhouse.fragment.EmptyFragment;
@@ -54,6 +56,7 @@ import com.system.bhouse.utils.LogUtil;
 import com.system.bhouse.utils.MeasureUtil;
 import com.system.bhouse.utils.sharedpreferencesuser;
 import com.tencent.android.tpush.XGPushShowedResult;
+import com.zijunlin.Zxing.Demo.CaptureActivity;
 
 import org.apache.commons.io.IOUtils;
 
@@ -156,11 +159,9 @@ public class MainActivity extends BaseActivity implements  TopMiddleMenu.OnMenuI
     @Bind(R.id.my_lehu_item_flag)
     ImageView myLehuItemFlag;
     @Bind(R.id.tv_toolbar_title_mid)
-      TextView tv_toolbar_title_mid;
+    TextView tv_toolbar_title_mid;
 
     FragmentManager mFragmentManager;
-    //    @Bind(R.id.toolbar)
-//    Toolbar toolbar;
     private Toolbar toolbar;
 
     @Bind(R.id.mSatelliteMenuLeftTop)
@@ -169,17 +170,18 @@ public class MainActivity extends BaseActivity implements  TopMiddleMenu.OnMenuI
     private void initTopMenu() {
 
         List<Integer> imageResourceLeftTop = new ArrayList<>();//菜单图片,可根据需要设置子菜单个数
-        imageResourceLeftTop.add(R.drawable.job_app);
-        imageResourceLeftTop.add(R.drawable.job_attendance);
-        imageResourceLeftTop.add(R.drawable.job_907);
+        imageResourceLeftTop.add(R.drawable.menu_btn_scan_normal);
+        imageResourceLeftTop.add(R.drawable.menu_btn_scannamecard_normal);
+        imageResourceLeftTop.add(R.drawable.menu_btn_touping_normal);
         imageResourceLeftTop.add(R.drawable.job_909);
-        imageResourceLeftTop.add(R.drawable.job_960);
+
+//      imageResourceLeftTop.add(R.drawable.job_960);
         List<String> nameMenuItem = new ArrayList<>();//菜单图片,可根据需要设置子菜单个数
-        nameMenuItem.add("库存管理");
-        nameMenuItem.add("新建任务");
-        nameMenuItem.add("用印保管");
-        nameMenuItem.add("出库日志");
-        nameMenuItem.add("财务日志");
+        nameMenuItem.add("生产扫码");
+        nameMenuItem.add("未完待续");
+        nameMenuItem.add("未完待续");
+        nameMenuItem.add("未完待续");
+//      nameMenuItem.add("财务日志");
 
         mSatelliteMenuLeftTop.getmBuilder()
                 .setMenuItemNameTexts(nameMenuItem)
@@ -193,7 +195,7 @@ public class MainActivity extends BaseActivity implements  TopMiddleMenu.OnMenuI
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        Log.e(TAG, "MainActivity onDestroy: " );
+        Log.e(TAG, "MainActivity onDestroy: ");
         EventBus.getDefault().unregister(this);
         //没开就不要关
         if(connection!=null)
@@ -246,7 +248,7 @@ public class MainActivity extends BaseActivity implements  TopMiddleMenu.OnMenuI
 
         mFragmentManager = getSupportFragmentManager();
         onsetViewFlow();
-//        initNotifacation();
+//       initNotifacation();
         version = MeasureUtil.getVersion(this);
 
         getUpdateMsg();
@@ -328,8 +330,6 @@ public class MainActivity extends BaseActivity implements  TopMiddleMenu.OnMenuI
         super.onStop();
         Log.e(TAG, "MainActivity onStop: " );
     }
-
-
 
     //处理服务器返回的版本号
     private void DealwithResult(String result) {
@@ -717,13 +717,21 @@ public class MainActivity extends BaseActivity implements  TopMiddleMenu.OnMenuI
         });
     }
 
+    public static final int REQUST_QRCODE = 10008;
+
     //middle icon menu 点击的回调
     @Override
     public void onClick(View view, int postion) {
 
         switch (postion) {
+            case 0:
+                Intent intent = new Intent(this, CaptureActivity.class);
+                intent.putExtra("position",postion);
+                intent.putExtra(CaptureActivity.TipContentTag,"生产订单ID获取备料详细信息");
+                startActivityForResult(intent, REQUST_QRCODE);
+                break;
             case 1:
-                TaskAddActivity_.intent(this).start();
+//                TaskAddActivity_.intent(this).start();
                 break;
         }
     }
@@ -780,8 +788,30 @@ public class MainActivity extends BaseActivity implements  TopMiddleMenu.OnMenuI
                 }
             }
         }
+        else if (requestCode == REQUST_QRCODE) {
 
+            if (resultCode == RESULT_OK) {
+                Bundle bundle = data.getBundleExtra("bundle");
+                String resultQr = bundle.getString("result");
+                int extraPosition = bundle.getInt("position");
+
+                StatusBean statusBean = new StatusBean();
+                //从初始化  或者  后台请求 得到状态
+                SubmitStatusBeanImpl submitStatusBean = new SubmitStatusBeanImpl();
+                submitStatusBean.setVisCheckBtn(true).setVisDeleteBtn(true);
+                statusBean.setBean(submitStatusBean);
+                statusBean.setLookStatus(true);
+
+                Intent intent = new Intent(this, ProductionOrderViewActivity.class);
+                intent.putExtra("result",resultQr);
+                intent.putExtra("position",extraPosition);
+
+                Bundle bundle1 = new Bundle();
+                bundle1.putSerializable("data",statusBean);
+                intent.putExtras(bundle1);
+                startActivity(intent);
+            }
+        }
     }
-
 }
 

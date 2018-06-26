@@ -38,9 +38,32 @@ public class productionOrderBean extends BaseBean implements Parcelable {
      * 计量单位ID : c8e082b5f5f34d5f934f071e6b464238
      */
 
-    private String ID;
+
+
+    public String ID;
     @SerializedName("二维码")
-    private String Qrcode;
+    public String Qrcode;
+    /**
+     * 备料完成 : true
+     * 完工入库 : true
+     * 开始备料 : true
+     * 录入人 : 管理员
+     * 录入时间 : 2018/6/4 15:06:18
+     * 状态 : 审核
+     * 计划开始日 : 2018/6/4 15:06:18
+     * 计划结束日 : 2018/6/4 0:00:00
+     * 订单编号 : SCDD-7-201806-0002
+     * 领料配送 : true
+     */
+
+    @SerializedName("备料完成")
+    public boolean beiliaoCompleted;
+    @SerializedName("完工入库")
+    public boolean wangongLibrary;
+    @SerializedName("开始备料")
+    public boolean Startbeiliao;
+    @SerializedName("领料配送")
+    public boolean lingliaoSend;
 
     public String getID() {
         return ID;
@@ -155,30 +178,65 @@ public class productionOrderBean extends BaseBean implements Parcelable {
     }
 
     @SerializedName("分录ID")
-    private String subDirectoryID;
-    @SerializedName("单据编号")
-    private String hNumbe;
+    public String subDirectoryID;
+    @SerializedName(value = "单据编号",alternate = {"订单编号"})
+    public String hNumbe;
     @SerializedName("数量")
-    private double amount;
+    public double amount;
     @SerializedName("来源类型")
-    private String sourceType;
+    public String sourceType;
     @SerializedName("物料ID")
-    private String materialsID;
+    public String materialsID;
     @SerializedName("物料名称")
-    private String materialsNames;
+    public String materialsNames;
     @SerializedName("物料编码")
-    private String materialsNumber;
+    public String materialsNumber;
     @SerializedName("规格型号")
-    private String Specification;
+    public String Specification;
     @SerializedName("计划开始日")
-    private String planStartDate;
+    public String planStartDate;
     @SerializedName("计划结束日")
-    private String planEndDate;
+    public String planEndDate;
     @SerializedName("计量单位")
-    private String measureUnit;
+    public String measureUnit;
     @SerializedName("计量单位ID")
-    private String measureUnitID;
+    public String measureUnitID;
 
+
+    public productionOrderBean() {
+    }
+
+    public boolean isBeiliaoCompleted() {
+        return beiliaoCompleted;
+    }
+
+    public void setBeiliaoCompleted(boolean beiliaoCompleted) {
+        this.beiliaoCompleted = beiliaoCompleted;
+    }
+
+    public boolean isWangongLibrary() {
+        return wangongLibrary;
+    }
+
+    public void setWangongLibrary(boolean wangongLibrary) {
+        this.wangongLibrary = wangongLibrary;
+    }
+
+    public boolean isStartbeiliao() {
+        return Startbeiliao;
+    }
+
+    public void setStartbeiliao(boolean Startbeiliao) {
+        this.Startbeiliao = Startbeiliao;
+    }
+
+    public boolean isLingliaoSend() {
+        return lingliaoSend;
+    }
+
+    public void setLingliaoSend(boolean lingliaoSend) {
+        this.lingliaoSend = lingliaoSend;
+    }
 
     @Override
     public int describeContents() {
@@ -189,6 +247,10 @@ public class productionOrderBean extends BaseBean implements Parcelable {
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeString(this.ID);
         dest.writeString(this.Qrcode);
+        dest.writeByte(this.beiliaoCompleted ? (byte) 1 : (byte) 0);
+        dest.writeByte(this.wangongLibrary ? (byte) 1 : (byte) 0);
+        dest.writeByte(this.Startbeiliao ? (byte) 1 : (byte) 0);
+        dest.writeByte(this.lingliaoSend ? (byte) 1 : (byte) 0);
         dest.writeString(this.subDirectoryID);
         dest.writeString(this.hNumbe);
         dest.writeDouble(this.amount);
@@ -201,22 +263,15 @@ public class productionOrderBean extends BaseBean implements Parcelable {
         dest.writeString(this.planEndDate);
         dest.writeString(this.measureUnit);
         dest.writeString(this.measureUnitID);
-        dest.writeByte(this.disableDelete ? (byte) 1 : (byte) 0);
-        dest.writeString(this.requireDate);
-        dest.writeString(this.description);
-        dest.writeString(this.checkPeople);
-        dest.writeString(this.checkTime);
-        dest.writeString(this.entryPeople);
-        dest.writeString(this.entryTime);
-        dest.writeString(this.status);
-    }
-
-    public productionOrderBean() {
     }
 
     protected productionOrderBean(Parcel in) {
         this.ID = in.readString();
         this.Qrcode = in.readString();
+        this.beiliaoCompleted = in.readByte() != 0;
+        this.wangongLibrary = in.readByte() != 0;
+        this.Startbeiliao = in.readByte() != 0;
+        this.lingliaoSend = in.readByte() != 0;
         this.subDirectoryID = in.readString();
         this.hNumbe = in.readString();
         this.amount = in.readDouble();
@@ -229,17 +284,9 @@ public class productionOrderBean extends BaseBean implements Parcelable {
         this.planEndDate = in.readString();
         this.measureUnit = in.readString();
         this.measureUnitID = in.readString();
-        this.disableDelete = in.readByte() != 0;
-        this.requireDate = in.readString();
-        this.description = in.readString();
-        this.checkPeople = in.readString();
-        this.checkTime = in.readString();
-        this.entryPeople = in.readString();
-        this.entryTime = in.readString();
-        this.status = in.readString();
     }
 
-    public static final Parcelable.Creator<productionOrderBean> CREATOR = new Parcelable.Creator<productionOrderBean>() {
+    public static final Creator<productionOrderBean> CREATOR = new Creator<productionOrderBean>() {
         @Override
         public productionOrderBean createFromParcel(Parcel source) {
             return new productionOrderBean(source);

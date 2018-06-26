@@ -5,9 +5,9 @@ package com.system.bhouse.bhouse.CommonTask.ProduceManagement.adapter.entity;
  */
 public abstract class MultiItemEntity<T>  {
 
-    protected boolean isHeader;
-    protected T t;
-    protected String headtitle;
+    public boolean isHeader;
+    public T t;
+    public String headtitle;
 
     public MultiItemEntity (boolean isHeader,String headtitle){
         this.isHeader=isHeader;
@@ -20,5 +20,5 @@ public abstract class MultiItemEntity<T>  {
         this.t=item;
     }
 
-   abstract int getItemType();
+  public abstract int getItemType();
 }

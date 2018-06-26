@@ -64,11 +64,13 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
+        android:clickable="true"
+        android:focusable="true"
         app:menu_postion="left_top"
         app:radius="150dp"
-        app:menu_item_image_width="120dp"
-        app:menu_image_width="60dp"
-        app:menu_item_text_size="9sp"
+        app:menu_item_image_width="104dp"
+        app:menu_image_width="50dp"
+        app:menu_item_text_size="7sp"
         app:menu_item_text_color="@color/colorPrimary"
         android:id="@+id/mSatelliteMenuLeftTop"/>
 

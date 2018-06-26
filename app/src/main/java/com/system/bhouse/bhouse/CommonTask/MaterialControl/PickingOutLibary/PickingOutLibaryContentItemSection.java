@@ -1,4 +1,4 @@
-package com.system.bhouse.bhouse.CommonTask.ProduceManagement.ProductionOrder;
+package com.system.bhouse.bhouse.CommonTask.MaterialControl.PickingOutLibary;
 
 import android.os.Bundle;
 import android.os.Handler;
@@ -11,7 +11,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.system.bhouse.base.StatusBean;
-import com.system.bhouse.bhouse.CommonTask.ProduceManagement.entity.productionOrderBean;
+import com.system.bhouse.bhouse.CommonTask.MaterialControl.entity.PickingOutBean;
 import com.system.bhouse.bhouse.R;
 import com.system.bhouse.ui.sectioned.Section;
 import com.system.bhouse.utils.TenUtils.L;
@@ -32,7 +32,7 @@ import rx.Observable;
  * UpdateUser:
  * UpdateDate:
  */
-public class ProductionOrderContentItemSection extends Section {
+public class PickingOutLibaryContentItemSection extends Section {
 
     private static final int REFRESH_DATA_COMTASK = 8888;
     private static final String POSITION = "position";
@@ -43,19 +43,19 @@ public class ProductionOrderContentItemSection extends Section {
     private String[] stringArray;
 
 
-    public ArrayList<productionOrderBean> getSearchHistroyBeans() {
+    public ArrayList<PickingOutBean> getSearchHistroyBeans() {
         return searchHistroyBeans;
     }
 
-    public productionOrderBean getSearchHistroyBeans(int position) {
-        productionOrderBean productionOrderBean = searchHistroyBeans.get(position);
-        return productionOrderBean;
+    public PickingOutBean getSearchHistroyBeans(int position) {
+        PickingOutBean PickingOutBean = searchHistroyBeans.get(position);
+        return PickingOutBean;
     }
 
-    private ArrayList<productionOrderBean> searchHistroyBeans;
+    private ArrayList<PickingOutBean> searchHistroyBeans;
 
 
-    public ProductionOrderContentItemSection(ArrayList<productionOrderBean> searchHistroyBeans, StatusBean mStatusBean) {
+    public PickingOutLibaryContentItemSection(ArrayList<PickingOutBean> searchHistroyBeans, StatusBean mStatusBean) {
         super(R.layout.layout_home_recommend_empty_noheight, R.layout.comtask_content_item_footer, R.layout.activity_comtask_content_layout_item, R.layout.layout_home_recommend_empty, R.layout.layout_home_recommend_empty);
         this.searchHistroyBeans = searchHistroyBeans;
         this.statusBean = mStatusBean;
@@ -92,18 +92,12 @@ public class ProductionOrderContentItemSection extends Section {
 //                    }
 //                });
                 if (statusBean.isNewStatus() || statusBean.isModifyStatus()) {
-                    holder1.ll_projectName.setOnClickListener(new View.OnClickListener() {
+                    holder1.tv_count.setTag("1111");
+                    holder1.tv_count.setOnClickListener(new View.OnClickListener() {
 
                         @Override
                         public void onClick(View v) {
-                            onItemClickListener.onItemClick(v, holder1.ll_projectName, position);
-                        }
-                    });
-
-                    holder1.lll_bottom_2.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            onItemClickListener.onItemClick(v, holder1.lll_bottom_2, position);
+                            onItemClickListener.onItemClick(v, holder1.tv_count, position);
                         }
                     });
                 }
@@ -232,10 +226,10 @@ public class ProductionOrderContentItemSection extends Section {
         contvs.add(holder1.tv_subBeizhu);
 
         contvs.get(0).setText(searchHistroyBeans.get(position).materialsNumber);
-        contvs.get(1).setText(searchHistroyBeans.get(position).Qrcode);
-        contvs.get(2).setText(searchHistroyBeans.get(position).materialsNames);
-        contvs.get(3).setText(searchHistroyBeans.get(position).Specification);
-        contvs.get(4).setText(searchHistroyBeans.get(position).getMeasureUnit());
+        contvs.get(1).setText(searchHistroyBeans.get(position).materialsNames);
+        contvs.get(2).setText(searchHistroyBeans.get(position).Specification);
+        contvs.get(3).setText(searchHistroyBeans.get(position).getMeasureUnit());
+        contvs.get(4).setText(searchHistroyBeans.get(position).getWareHouseName());
         contvs.get(5).setText(searchHistroyBeans.get(position).measureUnit+"");
 
         //4.显示 业务个数的 条目

@@ -1,4 +1,4 @@
-package com.system.bhouse.bhouse.CommonTask.ProduceManagement.ProductionOrder;
+package com.system.bhouse.bhouse.CommonTask.MaterialControl.FinishedStorage;
 
 import android.os.Bundle;
 import android.os.Handler;
@@ -10,8 +10,7 @@ import com.system.bhouse.api.ApiWebService;
 import com.system.bhouse.base.App;
 import com.system.bhouse.base.StatusBean;
 import com.system.bhouse.bhouse.CommonTask.BaseTaskFragment.BaseCommonListFragment;
-import com.system.bhouse.bhouse.CommonTask.ProduceManagement.ProductionOrder.ProductionOrderLoadingAdapter.onItemClickListener;
-import com.system.bhouse.bhouse.CommonTask.ProduceManagement.entity.productionOrderBean;
+import com.system.bhouse.bhouse.CommonTask.MaterialControl.entity.FinishedStorageBean;
 import com.system.bhouse.bhouse.R;
 import com.system.bhouse.utils.TenUtils.L;
 
@@ -25,14 +24,17 @@ import java.util.List;
  * Created by Administrator on 2018-03-19.
  * <p>
  * by author wz
- * 生产订单
+ * 完工入库
  * <p>
  * com.system.bhouse.bhouse.ConfirmationReceipt
  */
 @EFragment(R.layout.fragment_task_list)
-public class ProductionOrderListFragment extends BaseCommonListFragment<ProductionOrderLoadingAdapter,productionOrderBean> implements onItemClickListener {
+public class FinishedStorageListFragment extends BaseCommonListFragment<FinishedStorageLoadingAdapter,FinishedStorageBean> implements FinishedStorageLoadingAdapter.onItemClickListener {
 
-    ProductionOrderLoadingAdapter mAdapter;
+    FinishedStorageLoadingAdapter mAdapter;
+
+    //默认是 提交保存 。即可在此数组进行修改
+    String[] ContentTitle= new String[]{"", "保存", "审核"};
 
     //接收更新数据
     protected Handler handler = new Handler() {
@@ -41,7 +43,7 @@ public class ProductionOrderListFragment extends BaseCommonListFragment<Producti
             super.handleMessage(msg);
             if (msg.what == REFRESH_DATA) {
                 setRefreshing(false);
-                ArrayList<productionOrderBean> loadedRequires = msg.getData().getParcelableArrayList(LOADEDREQUIREKEY);
+                ArrayList<FinishedStorageBean> loadedRequires = msg.getData().getParcelableArrayList(LOADEDREQUIREKEY);
                 if (loadedRequires.size()==0)
                 {
                     if (mNoData) {
@@ -66,11 +68,12 @@ public class ProductionOrderListFragment extends BaseCommonListFragment<Producti
     public void initConfirmation()
     {
         initRefreshLayout();
-        mAdapter = new ProductionOrderLoadingAdapter(mData);
+        mAdapter = new FinishedStorageLoadingAdapter(mData);
         baseCommoninitView(mAdapter);
         mAdapter.setDataList(mData);
         listView.setAdapter(mAdapter);
         mAdapter.setmOnItemClickListener(this);
+        setStatusContent(ContentTitle);
     }
 
 
@@ -78,12 +81,12 @@ public class ProductionOrderListFragment extends BaseCommonListFragment<Producti
     protected void loadData() {
         if (mUpdateAll) {
             mUpdateAll = false;
-            ApiWebService.Get_Production_order_Json(getActivity(), new ApiWebService.SuccessCall() {
+            ApiWebService.Get_Production_order_In_Json(getActivity(), new ApiWebService.SuccessCall() {
 
                 @Override
                 public void SuccessBack(String result) {
                     L.e(result);
-                    ArrayList<productionOrderBean> loadedRequires = App.getAppGson().fromJson(result, new TypeToken<List<productionOrderBean>>() {
+                    ArrayList<FinishedStorageBean> loadedRequires = App.getAppGson().fromJson(result, new TypeToken<List<FinishedStorageBean>>() {
                     }.getType());
 
                     Message message = Message.obtain();
@@ -94,6 +97,10 @@ public class ProductionOrderListFragment extends BaseCommonListFragment<Producti
                     handler.sendMessage(message);
 
 
+//                    taskFragmentLoading(false);
+                    if (isRefreshing()) {
+                        setRefreshing(false);
+                    }
                 }
 
                 @Override
@@ -103,22 +110,15 @@ public class ProductionOrderListFragment extends BaseCommonListFragment<Producti
                         mAdapter.setEmptyView(errorView);
                     }
                     L.e(error);
+//                    taskFragmentLoading(false);
+                    if (isRefreshing()) {
+                        setRefreshing(false);
+                    }
                 }
-            }, TextUtils.isEmpty(mLabel) ? 50 : Integer.valueOf(mLabel), TextUtils.isEmpty(mStatus) ? "提交" : mStatus, TextUtils.isEmpty(mKeyword) ? "" : mKeyword);
+            }, TextUtils.isEmpty(mLabel) ? 50 : Integer.valueOf(mLabel), TextUtils.isEmpty(mStatus) ? ContentTitle[1] : mStatus, TextUtils.isEmpty(mKeyword) ? "" : mKeyword);
 
         }
 
-        ApiWebService.Get_Production_orderView_Json(getActivity(), new ApiWebService.SuccessCall() {
-            @Override
-            public void SuccessBack(String result) {
-
-            }
-
-            @Override
-            public void ErrorBack(String error) {
-
-            }
-        },"16c5357b9c6f41198c783cf755e9cf4c");
     }
 
     //刷新本数据，以及根据业务获取，字段。Hnumber->订单编号
@@ -134,15 +134,15 @@ public class ProductionOrderListFragment extends BaseCommonListFragment<Producti
 
     //list Item的点击事件
     @Override
-    public void ItemClick(ProductionOrderLoadingAdapter.ItemViewHolder holder, int position) {
+    public void ItemClick(FinishedStorageLoadingAdapter.ItemViewHolder holder, int position) {
         mNeedUpdate = true;
         StatusBean statusBean = getStatusBean();
-        statusBean.getBean().setVisModifyBtn(true).setVisSubmitBtn(true).setVisQRBtn(true);
-        if (DefaultStatus.equals("提交")) {
+        if (DefaultStatus.equals(ContentTitle[1])) {
+            statusBean.getBean().setVisModifyBtn(true);
         }
         statusBean.setLookStatus(true);
-        ProductionOrderContentMessageActivity_.intent(getParentFragment()).HId(mData
-                .get(position).getID() + "").receiptHnumber(mData.get(position).gethNumbe()).mStatus(statusBean).start();
+        FinishedStorageContentMessageActivity_.intent(getParentFragment()).HId(mData
+                .get(position).getID() + "").receiptHnumber(mData.get(position).getHNumbe()).mStatus(statusBean).start();
     }
 
 }

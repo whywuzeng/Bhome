@@ -15,6 +15,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Vibrator;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.SurfaceHolder;
 import android.view.SurfaceHolder.Callback;
@@ -24,6 +25,7 @@ import android.widget.Button;
 
 import com.google.zxing.BarcodeFormat;
 import com.google.zxing.Result;
+import com.zijunlin.Zxing.Demo.Utils.ToastUtil;
 import com.zijunlin.Zxing.Demo.camera.CameraManager;
 import com.zijunlin.Zxing.Demo.decoding.CaptureActivityHandler;
 import com.zijunlin.Zxing.Demo.decoding.InactivityTimer;
@@ -49,6 +51,10 @@ public class CaptureActivity extends Activity implements Callback
 	private Button captureLightBtn;
 	private boolean isLightOn;
 	private int positionExtra;
+	public static final String TipContentTag="tipcontent";
+	public static final int LongLongTime=60000000;
+	private String tipContent;
+	private ToastUtil mToastUtil;
 
 	/** Called when the activity is first created. */
 	@Override
@@ -61,6 +67,12 @@ public class CaptureActivity extends Activity implements Callback
 		viewfinderView = (ViewfinderView) findViewById(R.id.viewfinder_view);
 				captureLightBtn= (Button) findViewById(R.id.capture_light_btn);
 		 positionExtra = getIntent().getIntExtra("position",-1);
+		 tipContent=getIntent().getStringExtra(TipContentTag);
+		 if (TextUtils.isEmpty(tipContent))
+		 {
+		 	tipContent="如扫码时间过慢,请重试";
+		 }
+		mToastUtil=new ToastUtil();
 		hasSurface = false;
 		inactivityTimer = new InactivityTimer(this);
 
@@ -112,6 +124,7 @@ public class CaptureActivity extends Activity implements Callback
 			CameraManager.get().disableFlash();
 			isLightOn = !isLightOn;
 		}
+		mToastUtil.Long(this,tipContent).show();
 	}
 
 	@Override
