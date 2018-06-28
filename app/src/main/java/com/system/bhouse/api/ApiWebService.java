@@ -2681,7 +2681,7 @@ Get_Sale_Order_Car_shf(string scid, string addPer, int gsmid, int property, bool
         String methodName="Get_Production_order_In_Eedit";
         SoapObject request = new SoapObject(NAMESPACE, methodName);
         request.addProperty("billtablestr",s1);
-        request.addProperty("sccid",sccid);
+        request.addProperty("pmid",sccid);
         request.addProperty("gsmid",App.GSMID);
         request.addProperty("property",App.Property);
         request.addProperty("IsSubtitle",App.IsSub);

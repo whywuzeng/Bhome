@@ -108,12 +108,12 @@ public class FinishedStorageContentMessageActivity extends WWBackActivity implem
     @AfterViews
     public void initComTaskActivity() {
         if (mStatus.isNewStatus()) {
-            setActionBarMidlleTitle("新增领料出库");
+            setActionBarMidlleTitle("新增完工入库");
         }
         else {
-            setActionBarMidlleTitle("领料出库");
+            setActionBarMidlleTitle("完工入库");
         }
-        tv_title_live_layout.setText("领料出库分录");
+        tv_title_live_layout.setText("完工入库分录");
 
         mRecyclerViewAdapter = new FinishedStorageContentMessageActivity.MyTaskContentAdapter();
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
@@ -134,7 +134,7 @@ public class FinishedStorageContentMessageActivity extends WWBackActivity implem
         listView.setLayoutManager(linearLayoutManager);
 
         workflowSection = new FinishedStorageContentItemSection(comTaskBeans, mStatus);
-        String[] stringArray = getResources().getStringArray(R.array.pickingout_itemsection_order);
+        String[] stringArray = getResources().getStringArray(R.array.finished_itemsection_order);
         workflowSection.setTVIDContent(stringArray);
         new ItemTouchHelper(new ComTaskContentItemSectionItemTouchHelper(mRecyclerViewAdapter)).attachToRecyclerView(listView);
         workflowSection.setOnItemClickListener(this);
@@ -821,11 +821,11 @@ public class FinishedStorageContentMessageActivity extends WWBackActivity implem
         mStatus.setLookStatus(true);
         mStatus.setModifyStatus(true);
         if (mStatus.isModifyStatus()) {
-            setActionBarMidlleTitle("修改领料出库");
+            setActionBarMidlleTitle("修改完工入库");
             TopListViewInit();
 
             workflowSection = new FinishedStorageContentItemSection(comTaskBeans, mStatus);
-            String[] stringArray = getResources().getStringArray(R.array.pickingout_itemsection_order);
+            String[] stringArray = getResources().getStringArray(R.array.finished_itemsection_order);
             workflowSection.setTVIDContent(stringArray);
             workflowSection.setOnItemClickListener(this);
             mRecyclerViewAdapter.removeAllSections();
@@ -875,7 +875,7 @@ public class FinishedStorageContentMessageActivity extends WWBackActivity implem
         }
         int size = this.comTaskBeans.size();
         String[][] billtable = null;
-        billtable = new String[size][13];
+        billtable = new String[size][14];
         for (int i = 0; i < size; i++) {
             FinishedStorageBean confirmationReceBean = comTaskBeans.get(i);
 
@@ -884,14 +884,15 @@ public class FinishedStorageContentMessageActivity extends WWBackActivity implem
             billtable[i][2] = confirmationReceBean.entryPeople;
             billtable[i][3] = confirmationReceBean.oriderID;
             billtable[i][4] = confirmationReceBean.materialsID;
-            billtable[i][5] = confirmationReceBean.materialsNumber;
-            billtable[i][6] = confirmationReceBean.materialsNames;
-            billtable[i][7] = confirmationReceBean.Specification;
-            billtable[i][8] = confirmationReceBean.measureUnitID;
-            billtable[i][9] = confirmationReceBean.measureUnit;
-            billtable[i][10] = confirmationReceBean.wareHouseID;
-            billtable[i][11] = confirmationReceBean.amount + "";
-            billtable[i][12] = confirmationReceBean.sourceTableID;
+            billtable[i][5] = confirmationReceBean.materialsQrcode;
+            billtable[i][6] = confirmationReceBean.materialsNumber;
+            billtable[i][7] = confirmationReceBean.materialsNames;
+            billtable[i][8] = confirmationReceBean.Specification;
+            billtable[i][9] = confirmationReceBean.measureUnitID;
+            billtable[i][10] = confirmationReceBean.measureUnit;
+            billtable[i][11] = confirmationReceBean.wareHouseID;
+            billtable[i][12] = confirmationReceBean.amount + "";
+            billtable[i][13] = confirmationReceBean.sourceTableID;
         }
         if (mStatus.isNewStatus()) {
 

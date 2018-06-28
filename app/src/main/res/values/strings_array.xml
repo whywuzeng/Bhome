@@ -159,6 +159,15 @@
         <item>计划数量</item>
     </string-array>
 
+    <!--扫码生产备料码 分录详细-->
+    <string-array name="productionPrepare_itemsection_order">
+        <item>物料编码</item>
+        <item>物料名称</item>
+        <item>规格型号</item>
+        <item>计量单位</item>
+        <item>备料数量</item>
+    </string-array>
+
     <!--领料出库 表头详情-->
     <string-array name="pickingout_Basic_order">
         <item>生产订单号</item>
@@ -199,5 +208,19 @@
         <item>仓库名称</item>
         <item>入库数量</item>
     </string-array>
+
+    <!--托盘配料 表头详情-->
+    <string-array name="Plate_Material_order">
+        <item>订单编号</item>
+        <item>生产订单</item>
+        <item>状态</item>
+        <item>托盘</item>
+        <item>录入时间</item>
+        <item>录入人</item>
+        <item>开始日期</item>
+        <item>结束日期</item>
+
+    </string-array>
+
 
 </resources>

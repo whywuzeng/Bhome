@@ -1,4 +1,4 @@
-package com.system.bhouse.bhouse.CommonTask.ProduceManagement.ProductionOrder;
+package com.system.bhouse.bhouse.CommonTask.ProduceManagement.ProductionOrder.DetailProductionOrder;
 
 import android.os.Bundle;
 import android.os.Handler;
@@ -32,7 +32,7 @@ import rx.Observable;
  * UpdateUser:
  * UpdateDate:
  */
-public class ProductionOrderContentItemSection extends Section {
+public class ProductionOrderViewItemSection extends Section {
 
     private static final int REFRESH_DATA_COMTASK = 8888;
     private static final String POSITION = "position";
@@ -55,7 +55,7 @@ public class ProductionOrderContentItemSection extends Section {
     private ArrayList<productionOrderBean> searchHistroyBeans;
 
 
-    public ProductionOrderContentItemSection(ArrayList<productionOrderBean> searchHistroyBeans, StatusBean mStatusBean) {
+    public ProductionOrderViewItemSection(ArrayList<productionOrderBean> searchHistroyBeans, StatusBean mStatusBean) {
         super(R.layout.layout_home_recommend_empty_noheight, R.layout.comtask_content_item_footer, R.layout.activity_comtask_content_layout_item, R.layout.layout_home_recommend_empty, R.layout.layout_home_recommend_empty);
         this.searchHistroyBeans = searchHistroyBeans;
         this.statusBean = mStatusBean;
@@ -232,11 +232,10 @@ public class ProductionOrderContentItemSection extends Section {
         contvs.add(holder1.tv_subBeizhu);
 
         contvs.get(0).setText(searchHistroyBeans.get(position).materialsNumber);
-        contvs.get(1).setText(searchHistroyBeans.get(position).Qrcode);
-        contvs.get(2).setText(searchHistroyBeans.get(position).materialsNames);
-        contvs.get(3).setText(searchHistroyBeans.get(position).Specification);
-        contvs.get(4).setText(searchHistroyBeans.get(position).getMeasureUnit());
-        contvs.get(5).setText(searchHistroyBeans.get(position).amount+"");
+        contvs.get(1).setText(searchHistroyBeans.get(position).materialsNames);
+        contvs.get(2).setText(searchHistroyBeans.get(position).Specification);
+        contvs.get(3).setText(searchHistroyBeans.get(position).getMeasureUnit());
+        contvs.get(4).setText(searchHistroyBeans.get(position).amount+"");
 
         //4.显示 业务个数的 条目
 

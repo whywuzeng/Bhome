@@ -230,7 +230,7 @@ public class PickingOutLibaryContentItemSection extends Section {
         contvs.get(2).setText(searchHistroyBeans.get(position).Specification);
         contvs.get(3).setText(searchHistroyBeans.get(position).getMeasureUnit());
         contvs.get(4).setText(searchHistroyBeans.get(position).getWareHouseName());
-        contvs.get(5).setText(searchHistroyBeans.get(position).measureUnit+"");
+        contvs.get(5).setText(searchHistroyBeans.get(position).amount+"");
 
         //4.显示 业务个数的 条目
 

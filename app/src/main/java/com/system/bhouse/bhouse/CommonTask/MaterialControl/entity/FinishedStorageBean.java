@@ -54,7 +54,7 @@ public class FinishedStorageBean extends BaseBean implements Parcelable {
     public String hNumbe;
     @SerializedName("数量")
     public int amount;
-    @SerializedName("来源单据ID")
+    @SerializedName(value = "来源单据ID",alternate = {"源单ID"})
     public String sourceTableID;
     @SerializedName("来源类型")
     public String sourceType;

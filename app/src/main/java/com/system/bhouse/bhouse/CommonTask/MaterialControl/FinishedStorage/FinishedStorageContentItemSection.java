@@ -84,32 +84,16 @@ public class FinishedStorageContentItemSection extends Section {
             initDataForView(holder1,position);
 
             if (this.onItemClickListener != null) {
-//                holder1.itemView.setOnClickListener(new View.OnClickListener() {
-//                    @Override
-//                    public void onClick(View v) {
-//                        if (position==8||position==12)
-//                        onItemClickListener.onItemClick(v, holder1.mianLayout, position);
-//                    }
-//                });
                 if (statusBean.isNewStatus() || statusBean.isModifyStatus()) {
-                    holder1.ll_projectName.setOnClickListener(new View.OnClickListener() {
-
+                    holder1.tv_unit.setTag("1111");
+                    holder1.tv_unit.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
-                            onItemClickListener.onItemClick(v, holder1.ll_projectName, position);
-                        }
-                    });
-
-                    holder1.lll_bottom_2.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            onItemClickListener.onItemClick(v, holder1.lll_bottom_2, position);
+                            onItemClickListener.onItemClick(v, holder1.tv_unit, position);
                         }
                     });
                 }
             }
-//            holder1.imgDeleteItem.setOnClickListener(v -> {
-//            });
             if (statusBean.isNewStatus() || statusBean.isModifyStatus()) {
                 if (!searchHistroyBeans.get(0).isDisableDelete()) {
                     holder1.imgDeleteItem.setVisibility(View.VISIBLE);

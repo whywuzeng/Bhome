@@ -821,7 +821,7 @@ public class ProductionOrderContentMessageActivity extends WWBackActivity implem
 ////                setActionBarMidlleTitle("修改构件退货");
 ////                TopListViewInit();
 ////
-////                workflowSection = new FinishedStorageContentItemSection(comTaskBeans, mStatus);
+////                workflowSection = new PlateMaterialContentItemSection(comTaskBeans, mStatus);
 ////                String[] stringArray = getResources().getStringArray(R.array.ComponentReturn_itemsection_order);
 ////                workflowSection.setTVIDContent(stringArray);
 ////                mRecyclerViewAdapter.removeAllSections();

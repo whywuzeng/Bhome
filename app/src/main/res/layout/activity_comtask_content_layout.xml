@@ -11,56 +11,57 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:orientation="vertical"
-        android:layout_height="wrap_content">
-
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/topListView"
-        android:paddingLeft="7dp"
-        android:paddingRight="7dp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-    </android.support.v7.widget.RecyclerView>
-
-    <RelativeLayout
-        android:paddingTop="8dp"
-        android:paddingBottom="8dp"
-        android:background="@color/divide"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-    <TextView
-        android:id="@+id/tv_title_live_layout"
-        android:paddingLeft="3dp"
-        android:paddingRight="3dp"
-        android:layout_width="wrap_content"
-        android:background="@drawable/selector_comtask_content_normal"
-        android:textColor="@color/common_color_line_blue"
-        android:layout_marginLeft="10dp"
-        android:textSize="@dimen/common_font_fs6"
-        style="@style/LoginButtonRadius"
-        android:text="@string/diaozhuangxuqiufenlu"/>
-
-        <View
-            android:background="@color/common_color_line_blue"
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_marginLeft="10.0dip"
-            android:layout_alignRight="@+id/tv_title_live_layout"
-            android:layout_alignBottom="@+id/tv_title_live_layout"
-            android:layout_height="2dp"/>
+            android:orientation="vertical"
+            android:layout_height="wrap_content">
 
-    </RelativeLayout>
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/topListView"
+                android:paddingLeft="7dp"
+                android:paddingRight="7dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+            </android.support.v7.widget.RecyclerView>
 
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/listView"
-        android:paddingLeft="7dp"
-        android:paddingRight="7dp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-    </android.support.v7.widget.RecyclerView>
+            <RelativeLayout
+                android:paddingTop="8dp"
+                android:paddingBottom="8dp"
+                android:background="@color/divide"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
 
-    </LinearLayout>
+                <TextView
+                    android:id="@+id/tv_title_live_layout"
+                    android:paddingLeft="3dp"
+                    android:paddingRight="3dp"
+                    android:layout_width="wrap_content"
+                    android:background="@drawable/selector_comtask_content_normal"
+                    android:textColor="@color/common_color_line_blue"
+                    android:layout_marginLeft="10dp"
+                    android:textSize="@dimen/common_font_fs6"
+                    style="@style/LoginButtonRadius"
+                    android:text="@string/diaozhuangxuqiufenlu"/>
+
+                <View
+                    android:background="@color/common_color_line_blue"
+                    android:layout_width="match_parent"
+                    android:layout_marginLeft="10.0dip"
+                    android:layout_alignRight="@+id/tv_title_live_layout"
+                    android:layout_alignBottom="@+id/tv_title_live_layout"
+                    android:layout_height="2dp"/>
+
+            </RelativeLayout>
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/listView"
+                android:paddingLeft="7dp"
+                android:paddingRight="7dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+            </android.support.v7.widget.RecyclerView>
+
+        </LinearLayout>
     </ScrollView>
 
 </LinearLayout>

@@ -19,6 +19,7 @@ import android.view.View;
 import com.system.bhouse.base.App;
 import com.system.bhouse.bhouse.CommonTask.MaterialControl.FinishedStorage.FinishedStorageActivity;
 import com.system.bhouse.bhouse.CommonTask.MaterialControl.PickingOutLibary.PickingOutLibaryActivity;
+import com.system.bhouse.bhouse.CommonTask.MaterialControl.PlateMaterial.PlateMaterialActivity;
 import com.system.bhouse.bhouse.CommonTask.ProduceManagement.ProductionOrder.ProductionOrderActivity;
 import com.system.bhouse.bhouse.CommonTask.ProduceManagement.adapter.MultipleItemQuickAdapter;
 import com.system.bhouse.bhouse.CommonTask.ProduceManagement.adapter.entity.MultipleItem;
@@ -113,6 +114,9 @@ public class ProduceActivity extends WWBackActivity implements BaseQuickAdapter.
             case 4:
                 intent=new Intent(this, FinishedStorageActivity.class);
                 startActivity(intent);
+            case 5:
+               intent= new Intent(this, PlateMaterialActivity.class);
+               startActivity(intent);
                 break;
         }
     }

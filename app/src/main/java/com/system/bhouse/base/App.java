@@ -114,6 +114,8 @@ public class App extends MultiDexApplication {
     @Override
     public void onCreate() {
         super.onCreate();
+        //初始化LeakCanary
+//        LeakCanary.install(this);
         mApp = this;
         KLog.init(BuildConfig.DEBUG);
         AutoLayoutConifg.getInstance().useDeviceSize();

@@ -20,7 +20,7 @@ public class DatePeriodUtil {
     public static final SimpleDateFormat df_only_date = new SimpleDateFormat("d日");
     public static final SimpleDateFormat df_time = new SimpleDateFormat("H:mm");
 
-    public static final String getCheckTime(long j) {
+    public static String getCheckTime(long j) {
         return isYesterdayOrToday(new Date(j)) == -1 ? DateFormatUtil.SHORT_TIME.format(Long.valueOf(j)) : isCurrentYear(j) ? DateFormatUtil.WORKLOG_TIME.format(Long.valueOf(j)) : DateFormatUtil.LEAVE_FULL_FORMATE_WITH_SPACE.format(Long.valueOf(j));
     }
 

@@ -303,6 +303,13 @@
                   android:screenOrientation="portrait"
                   android:windowSoftInputMode="adjustNothing"/>
 
+        <activity android:name=".CommonTask.MaterialControl.PlateMaterial.PlateMaterialActivity"
+                  android:screenOrientation="portrait"/>
+
+        <activity android:name="com.system.bhouse.bhouse.CommonTask.MaterialControl.PlateMaterial.PlateMaterialContentMessageActivity_"
+                  android:screenOrientation="portrait"
+                  android:windowSoftInputMode="adjustNothing"/>
+
         <meta-data
             android:name="design_width"
             android:value="768">

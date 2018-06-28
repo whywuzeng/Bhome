@@ -339,7 +339,7 @@ public class LoginActivity extends AutoLayoutActivity {
             public void onNext(String result) {
                 Gson gson = new Gson();
                 UserInfo[] getIpInfoResponse = gson.fromJson(result, UserInfo[].class);
-                if (!(getIpInfoResponse == null) && !TextUtils.isEmpty(getIpInfoResponse.toString()) && !(getIpInfoResponse.length == 0)) {
+                if (!(getIpInfoResponse == null)  && (getIpInfoResponse.length > 0)) {
                     isLogin = true;
 
                     for (int j = 0; j < getIpInfoResponse.length; j++) { //就只有一个
