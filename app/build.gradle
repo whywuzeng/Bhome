@@ -163,17 +163,14 @@ dependencies {
     implementation "org.androidannotations:androidannotations-api:$AAVersion"
     //    annotationProcessor
     implementation 'com.zijunlin.Zxing.Demo:ZXingDemo:1.0.3'
-
     //产品标签
     implementation 'me.gujun.android.taggroup:library:1.4@aar'
-
     // popdialogwindow
     implementation 'com.github.pinguo-zhouwei:CustomPopwindow:2.1.1'
-
     //内存泄漏
-//    debugImplementation 'com.squareup.leakcanary:leakcanary-android:1.3'
-//    releaseImplementation 'com.squareup.leakcanary:leakcanary-android-no-op:1.3'
-
+    //    debugImplementation 'com.squareup.leakcanary:leakcanary-android:1.3'
+    //    releaseImplementation 'com.squareup.leakcanary:leakcanary-android-no-op:1.3'
+//    implementation project(':ZXingapp')
 }
 
 

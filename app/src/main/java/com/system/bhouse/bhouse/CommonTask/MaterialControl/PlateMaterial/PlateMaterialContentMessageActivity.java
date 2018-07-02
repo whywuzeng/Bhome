@@ -6,7 +6,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.PersistableBundle;
-import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.helper.ItemTouchHelper;
@@ -25,21 +24,21 @@ import com.system.bhouse.api.ApiWebService;
 import com.system.bhouse.base.App;
 import com.system.bhouse.base.StatusBean;
 import com.system.bhouse.base.SubmitStatusBeanImpl;
-import com.system.bhouse.bhouse.CommonTask.MaterialControl.entity.FinishedStorageBean;
+import com.system.bhouse.bean.BProBOM;
+import com.system.bhouse.bhouse.CommonTask.MaterialControl.entity.PlatematerialBean;
 import com.system.bhouse.bhouse.CommonTask.adapter.TreeWidget.TreeRecyclerAdapter;
 import com.system.bhouse.bhouse.CommonTask.adapter.TreeWidget.base.ViewHolder;
 import com.system.bhouse.bhouse.CommonTask.adapter.TreeWidget.item.GroupItem;
 import com.system.bhouse.bhouse.CommonTask.adapter.TreeWidget.item.SortChildItem;
 import com.system.bhouse.bhouse.CommonTask.adapter.TreeWidget.item.TreeItem;
 import com.system.bhouse.bhouse.CommonTask.common.CommonDateTimePickerFragment;
+import com.system.bhouse.bhouse.CommonTask.common.CommonPickerActivity_;
 import com.system.bhouse.bhouse.CommonTask.utils.ComTaskContentItemSectionItemTouchHelper;
 import com.system.bhouse.bhouse.R;
 import com.system.bhouse.bhouse.setup.WWCommon.WWBackActivity;
 import com.system.bhouse.bhouse.setup.utils.onMutiDataSetListener;
-import com.system.bhouse.ui.sectioned.SectionedRecyclerViewAdapter;
 import com.system.bhouse.utils.TenUtils.L;
 import com.system.bhouse.utils.TenUtils.T;
-import com.system.bhouse.utils.ValueUtils;
 import com.zijunlin.Zxing.Demo.CaptureActivity;
 
 import org.androidannotations.annotations.AfterViews;
@@ -92,7 +91,7 @@ public class PlateMaterialContentMessageActivity extends WWBackActivity implemen
     StatusBean mStatus;
 
     private PlateMaterialContentMessageActivity.MyTaskContentAdapter mRecyclerViewAdapter;
-    private ArrayList<FinishedStorageBean> comTaskBeans = new ArrayList<>();
+    private ArrayList<PlatematerialBean> comTaskBeans = new ArrayList<>();
     private TreeRecyclerAdapter treeRecyclerAdapter;
     private boolean isDeleteAble = true;
     public static final int RESULT_SORTITEM_SELECTPROJECT = 1001;
@@ -108,33 +107,20 @@ public class PlateMaterialContentMessageActivity extends WWBackActivity implemen
     @AfterViews
     public void initComTaskActivity() {
         if (mStatus.isNewStatus()) {
-            setActionBarMidlleTitle("新增完工入库");
+            setActionBarMidlleTitle("新增托盘配料");
         }
         else {
-            setActionBarMidlleTitle("完工入库");
+            setActionBarMidlleTitle("托盘配料");
         }
-        tv_title_live_layout.setText("完工入库分录");
+        tv_title_live_layout.setText("托盘配料分录");
 
         mRecyclerViewAdapter = new PlateMaterialContentMessageActivity.MyTaskContentAdapter();
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
 
-        GridLayoutManager manager = new GridLayoutManager(this, 1);
-        manager.setSpanSizeLookup(new GridLayoutManager.SpanSizeLookup() {
-            @Override
-            public int getSpanSize(int position) {
-                switch (mRecyclerViewAdapter.getSectionItemViewType(position)) {
-                    case SectionedRecyclerViewAdapter.VIEW_TYPE_HEADER:
-                        return 0;
-                    default:
-                        return 1;
-                }
-            }
-        });
-
         listView.setLayoutManager(linearLayoutManager);
 
         workflowSection = new PlateMaterialContentItemSection(comTaskBeans, mStatus);
-        String[] stringArray = getResources().getStringArray(R.array.finished_itemsection_order);
+        String[] stringArray = getResources().getStringArray(R.array.Plate_itemsection_order);
         workflowSection.setTVIDContent(stringArray);
         new ItemTouchHelper(new ComTaskContentItemSectionItemTouchHelper(mRecyclerViewAdapter)).attachToRecyclerView(listView);
         workflowSection.setOnItemClickListener(this);
@@ -146,6 +132,7 @@ public class PlateMaterialContentMessageActivity extends WWBackActivity implemen
 
         testData();
 //        TopListViewInit(this.comTaskBeans);
+        setScrollViewFirst();
     }
 
     @Override
@@ -166,14 +153,14 @@ public class PlateMaterialContentMessageActivity extends WWBackActivity implemen
      * param comTaskBeans
      */
     private void TopListViewInit() {
-        FinishedStorageBean comTaskBean1 = null;
+        PlatematerialBean comTaskBean1 = null;
 
         comTaskBean1 = this.comTaskBeans.get(0);
 
         if (!TextUtils.isEmpty(receiptHnumber)) {
             comTaskBean1.hNumbe = receiptHnumber;
             if (getComtaskSize()) {
-                for (FinishedStorageBean bean : comTaskBeans) {
+                for (PlatematerialBean bean : comTaskBeans) {
                     bean.hNumbe = receiptHnumber;
                 }
             }
@@ -218,7 +205,7 @@ public class PlateMaterialContentMessageActivity extends WWBackActivity implemen
      * @param mStatus
      * @return
      */
-    protected ArrayList<SortChildItem.ViewModel> makeChlidData(FinishedStorageBean comTaskBean1, PlateMaterialContentMessageActivity.KeyType data, StatusBean mStatus) {
+    protected ArrayList<SortChildItem.ViewModel> makeChlidData(PlatematerialBean comTaskBean1, PlateMaterialContentMessageActivity.KeyType data, StatusBean mStatus) {
         ArrayList<SortChildItem.ViewModel> viewModels = new ArrayList<>();
         SortChildItem.ViewModel viewModel=null;
         if (data.key == 4) {
@@ -230,6 +217,37 @@ public class PlateMaterialContentMessageActivity extends WWBackActivity implemen
             viewModel.isClick = false;
             viewModels.add(viewModel);
 //            comTaskBean1.hNumbe = App.receiptHnumber;
+            headerProperties.put(viewModel.key,viewModel.value);
+
+
+            viewModel = new SortChildItem.ViewModel();
+            viewModel.name = "开始日期";
+            viewModel.value = this.comTaskBeans.get(0).getPlanStartDate();
+            viewModel.key = "planStartDate";
+            if (mStatus.isNewStatus() || mStatus.isModifyStatus()) {
+                viewModel.isClick = true;
+            }
+            viewModels.add(viewModel);
+            headerProperties.put(viewModel.key,viewModel.value);
+
+            viewModel = new SortChildItem.ViewModel();
+            viewModel.name = "结束日期";
+            viewModel.value = this.comTaskBeans.get(0).getPlanendDate();
+            viewModel.key = "requireDate";
+            if (mStatus.isNewStatus() || mStatus.isModifyStatus()) {
+                viewModel.isClick = true;
+            }
+            viewModels.add(viewModel);
+            headerProperties.put(viewModel.key,viewModel.value);
+
+            viewModel = new SortChildItem.ViewModel();
+            viewModel.name = "托盘";
+            viewModel.value = this.comTaskBeans.get(0).plateName;
+            viewModel.key = "requireDate";
+            if (mStatus.isNewStatus() || mStatus.isModifyStatus()) {
+                viewModel.isClick = true;
+            }
+            viewModels.add(viewModel);
             headerProperties.put(viewModel.key,viewModel.value);
 
             viewModel = new SortChildItem.ViewModel();
@@ -246,15 +264,6 @@ public class PlateMaterialContentMessageActivity extends WWBackActivity implemen
             viewModel.isClick = false;
             viewModels.add(viewModel);
 
-            viewModel = new SortChildItem.ViewModel();
-            viewModel.name = "业务日期";
-            viewModel.value = this.comTaskBeans.get(0).getRequireDate();
-            viewModel.key = "requireDate";
-            if (mStatus.isNewStatus() || mStatus.isModifyStatus()) {
-                viewModel.isClick = true;
-            }
-            viewModels.add(viewModel);
-            headerProperties.put(viewModel.key,viewModel.value);
 
         }
         else if (data.key == 2 && data.type.equals("录入人信息")) {
@@ -310,7 +319,7 @@ public class PlateMaterialContentMessageActivity extends WWBackActivity implemen
     public void onChildItemClick(SortChildItem.ViewModel data, ViewHolder holder) {
         String type = "";
 
-        if (data.name.equals("业务日期")) {
+        if (data.name.equals("开始日期")) {
             CommonDateTimePickerFragment commonDateTimePickerFragment = new CommonDateTimePickerFragment();
             Bundle bundle = new Bundle();
             bundle.putString(CommonDateTimePickerFragment.PARAM_DATA, data.value);
@@ -322,7 +331,7 @@ public class PlateMaterialContentMessageActivity extends WWBackActivity implemen
             commonDateTimePickerFragment.show(getSupportFragmentManager(), "datePicker");
             getSupportFragmentManager().executePendingTransactions();
         }
-        else if (data.name.equals("计划结束日")) {
+        else if (data.name.equals("结束日期")) {
             CommonDateTimePickerFragment commonDateTimePickerFragment = new CommonDateTimePickerFragment();
             Bundle bundle = new Bundle();
             bundle.putString(CommonDateTimePickerFragment.PARAM_DATA, data.value);
@@ -333,6 +342,16 @@ public class PlateMaterialContentMessageActivity extends WWBackActivity implemen
             commonDateTimePickerFragment.setCancelable(true);
             commonDateTimePickerFragment.show(getSupportFragmentManager(), "datePicker");
             getSupportFragmentManager().executePendingTransactions();
+        }else if (data.name.equals("托盘"))
+        {
+//            if(TextUtils.isEmpty(comTaskBeans.get(0).getPlateName()))
+//            {
+//                T.showShort(PlateMaterialContentMessageActivity.this,"车次不能为空");
+//                return;
+//            }
+            Intent intent = new Intent(PlateMaterialContentMessageActivity.this, CaptureActivity.class);
+            intent.putExtra("position",holder.getAdapterPosition());
+            startActivityForResult(intent,REQUST_QRCODE);
         }
         else if (data.name.equals("描述")) {
             int adapterPosition = holder.getAdapterPosition();
@@ -387,7 +406,7 @@ public class PlateMaterialContentMessageActivity extends WWBackActivity implemen
                     @Override
                     public void SuccessBack(String result) {
 
-                        ArrayList<FinishedStorageBean> loadingcarbean = App.getAppGson().fromJson(result, new TypeToken<List<FinishedStorageBean>>() {
+                        ArrayList<PlatematerialBean> loadingcarbean = App.getAppGson().fromJson(result, new TypeToken<List<PlatematerialBean>>() {
                         }.getType());
 
                         if (loadingcarbean.isEmpty())
@@ -395,7 +414,7 @@ public class PlateMaterialContentMessageActivity extends WWBackActivity implemen
                             T.showShort(PlateMaterialContentMessageActivity.this,getResources().getString(R.string.Qrcode_result));
                         }
 
-                        for (FinishedStorageBean bean : loadingcarbean) {
+                        for (PlatematerialBean bean : loadingcarbean) {
                             bean.hNumbe= headerProperties.get("receiptHnumber");
                             bean.requireDate= headerProperties.get("requireDate");
                             bean.description=headerProperties.get("description");
@@ -403,7 +422,7 @@ public class PlateMaterialContentMessageActivity extends WWBackActivity implemen
                         }
 
                         //清空 二维码为空的
-                        for (FinishedStorageBean receBean : comTaskBeans) {
+                        for (PlatematerialBean receBean : comTaskBeans) {
                             if (TextUtils.isEmpty(receBean.getMaterialsNumber())) {
                                 comTaskBeans.remove(receBean);
                             }
@@ -411,7 +430,7 @@ public class PlateMaterialContentMessageActivity extends WWBackActivity implemen
                         if (!(loadingcarbean.size() == 0)) {
                             comTaskBeans.addAll(loadingcarbean);
                         }
-                        ArrayList<FinishedStorageBean> clone =(ArrayList<FinishedStorageBean>)comTaskBeans.clone();
+                        ArrayList<PlatematerialBean> clone =(ArrayList<PlatematerialBean>)comTaskBeans.clone();
                         comTaskBeans.clear();
                         comTaskBeans.addAll(removeDupliById(clone));
 
@@ -425,29 +444,29 @@ public class PlateMaterialContentMessageActivity extends WWBackActivity implemen
                 }, resultQr);
             }else {
                 //分录下的Item 回调.
-                ApiWebService.B_Get_Ware_house(this, new ApiWebService.SuccessCall() {
-                    @Override
-                    public void SuccessBack(String result) {
-
-                        ArrayList<FinishedStorageBean> loadingcarbean = App.getAppGson().fromJson(result, new TypeToken<List<FinishedStorageBean>>() {
-                        }.getType());
-
-                        if (!ValueUtils.IsFirstValueExist(loadingcarbean))
-                            return;
-                        comTaskBeans.get(extraPosition).setWareHouseID(loadingcarbean.get(0).wareHouseID);
-                        comTaskBeans.get(extraPosition).setWareHouseName(loadingcarbean.get(0).wareHouseName);
-
-                        ArrayList<FinishedStorageBean> clone = (ArrayList<FinishedStorageBean>)comTaskBeans.clone();
-                        comTaskBeans.clear();
-                        comTaskBeans.addAll(clone);
-                        mRecyclerViewAdapter.notifyDataSetChanged();
-                    }
-
-                    @Override
-                    public void ErrorBack(String error) {
-
-                    }
-                },resultQr);
+//                ApiWebService.B_Get_Ware_house(this, new ApiWebService.SuccessCall() {
+//                    @Override
+//                    public void SuccessBack(String result) {
+//
+//                        ArrayList<PlatematerialBean> loadingcarbean = App.getAppGson().fromJson(result, new TypeToken<List<PlatematerialBean>>() {
+//                        }.getType());
+//
+//                        if (!ValueUtils.IsFirstValueExist(loadingcarbean))
+//                            return;
+//                        comTaskBeans.get(extraPosition).setWareHouseID(loadingcarbean.get(0).wareHouseID);
+//                        comTaskBeans.get(extraPosition).setWareHouseName(loadingcarbean.get(0).wareHouseName);
+//
+//                        ArrayList<PlatematerialBean> clone = (ArrayList<PlatematerialBean>)comTaskBeans.clone();
+//                        comTaskBeans.clear();
+//                        comTaskBeans.addAll(clone);
+//                        mRecyclerViewAdapter.notifyDataSetChanged();
+//                    }
+//
+//                    @Override
+//                    public void ErrorBack(String error) {
+//
+//                    }
+//                },resultQr);
             }
         }
     }
@@ -474,10 +493,10 @@ public class PlateMaterialContentMessageActivity extends WWBackActivity implemen
 //            @Override
 //            public void SuccessBack(String result) {
 //
-//                ArrayList<FinishedStorageBean> loadingcarbean = App.getAppGson().fromJson(result, new TypeToken<List<FinishedStorageBean>>() {
+//                ArrayList<PlatematerialBean> loadingcarbean = App.getAppGson().fromJson(result, new TypeToken<List<PlatematerialBean>>() {
 //                }.getType());
 //
-//                for (FinishedStorageBean bean : loadingcarbean) {
+//                for (PlatematerialBean bean : loadingcarbean) {
 //                    bean.hNumbe = comTaskBeans.get(0).getHNumbe();
 //                    bean.cartrips = comTaskBeans.get(0).getCartrips();
 //                    bean.containerName = comTaskBeans.get(0).getContainerName();
@@ -499,8 +518,8 @@ public class PlateMaterialContentMessageActivity extends WWBackActivity implemen
 //        }, extra);
 //    }
 
-    public static ArrayList<FinishedStorageBean> removeDupliById(List<FinishedStorageBean> persons) {
-        Set<FinishedStorageBean> personSet = new TreeSet<>((o1, o2) -> {
+    public static ArrayList<PlatematerialBean> removeDupliById(List<PlatematerialBean> persons) {
+        Set<PlatematerialBean> personSet = new TreeSet<>((o1, o2) -> {
             if (o1.getMaterialsNumber().equals(o2.getMaterialsNumber()))
             {
                 return 0;
@@ -563,14 +582,27 @@ public class PlateMaterialContentMessageActivity extends WWBackActivity implemen
 
         SortChildItem treeItem = (SortChildItem) datas.get(position); //需求日期
         SortChildItem.ViewModel viewModel = treeItem.getData();
-        if (viewModel.name.equals(typestring) && typestring.equals("业务日期")) {
+        if (viewModel.name.equals(typestring) && typestring.equals("开始日期")) {
             if (viewModel.value == null || !viewModel.value.equals(date))
                 viewModel.value = date;
-            for (FinishedStorageBean receBean : comTaskBeans) {
-                receBean.requireDate=viewModel.value;
+            for (PlatematerialBean receBean : comTaskBeans) {
+                receBean.planStartDate=viewModel.value;
+            }
+        }else  if (viewModel.name.equals(typestring) && typestring.equals("结束日期")) {
+            if (viewModel.value == null || !viewModel.value.equals(date))
+                viewModel.value = date;
+            for (PlatematerialBean receBean : comTaskBeans) {
+                receBean.planendDate=viewModel.value;
             }
         }
-        else if (viewModel.name.equals("描述")) {
+        else if (viewModel.name.equals("托盘")) {
+            if (viewModel.value==null||!viewModel.value.equals(date))
+                viewModel.value = date;
+
+            for (int i = 0; i < comTaskBeans.size(); i++) {
+                comTaskBeans.get(i).plateName = viewModel.value;
+            }
+        }else if (viewModel.name.equals("描述")) {
             if (viewModel.value==null||!viewModel.value.equals(date))
                 viewModel.value = date;
 
@@ -595,14 +627,14 @@ public class PlateMaterialContentMessageActivity extends WWBackActivity implemen
      */
     private void testData() {
 
-        ApiWebService.Get_Production_order_InView_Json(this, new ApiWebService.SuccessCall() {
+        ApiWebService.Get_Production_order_TrayView_Json(this, new ApiWebService.SuccessCall() {
             @Override
             public void SuccessBack(String result) {
-                ArrayList<FinishedStorageBean> tomTaskBeans = App.getAppGson().fromJson(result, new TypeToken<List<FinishedStorageBean>>() {
+                ArrayList<PlatematerialBean> tomTaskBeans = App.getAppGson().fromJson(result, new TypeToken<List<PlatematerialBean>>() {
                 }.getType());
                 //为空就创建一个新的空对象
                 if (tomTaskBeans.isEmpty()) {
-                    FinishedStorageBean bean = new FinishedStorageBean();
+                    PlatematerialBean bean = new PlatematerialBean();
                     bean.setDisableDelete(true);
                     comTaskBeans.add(bean);
                 }
@@ -626,7 +658,7 @@ public class PlateMaterialContentMessageActivity extends WWBackActivity implemen
 
     @Override
     public void onItemClick(View view, View textView, int position) {
-        FinishedStorageBean searchHistroyBeans = workflowSection.getSearchHistroyBeans(position);
+        PlatematerialBean searchHistroyBeans = workflowSection.getSearchHistroyBeans(position);
         if (textView.getTag() == "1111") {
             if (TextUtils.isEmpty(searchHistroyBeans.getMaterialsNumber()))
                 return;
@@ -685,7 +717,7 @@ public class PlateMaterialContentMessageActivity extends WWBackActivity implemen
     public void onImgItemAdd(View view, int position, RecyclerView.ViewHolder holder) {
         if (comTaskBeans == null)
             return;
-        FinishedStorageBean dataBean = new FinishedStorageBean();
+        PlatematerialBean dataBean = new PlatematerialBean();
         comTaskBeans.add(dataBean);
 
         mRecyclerViewAdapter.notifyItemInserted(comTaskBeans.size());
@@ -728,7 +760,7 @@ public class PlateMaterialContentMessageActivity extends WWBackActivity implemen
         TextView tvDelete = (TextView) contentView.findViewById(R.id.tv_delete);
         TextView tvQrcode = (TextView) contentView.findViewById(R.id.tv_qrcode);
 
-        tvQrcode.setText("可领料信息");
+        tvQrcode.setText("选取台车磨具");
 
         /**
          * 这里{按键会变化View.GONE}
@@ -825,7 +857,7 @@ public class PlateMaterialContentMessageActivity extends WWBackActivity implemen
             TopListViewInit();
 
             workflowSection = new PlateMaterialContentItemSection(comTaskBeans, mStatus);
-            String[] stringArray = getResources().getStringArray(R.array.finished_itemsection_order);
+            String[] stringArray = getResources().getStringArray(R.array.Plate_itemsection_order);
             workflowSection.setTVIDContent(stringArray);
             workflowSection.setOnItemClickListener(this);
             mRecyclerViewAdapter.removeAllSections();
@@ -836,11 +868,26 @@ public class PlateMaterialContentMessageActivity extends WWBackActivity implemen
         }
     }
 
-    //可领料信息  二维码扫描
+    //选取台车磨具
     private void tvQrcodeAction() {
-        Intent intent = new Intent(PlateMaterialContentMessageActivity.this, CaptureActivity.class);
-        intent.putExtra("position", -1);
-        startActivityForResult(intent, REQUST_QRCODE);
+
+
+        ApiWebService.Get_Production_order_Tray_byTid_Json(this, new ApiWebService.SuccessCall() {
+            @Override
+            public void SuccessBack(String result) {
+
+                ArrayList<BProBOM> bProBOMs = App.getAppGson().fromJson(result, new TypeToken<List<BProBOM>>() {
+                }.getType());
+
+                CommonPickerActivity_.intent(PlateMaterialContentMessageActivity.this).title("选取台车模具").bProBOMs(bProBOMs).Position(0).LayoutID(R.layout.loadcar_order_picker_item).startForResult(RESULT_SORTITEM_SELECTPROJECT);
+            }
+
+            @Override
+            public void ErrorBack(String error) {
+
+            }
+        }, comTaskBeans.get(0).getID(),9999);
+
     }
 
     @Override
@@ -868,31 +915,35 @@ public class PlateMaterialContentMessageActivity extends WWBackActivity implemen
 //            return;
 //        }
         for (int i=0;i<comTaskBeans.size();i++) {
-            if (TextUtils.isEmpty(this.comTaskBeans.get(i).getWareHouseID())) {
-                T.showShort(this, "第"+(i+1)+"行的仓库为空不能提交");
+            if (TextUtils.isEmpty(this.comTaskBeans.get(i).getModuleID())) {
+                T.showShort(this, "第"+(i+1)+"行的磨具为空不能提交");
                 return;
             }
         }
         int size = this.comTaskBeans.size();
         String[][] billtable = null;
-        billtable = new String[size][14];
+        billtable = new String[size][18];
         for (int i = 0; i < size; i++) {
-            FinishedStorageBean confirmationReceBean = comTaskBeans.get(i);
+            PlatematerialBean confirmationReceBean = comTaskBeans.get(i);
 
             billtable[i][0] = confirmationReceBean.hNumbe;
-            billtable[i][1] = confirmationReceBean.requireDate;
-            billtable[i][2] = confirmationReceBean.entryPeople;
-            billtable[i][3] = confirmationReceBean.oriderID;
-            billtable[i][4] = confirmationReceBean.materialsID;
-            billtable[i][5] = confirmationReceBean.materialsQrcode;
-            billtable[i][6] = confirmationReceBean.materialsNumber;
-            billtable[i][7] = confirmationReceBean.materialsNames;
-            billtable[i][8] = confirmationReceBean.Specification;
-            billtable[i][9] = confirmationReceBean.measureUnitID;
-            billtable[i][10] = confirmationReceBean.measureUnit;
-            billtable[i][11] = confirmationReceBean.wareHouseID;
-            billtable[i][12] = confirmationReceBean.amount + "";
-            billtable[i][13] = confirmationReceBean.sourceTableID;
+            billtable[i][1] = confirmationReceBean.plateID;
+            billtable[i][2] = confirmationReceBean.planStartDate;
+            billtable[i][3] = confirmationReceBean.planendDate;
+            billtable[i][4] = confirmationReceBean.entryPeople;
+            billtable[i][5] = confirmationReceBean.oriderID;
+            billtable[i][6] = confirmationReceBean.materialsID;
+            billtable[i][7] = confirmationReceBean.componentQrcode;
+            billtable[i][8] = confirmationReceBean.materialsNumber;
+            billtable[i][9] = confirmationReceBean.materialsNames;
+            billtable[i][10] = confirmationReceBean.Specification;
+            billtable[i][11] = confirmationReceBean.measureUnitID;
+            billtable[i][12] = confirmationReceBean.measureUnit;
+            billtable[i][13] = confirmationReceBean.moduleID;
+            billtable[i][14] = confirmationReceBean.stationCarID;
+            billtable[i][15] = confirmationReceBean.amount + "";
+            billtable[i][16] = confirmationReceBean.sourceTypeID;
+            billtable[i][17] = confirmationReceBean.tagNumber;
         }
         if (mStatus.isNewStatus()) {
 

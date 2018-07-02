@@ -144,6 +144,7 @@ public class ContainerRecycleContentMessageActivity extends WWBackActivity imple
 
         testData();
 //        TopListViewInit(this.comTaskBeans);
+        setScrollViewFirst();
     }
 
     @Override

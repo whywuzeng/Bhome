@@ -151,6 +151,7 @@ public class ReplenishmentRequireContentMessageActivity extends WWBackActivity i
         mRecyclerViewAdapter.notifyDataSetChanged();
 
         testData();
+        setScrollViewFirst();
     }
 
     @Override

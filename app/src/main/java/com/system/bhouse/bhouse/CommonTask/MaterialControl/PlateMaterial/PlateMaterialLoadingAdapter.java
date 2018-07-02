@@ -11,7 +11,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.system.bhouse.base.App;
-import com.system.bhouse.bhouse.CommonTask.MaterialControl.entity.FinishedStorageBean;
+import com.system.bhouse.bhouse.CommonTask.MaterialControl.entity.PlatematerialBean;
 import com.system.bhouse.bhouse.CommonTask.Widget.LoadingAdapter;
 import com.system.bhouse.bhouse.R;
 
@@ -32,12 +32,12 @@ import butterknife.ButterKnife;
  * com.system.bhouse.bhouse.ConfirmationReceipt.adapter
  */
 
-public class PlateMaterialLoadingAdapter extends LoadingAdapter<FinishedStorageBean> {
+public class PlateMaterialLoadingAdapter extends LoadingAdapter<PlatematerialBean> {
 
     private final String[] TitlestringArray;
-    private ArrayList<FinishedStorageBean> mComTaskBeans = new ArrayList<>();
+    private ArrayList<PlatematerialBean> mComTaskBeans = new ArrayList<>();
 
-    public PlateMaterialLoadingAdapter(ArrayList<FinishedStorageBean> mComTaskBeans) {
+    public PlateMaterialLoadingAdapter(ArrayList<PlatematerialBean> mComTaskBeans) {
         this.mComTaskBeans = mComTaskBeans;
         TitlestringArray = App.getContextApp().getResources().getStringArray(R.array.Plate_Material_order);
     }
@@ -191,23 +191,32 @@ public class PlateMaterialLoadingAdapter extends LoadingAdapter<FinishedStorageB
                 .get(position).getHNumbe());
 
         tagContent.get(1).setText(mComTaskBeans
-                .get(position).oriderNumber == null ? "" : mComTaskBeans
-                .get(position).oriderNumber);
+                .get(position).producationOrderNumber== null ? "" : mComTaskBeans
+                .get(position).producationOrderNumber);
+
         tagContent.get(2).setText(mComTaskBeans
                 .get(position).getStatus() == null ? "" : mComTaskBeans
                 .get(position).getStatus());
 
         tagContent.get(3).setText(mComTaskBeans
+                .get(position).plateName == null ? "" : mComTaskBeans
+                .get(position).plateName);
+
+        tagContent.get(4).setText(mComTaskBeans
                 .get(position).getEntryTime() == null ? "" : mComTaskBeans
                 .get(position).getEntryTime());
 
-        tagContent.get(4).setText(mComTaskBeans
+        tagContent.get(5).setText(mComTaskBeans
                 .get(position).getEntryPeople() == null ? "" : mComTaskBeans
                 .get(position).getEntryPeople());
 
-        tagContent.get(5).setText(mComTaskBeans
-                .get(position).getRequireDate() == null ? "" : mComTaskBeans
-                .get(position).getRequireDate());
+        tagContent.get(6).setText(mComTaskBeans
+                .get(position).planStartDate == null ? "" : mComTaskBeans
+                .get(position).planStartDate);
+
+        tagContent.get(7).setText(mComTaskBeans
+                .get(position).planendDate == null ? "" : mComTaskBeans
+                .get(position).planendDate);
 
 //        tagContent.get(position).setText(mComTaskBeans
 //                .get(position).getEntryTime() == null ? "" : mComTaskBeans

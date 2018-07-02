@@ -146,6 +146,8 @@ public class FinishedStorageContentMessageActivity extends WWBackActivity implem
 
         testData();
 //        TopListViewInit(this.comTaskBeans);
+
+        setScrollViewFirst();
     }
 
     @Override

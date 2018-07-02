@@ -65,7 +65,7 @@ public  class DateTimePickerDialog extends AlertDialog implements DialogInterfac
         mDatePicker =(DatePicker) view.findViewById(R.id.DatePicker);
         mTimePicker =(TimePicker) view.findViewById(R.id.TimePicker);
         mTimePicker.setIs24HourView(true);
-        if (dateString.isEmpty()) {
+        if (dateString==null||dateString.isEmpty()) {
             dateString = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss")
                     .format(Calendar.getInstance().getTimeInMillis());
         }

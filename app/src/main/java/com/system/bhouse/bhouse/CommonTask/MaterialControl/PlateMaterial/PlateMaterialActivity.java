@@ -18,7 +18,7 @@ public class PlateMaterialActivity extends WWBackActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.confirmationreceip_activity);
-        setActionBarMidlleTitle("完工入库");
+        setActionBarMidlleTitle("托盘配料");
         //运行back功能
         annotationDispayHomeAsUp();
         taskFragment = PlateMaterialFragment_.builder().build();

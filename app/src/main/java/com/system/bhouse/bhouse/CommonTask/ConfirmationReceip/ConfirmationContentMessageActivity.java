@@ -150,6 +150,7 @@ public class ConfirmationContentMessageActivity extends WWBackActivity implement
 
         testData();
         TopListViewInit(this.comTaskBeans);
+        setScrollViewFirst();
 
     }
 

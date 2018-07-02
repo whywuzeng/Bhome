@@ -146,6 +146,7 @@ public class LoadingCarOrderContentMessageActivity extends WWBackActivity implem
 
         testData();
 //        TopListViewInit(this.comTaskBeans);
+        setScrollViewFirst();
     }
 
     @Override

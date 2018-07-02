@@ -143,6 +143,7 @@ public class TransportSendGoodsContentMessageActivity extends WWBackActivity imp
 
         testData();
 //        TopListViewInit(this.comTaskBeans);
+        setScrollViewFirst();
     }
 
     @Override

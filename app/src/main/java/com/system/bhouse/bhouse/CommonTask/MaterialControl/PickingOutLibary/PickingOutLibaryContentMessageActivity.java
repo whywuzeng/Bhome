@@ -83,6 +83,8 @@ public class PickingOutLibaryContentMessageActivity extends WWBackActivity imple
     @ViewById
     TextView tv_title_live_layout;
 
+
+
     @Extra
     String HId;
 
@@ -147,6 +149,7 @@ public class PickingOutLibaryContentMessageActivity extends WWBackActivity imple
 
         testData();
 //        TopListViewInit(this.comTaskBeans);
+        setScrollViewFirst();
     }
 
     @Override

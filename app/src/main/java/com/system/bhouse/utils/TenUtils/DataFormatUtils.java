@@ -14,6 +14,8 @@ import java.util.Date;
 
 public class DataFormatUtils {
 
+    public static final int One_Day=86400000;//一天毫秒
+
     private static final SimpleDateFormat sFormatThisYearSlash = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
     private static final SimpleDateFormat simpleFormatThisYearSlash = new SimpleDateFormat("yyyy-MM-dd");
@@ -21,6 +23,12 @@ public class DataFormatUtils {
 
     public static String getCurrentTime(){
         Date curDate = new Date(System.currentTimeMillis());
+        String format = sFormatThisYearSlash.format(curDate);
+        return format;
+    }
+
+    public static String getCurrentTimeAddOneDay(){
+        Date curDate = new Date(System.currentTimeMillis()+One_Day);
         String format = sFormatThisYearSlash.format(curDate);
         return format;
     }

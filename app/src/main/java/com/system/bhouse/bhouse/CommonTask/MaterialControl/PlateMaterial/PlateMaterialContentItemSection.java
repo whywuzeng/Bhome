@@ -11,7 +11,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.system.bhouse.base.StatusBean;
-import com.system.bhouse.bhouse.CommonTask.MaterialControl.entity.FinishedStorageBean;
+import com.system.bhouse.bhouse.CommonTask.MaterialControl.entity.PlatematerialBean;
 import com.system.bhouse.bhouse.R;
 import com.system.bhouse.ui.sectioned.Section;
 import com.system.bhouse.utils.TenUtils.L;
@@ -43,19 +43,19 @@ public class PlateMaterialContentItemSection extends Section {
     private String[] stringArray;
 
 
-    public ArrayList<FinishedStorageBean> getSearchHistroyBeans() {
+    public ArrayList<PlatematerialBean> getSearchHistroyBeans() {
         return searchHistroyBeans;
     }
 
-    public FinishedStorageBean getSearchHistroyBeans(int position) {
-        FinishedStorageBean FinishedStorageBean = searchHistroyBeans.get(position);
-        return FinishedStorageBean;
+    public PlatematerialBean getSearchHistroyBeans(int position) {
+        PlatematerialBean PlatematerialBean = searchHistroyBeans.get(position);
+        return PlatematerialBean;
     }
 
-    private ArrayList<FinishedStorageBean> searchHistroyBeans;
+    private ArrayList<PlatematerialBean> searchHistroyBeans;
 
 
-    public PlateMaterialContentItemSection(ArrayList<FinishedStorageBean> searchHistroyBeans, StatusBean mStatusBean) {
+    public PlateMaterialContentItemSection(ArrayList<PlatematerialBean> searchHistroyBeans, StatusBean mStatusBean) {
         super(R.layout.layout_home_recommend_empty_noheight, R.layout.comtask_content_item_footer, R.layout.activity_comtask_content_layout_item, R.layout.layout_home_recommend_empty, R.layout.layout_home_recommend_empty);
         this.searchHistroyBeans = searchHistroyBeans;
         this.statusBean = mStatusBean;
@@ -215,13 +215,14 @@ public class PlateMaterialContentItemSection extends Section {
         contvs.add(holder1.tv_shifouproduce);
         contvs.add(holder1.tv_subBeizhu);
 
-        contvs.get(0).setText(searchHistroyBeans.get(position).materialsNumber);
-        contvs.get(1).setText(searchHistroyBeans.get(position).materialsQrcode);
+        contvs.get(0).setText(searchHistroyBeans.get(position).componentQrcode);
+        contvs.get(1).setText(searchHistroyBeans.get(position).materialsNumber);
         contvs.get(2).setText(searchHistroyBeans.get(position).materialsNames);
         contvs.get(3).setText(searchHistroyBeans.get(position).Specification);
         contvs.get(4).setText(searchHistroyBeans.get(position).getMeasureUnit());
-        contvs.get(5).setText(searchHistroyBeans.get(position).getWareHouseName());
-        contvs.get(6).setText(searchHistroyBeans.get(position).amount+"");
+        contvs.get(5).setText(searchHistroyBeans.get(position).moduleName);
+        contvs.get(6).setText(searchHistroyBeans.get(position).stationCarName);
+        contvs.get(7).setText(searchHistroyBeans.get(position).amount+"");
 
         //4.显示 业务个数的 条目
 

@@ -1,5 +1,7 @@
 package com.system.bhouse.bhouse.setup.WWCommon;
 
+import android.support.design.widget.FloatingActionButton;
+import android.support.v4.widget.NestedScrollView;
 import android.support.v7.app.ActionBar;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
@@ -19,6 +21,7 @@ public class WWBackActivity extends WWBaseActivity {
 
    protected  Toolbar toolbar_com;
 
+
     @AfterViews
     protected final void annotationDispayHomeAsUp() {
         ActionBar supportActionBar = getSupportActionBar();
@@ -26,6 +29,21 @@ public class WWBackActivity extends WWBaseActivity {
             supportActionBar.setDisplayHomeAsUpEnabled(true);
         }
         ToolbarDispayHomeAsUp();
+
+    }
+
+    //添加滑动响应
+    protected void setScrollViewFirst() {
+
+        NestedScrollView mNestedScrollView = (NestedScrollView) findViewById(R.id.nested_view);
+        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mNestedScrollView.setScrollY(0);
+            }
+        });
     }
 
     @OptionsItem(android.R.id.home)

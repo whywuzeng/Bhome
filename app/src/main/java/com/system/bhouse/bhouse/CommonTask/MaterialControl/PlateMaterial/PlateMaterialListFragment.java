@@ -1,17 +1,20 @@
 package com.system.bhouse.bhouse.CommonTask.MaterialControl.PlateMaterial;
 
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.text.TextUtils;
+import android.view.View;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.google.gson.reflect.TypeToken;
 import com.system.bhouse.api.ApiWebService;
 import com.system.bhouse.base.App;
 import com.system.bhouse.base.StatusBean;
 import com.system.bhouse.bhouse.CommonTask.BaseTaskFragment.BaseCommonListFragment;
-import com.system.bhouse.bhouse.CommonTask.MaterialControl.FinishedStorage.FinishedStorageContentMessageActivity_;
-import com.system.bhouse.bhouse.CommonTask.MaterialControl.entity.FinishedStorageBean;
+import com.system.bhouse.bhouse.CommonTask.MaterialControl.entity.PlatematerialBean;
 import com.system.bhouse.bhouse.R;
 import com.system.bhouse.utils.TenUtils.L;
 
@@ -29,10 +32,11 @@ import java.util.List;
  * <p>
  * com.system.bhouse.bhouse.ConfirmationReceipt
  */
-@EFragment(R.layout.fragment_task_list)
-public class PlateMaterialListFragment extends BaseCommonListFragment<PlateMaterialLoadingAdapter,FinishedStorageBean> implements PlateMaterialLoadingAdapter.onItemClickListener {
+@EFragment(R.layout.fragment_plate_material_list)
+public class PlateMaterialListFragment extends BaseCommonListFragment<PlateMaterialLoadingAdapter,PlatematerialBean> implements PlateMaterialLoadingAdapter.onItemClickListener {
 
     PlateMaterialLoadingAdapter mAdapter;
+    private boolean isDealWith=false;
 
     //默认是 提交保存 。即可在此数组进行修改
     String[] ContentTitle= new String[]{"", "保存", "审核"};
@@ -44,7 +48,7 @@ public class PlateMaterialListFragment extends BaseCommonListFragment<PlateMater
             super.handleMessage(msg);
             if (msg.what == REFRESH_DATA) {
                 setRefreshing(false);
-                ArrayList<FinishedStorageBean> loadedRequires = msg.getData().getParcelableArrayList(LOADEDREQUIREKEY);
+                ArrayList<PlatematerialBean> loadedRequires = msg.getData().getParcelableArrayList(LOADEDREQUIREKEY);
                 if (loadedRequires.size()==0)
                 {
                     if (mNoData) {
@@ -64,6 +68,9 @@ public class PlateMaterialListFragment extends BaseCommonListFragment<PlateMater
             }
         }
     };
+    private TextView TvDealWith;
+    private Drawable drawableGouSeleted;
+    private Drawable drawablePositiveGou;
 
     @AfterViews
     public void initConfirmation()
@@ -75,6 +82,32 @@ public class PlateMaterialListFragment extends BaseCommonListFragment<PlateMater
         listView.setAdapter(mAdapter);
         mAdapter.setmOnItemClickListener(this);
         setStatusContent(ContentTitle);
+        TvDealWith = (TextView) rootView.findViewById(R.id.tv_finish_dealwith);
+        LinearLayout tasklistHead = (LinearLayout) rootView.findViewById(R.id.head_tasklist);
+        tasklistHead.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                setTvDealWithBg();
+                mUpdateAll = true;
+                onRefresh();
+            }
+        });
+        drawableGouSeleted = rootView.getResources().getDrawable(R.drawable.ic_gou_selected);
+        drawablePositiveGou = rootView.getResources().getDrawable(R.drawable.ic_positive_gou);
+
+
+    }
+
+    private void setTvDealWithBg(){
+        if (!isDealWith)
+        {
+            drawableGouSeleted.setBounds(0,0,drawableGouSeleted.getIntrinsicWidth(),drawableGouSeleted.getIntrinsicHeight());
+            TvDealWith.setCompoundDrawables(drawableGouSeleted,null,null,null);
+        }else{
+            drawablePositiveGou.setBounds(0,0,drawablePositiveGou.getIntrinsicWidth(),drawablePositiveGou.getIntrinsicHeight());
+            TvDealWith.setCompoundDrawables(drawablePositiveGou,null,null,null);
+        }
+        isDealWith=!isDealWith;
     }
 
 
@@ -87,7 +120,7 @@ public class PlateMaterialListFragment extends BaseCommonListFragment<PlateMater
                 @Override
                 public void SuccessBack(String result) {
                     L.e(result);
-                    ArrayList<FinishedStorageBean> loadedRequires = App.getAppGson().fromJson(result, new TypeToken<List<FinishedStorageBean>>() {
+                    ArrayList<PlatematerialBean> loadedRequires = App.getAppGson().fromJson(result, new TypeToken<List<PlatematerialBean>>() {
                     }.getType());
 
                     Message message = Message.obtain();
@@ -116,20 +149,19 @@ public class PlateMaterialListFragment extends BaseCommonListFragment<PlateMater
                         setRefreshing(false);
                     }
                 }
-            }, TextUtils.isEmpty(mLabel) ? 50 : Integer.valueOf(mLabel), TextUtils.isEmpty(mStatus) ? ContentTitle[1] : mStatus, TextUtils.isEmpty(mKeyword) ? "" : mKeyword,false);
+            }, TextUtils.isEmpty(mLabel) ? 50 : Integer.valueOf(mLabel), TextUtils.isEmpty(mStatus) ? ContentTitle[1] : mStatus, TextUtils.isEmpty(mKeyword) ? "" : mKeyword,isDealWith);
 
-      ApiWebService.Get_Production_order_TrayView_Json(getActivity(), new ApiWebService.SuccessCall() {
-                @Override
-                public void SuccessBack(String result) {
-
-                }
-
-                @Override
-                public void ErrorBack(String error) {
-
-                }
-            }, "fe6e3bb77d4a4b01a1b3426083a8e7e7");
-
+//      ApiWebService.Get_Production_order_TrayView_Json(getActivity(), new ApiWebService.SuccessCall() {
+//                @Override
+//                public void SuccessBack(String result) {
+//
+//                }
+//
+//                @Override
+//                public void ErrorBack(String error) {
+//
+//                }
+//            }, "fe6e3bb77d4a4b01a1b3426083a8e7e7");
         }
 
     }
@@ -154,7 +186,7 @@ public class PlateMaterialListFragment extends BaseCommonListFragment<PlateMater
             statusBean.getBean().setVisModifyBtn(true);
         }
         statusBean.setLookStatus(true);
-        FinishedStorageContentMessageActivity_.intent(getParentFragment()).HId(mData
+        PlateMaterialContentMessageActivity_.intent(getParentFragment()).HId(mData
                 .get(position).getID() + "").receiptHnumber(mData.get(position).getHNumbe()).mStatus(statusBean).start();
     }
 

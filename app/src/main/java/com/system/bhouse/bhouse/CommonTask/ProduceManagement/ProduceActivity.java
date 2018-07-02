@@ -114,6 +114,7 @@ public class ProduceActivity extends WWBackActivity implements BaseQuickAdapter.
             case 4:
                 intent=new Intent(this, FinishedStorageActivity.class);
                 startActivity(intent);
+                break;
             case 5:
                intent= new Intent(this, PlateMaterialActivity.class);
                startActivity(intent);

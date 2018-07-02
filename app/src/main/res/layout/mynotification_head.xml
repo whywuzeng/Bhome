@@ -12,6 +12,7 @@
             android:layout_height="wrap_content">
 
             <TextView
+                android:id="@+id/tv_finish_dealwith"
                 android:layout_marginLeft="15dp"
                 android:drawableLeft="@drawable/ic_positive_gou"
                 android:drawablePadding="10dp"

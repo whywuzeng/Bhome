@@ -152,6 +152,7 @@ public class ReturnRequireContentMessageActivity extends WWBackActivity implemen
 
         testData();
 //        TopListViewInit(this.comTaskBeans);
+        setScrollViewFirst();
     }
 
 //    ID = "1ea66b7bb9674a18a8794bd943c212bb"

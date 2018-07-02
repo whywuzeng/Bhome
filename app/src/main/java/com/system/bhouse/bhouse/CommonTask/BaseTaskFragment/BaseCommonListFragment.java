@@ -99,6 +99,7 @@ public abstract class BaseCommonListFragment<T extends LoadingAdapter,B> extends
     protected View errorView;
     protected boolean mError = true;
     protected boolean mNoData = true;
+    protected View rootView;
 
     public void setParent(TaskListParentUpdate parent) {
         mParent = parent;
@@ -125,7 +126,7 @@ public abstract class BaseCommonListFragment<T extends LoadingAdapter,B> extends
     }
 
     protected void baseCommoninitView(T mAdapter) {
-        View rootView = getView();
+        rootView = getView();
         blankLayout = rootView.findViewById(R.id.blankLayout);
         listView = (LRecyclerView) rootView.findViewById(R.id.listView);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity());

@@ -83,7 +83,7 @@ public class MyApprovalNotificationFragment extends WWBaseFragment implements On
         notificationSectionAdapter.addHeaderView(headView);
         getNotifications(id);
 
-
+        //headview 点击事件
         headView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -179,22 +179,13 @@ public class MyApprovalNotificationFragment extends WWBaseFragment implements On
             }
         }
         else {
-            // 创建适配器
+            // 创建适配器  FooterView 就是没值
             notificationSectionAdapter.removeAllFooterView();
         }
         notificationSectionAdapter.setNewData(scrollDataWrap);
 
         if (allRecorders <= lineSize) {
-//            bloadLayout.setVisibility(View.GONE);
-//            bloadInfo.setHeight(0);
-//            bloadLayout.setMinimumHeight(0);
             LayoutFooter.setVisibility(View.GONE);
-        } else {
-//            if (mRecyclerView.getFooterViewsCount() < 1) {
-//                bloadLayout.setVisibility(View.VISIBLE);
-//                bloadInfo.setHeight(50);
-//                bloadLayout.setMinimumHeight(100);
-//            }
         }
         mRecyclerView.setAdapter(notificationSectionAdapter);
     }

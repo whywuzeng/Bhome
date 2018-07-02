@@ -2,9 +2,11 @@ package com.system.bhouse.bhouse.CommonTask.MaterialControl.entity;
 
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.text.TextUtils;
 
 import com.google.gson.annotations.SerializedName;
 import com.system.bhouse.bean.BaseBean;
+import com.system.bhouse.utils.TenUtils.DataFormatUtils;
 
 /**
  * Created by Administrator on 2018-06-28.
@@ -46,52 +48,52 @@ public class PlatematerialBean extends BaseBean implements Parcelable {
      * 订单ID : 808f2a114a354e4b956d0208b3cceacf
      */
 
-    private String ID;
+    public String ID;
     @SerializedName("分录ID")
-    private String subDirectoryID;
+    public String subDirectoryID;
     @SerializedName(value = "单据编号",alternate = {"托盘配料单编号"})
-    private String hNumbe;
+    public String hNumbe;
     @SerializedName("台车ID")
-    private String stationCarID;
+    public String stationCarID;
     @SerializedName("台车名称")
-    private String stationCarName;
+    public String stationCarName;
     @SerializedName("开始日期")
-    private String planStartDate;
+    public String planStartDate;
     @SerializedName("托盘ID")
-    private String plateID;
+    public String plateID;
     @SerializedName(value = "托盘名称",alternate = {"托盘"})
-    private String plateName;
+    public String plateName;
     @SerializedName("数量")
-    private double amount;
+    public double amount;
     @SerializedName("来源单据ID")
-    private String sourceTypeID;
+    public String sourceTypeID;
     @SerializedName("构件二维码")
-    private String componentQrcode;
+    public String componentQrcode;
     @SerializedName("标记号")
-    private String tagNumber;
+    public String tagNumber;
     @SerializedName("模具ID")
-    private String moduleID;
+    public String moduleID;
     @SerializedName("模具名称")
-    private String moduleName;
+    public String moduleName;
     @SerializedName("物料ID")
-    private String materialsID;
+    public String materialsID;
     @SerializedName("物料名称")
-    private String materialsNames;
+    public String materialsNames;
     @SerializedName("物料编码")
-    private String materialsNumber;
+    public String materialsNumber;
     @SerializedName("结束日期")
-    private String planendDate;
+    public String planendDate;
     @SerializedName("规格型号")
-    private String Specification;
+    public String Specification;
     @SerializedName("计量单位")
-    private String measureUnit;
+    public String measureUnit;
     @SerializedName("计量单位ID")
-    private String measureUnitID;
+    public String measureUnitID;
     @SerializedName("订单ID")
-    private String oriderID;
+    public String oriderID;
 
     @SerializedName("生产订单号")
-    private String producationOrderNumber;
+    public String producationOrderNumber;
 
 
     public String getID() {
@@ -135,6 +137,10 @@ public class PlatematerialBean extends BaseBean implements Parcelable {
     }
 
     public String getPlanStartDate() {
+
+        if (TextUtils.isEmpty(planStartDate)) {
+            return DataFormatUtils.getCurrentTime();
+        }
         return planStartDate;
     }
 
@@ -231,6 +237,10 @@ public class PlatematerialBean extends BaseBean implements Parcelable {
     }
 
     public String getPlanendDate() {
+
+        if (TextUtils.isEmpty(planendDate)) {
+            return DataFormatUtils.getCurrentTimeAddOneDay();
+        }
         return planendDate;
     }
 

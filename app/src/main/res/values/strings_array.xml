@@ -219,8 +219,18 @@
         <item>录入人</item>
         <item>开始日期</item>
         <item>结束日期</item>
-
     </string-array>
 
+    <!--托盘配料 分录详情-->
+    <string-array name="Plate_itemsection_order">
+        <item>构件二维码</item>
+        <item>物料编码</item>
+        <item>物料名称</item>
+        <item>规格型号</item>
+        <item>单位</item>
+        <item>磨具名称</item>
+        <item>台车名称</item>
+        <item>数量</item>
+    </string-array>
 
 </resources>

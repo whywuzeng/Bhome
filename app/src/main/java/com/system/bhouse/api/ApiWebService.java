@@ -2774,7 +2774,7 @@ Get_Sale_Order_Car_shf(string scid, string addPer, int gsmid, int property, bool
         request.addProperty("property",App.Property);
         request.addProperty("IsSubtitle",App.IsSub);
         request.addProperty("username",App.USER_INFO);
-        return getNetworkServiceNoProgress(mContext,call,request);
+        return getNetworkService(mContext,call,request);
     }
 
     /**

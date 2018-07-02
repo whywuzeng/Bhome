@@ -119,6 +119,7 @@ public class ComTaskContentMessageActivity extends BaseContentMessageActivity im
         }else {
             setActionBarMidlleTitle("吊装需求");
         }
+        setScrollViewFirst();
     }
 
     /**

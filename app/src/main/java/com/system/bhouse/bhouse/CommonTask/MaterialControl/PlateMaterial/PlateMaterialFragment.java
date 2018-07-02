@@ -8,7 +8,6 @@ import com.system.bhouse.api.ApiWebService;
 import com.system.bhouse.base.StatusBean;
 import com.system.bhouse.base.SubmitStatusBeanImpl;
 import com.system.bhouse.bhouse.CommonTask.BaseTaskFragment.BaseCommonFragment;
-import com.system.bhouse.bhouse.CommonTask.MaterialControl.FinishedStorage.FinishedStorageContentMessageActivity_;
 import com.system.bhouse.bhouse.CommonTask.adapter.PageTaskFragment;
 import com.system.bhouse.bhouse.CommonTask.callback.TaskListParentUpdate;
 import com.system.bhouse.bhouse.CommonTask.callback.TaskListUpdate;
@@ -46,13 +45,13 @@ public class PlateMaterialFragment extends BaseCommonFragment implements TaskLis
     @Override
     protected void AddIntentFor() {
 
-        ApiWebService.Get_Production_order_In_po_Number(getActivity(), new ApiWebService.SuccessCall() {
+        ApiWebService.Get_Production_order_Tray_po_Number(getActivity(), new ApiWebService.SuccessCall() {
             @Override
             public void SuccessBack(String result) {
                 StatusBean statusBean = new StatusBean();
                 statusBean.setBean(new SubmitStatusBeanImpl().setVisSubmitBtn(true).setVisQRBtn(true));
                 statusBean.setNewStatus(true);
-                FinishedStorageContentMessageActivity_.intent(getActivity()).HId("").receiptHnumber(result).mStatus(statusBean).start();
+                PlateMaterialContentMessageActivity_.intent(getActivity()).HId("").receiptHnumber(result).mStatus(statusBean).start();
             }
 
             @Override
