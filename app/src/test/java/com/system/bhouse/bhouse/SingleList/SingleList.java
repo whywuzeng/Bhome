@@ -103,28 +103,47 @@ public class SingleList<E> {
     }
 
     public void deleteDuplication(){
-        if (first==null)return;
-        Node<E> pNode=first;
-        while (pNode!=null)
-        {
-            E mdata= pNode.data;
-            Node<E> tempNode= pNode.next;
-            Node<E> next=pNode.next;
+        if (first == null) return;
+        Node<E> pNode = first;
+        while (pNode != null) {
+            E mdata = pNode.data;
+            Node<E> tempNode = pNode.next;
+            Node<E> next = pNode;
 
-            boolean needDelete=false;
-            while (tempNode!=null)
-            {
-                if (tempNode.data!=mdata)
-                {
-                    next =next.next;
-                    tempNode=next;
-                }else
-                {
-                    tempNode=tempNode.next;
+            boolean needDelete = false;
+            while (tempNode != null) {
+                if (tempNode.data != mdata) {
+                    next = next.next;
+
                 }
+                else {
+                    if (tempNode.next==null)
+                    {
+                        last=next;
+                    }
+                    next.next = tempNode.next;
+                    size--;
+                }
+                tempNode = tempNode.next;
             }
 
-            pNode= pNode.next;
+            pNode = pNode.next;
+
+        }
+    }
+
+
+    public void fanzhuan() {
+        Node pNode = first.next;
+        Node preNode = null;
+        Node temp=first;
+        Node temp1=null;
+        while (pNode != null) {
+            preNode = pNode.next;
+            temp1=temp.next;
+            temp1.next=temp;
+
+            pNode = preNode.next;
         }
     }
 }
