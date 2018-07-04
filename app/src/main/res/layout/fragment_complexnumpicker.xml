@@ -1,67 +1,85 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:orientation="vertical"
+<android.support.design.widget.CoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
               android:layout_width="match_parent"
+              android:orientation="vertical"
               android:layout_height="match_parent">
 
-    <include layout="@layout/toolbar"/>
-
-    <LinearLayout
-        android:gravity="center_vertical"
+    <android.support.design.widget.AppBarLayout
+        android:id="@+id/appbar_layout"
         android:layout_width="match_parent"
-        android:layout_height="75dp">
+        android:layout_height="wrap_content">
 
-        <RelativeLayout
-            android:layout_width="200dp"
-            style="@style/GreyBoxButton"
-            android:layout_marginLeft="17dp"
-            android:focusable="true"
-            android:focusableInTouchMode="true"
-            android:layout_height="wrap_content">
+        <include layout="@layout/toolbar"/>
 
-            <Spinner
-                android:id="@+id/spDwon"
-                android:background="@drawable/rightbackground"
-                android:layout_alignParentLeft="true"
-                android:overlapAnchor="false"
-                android:layout_width="60dp"
-                android:spinnerMode="dropdown"
-                android:textSize="15sp"
-                android:textColor="@color/common_color_text_300"
-                android:gravity="center"
-                android:layout_height="37dp"
-                android:clickable="true"
+        <LinearLayout
+            android:gravity="center_vertical"
+            android:layout_width="match_parent"
+            android:background="@color/litte_gray"
+            android:layout_height="75dp">
 
-                />
+            <RelativeLayout
+                android:layout_width="200dp"
+                style="@style/GreyBoxButton"
+                android:layout_marginLeft="60dp"
+                android:focusable="true"
+                android:focusableInTouchMode="true"
+                android:layout_height="wrap_content">
+
+                <Spinner
+                    android:id="@+id/spDwon"
+                    android:background="@drawable/rightbackground"
+                    android:layout_alignParentLeft="true"
+                    android:overlapAnchor="false"
+                    android:layout_width="60dp"
+                    android:spinnerMode="dropdown"
+                    android:textSize="15sp"
+                    android:textColor="@color/common_color_text_300"
+                    android:gravity="center"
+                    android:layout_height="37dp"
+                    android:clickable="true"
+
+                    />
 
 
-            <EditText
-                android:layout_toRightOf="@id/spDwon"
-                android:id="@+id/et_query"
-                android:textSize="12sp"
-                android:background="@drawable/bg_edittext_selector"
-                android:textColor="@color/common_color_text_300"
-                android:textColorHint="@color/common_color_text_10"
-                android:hint="@string/qingshuru"
-                android:paddingLeft="3dp"
-                android:layout_width="80dp"
-                android:layout_height="37dp"/>
+                <EditText
+                    android:layout_toRightOf="@id/spDwon"
+                    android:id="@+id/et_query"
+                    android:textSize="12sp"
+                    android:background="@drawable/bg_edittext_selector"
+                    android:textColor="@color/common_color_text_300"
+                    android:textColorHint="@color/common_color_text_10"
+                    android:hint="@string/qingshuru"
+                    android:paddingLeft="3dp"
+                    android:layout_width="80dp"
+                    android:layout_height="37dp"/>
 
-            <TextView
-                android:id="@+id/tv_Empty"
-                android:background="@drawable/leftbackground"
-                android:layout_alignParentRight="true"
-                android:textSize="15sp"
-                android:gravity="center"
-                android:clickable="true"
-                android:textColor="@color/textview_disable_style"
-                android:text="清空"
-                android:layout_width="60dp"
-                android:layout_height="37dp"/>
+                <TextView
+                    android:id="@+id/tv_Empty"
+                    android:background="@drawable/leftbackground"
+                    android:layout_alignParentRight="true"
+                    android:textSize="15sp"
+                    android:gravity="center"
+                    android:clickable="true"
+                    android:textColor="@color/textview_disable_style"
+                    android:text="清空"
+                    android:layout_width="60dp"
+                    android:layout_height="37dp"/>
 
-        </RelativeLayout>
+            </RelativeLayout>
 
-    </LinearLayout>
+        </LinearLayout>
+
+    </android.support.design.widget.AppBarLayout>
+
+    <com.system.bhouse.bhouse.CommonTask.Widget.LRecyclerView
+        android:id="@+id/listView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"
+        android:scrollbars="none"/>
+
 
     <View
         style="@style/DivideLine1dp"
@@ -69,13 +87,44 @@
         android:layout_height="0.5dp"
        />
 
-        <com.system.bhouse.bhouse.CommonTask.Widget.LRecyclerView
-            android:id="@+id/listView"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:scrollbars="none"/>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/litte_gray"
+        android:padding="5dp"
+        android:layout_gravity="bottom"
+        app:layout_behavior="com.system.bhouse.bhouse.CommonTask.MaterialControl.Behavior.FooterLLBehavior"
+        >
 
-</LinearLayout>
+        <TextView
+            android:id="@+id/tv_countNum"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="2dp"
+            android:textSize="10sp"
+            android:textColor="@color/black"
+            android:text="选择个数:"
+            android:layout_alignParentTop="true"
+            android:layout_marginLeft="12dp"
+            />
+
+        <TextView
+            android:id="@+id/tv_button"
+            android:background="@drawable/roundbackground"
+            android:layout_alignParentRight="true"
+            android:textSize="15sp"
+            android:gravity="center"
+            android:layout_marginRight="30dp"
+            android:padding="6dp"
+            android:clickable="true"
+            android:textColor="@color/textview_disable_style"
+            android:text="确认选择"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+    </RelativeLayout>
+
+
+</android.support.design.widget.CoordinatorLayout>
 
 
 

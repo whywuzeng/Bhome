@@ -13,7 +13,7 @@ import com.google.gson.annotations.SerializedName;
  * com.system.bhouse.bean
  */
 
-public class BProBOM implements Parcelable {
+public class BProBOM extends BaseBean implements Parcelable {
 
     /**
      * ID : a3296cf71c1d46b0963f9f45bfd58382
@@ -30,11 +30,13 @@ public class BProBOM implements Parcelable {
     private String coding;
     @SerializedName(value = "名称",alternate = {"装柜数","货柜名称","项目"})
     private String projectname;
-    @SerializedName("录入人")
-    private String entrypeople;
-    @SerializedName("录入时间")
-    private String entrytime;
     private String BOMID;
+
+    @SerializedName(value = "层")
+    private String ceng;
+    @SerializedName(value = "栋")
+    private String dong;
+
 
     public String getCeng() {
         return ceng;
@@ -51,11 +53,6 @@ public class BProBOM implements Parcelable {
     public void setDong(String dong) {
         this.dong = dong;
     }
-
-    @SerializedName(value = "层")
-    private String ceng;
-    @SerializedName(value = "栋")
-    private String dong;
 
     public String getID() {
         return ID;
@@ -81,22 +78,6 @@ public class BProBOM implements Parcelable {
         this.projectname = projectname;
     }
 
-    public String getEntrypeople() {
-        return entrypeople;
-    }
-
-    public void setEntrypeople(String entrypeople) {
-        this.entrypeople = entrypeople;
-    }
-
-    public String getEntrytime() {
-        return entrytime;
-    }
-
-    public void setEntrytime(String entrytime) {
-        this.entrytime = entrytime;
-    }
-
     public String getBOMID() {
         return BOMID;
     }
@@ -118,22 +99,34 @@ public class BProBOM implements Parcelable {
         dest.writeString(this.ID);
         dest.writeString(this.coding);
         dest.writeString(this.projectname);
-        dest.writeString(this.entrypeople);
-        dest.writeString(this.entrytime);
         dest.writeString(this.BOMID);
         dest.writeString(this.ceng);
         dest.writeString(this.dong);
+        dest.writeByte(this.disableDelete ? (byte) 1 : (byte) 0);
+        dest.writeString(this.requireDate);
+        dest.writeString(this.description);
+        dest.writeString(this.checkPeople);
+        dest.writeString(this.checkTime);
+        dest.writeString(this.entryPeople);
+        dest.writeString(this.entryTime);
+        dest.writeString(this.status);
     }
 
     protected BProBOM(Parcel in) {
         this.ID = in.readString();
         this.coding = in.readString();
         this.projectname = in.readString();
-        this.entrypeople = in.readString();
-        this.entrytime = in.readString();
         this.BOMID = in.readString();
         this.ceng = in.readString();
         this.dong = in.readString();
+        this.disableDelete = in.readByte() != 0;
+        this.requireDate = in.readString();
+        this.description = in.readString();
+        this.checkPeople = in.readString();
+        this.checkTime = in.readString();
+        this.entryPeople = in.readString();
+        this.entryTime = in.readString();
+        this.status = in.readString();
     }
 
     public static final Creator<BProBOM> CREATOR = new Creator<BProBOM>() {

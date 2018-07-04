@@ -24,7 +24,7 @@ import com.system.bhouse.api.ApiWebService;
 import com.system.bhouse.base.App;
 import com.system.bhouse.base.StatusBean;
 import com.system.bhouse.base.SubmitStatusBeanImpl;
-import com.system.bhouse.bean.BProBOM;
+import com.system.bhouse.bhouse.CommonTask.MaterialControl.PlateMaterial.StationCarBean.StationCarBean;
 import com.system.bhouse.bhouse.CommonTask.MaterialControl.entity.PlatematerialBean;
 import com.system.bhouse.bhouse.CommonTask.adapter.TreeWidget.TreeRecyclerAdapter;
 import com.system.bhouse.bhouse.CommonTask.adapter.TreeWidget.base.ViewHolder;
@@ -32,7 +32,6 @@ import com.system.bhouse.bhouse.CommonTask.adapter.TreeWidget.item.GroupItem;
 import com.system.bhouse.bhouse.CommonTask.adapter.TreeWidget.item.SortChildItem;
 import com.system.bhouse.bhouse.CommonTask.adapter.TreeWidget.item.TreeItem;
 import com.system.bhouse.bhouse.CommonTask.common.CommonDateTimePickerFragment;
-import com.system.bhouse.bhouse.CommonTask.common.CommonPickerActivity_;
 import com.system.bhouse.bhouse.CommonTask.utils.ComTaskContentItemSectionItemTouchHelper;
 import com.system.bhouse.bhouse.R;
 import com.system.bhouse.bhouse.setup.WWCommon.WWBackActivity;
@@ -484,6 +483,51 @@ public class PlateMaterialContentMessageActivity extends WWBackActivity implemen
             String extra = data.getStringExtra("HId");
             String extraCoding = data.getStringExtra("coding");
             String extraBOMID = data.getStringExtra("BOMID");
+
+           List<StationCarBean> list= data.getParcelableArrayListExtra("coding");
+
+            //根据 list 来合成, 订单ID集（a','b','c','s）  构件二维码集（a','b','c','s）
+
+            ApiWebService.Get_Production_order_Tray_byTidView_Json(this, new ApiWebService.SuccessCall() {
+                @Override
+                public void SuccessBack(String result) {
+
+                    ArrayList<PlatematerialBean> loadingcarbean = App.getAppGson().fromJson(result, new TypeToken<List<PlatematerialBean>>() {
+                    }.getType());
+
+                    if (loadingcarbean.isEmpty())
+                    {
+                        T.showShort(PlateMaterialContentMessageActivity.this,getResources().getString(R.string.Qrcode_result));
+                    }
+
+                    for (PlatematerialBean bean : loadingcarbean) {
+                        bean.hNumbe= headerProperties.get("receiptHnumber");
+                        bean.requireDate= headerProperties.get("requireDate");
+                        bean.description=headerProperties.get("description");
+                        bean.entryPeople= headerProperties.get("enterPeople");
+                    }
+
+                    //清空 二维码为空的
+                    for (PlatematerialBean receBean : comTaskBeans) {
+                        if (TextUtils.isEmpty(receBean.getMaterialsNumber())) {
+                            comTaskBeans.remove(receBean);
+                        }
+                    }
+                    if (!(loadingcarbean.size() == 0)) {
+                        comTaskBeans.addAll(loadingcarbean);
+                    }
+                    ArrayList<PlatematerialBean> clone =(ArrayList<PlatematerialBean>)comTaskBeans.clone();
+                    comTaskBeans.clear();
+                    comTaskBeans.addAll(removeDupliById(clone));
+
+                    mRecyclerViewAdapter.notifyDataSetChanged();
+                }
+
+                @Override
+                public void ErrorBack(String error) {
+
+                }
+            }, "","");
         }
     }
 
@@ -876,10 +920,10 @@ public class PlateMaterialContentMessageActivity extends WWBackActivity implemen
             @Override
             public void SuccessBack(String result) {
 
-                ArrayList<BProBOM> bProBOMs = App.getAppGson().fromJson(result, new TypeToken<List<BProBOM>>() {
+                ArrayList<StationCarBean> bProBOMs = App.getAppGson().fromJson(result, new TypeToken<List<StationCarBean>>() {
                 }.getType());
 
-                CommonPickerActivity_.intent(PlateMaterialContentMessageActivity.this).title("选取台车模具").bProBOMs(bProBOMs).Position(0).LayoutID(R.layout.loadcar_order_picker_item).startForResult(RESULT_SORTITEM_SELECTPROJECT);
+                PlateMaterPickerActivity_.intent(PlateMaterialContentMessageActivity.this).title("选取台车模具").bProBOMs(bProBOMs).Position(0).LayoutID(R.layout.multiple_choice_order_picker_item).startForResult(RESULT_SORTITEM_SELECTPROJECT);
             }
 
             @Override
@@ -947,7 +991,7 @@ public class PlateMaterialContentMessageActivity extends WWBackActivity implemen
         }
         if (mStatus.isNewStatus()) {
 
-            ApiWebService.Get_Production_order_In_Add(this, new ApiWebService.SuccessCall() {
+            ApiWebService.Get_Production_order_Tray_Add(this, new ApiWebService.SuccessCall() {
                 @Override
                 public void SuccessBack(String result) {
                     T.showShort(PlateMaterialContentMessageActivity.this, result);
@@ -965,7 +1009,7 @@ public class PlateMaterialContentMessageActivity extends WWBackActivity implemen
             }, billtable);
         }
         else if (mStatus.isModifyStatus()) {
-            ApiWebService.Get_Production_order_In_Eedit(this, new ApiWebService.SuccessCall() {
+            ApiWebService.Get_Production_order_Tray_Eedit(this, new ApiWebService.SuccessCall() {
                 @Override
                 public void SuccessBack(String result) {
                     T.showShort(PlateMaterialContentMessageActivity.this, result);
@@ -985,7 +1029,7 @@ public class PlateMaterialContentMessageActivity extends WWBackActivity implemen
 
     private void tvCheckAction() {
 
-        ApiWebService.Get_Production_order_In_sh(this, new ApiWebService.SuccessCall() {
+        ApiWebService.Get_Production_order_Tray_sh(this, new ApiWebService.SuccessCall() {
             @Override
             public void SuccessBack(String result) {
                 T.showShort(PlateMaterialContentMessageActivity.this, result);
@@ -1000,8 +1044,9 @@ public class PlateMaterialContentMessageActivity extends WWBackActivity implemen
         }, comTaskBeans.get(0).getID());
     }
 
+
     private void tvFanCheckAction() {
-        ApiWebService.Get_Production_order_In_shf(this, new ApiWebService.SuccessCall() {
+        ApiWebService.Get_Production_order_Tray_shf(this, new ApiWebService.SuccessCall() {
             @Override
             public void SuccessBack(String result) {
                 T.showShort(PlateMaterialContentMessageActivity.this, result);
@@ -1017,7 +1062,7 @@ public class PlateMaterialContentMessageActivity extends WWBackActivity implemen
     }
 
     private void tvDeleteAction() {
-        ApiWebService.Get_Production_order_In_Del(this, new ApiWebService.SuccessCall() {
+        ApiWebService.Get_Production_order_Tray_Del(this, new ApiWebService.SuccessCall() {
             @Override
             public void SuccessBack(String result) {
                 T.showShort(PlateMaterialContentMessageActivity.this, result);
@@ -1029,7 +1074,9 @@ public class PlateMaterialContentMessageActivity extends WWBackActivity implemen
             public void ErrorBack(String error) {
 
             }
-        }, HId, comTaskBeans.get(0).oriderID);
+        }, HId);
+
+//        comTaskBeans.get(0).oriderID
     }
 
     protected void sureDataRefresh(String type) {

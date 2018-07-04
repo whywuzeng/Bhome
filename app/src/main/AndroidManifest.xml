@@ -310,6 +310,9 @@
                   android:screenOrientation="portrait"
                   android:windowSoftInputMode="adjustNothing"/>
 
+        <activity android:name="com.system.bhouse.bhouse.CommonTask.MaterialControl.PlateMaterial.PlateMaterPickerActivity_"
+                  android:screenOrientation="portrait"/>
+
         <meta-data
             android:name="design_width"
             android:value="768">

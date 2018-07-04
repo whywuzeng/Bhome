@@ -47,7 +47,8 @@ public class TestUnit {
 //            System.out.println(objects.pop().toString());
 //        }
 
-        stringSingleList.deleteDuplication();
+//        stringSingleList.deleteDuplication();
 
+        SingleList.Node node = stringSingleList.fanzhuan3();
     }
  }

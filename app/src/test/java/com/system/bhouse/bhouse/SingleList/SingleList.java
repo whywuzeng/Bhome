@@ -133,17 +133,44 @@ public class SingleList<E> {
     }
 
 
-    public void fanzhuan() {
-        Node pNode = first.next;
-        Node preNode = null;
-        Node temp=first;
-        Node temp1=null;
-        while (pNode != null) {
-            preNode = pNode.next;
-            temp1=temp.next;
-            temp1.next=temp;
+//    public void fanzhuan() {
+//        Node pNode = first;
+//        Node preNode = null;
+//        while (pNode != null) {
+//            preNode= pNode.next;
+//            Node n= pNode;
+//            preNode.next=n;
+//            pNode = pNode.next;
+//        }
+//    }
 
-            pNode = preNode.next;
+    public void fanzhuan1() {
+        Node pNode = first;
+        Node preNode = null;
+        while (pNode != null) {
+            Node n= pNode;
+            pNode=pNode.next;
+            n.next=preNode;
+            preNode=n;
         }
+        first=preNode;
     }
+
+    public Node fanzhuan3(){
+        return fanzhuan2(first);
+    }
+
+    static Node preNode=null;
+
+    public Node fanzhuan2(Node p) {
+        if (p == null)
+            return preNode;
+        Node n = p;
+        Node next = p.next;
+        n.next = preNode;
+        preNode = n;
+        fanzhuan2(next);
+        return preNode;
+    }
+
 }

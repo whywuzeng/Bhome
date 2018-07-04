@@ -95,7 +95,6 @@ public class PlateMaterialListFragment extends BaseCommonListFragment<PlateMater
         drawableGouSeleted = rootView.getResources().getDrawable(R.drawable.ic_gou_selected);
         drawablePositiveGou = rootView.getResources().getDrawable(R.drawable.ic_positive_gou);
 
-
     }
 
     private void setTvDealWithBg(){
