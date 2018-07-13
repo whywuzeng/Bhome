@@ -36,8 +36,10 @@ import com.system.bhouse.bhouse.CommonTask.utils.ComTaskContentItemSectionItemTo
 import com.system.bhouse.bhouse.R;
 import com.system.bhouse.bhouse.setup.WWCommon.WWBackActivity;
 import com.system.bhouse.bhouse.setup.utils.onMutiDataSetListener;
+import com.system.bhouse.utils.TenUtils.ButtonUtils;
 import com.system.bhouse.utils.TenUtils.L;
 import com.system.bhouse.utils.TenUtils.T;
+import com.system.bhouse.utils.ValueUtils;
 import com.zijunlin.Zxing.Demo.CaptureActivity;
 
 import org.androidannotations.annotations.AfterViews;
@@ -49,6 +51,7 @@ import org.androidannotations.annotations.OptionsMenu;
 import org.androidannotations.annotations.ViewById;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Set;
@@ -125,7 +128,7 @@ public class PlateMaterialContentMessageActivity extends WWBackActivity implemen
         workflowSection.setOnItemClickListener(this);
 
         mRecyclerViewAdapter.addSection(workflowSection);
-
+        listView.setNestedScrollingEnabled(false);
         listView.setAdapter(mRecyclerViewAdapter);
         mRecyclerViewAdapter.notifyDataSetChanged();
 
@@ -215,9 +218,7 @@ public class PlateMaterialContentMessageActivity extends WWBackActivity implemen
             viewModel.key = "receiptHnumber";
             viewModel.isClick = false;
             viewModels.add(viewModel);
-//            comTaskBean1.hNumbe = App.receiptHnumber;
             headerProperties.put(viewModel.key,viewModel.value);
-
 
             viewModel = new SortChildItem.ViewModel();
             viewModel.name = "开始日期";
@@ -232,7 +233,7 @@ public class PlateMaterialContentMessageActivity extends WWBackActivity implemen
             viewModel = new SortChildItem.ViewModel();
             viewModel.name = "结束日期";
             viewModel.value = this.comTaskBeans.get(0).getPlanendDate();
-            viewModel.key = "requireDate";
+            viewModel.key = "planendDate";
             if (mStatus.isNewStatus() || mStatus.isModifyStatus()) {
                 viewModel.isClick = true;
             }
@@ -242,12 +243,13 @@ public class PlateMaterialContentMessageActivity extends WWBackActivity implemen
             viewModel = new SortChildItem.ViewModel();
             viewModel.name = "托盘";
             viewModel.value = this.comTaskBeans.get(0).plateName;
-            viewModel.key = "requireDate";
+            viewModel.key = "plateName";
             if (mStatus.isNewStatus() || mStatus.isModifyStatus()) {
                 viewModel.isClick = true;
             }
             viewModels.add(viewModel);
             headerProperties.put(viewModel.key,viewModel.value);
+            headerProperties.put("plateID",this.comTaskBeans.get(0).plateID);
 
             viewModel = new SortChildItem.ViewModel();
             viewModel.name = "状态";
@@ -343,11 +345,6 @@ public class PlateMaterialContentMessageActivity extends WWBackActivity implemen
             getSupportFragmentManager().executePendingTransactions();
         }else if (data.name.equals("托盘"))
         {
-//            if(TextUtils.isEmpty(comTaskBeans.get(0).getPlateName()))
-//            {
-//                T.showShort(PlateMaterialContentMessageActivity.this,"车次不能为空");
-//                return;
-//            }
             Intent intent = new Intent(PlateMaterialContentMessageActivity.this, CaptureActivity.class);
             intent.putExtra("position",holder.getAdapterPosition());
             startActivityForResult(intent,REQUST_QRCODE);
@@ -400,40 +397,27 @@ public class PlateMaterialContentMessageActivity extends WWBackActivity implemen
             Bundle bundle = data.getBundleExtra("bundle");
             String resultQr = bundle.getString("result");
             int extraPosition = bundle.getInt("position");
-            if (extraPosition==-1) {
-                ApiWebService.Get_Production_order_In_bypoid_Json(this, new ApiWebService.SuccessCall() {
+            //托盘  扫描二维码 回调
+            if (extraPosition==4) {
+                ApiWebService.B_Get_Tray_Man(this, new ApiWebService.SuccessCall() {
                     @Override
                     public void SuccessBack(String result) {
 
                         ArrayList<PlatematerialBean> loadingcarbean = App.getAppGson().fromJson(result, new TypeToken<List<PlatematerialBean>>() {
                         }.getType());
 
-                        if (loadingcarbean.isEmpty())
-                        {
-                            T.showShort(PlateMaterialContentMessageActivity.this,getResources().getString(R.string.Qrcode_result));
-                        }
+                        if (!ValueUtils.IsFirstValueExist(loadingcarbean))
+                            return;
+                        //把主分录 值 用HeaderProperties保存起来
+                        headerProperties.put("plateID", loadingcarbean.get(0).getPlateID());
+                        headerProperties.put("plateName", loadingcarbean.get(0).getPlateName());
 
-                        for (PlatematerialBean bean : loadingcarbean) {
-                            bean.hNumbe= headerProperties.get("receiptHnumber");
-                            bean.requireDate= headerProperties.get("requireDate");
-                            bean.description=headerProperties.get("description");
-                            bean.entryPeople= headerProperties.get("enterPeople");
-                        }
-
-                        //清空 二维码为空的
-                        for (PlatematerialBean receBean : comTaskBeans) {
-                            if (TextUtils.isEmpty(receBean.getMaterialsNumber())) {
-                                comTaskBeans.remove(receBean);
-                            }
-                        }
-                        if (!(loadingcarbean.size() == 0)) {
-                            comTaskBeans.addAll(loadingcarbean);
-                        }
-                        ArrayList<PlatematerialBean> clone =(ArrayList<PlatematerialBean>)comTaskBeans.clone();
-                        comTaskBeans.clear();
-                        comTaskBeans.addAll(removeDupliById(clone));
-
-                        mRecyclerViewAdapter.notifyDataSetChanged();
+                        //更新分录的 adpater列表
+                        getDateRefresh(loadingcarbean.get(0).getPlateName(),extraPosition,"托盘");
+//                        ArrayList<PlatematerialBean> clone = (ArrayList<PlatematerialBean>) comTaskBeans.clone();
+//                        comTaskBeans.clear();
+//                        comTaskBeans.addAll(clone);
+//                        mRecyclerViewAdapter.notifyDataSetChanged();
                     }
 
                     @Override
@@ -485,6 +469,20 @@ public class PlateMaterialContentMessageActivity extends WWBackActivity implemen
             String extraBOMID = data.getStringExtra("BOMID");
 
            List<StationCarBean> list= data.getParcelableArrayListExtra("coding");
+           if (null!=list&&list.isEmpty())
+           {
+               return;
+           }
+            List<String> orderIds=new ArrayList<>();
+            List<String> componenentQrs=new ArrayList<>();
+            for (StationCarBean bean:list)
+            {
+                orderIds.add("\'"+bean.getOriderID()+"\'");
+                componenentQrs.add("\'"+bean.getComponentQrcode()+"\'");
+            }
+
+           final String OrderIDs = SplicingStringFArray(orderIds);
+           final String ComponenentQRS = SplicingStringFArray(componenentQrs);
 
             //根据 list 来合成, 订单ID集（a','b','c','s）  构件二维码集（a','b','c','s）
 
@@ -502,9 +500,12 @@ public class PlateMaterialContentMessageActivity extends WWBackActivity implemen
 
                     for (PlatematerialBean bean : loadingcarbean) {
                         bean.hNumbe= headerProperties.get("receiptHnumber");
-                        bean.requireDate= headerProperties.get("requireDate");
+                        bean.planStartDate= headerProperties.get("planStartDate");
+                        bean.planendDate= headerProperties.get("planendDate");
                         bean.description=headerProperties.get("description");
                         bean.entryPeople= headerProperties.get("enterPeople");
+                        bean.plateName= headerProperties.get("plateName");
+                        bean.plateID= headerProperties.get("plateID");
                     }
 
                     //清空 二维码为空的
@@ -514,11 +515,12 @@ public class PlateMaterialContentMessageActivity extends WWBackActivity implemen
                         }
                     }
                     if (!(loadingcarbean.size() == 0)) {
+                        comTaskBeans.clear();
                         comTaskBeans.addAll(loadingcarbean);
                     }
-                    ArrayList<PlatematerialBean> clone =(ArrayList<PlatematerialBean>)comTaskBeans.clone();
-                    comTaskBeans.clear();
-                    comTaskBeans.addAll(removeDupliById(clone));
+//                    ArrayList<PlatematerialBean> clone =(ArrayList<PlatematerialBean>)comTaskBeans.clone();
+//                    comTaskBeans.clear();
+//                    comTaskBeans.addAll(clone);
 
                     mRecyclerViewAdapter.notifyDataSetChanged();
                 }
@@ -527,8 +529,16 @@ public class PlateMaterialContentMessageActivity extends WWBackActivity implemen
                 public void ErrorBack(String error) {
 
                 }
-            }, "","");
+            }, OrderIDs,ComponenentQRS);
         }
+    }
+
+
+    private String SplicingStringFArray(List<String> orderIds) {
+        String toString = Arrays.toString(orderIds.toArray());
+        String substring = toString.substring(2);
+        String s = toString.substring(2,toString.length()-2);
+        return s;
     }
 
     //得到分录的数据
@@ -751,7 +761,6 @@ public class PlateMaterialContentMessageActivity extends WWBackActivity implemen
                 public void run() {
                 }
             }, 200);
-
         }
     }
 
@@ -809,7 +818,6 @@ public class PlateMaterialContentMessageActivity extends WWBackActivity implemen
         /**
          * 这里{按键会变化View.GONE}
          */
-
         llCheck.setVisibility(mStatus.getBean().visCheckBtn?View.VISIBLE:View.GONE);
         llModify.setVisibility(mStatus.getBean().visModifyBtn?View.VISIBLE:View.GONE);
         llFanCheck.setVisibility(mStatus.getBean().visCheckFBtn?View.VISIBLE:View.GONE);
@@ -897,7 +905,7 @@ public class PlateMaterialContentMessageActivity extends WWBackActivity implemen
         mStatus.setLookStatus(true);
         mStatus.setModifyStatus(true);
         if (mStatus.isModifyStatus()) {
-            setActionBarMidlleTitle("修改完工入库");
+            setActionBarMidlleTitle("修改托盘配料");
             TopListViewInit();
 
             workflowSection = new PlateMaterialContentItemSection(comTaskBeans, mStatus);
@@ -914,7 +922,10 @@ public class PlateMaterialContentMessageActivity extends WWBackActivity implemen
 
     //选取台车磨具
     private void tvQrcodeAction() {
-
+        String componentQr="";
+        if (getComtaskSize()) {
+            componentQr = TextUtils.isEmpty(comTaskBeans.get(0).getComponentQrcode()) ? "" : comTaskBeans.get(0).getComponentQrcode();
+        }
 
         ApiWebService.Get_Production_order_Tray_byTid_Json(this, new ApiWebService.SuccessCall() {
             @Override
@@ -930,8 +941,7 @@ public class PlateMaterialContentMessageActivity extends WWBackActivity implemen
             public void ErrorBack(String error) {
 
             }
-        }, comTaskBeans.get(0).getID(),9999);
-
+        },"" ,9999);
     }
 
     @Override
@@ -954,10 +964,10 @@ public class PlateMaterialContentMessageActivity extends WWBackActivity implemen
             T.showShort(this, "分录为空,不能提交");
             return;
         }
-//        if (TextUtils.isEmpty(this.comTaskBeans.get(0).getCartrips())) {
-//            T.showShort(this, "车次为空不能提交");
-//            return;
-//        }
+        if (TextUtils.isEmpty(this.comTaskBeans.get(0).getPlateName())) {
+            T.showShort(this, "托盘为空不能提交");
+            return;
+        }
         for (int i=0;i<comTaskBeans.size();i++) {
             if (TextUtils.isEmpty(this.comTaskBeans.get(i).getModuleID())) {
                 T.showShort(this, "第"+(i+1)+"行的磨具为空不能提交");
@@ -974,7 +984,7 @@ public class PlateMaterialContentMessageActivity extends WWBackActivity implemen
             billtable[i][1] = confirmationReceBean.plateID;
             billtable[i][2] = confirmationReceBean.planStartDate;
             billtable[i][3] = confirmationReceBean.planendDate;
-            billtable[i][4] = confirmationReceBean.entryPeople;
+            billtable[i][4] = confirmationReceBean.getEntryPeople();
             billtable[i][5] = confirmationReceBean.oriderID;
             billtable[i][6] = confirmationReceBean.materialsID;
             billtable[i][7] = confirmationReceBean.componentQrcode;
@@ -1075,8 +1085,6 @@ public class PlateMaterialContentMessageActivity extends WWBackActivity implemen
 
             }
         }, HId);
-
-//        comTaskBeans.get(0).oriderID
     }
 
     protected void sureDataRefresh(String type) {
@@ -1111,7 +1119,9 @@ public class PlateMaterialContentMessageActivity extends WWBackActivity implemen
     @OptionsItem
     protected final void action_operat_status() {
         Observable<Object> objectObservable = Observable.create(subscriber -> {
-            show1();
+            if (ButtonUtils.isFastDoubleClick()) {
+                show1();
+            }
         });
         Observable observableMobileKey = ApiWebService.Get_KeyTimestr(App.MobileKey);
         observableMobileKey.concatWith(objectObservable).subscribe(new Subscriber() {

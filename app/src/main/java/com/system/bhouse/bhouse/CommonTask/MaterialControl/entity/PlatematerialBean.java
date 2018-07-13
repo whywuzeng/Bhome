@@ -65,9 +65,9 @@ public class PlatematerialBean extends BaseBean implements Parcelable {
     public String plateName;
     @SerializedName("数量")
     public double amount;
-    @SerializedName("来源单据ID")
+    @SerializedName(value = "来源单据ID",alternate = {"源单ID"})
     public String sourceTypeID;
-    @SerializedName("构件二维码")
+    @SerializedName(value = "构件二维码",alternate = {"物料二维码"})
     public String componentQrcode;
     @SerializedName("标记号")
     public String tagNumber;

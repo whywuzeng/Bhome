@@ -1,16 +1,18 @@
 package com.system.bhouse.bhouse.CommonTask;
 
 import android.graphics.Color;
-import android.graphics.drawable.Drawable;
 import android.os.Handler;
 import android.os.Message;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
-import android.widget.RelativeLayout;
-import android.widget.TextView;
 
 import com.system.bhouse.base.App;
+import com.system.bhouse.bhouse.CommonTask.TechnologyExecution.selectploy.DisablePloy;
+import com.system.bhouse.bhouse.CommonTask.TechnologyExecution.selectploy.SelectColorBg;
+import com.system.bhouse.bhouse.CommonTask.TechnologyExecution.selectploy.SelectPloy;
+import com.system.bhouse.bhouse.CommonTask.TechnologyExecution.selectploy.UnSelectLineDotBg;
+import com.system.bhouse.bhouse.CommonTask.TechnologyExecution.selectploy.UnSelectPloy;
 import com.system.bhouse.bhouse.CommonTask.TransportationManagement.adapter.BaseQuickAdapter;
 import com.system.bhouse.bhouse.CommonTask.TransportationManagement.adapter.BaseViewHolder;
 import com.system.bhouse.bhouse.CommonTask.Widget.TimeLineItemTopBottomDecoration;
@@ -68,7 +70,7 @@ public abstract class WWTimeLineActivity extends WWBackActivity implements BaseQ
 
     }
 
-    private  InnerHandle handler=new InnerHandle(this){
+    protected   InnerHandle handler=new InnerHandle(this){
         @Override
         public void handleMessage(Message msg) {
             super.handleMessage(msg);
@@ -126,48 +128,37 @@ public abstract class WWTimeLineActivity extends WWBackActivity implements BaseQ
     protected void onResume() {
         super.onResume();
         data.clear();
-        data.addAll(Arrays.asList(stringArray));
-        adapter.notifyDataSetChanged();
+        if (stringArray!=null) {
+            data.addAll(Arrays.asList(stringArray));
+        }
+        if (adapter!=null) {
+            adapter.notifyDataSetChanged();
+        }
     }
 
-    private void UnSelectLineDotBg(View view) {
-        TextView tvView = (TextView) view.findViewById(R.id.tvTopLine);
-        TextView tvDot = (TextView) view.findViewById(R.id.tvDot);
-        TextView tvBottom = (TextView) view.findViewById(R.id.tvBottom);
-
-        tvView.setBackground(getResources().getDrawable(R.color.common_color_text_8));
-        tvDot.setBackground(getResources().getDrawable(R.drawable.timelline_dot_normal));
-        tvBottom.setBackground(getResources().getDrawable(R.color.common_color_text_8));
+    protected void DisableBg(View view)
+    {
+        DisablePloy ploy = new SelectColorBg();
+        ploy.Disablebg(view);
     }
 
-    private void SelectLineDotBg(View view) {
-        TextView tvView = (TextView) view.findViewById(R.id.tvTopLine);
-        TextView tvDot = (TextView) view.findViewById(R.id.tvDot);
-        TextView tvBottom = (TextView) view.findViewById(R.id.tvBottom);
-
-        tvView.setBackground(getResources().getDrawable(R.color.fc5));
-        tvDot.setBackground(getResources().getDrawable(R.drawable.bg_timeline_btn_select));
-        tvBottom.setBackground(getResources().getDrawable(R.color.fc5));
+    protected void UnSelectLineDotBg(View view) {
+        UnSelectPloy ploy = new UnSelectLineDotBg();
+        ploy.UnSelectbg(view);
     }
 
-    private void SelectColorBg(View view) {
-        RelativeLayout rel = (RelativeLayout) view.findViewById(R.id.rl_content_layout);
-        Drawable drawable = getResources().getDrawable(R.drawable.bg_timeline_btn_select);
-        rel.setBackground(drawable);
-        TextView textTitle = (TextView) view.findViewById(R.id.tv_title);
-        TextView subTitle = (TextView) view.findViewById(R.id.tv_sub_title);
-
-        textTitle.setTextColor(getResources().getColor(R.color.white));
-        subTitle.setTextColor(getResources().getColor(R.color.white));
+    protected void SelectLineDotBg(View view) {
+        SelectPloy ploy = new UnSelectLineDotBg();
+        ploy.selectBg(view);
     }
 
-    private void UnSelectColorBg(View view) {
-        RelativeLayout rel = (RelativeLayout) view.findViewById(R.id.rl_content_layout);
-        Drawable drawable = getResources().getDrawable(R.drawable.bg_timeline_btn_normal);
-        rel.setBackground(drawable);
-        TextView textTitle = (TextView) view.findViewById(R.id.tv_title);
-        TextView subTitle = (TextView) view.findViewById(R.id.tv_sub_title);
-        textTitle.setTextColor(getResources().getColor(R.color.font_6));
-        subTitle.setTextColor(getResources().getColor(R.color.common_color_text_30));
+    protected void SelectColorBg(View view) {
+        SelectPloy ploy = new SelectColorBg();
+        ploy.selectBg(view);
+    }
+
+    protected void UnSelectColorBg(View view) {
+        UnSelectPloy ploy = new SelectColorBg();
+        ploy.UnSelectbg(view);
     }
 }

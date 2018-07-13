@@ -54,7 +54,7 @@ public class LoadingCarOrderContentItemSection extends Section {
 
     public LoadingCarOrderContentItemSection(ArrayList<LoadingCarBean> searchHistroyBeans, StatusBean mStatusBean) {
         super(R.layout.layout_home_recommend_empty_noheight, R.layout.comtask_content_item_footer, R.layout.activity_comtask_content_layout_item, R.layout.layout_home_recommend_empty, R.layout.layout_home_recommend_empty);
-        this.searchHistroyBeans = searchHistroyBeans;
+        this.searchHistroyBeans = searchHistroyBeans==null?new ArrayList<>():searchHistroyBeans;
         this.statusBean = mStatusBean;
     }
 

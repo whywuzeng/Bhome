@@ -30,10 +30,12 @@ public class plateMaterialAdapter extends BaseSectionQuickAdapter<MyStation, Bas
     @Override
     protected void convert(BaseViewHolder helper, MyStation item) {
         StationCarBean StationCarBean = (StationCarBean) item.t;
-        helper.setText(R.id.tv_title, "生产订单\n"+StationCarBean.getProducationOrderNumber() );
-        helper.setText(R.id.tv_content,"构件二维码\n"+StationCarBean.getComponentQrcode());
-        helper.setText(R.id.tv_title_1,"模具名称\n"+StationCarBean.getModuleName());
-        helper.setText(R.id.tv_content_1,"台车名称\n"+StationCarBean.getStationCarName());
-        helper.addOnClickListener(R.id.checkbox);
+        helper.setText(R.id.tv_title, "生产订单:"+StationCarBean.getProducationOrderNumber() );
+        helper.setText(R.id.tv_content,"构件二维码:"+StationCarBean.getComponentQrcode());
+        helper.setText(R.id.tv_title_1,"模具名称:"+StationCarBean.getModuleName());
+        helper.setText(R.id.tv_content_1,"台车名称:"+StationCarBean.getStationCarName());
+        helper.setChecked(R.id.checkbox,StationCarBean.isSelect());
+
+        helper.addOnClickListener(R.id.main_layout);
     }
 }

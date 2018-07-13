@@ -138,7 +138,7 @@ public class FinishedStorageContentMessageActivity extends WWBackActivity implem
         workflowSection.setTVIDContent(stringArray);
         new ItemTouchHelper(new ComTaskContentItemSectionItemTouchHelper(mRecyclerViewAdapter)).attachToRecyclerView(listView);
         workflowSection.setOnItemClickListener(this);
-
+        listView.setNestedScrollingEnabled(false);
         mRecyclerViewAdapter.addSection(workflowSection);
 
         listView.setAdapter(mRecyclerViewAdapter);

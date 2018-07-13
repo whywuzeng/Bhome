@@ -312,6 +312,11 @@
 
         <activity android:name="com.system.bhouse.bhouse.CommonTask.MaterialControl.PlateMaterial.PlateMaterPickerActivity_"
                   android:screenOrientation="portrait"/>
+        <activity android:name=".CommonTask.TechnologyExecution.TechnologyExecutionActivity"
+            android:screenOrientation="portrait"
+            >
+
+        </activity>
 
         <meta-data
             android:name="design_width"

@@ -144,7 +144,7 @@ public class ReplenishmentRequireContentMessageActivity extends WWBackActivity i
         workflowSection.setTVIDContent(stringArray);
         new ItemTouchHelper(new ComTaskContentItemSectionItemTouchHelper(mRecyclerViewAdapter)).attachToRecyclerView(listView);
         workflowSection.setOnItemClickListener(this);
-
+        listView.setNestedScrollingEnabled(false);
         mRecyclerViewAdapter.addSection(workflowSection);
 
         listView.setAdapter(mRecyclerViewAdapter);

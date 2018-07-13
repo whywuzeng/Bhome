@@ -7,6 +7,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 
 import com.system.bhouse.bhouse.R;
+import com.system.bhouse.utils.TenUtils.T;
 
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.EActivity;
@@ -77,5 +78,13 @@ public class WWBackActivity extends WWBaseActivity {
     public void setToolBarMenuOnclick(Toolbar.OnMenuItemClickListener onclick) {
         toolbar_com.setOnMenuItemClickListener(onclick);
 
+    }
+
+    /**
+     * 显示出toast
+     * @param context
+     */
+    public void ShowShort(CharSequence context){
+        T.showShort(this,context);
     }
 }

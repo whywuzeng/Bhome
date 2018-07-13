@@ -219,9 +219,12 @@
     <color name="common_color_box_stroke_bg">#ececec</color>
     <color name="common_color_layout_stroke_bg">#c9c9c9</color>
     <color name="common_color_layout_text">#4b4b4b</color>
+    <!--黑色字体-->
     <color name="common_color_text_300">#343434</color>
     <color name="common_color_text_50">#4b4b4b</color>
+    <!--灰色字体-->
     <color name="common_color_text_30">#8b8b8b</color>
+    <color name="common_color_text_20">#9FA4A6</color>
     <color name="common_color_text_10">#c9c9c9</color>
     <color name="common_color_line_000001">#FEFEFE</color>
     <color name="common_color_line_blue">#ff3cbaff</color>

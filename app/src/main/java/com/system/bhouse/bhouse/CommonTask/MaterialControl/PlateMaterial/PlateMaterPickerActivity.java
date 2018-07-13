@@ -28,6 +28,7 @@ import org.androidannotations.annotations.Extra;
 import org.androidannotations.annotations.ViewById;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -147,32 +148,24 @@ public class PlateMaterPickerActivity extends WWBackActivity implements AdapterV
             public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
                 switch (view.getId())
                 {
-                    case R.id.checkbox:
+                    case R.id.main_layout:
+                        List<String> boms=new ArrayList<>();
                         boolean select = bProBOMs.get(position).isSelect();
-                        if (select) {
-                            bProBOMs.get(position).setSelect(!select);
-                        }
-                        int i=0;
+                        bProBOMs.get(position).setSelect(!select);
+
+                        int i = 0;
                         for (StationCarBean bom:bProBOMs)
                         {
                             if (bom.isSelect())
                             {
+                                boms.add(String.format("%d\t.%s" , i, bom.getStationCarName()));
                                 i++;
-                                tv_countNum.setText(i+"个数"+bom.getStationCarName()+"\t");
+
                             }
                         }
+                        tv_countNum.setText(Arrays.toString((boms.toArray())));
                         i=0;
-                        break;
-                    case R.id.main_layout:
-                        Intent data = new Intent();
-                        data.putExtra("projectname", bProBOMs.get(position).getStationCarName());
-                        data.putExtra("coding", bProBOMs.get(position).getProducationOrderNumber());
-                        data.putExtra("HId", bProBOMs.get(position).getOriderID());
-                        data.putExtra("position", Position);
-                        data.putExtra("BOMID",bProBOMs.get(position).getComponentQrcode());
-                        data.putExtra("title",title);
-                        setResult(Activity.RESULT_OK, data);
-                        onBackPressed();
+                        plateMaterialAdapter.notifyItemChanged(position);
                         break;
                 }
             }

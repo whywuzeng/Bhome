@@ -109,7 +109,7 @@ public class ComTaskContentMessageActivity extends BaseContentMessageActivity im
 
         listView.setAdapter(mRecyclerViewAdapter);
         mRecyclerViewAdapter.notifyDataSetChanged();
-
+        listView.setNestedScrollingEnabled(false);
         testData();
         TopListViewInit(this.comTaskBeans);
 

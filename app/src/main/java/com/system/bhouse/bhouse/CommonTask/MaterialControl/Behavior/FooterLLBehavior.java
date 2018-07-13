@@ -45,8 +45,8 @@ public class FooterLLBehavior extends CoordinatorLayout.Behavior{
         if (dy>0 && directionChange<0||dy<0 && directionChange>0)
         {
             //重新置零  马上反方向
-            child.animate().cancel();
-            directionChange=0;
+//            child.animate().cancel();
+//            directionChange=0;
         }
         directionChange+=dy;
         if (directionChange > child.getHeight() && child.getVisibility() == View.VISIBLE) {

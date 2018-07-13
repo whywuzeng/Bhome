@@ -188,6 +188,16 @@
         <item name="android:background">@color/divide_line</item>
     </style>
 
+
+    <!--分割线 0.5dp-->
+    <style name="DivideLine05dp" >
+        <item name="android:layout_marginRight">4dp</item>
+        <item name="android:layout_marginLeft">4dp</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">0.5dp</item>
+        <item name="android:background">@color/gray</item>
+    </style>
+
     <style name="TextViewFilterTag">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>

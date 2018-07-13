@@ -140,7 +140,7 @@ public class LoadingCarOrderContentMessageActivity extends WWBackActivity implem
         workflowSection.setOnItemClickListener(this);
 
         mRecyclerViewAdapter.addSection(workflowSection);
-
+        listView.setNestedScrollingEnabled(false);
         listView.setAdapter(mRecyclerViewAdapter);
         mRecyclerViewAdapter.notifyDataSetChanged();
 

@@ -138,7 +138,7 @@ public class ContainerRecycleContentMessageActivity extends WWBackActivity imple
         workflowSection.setOnItemClickListener(this);
 
         mRecyclerViewAdapter.addSection(workflowSection);
-
+        listView.setNestedScrollingEnabled(false);
         listView.setAdapter(mRecyclerViewAdapter);
         mRecyclerViewAdapter.notifyDataSetChanged();
 

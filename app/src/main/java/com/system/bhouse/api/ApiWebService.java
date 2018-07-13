@@ -2235,7 +2235,7 @@ Get_Sale_Order_Car_shf(string scid, string addPer, int gsmid, int property, bool
     {
         String methodName="Get_Production_order_sh";
         SoapObject request = new SoapObject(NAMESPACE, methodName);
-        request.addProperty("sccid",poid);
+        request.addProperty("poid",poid);
         request.addProperty("addPer", App.menname);
         request.addProperty("gsmid",App.GSMID);
         request.addProperty("property",App.Property);
@@ -2256,7 +2256,7 @@ Get_Sale_Order_Car_shf(string scid, string addPer, int gsmid, int property, bool
     {
         String methodName="Get_Production_order_shf";
         SoapObject request = new SoapObject(NAMESPACE, methodName);
-        request.addProperty("sccid",poid);
+        request.addProperty("poid",poid);
         request.addProperty("addPer", App.menname);
         request.addProperty("gsmid",App.GSMID);
         request.addProperty("property",App.Property);
@@ -2278,7 +2278,7 @@ Get_Sale_Order_Car_shf(string scid, string addPer, int gsmid, int property, bool
     {
         String methodName="Get_Production_order_Del";
         SoapObject request = new SoapObject(NAMESPACE, methodName);
-        request.addProperty("sccid",poid);
+        request.addProperty("poid",poid);
         request.addProperty("addPer", App.menname);
         request.addProperty("gsmid",App.GSMID);
         request.addProperty("property",App.Property);
@@ -2970,6 +2970,120 @@ Get_Sale_Order_Car_shf(string scid, string addPer, int gsmid, int property, bool
         return getNetworkService(mContext,call,request);
     }
 
+    /**
+     * 接口名称：根据托盘二维码获取货柜信息
+     接口地址：http://192.168.11.96:7785/Service1.asmx
+     接口函数：
+     B_Get_Tray_Man(string Tid, int gsmid, int property, bool IsSubtitle)
+     */
+    public static Subscription B_Get_Tray_Man(final Context mContext, final SuccessCall call,String Tid )
+    {
+        String methodName="B_Get_Tray_Man";
+        SoapObject request = new SoapObject(NAMESPACE, methodName);
+        request.addProperty("Tid",Tid);
+        request.addProperty("gsmid",App.GSMID);
+        request.addProperty("property",App.Property);
+        request.addProperty("IsSubtitle",App.IsSub);
+        return getNetworkServiceNoProgress(mContext,call,request);
+    }
+
+    /**
+     * 接口名称：根据构件二维码获取订单信息
+     接口地址：http://192.168.11.96:7785/Service1.asmx
+     接口函数：
+     Get_Pro_Working_Main_poid_byprid_QR_Code_Json(string prid_QR_Code, int gsmid, int property, bool IsSubtitle)
+     */
+    public static Subscription Get_Pro_Working_Main_poid_byprid_QR_Code_Json(final Context mContext, final SuccessCall call,String prid_QR_Code)
+    {
+        String methodName="Get_Pro_Working_Main_poid_byprid_QR_Code_Json";
+        SoapObject request = new SoapObject(NAMESPACE, methodName);
+        request.addProperty("prid_QR_Code",prid_QR_Code);
+        request.addProperty("gsmid",App.GSMID);
+        request.addProperty("property",App.Property);
+        request.addProperty("IsSubtitle",App.IsSub);
+        return getNetworkServiceNoProgress(mContext,call,request);
+    }
+
+    /**
+     *
+     接口名称：根据构件二维码和订单ID获取工艺路线执行信息
+     接口地址：http://192.168.11.96:7785/Service1.asmx
+     接口函数：
+     Get_Pro_Working_Main_poid_Json(string prid_QR_Code,string poid, int gsmid, int property, bool IsSubtitle)
+     */
+    public static Subscription Get_Pro_Working_Main_poid_Json(final Context mContext, final SuccessCall call , String prid_QR_Code,String poid)
+    {
+        String methodName="Get_Pro_Working_Main_poid_Json";
+        SoapObject request = new SoapObject(NAMESPACE, methodName);
+        request.addProperty("prid_QR_Code",prid_QR_Code);
+        request.addProperty("poid",poid);
+        request.addProperty("gsmid",App.GSMID);
+        request.addProperty("property",App.Property);
+        request.addProperty("IsSubtitle",App.IsSub);
+        return getNetworkServiceNoProgress(mContext,call,request);
+    }
+
+    /**
+     * 接口名称：执行工序（无关联单据）
+     接口地址：http://192.168.11.96:7785/Service1.asmx
+     接口函数：
+     Get_Pro_Working_Main_poid_zx(string pwid_p, string pwid_i_p, string addPer, int gsmid, int property, bool IsSubtitle, string Keystring, string KeysTimetring, string username)
+     */
+    public static Subscription Get_Pro_Working_Main_poid_zx(final Context mContext, final SuccessCall call,String pwid_p,String pwid_i_p,  String po_Number)
+    {
+        String methodName="Get_Pro_Working_Main_poid_zx";
+        SoapObject request = new SoapObject(NAMESPACE, methodName);
+        request.addProperty("pwid_p",pwid_p);
+        request.addProperty("pwid_i_p",pwid_i_p);
+        request.addProperty("addPer",App.menname);
+        request.addProperty("gsmid",App.GSMID);
+        request.addProperty("property",App.Property);
+        request.addProperty("IsSubtitle",App.IsSub);
+        request.addProperty("Keystring",App.MobileKey);
+        request.addProperty("KeysTimetring",App.KeyTimestring);
+        request.addProperty("username",App.USER_INFO);
+        return getNetworkService(mContext,call,request);
+    }
+
+    /**
+     * 接口名称：撤回工序（无关联单据）
+     接口地址：http://192.168.11.96:7785/Service1.asmx
+     接口函数：
+     Get_Pro_Working_Main_poid_zxf(string pwid_p, string pwid_i_p, string addPer, int gsmid, int property, bool IsSubtitle, string Keystring, string KeysTimetring, string username)
+     */
+    public static Subscription Get_Pro_Working_Main_poid_zxf(final Context mContext, final SuccessCall call,String pwid_p,String pwid_i_p,  String po_Number)
+    {
+        String methodName="Get_Pro_Working_Main_poid_zxf";
+        SoapObject request = new SoapObject(NAMESPACE, methodName);
+        request.addProperty("pwid_p",pwid_p);
+        request.addProperty("pwid_i_p",pwid_i_p);
+        request.addProperty("addPer",App.menname);
+        request.addProperty("gsmid",App.GSMID);
+        request.addProperty("property",App.Property);
+        request.addProperty("IsSubtitle",App.IsSub);
+        request.addProperty("Keystring",App.MobileKey);
+        request.addProperty("KeysTimetring",App.KeyTimestring);
+        request.addProperty("username",App.USER_INFO);
+        return getNetworkService(mContext,call,request);
+    }
+
+    /**
+     接口名称：获取工序对应的资源单据明细
+     接口地址：http://192.168.11.96:7785/Service1.asmx
+     接口函数：
+     Get_Pro_Working_Item_r_poid_Json(string pwid_i_p, int gsmid, int property, bool IsSubtitle)
+     */
+    public static Subscription Get_Pro_Working_Item_r_poid_Json(final Context mContext, final SuccessCall call,String pwid_i_p)
+    {
+        String methodName="Get_Pro_Working_Item_r_poid_Json";
+        SoapObject request = new SoapObject(NAMESPACE, methodName);
+        request.addProperty("pwid_i_p",pwid_i_p);
+        request.addProperty("gsmid",App.GSMID);
+        request.addProperty("property",App.Property);
+        request.addProperty("IsSubtitle",App.IsSub);
+        return getNetworkService(mContext,call,request);
+    }
+
 
     /**
      * //小型的接口
@@ -3084,7 +3198,6 @@ Get_Sale_Order_Car_shf(string scid, string addPer, int gsmid, int property, bool
         return getNetworkService(new BHBaseSubscriber<String>(new RequestError() {
             @Override
             public void forRequestError(String msg) {
-
                 T.showShort(mContext, msg);
                 call.ErrorBack(msg);
             }

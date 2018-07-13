@@ -87,8 +87,10 @@ public class PlateMaterialListFragment extends BaseCommonListFragment<PlateMater
         tasklistHead.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                //查看已处理
                 setTvDealWithBg();
                 mUpdateAll = true;
+
                 onRefresh();
             }
         });
@@ -103,8 +105,10 @@ public class PlateMaterialListFragment extends BaseCommonListFragment<PlateMater
             drawableGouSeleted.setBounds(0,0,drawableGouSeleted.getIntrinsicWidth(),drawableGouSeleted.getIntrinsicHeight());
             TvDealWith.setCompoundDrawables(drawableGouSeleted,null,null,null);
         }else{
+            //审核状态
             drawablePositiveGou.setBounds(0,0,drawablePositiveGou.getIntrinsicWidth(),drawablePositiveGou.getIntrinsicHeight());
             TvDealWith.setCompoundDrawables(drawablePositiveGou,null,null,null);
+            mStatus=ContentTitle[2];
         }
         isDealWith=!isDealWith;
     }
@@ -129,8 +133,6 @@ public class PlateMaterialListFragment extends BaseCommonListFragment<PlateMater
                     message.what = REFRESH_DATA;
                     handler.sendMessage(message);
 
-
-//                    taskFragmentLoading(false);
                     if (isRefreshing()) {
                         setRefreshing(false);
                     }

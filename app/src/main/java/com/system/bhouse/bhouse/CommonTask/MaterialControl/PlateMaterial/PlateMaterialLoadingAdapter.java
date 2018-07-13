@@ -56,6 +56,7 @@ public class PlateMaterialLoadingAdapter extends LoadingAdapter<PlatematerialBea
             //给content设置Data数据
             List<TextView> tagContent = setContentstag(itemViewHolder);
             List<String> dataList = getListStrings(position,tagContent);
+
             //设置 显示的Item和数据
             setCountViewShow(itemViewHolder,TitlestringArray.length);
 
@@ -179,10 +180,13 @@ public class PlateMaterialLoadingAdapter extends LoadingAdapter<PlatematerialBea
         tagres.add(itemViewHolder.textDescriptionContent);
         tagres.add(itemViewHolder.textStatusContent);
         tagres.add(itemViewHolder.textEntryPeopleContent);
-        tagres.add(itemViewHolder.textEntryTimeContent);
         return tagres;
     }
 
+    /**
+     * 给 tags content 资源控件赋值数据
+     * @return
+     */
     @NonNull
     private List<String> getListStrings(int position, List<TextView> tagContent) {
         List<String> dataList = new ArrayList<>();
@@ -191,30 +195,26 @@ public class PlateMaterialLoadingAdapter extends LoadingAdapter<PlatematerialBea
                 .get(position).getHNumbe());
 
         tagContent.get(1).setText(mComTaskBeans
-                .get(position).producationOrderNumber== null ? "" : mComTaskBeans
-                .get(position).producationOrderNumber);
-
-        tagContent.get(2).setText(mComTaskBeans
                 .get(position).getStatus() == null ? "" : mComTaskBeans
                 .get(position).getStatus());
 
-        tagContent.get(3).setText(mComTaskBeans
+        tagContent.get(2).setText(mComTaskBeans
                 .get(position).plateName == null ? "" : mComTaskBeans
                 .get(position).plateName);
 
-        tagContent.get(4).setText(mComTaskBeans
+        tagContent.get(3).setText(mComTaskBeans
                 .get(position).getEntryTime() == null ? "" : mComTaskBeans
                 .get(position).getEntryTime());
 
-        tagContent.get(5).setText(mComTaskBeans
+        tagContent.get(4).setText(mComTaskBeans
                 .get(position).getEntryPeople() == null ? "" : mComTaskBeans
                 .get(position).getEntryPeople());
 
-        tagContent.get(6).setText(mComTaskBeans
+        tagContent.get(5).setText(mComTaskBeans
                 .get(position).planStartDate == null ? "" : mComTaskBeans
                 .get(position).planStartDate);
 
-        tagContent.get(7).setText(mComTaskBeans
+        tagContent.get(6).setText(mComTaskBeans
                 .get(position).planendDate == null ? "" : mComTaskBeans
                 .get(position).planendDate);
 

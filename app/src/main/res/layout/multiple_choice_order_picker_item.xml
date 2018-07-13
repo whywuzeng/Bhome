@@ -4,12 +4,15 @@
                 android:id="@+id/main_layout"
                 android:layout_width="match_parent"
                 style="@style/GreyBoxButtonfang"
+                android:paddingTop="8dp"
+                android:paddingBottom="8dp"
                 android:layout_height="wrap_content">
 
     <CheckBox
         android:id="@+id/checkbox"
         android:layout_width="25dp"
         android:layout_height="25dp"
+        android:clickable="false"
         android:layout_marginStart="15dp"
         android:layout_gravity="center_vertical"
         android:button="@drawable/checkbox_task_0"
@@ -27,7 +30,7 @@
             android:id="@+id/tv_title"
             android:text="465465465"
             android:textColor="@color/common_color_text_30"
-            android:textSize="15sp"
+            android:textSize="14sp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"/>
 
@@ -36,7 +39,7 @@
             android:id="@+id/tv_content"
             android:text="测试测试"
             android:textColor="@color/common_color_text_300"
-            android:textSize="15sp"
+            android:textSize="14sp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"/>
 
@@ -44,7 +47,7 @@
             android:id="@+id/tv_title_1"
             android:text="465465465"
             android:textColor="@color/common_color_text_30"
-            android:textSize="15sp"
+            android:textSize="14sp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"/>
 
@@ -53,7 +56,7 @@
             android:id="@+id/tv_content_1"
             android:text="测试测试"
             android:textColor="@color/common_color_text_300"
-            android:textSize="15sp"
+            android:textSize="14sp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"/>
 

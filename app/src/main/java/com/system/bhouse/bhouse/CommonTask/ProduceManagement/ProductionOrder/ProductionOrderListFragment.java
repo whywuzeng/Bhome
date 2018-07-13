@@ -92,8 +92,6 @@ public class ProductionOrderListFragment extends BaseCommonListFragment<Producti
                     message.setData(bundle);
                     message.what = REFRESH_DATA;
                     handler.sendMessage(message);
-
-
                 }
 
                 @Override

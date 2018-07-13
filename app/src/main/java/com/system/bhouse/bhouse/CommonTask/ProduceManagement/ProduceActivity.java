@@ -1,5 +1,6 @@
 package com.system.bhouse.bhouse.CommonTask.ProduceManagement;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Canvas;
 import android.graphics.Color;
@@ -16,6 +17,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 
+import com.system.bhouse.api.ApiWebService;
 import com.system.bhouse.base.App;
 import com.system.bhouse.bhouse.CommonTask.MaterialControl.FinishedStorage.FinishedStorageActivity;
 import com.system.bhouse.bhouse.CommonTask.MaterialControl.PickingOutLibary.PickingOutLibaryActivity;
@@ -25,11 +27,16 @@ import com.system.bhouse.bhouse.CommonTask.ProduceManagement.adapter.MultipleIte
 import com.system.bhouse.bhouse.CommonTask.ProduceManagement.adapter.entity.MultipleItem;
 import com.system.bhouse.bhouse.CommonTask.ProduceManagement.adapter.entity.ProduceItemDataBean;
 import com.system.bhouse.bhouse.CommonTask.ProduceManagement.adapter.entity.SectionMultipleItem;
+import com.system.bhouse.bhouse.CommonTask.TechnologyExecution.TechnologyExecutionActivity;
 import com.system.bhouse.bhouse.CommonTask.TransportationManagement.adapter.BaseQuickAdapter;
 import com.system.bhouse.bhouse.R;
 import com.system.bhouse.bhouse.phone.activity.InformationActivity;
 import com.system.bhouse.bhouse.setup.WWCommon.WWBackActivity;
 import com.system.bhouse.utils.MeasureUtil;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -51,6 +58,8 @@ public class ProduceActivity extends WWBackActivity implements BaseQuickAdapter.
     RecyclerView recyclerView;
 
     private static final int RESULT_LOCAL = 2;
+
+    public static final int RESULT_COMPONENT=2<<2;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -118,9 +127,66 @@ public class ProduceActivity extends WWBackActivity implements BaseQuickAdapter.
             case 5:
                intent= new Intent(this, PlateMaterialActivity.class);
                startActivity(intent);
+               break;
+            case 7:
+
+                intent = new Intent(ProduceActivity.this, TechnologyExecutionActivity.class);
+                startActivity(intent);
                 break;
         }
     }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        switch (requestCode){
+            case RESULT_COMPONENT:
+                 QrCodeComponent(resultCode,data);
+                break;
+        }
+    }
+
+    private void QrCodeComponent(int resultCode, Intent data) {
+        if (resultCode== Activity.RESULT_OK)
+        {
+            Bundle bundle = data.getBundleExtra("bundle");
+            String resultQr = bundle.getString("result");
+            int extraPosition = bundle.getInt("position");
+
+            ApiWebService.Get_Pro_Working_Main_poid_byprid_QR_Code_Json(this, new ApiWebService.SuccessCall() {
+                @Override
+                public void SuccessBack(String result) {
+                    //[{"订单ID":"08776473ea6a4c0ea7a3291d4aa0d359","订单编号":"SCDD-7-201807-0008"}]
+                    String orderID = null;
+                    String orderNumber = null;
+                    try {
+                        JSONArray jsonArray = new JSONArray(result);
+                        JSONObject jsonObject = jsonArray.getJSONObject(0);
+                         orderID = jsonObject.optString("订单ID", "");
+                         orderNumber = jsonObject.optString("订单编号", "");
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    } finally {
+                        if (!TextUtils.isEmpty(orderID)&&!TextUtils.isEmpty(orderNumber))
+                        {
+
+                            Intent intent = new Intent(ProduceActivity.this, TechnologyExecutionActivity.class);
+                            intent.putExtra(TechnologyExecutionActivity.RESULTQRCOMPONENT,resultQr);
+                            intent.putExtra(TechnologyExecutionActivity.ORDER_ID,orderID);
+                            startActivity(intent);
+
+                        }
+                    }
+                }
+
+                @Override
+                public void ErrorBack(String error) {
+
+                }
+            }, resultQr);
+        }
+    }
+
 
     static class TimeLineItemTopBottomDecoration extends RecyclerView.ItemDecoration {
 
@@ -258,6 +324,7 @@ public class ProduceActivity extends WWBackActivity implements BaseQuickAdapter.
                 int position = parent.getChildAdapterPosition(view);
                 preGroupName = currentGroupName;
                 currentGroupName = getGroupName(position);
+                //比较 currentGroupName是否一样
                 if (currentGroupName == null || TextUtils.equals(currentGroupName, preGroupName))
                     continue;
                 int viewBottom = view.getBottom();
@@ -270,10 +337,10 @@ public class ProduceActivity extends WWBackActivity implements BaseQuickAdapter.
                         top = viewBottom;
                     }
                 }
-//根据top绘制group
+                //根据top绘制group
                 c.drawRect(left, top - mGroupHeight, right, top, mGroutPaint);
                 Paint.FontMetrics fm = mTextPaint.getFontMetrics();
-//文字竖直居中显示
+                //文字竖直居中显示
                 float baseLine = top - (mGroupHeight - (fm.bottom - fm.top)) / 2 - fm.bottom;
                 c.drawText(currentGroupName, left + mLeftMargin, baseLine, mTextPaint);
             }

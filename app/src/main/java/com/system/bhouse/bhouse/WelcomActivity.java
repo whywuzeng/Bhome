@@ -151,6 +151,7 @@ public class WelcomActivity extends BaseActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
+        unregisterReceiver(updateListViewReceiver);
     }
 
     @Override

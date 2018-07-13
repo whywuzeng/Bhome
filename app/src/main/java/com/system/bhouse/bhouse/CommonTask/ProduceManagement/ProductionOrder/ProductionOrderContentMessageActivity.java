@@ -110,7 +110,7 @@ public class ProductionOrderContentMessageActivity extends WWBackActivity implem
             setActionBarMidlleTitle("新增构件退货");
         }
         else {
-            setActionBarMidlleTitle("构件退货");
+            setActionBarMidlleTitle("生产订单");
         }
         tv_title_live_layout.setText("构件退货分录");
 
@@ -137,7 +137,7 @@ public class ProductionOrderContentMessageActivity extends WWBackActivity implem
         workflowSection.setTVIDContent(stringArray);
         new ItemTouchHelper(new ComTaskContentItemSectionItemTouchHelper(mRecyclerViewAdapter)).attachToRecyclerView(listView);
         workflowSection.setOnItemClickListener(this);
-
+        listView.setNestedScrollingEnabled(false);
         mRecyclerViewAdapter.addSection(workflowSection);
 
         listView.setAdapter(mRecyclerViewAdapter);
@@ -736,8 +736,8 @@ public class ProductionOrderContentMessageActivity extends WWBackActivity implem
         TextView tvDelete = (TextView) contentView.findViewById(R.id.tv_delete);
         TextView tvQrcode = (TextView) contentView.findViewById(R.id.tv_qrcode);
 
-        tvQrcode.setText("生产订单-开始备料");
-        tvModify.setText("生产订单-备料完成");
+        tvQrcode.setText("生产订单-备料完成");
+        tvModify.setText("生产订单-开始备料");
         tvSubmit.setText("生产订单-取消备料");
 
         /**
@@ -867,11 +867,13 @@ public class ProductionOrderContentMessageActivity extends WWBackActivity implem
         bottomDialog.show();
     }
 
-    //生产订单-备料完成
+    //生产订单-开始备料
     private void tvModifyAction() {
-        ApiWebService.Get_Production_order_Stock_end(this, new ApiWebService.SuccessCall() {
+
+        ApiWebService.Get_Production_order_Stock_start(this, new ApiWebService.SuccessCall() {
             @Override
             public void SuccessBack(String result) {
+
                 T.showShort(ProductionOrderContentMessageActivity.this, result);
             }
 
@@ -880,6 +882,7 @@ public class ProductionOrderContentMessageActivity extends WWBackActivity implem
 
             }
         }, comTaskBeans.get(0).getID());
+
     }
 
     //生产订单-取消备料
@@ -898,16 +901,13 @@ public class ProductionOrderContentMessageActivity extends WWBackActivity implem
         }, comTaskBeans.get(0).getID());
     }
 
-    //  生产订单-开始备料
+    //  生产订单-备料完成
     private void tvQrcodeAction() {
 
-        ApiWebService.Get_Production_order_Stock_start(this, new ApiWebService.SuccessCall() {
+        ApiWebService.Get_Production_order_Stock_end(this, new ApiWebService.SuccessCall() {
             @Override
             public void SuccessBack(String result) {
-
                 T.showShort(ProductionOrderContentMessageActivity.this, result);
-//                onBackPressed();
-//                sureDataRefresh("tvFanCheckAction");
             }
 
             @Override

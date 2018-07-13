@@ -212,7 +212,6 @@
     <!--托盘配料 表头详情-->
     <string-array name="Plate_Material_order">
         <item>订单编号</item>
-        <item>生产订单</item>
         <item>状态</item>
         <item>托盘</item>
         <item>录入时间</item>
