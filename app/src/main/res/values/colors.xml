@@ -235,6 +235,9 @@
     <color name="fabColor">@color/fab_color</color>
     <color name="common_color_text_8">#DCE1E8</color>
 
+    <!--tab选中发生颜色变化-->
+    <color name="greed_11B57C">#11B57C</color>
+    <color name="black_333333">#333333</color>
 
 </resources>
 

@@ -8,6 +8,6 @@ package com.system.bhouse.Custom;
  * com.system.bhouse.Custom
  */
 
-public interface OnSpinerItemClick {
-    public void onClick(String item,int position);
+public interface OnSpinerItemClick<T> {
+    public void onClick(T item,int position);
 }

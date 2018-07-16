@@ -1,7 +1,6 @@
 package com.system.bhouse.Custom;
 
 import android.app.Activity;
-import android.app.AlertDialog;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
@@ -11,6 +10,7 @@ import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.system.bhouse.bhouse.CommonTask.TechnologyExecution.entity.Orderbean;
 import com.system.bhouse.bhouse.R;
 
 import java.util.ArrayList;
@@ -23,37 +23,37 @@ import java.util.ArrayList;
  * com.system.bhouse.Custom
  */
 
-public class SpinnerDialog {
-    ArrayList<String> items;
+public class SpinnerDialog<T> {
+    ArrayList<T> items;
     Activity context;
-    String dTitle,closeTitle="Close";
+    String dTitle,closeTitle="";
     OnSpinerItemClick onSpinerItemClick;
-    AlertDialog alertDialog;
+    BaseCustomDialog alertDialog;
     int pos;
     int style;
 
 
-    public SpinnerDialog(Activity activity, ArrayList<String> items, String dialogTitle) {
+    public SpinnerDialog(Activity activity, ArrayList<T> items, String dialogTitle) {
         this.items = items;
         this.context = activity;
         this.dTitle = dialogTitle;
     }
 
-    public SpinnerDialog(Activity activity, ArrayList<String> items, String dialogTitle,String closeTitle) {
+    public SpinnerDialog(Activity activity, ArrayList<T> items, String dialogTitle,String closeTitle) {
         this.items = items;
         this.context = activity;
         this.dTitle = dialogTitle;
         this.closeTitle=closeTitle;
     }
 
-    public SpinnerDialog(Activity activity, ArrayList<String> items, String dialogTitle, int style) {
+    public SpinnerDialog(Activity activity, ArrayList<T> items, String dialogTitle, int style) {
         this.items = items;
         this.context = activity;
         this.dTitle = dialogTitle;
         this.style = style;
     }
 
-    public SpinnerDialog(Activity activity, ArrayList<String> items, String dialogTitle, int style,String closeTitle) {
+    public SpinnerDialog(Activity activity, ArrayList<T> items, String dialogTitle, int style,String closeTitle) {
         this.items = items;
         this.context = activity;
         this.dTitle = dialogTitle;
@@ -66,33 +66,40 @@ public class SpinnerDialog {
     }
 
     public void showSpinerDialog() {
-        AlertDialog.Builder adb = new AlertDialog.Builder(context);
         View v = context.getLayoutInflater().inflate(R.layout.spinner_dialog_layout, null);
         TextView rippleViewClose = (TextView) v.findViewById(R.id.close);
         TextView title = (TextView) v.findViewById(R.id.spinerTitle);
-        rippleViewClose.setText(closeTitle);
+        rippleViewClose.setText(context.getResources().getString(R.string.text_close));
         title.setText(dTitle);
         final ListView listView = (ListView) v.findViewById(R.id.list);
         final EditText searchBox = (EditText) v.findViewById(R.id.searchBox);
 
-        final ArrayAdapter<String> adapter = new ArrayAdapter<String>(context, R.layout.spinnerdialog_items_view, items);
+        alertDialog= new BaseCustomDialog.Builder().setContext(this.context).setContentView(v).setTitle(context.getResources().getString(R.string.lookup_order_id)).builder();
+
+        ArrayList<String> oriderNumbers =new ArrayList<>();
+        for (T bean:items)
+        {
+            oriderNumbers.add(((Orderbean)bean).oriderNumber);
+        }
+
+        final ArrayAdapter<String> adapter = new ArrayAdapter<String>(context, R.layout.spinnerdialog_items_view, oriderNumbers);
         listView.setAdapter(adapter);
-        adb.setView(v);
-        alertDialog = adb.create();
         alertDialog.getWindow().getAttributes().windowAnimations = style;//R.style.DialogAnimations_SmileWindow;
-//        alertDialog.getWindow().setBackgroundDrawableResource(R.drawable.selector_layout_common_radius_v8);
+        alertDialog.getWindow().setBackgroundDrawableResource(R.drawable.selector_layout_common_radius_v8);
         alertDialog.setCancelable(false);
 
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 TextView t = (TextView) view.findViewById(R.id.text1);
+                T orderbean=null;
                 for (int j = 0; j < items.size(); j++) {
-                    if (t.getText().toString().equalsIgnoreCase(items.get(j).toString())) {
+                    if (t.getText().toString().equalsIgnoreCase(((Orderbean)items.get(j)).oriderNumber)) {
                         pos = j;
+                        orderbean=((T)items.get(j));
                     }
                 }
-                onSpinerItemClick.onClick(t.getText().toString(), pos);
+                onSpinerItemClick.onClick(orderbean, pos);
                 alertDialog.dismiss();
             }
         });

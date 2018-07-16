@@ -14,10 +14,11 @@ import android.view.ViewGroup;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.system.bhouse.base.Global;
 import com.system.bhouse.bhouse.R;
 import com.system.bhouse.bhouse.setup.SingleToast;
 import com.system.bhouse.bhouse.setup.program.FootUpdate;
-import com.system.bhouse.base.Global;
+import com.system.bhouse.utils.TenUtils.T;
 
 import org.json.JSONObject;
 
@@ -226,5 +227,13 @@ public class WWBaseFragment extends Fragment implements FootUpdate.LoadMore, Glo
         if (getActivity() instanceof WWBaseActivity) {
             ((WWBaseActivity) getActivity()).hideProgressDialog();
         }
+    }
+
+    /**
+     * 显示出toast
+     * @param context
+     */
+    public void ShowShort(CharSequence context){
+        T.showShort(getActivity(),context);
     }
 }

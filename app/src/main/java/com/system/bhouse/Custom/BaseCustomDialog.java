@@ -120,6 +120,15 @@ public class BaseCustomDialog extends Dialog{
             Button positiveView= (Button)contentView.findViewById(R.id.positiveButton);
             Button negativeView= (Button)contentView.findViewById(R.id.negativeButton);
 
+            baseCustomDialog.setTitle(title);
+
+            if (positiveView==null && negativeView==null)
+            {
+                baseCustomDialog.setContentView(contentView);
+
+                return baseCustomDialog;
+            }
+
             if (positiveButtonText!=null &&positiveButtonClickListener!=null) {
                 positiveView.setText(positiveButtonText);
             }else{
