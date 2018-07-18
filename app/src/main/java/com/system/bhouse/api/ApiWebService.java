@@ -3029,7 +3029,7 @@ Get_Sale_Order_Car_shf(string scid, string addPer, int gsmid, int property, bool
      接口函数：
      Get_Pro_Working_Main_poid_zx(string pwid_p, string pwid_i_p, string addPer, int gsmid, int property, bool IsSubtitle, string Keystring, string KeysTimetring, string username)
      */
-    public static Subscription Get_Pro_Working_Main_poid_zx(final Context mContext, final SuccessCall call,String pwid_p,String pwid_i_p,  String po_Number)
+    public static Subscription Get_Pro_Working_Main_poid_zx(final Context mContext, final SuccessCall call,String pwid_p,String pwid_i_p)
     {
         String methodName="Get_Pro_Working_Main_poid_zx";
         SoapObject request = new SoapObject(NAMESPACE, methodName);
@@ -3051,7 +3051,7 @@ Get_Sale_Order_Car_shf(string scid, string addPer, int gsmid, int property, bool
      接口函数：
      Get_Pro_Working_Main_poid_zxf(string pwid_p, string pwid_i_p, string addPer, int gsmid, int property, bool IsSubtitle, string Keystring, string KeysTimetring, string username)
      */
-    public static Subscription Get_Pro_Working_Main_poid_zxf(final Context mContext, final SuccessCall call,String pwid_p,String pwid_i_p,  String po_Number)
+    public static Subscription Get_Pro_Working_Main_poid_zxf(final Context mContext, final SuccessCall call,String pwid_p,String pwid_i_p)
     {
         String methodName="Get_Pro_Working_Main_poid_zxf";
         SoapObject request = new SoapObject(NAMESPACE, methodName);

@@ -206,4 +206,10 @@
         <item>脱模</item>
         <item>完工入库</item>
     </string-array>
+
+    <string-array name="bumo_title">
+        <item>人工派工单</item>
+        <item>磨具分配单</item>
+        <item>台车分配单</item>
+    </string-array>
 </resources>

@@ -146,7 +146,7 @@ public class ProjectListFragment extends RefreshBaseFragment implements View.OnC
 
             if (convertView==null)
             {
-                convertView = mInflater.inflate(R.layout.divide_top_15, parent, false);
+                convertView = inflater.inflate(R.layout.divide_top_15, parent, false);
             }
             return convertView;
         }
@@ -180,7 +180,7 @@ public class ProjectListFragment extends RefreshBaseFragment implements View.OnC
 
             if (convertView==null)
             {
-                view = mInflater.inflate(R.layout.project_all_list_item, parent, false);
+                view = inflater.inflate(R.layout.project_all_list_item, parent, false);
                 viewHolder = new ViewHolder(view);
                 viewHolder.name = (TextView) view.findViewById(R.id.name);
                 viewHolder.icon = (ImageView) view.findViewById(R.id.icon);

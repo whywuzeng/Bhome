@@ -2,15 +2,22 @@ package com.system.bhouse.bhouse.CommonTask.TechnologyExecution;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.view.ViewGroup;
 
+import com.socks.library.KLog;
+import com.system.bhouse.bhouse.CommonTask.TechnologyExecution.entity.RelatedDetailBean;
 import com.system.bhouse.bhouse.R;
 import com.system.bhouse.bhouse.setup.WWCommon.WWBackActivity;
+
+import java.util.ArrayList;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -24,6 +31,8 @@ import butterknife.ButterKnife;
  */
 
 public class TechnologyExecutionActivity extends WWBackActivity implements TechnologyExecutionFragment.TechnologyActivityListenter{
+
+    private static final String TAG = "TechnologyExecutionActivity";
 
     private static final int RESULT_LOCAL = 2;
 
@@ -39,45 +48,19 @@ public class TechnologyExecutionActivity extends WWBackActivity implements Techn
     //订单ID
     public String Order_Id = null;
 
-//    @Bind(R.id.my_recycle_view)
-//    RecyclerView my_recycle_view;
-//
-//    private View notDataView;
-//    private View errorView;
-//
-//    //数据的集合
-//    private ArrayList<TechnologyBean> TechnologyBeans;
-//
-//    //数据显示控件
-//    @Bind(R.id.tv_component_content)
-//     TextView tv_component_content;
-//
-//    @Bind(R.id.tv_orderid_content)
-//     TextView tv_orderid_content;
-//    private SpinnerDialog spinnerDialog;
-//
-//    @Bind(R.id.orderid_qrcode)
-//    Button orderidBtn;
-//
-//    //订单编号集合
-//    ArrayList<Orderbean> items=new ArrayList<>();
-//
-//    //data工序数组
-//    protected String[] stringArray;
-//
-//    //data 工序数据
-//    protected List<String> data=new ArrayList<>();
-//
-//    protected BaseQuickAdapter<String, MyBaseViewHolder> adapter;
-
     private final String[] TitleString=new String[]{
-            "工艺执行", "工序步骤"
+            "工艺执行", "关联明细"
     };
 
     private final String[] TitleDefaute=new String[]{
             "工艺执行", "请选择"
     };
 
+    private final static int MSG_111=2323<<2;
+
+    private final static int MSG_222=2899<<2;
+
+    private final static int MSG_333=9889<<2;
 
     /**
      * 加入ViewPager 数据
@@ -87,7 +70,36 @@ public class TechnologyExecutionActivity extends WWBackActivity implements Techn
     TabLayout mTabLayout;
     @Bind(R.id.viewPager)
     ViewPager viewPager;
-    private MyViewPagerAdapter mAdapter;
+
+    private RefreshFragmentPagerAdapter pagerAdapter;
+
+    private ItemTouchListener mItemTouchListener;
+
+
+    Handler mainHandle =new Handler(){
+        @Override
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+            switch (msg.what) {
+                case MSG_111:
+                    fragments1[1] = fragment;
+                    fragmentsUpdateFlag[1] = true;
+                    pagerAdapter.notifyDataSetChanged();
+                    break;
+
+                case MSG_222:
+                    fragments1[2]=null;
+                    pagerAdapter.notifyDataSetChanged();
+                    break;
+
+                case MSG_333:
+                    fragments1[2]=null;
+                    fragments1[1]=null;
+                    pagerAdapter.notifyDataSetChanged();
+                default:
+            }
+        }
+    };
 
 
     @Override
@@ -107,24 +119,28 @@ public class TechnologyExecutionActivity extends WWBackActivity implements Techn
         /**
          * 加入ViewPager 后的样式展现
          */
-         mAdapter = new MyViewPagerAdapter(getSupportFragmentManager());
-        viewPager.setAdapter(mAdapter);
+        pagerAdapter=new RefreshFragmentPagerAdapter(getSupportFragmentManager());
+//      mAdapter = new MyViewPagerAdapter(getSupportFragmentManager());
+        viewPager.setAdapter(pagerAdapter);
 
-        // 适配器必须重写getPageTitle()方法
-        mTabLayout.setTabsFromPagerAdapter(mAdapter);
-        // 监听TabLayout的标签选择，当标签选中时ViewPager切换
-        mTabLayout.setOnTabSelectedListener(new TabLayout.ViewPagerOnTabSelectedListener(viewPager));
-        // 监听ViewPager的页面切换，当页面切换时TabLayout的标签跟着切换
-        viewPager.setOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(mTabLayout));
+        mTabLayout.setupWithViewPager(viewPager);
+
+//        // 适配器必须重写getPageTitle()方法
+//        mTabLayout.setTabsFromPagerAdapter(pagerAdapter);
+//        // 监听TabLayout的标签选择，当标签选中时ViewPager切换
+//        mTabLayout.setOnTabSelectedListener(new TabLayout.ViewPagerOnTabSelectedListener(viewPager));
+//        // 监听ViewPager的页面切换，当页面切换时TabLayout的标签跟着切换
+//        viewPager.setOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(mTabLayout));
 
         // 当选中的Tab切换时，点击事件
-        mTabLayout.setOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+        mTabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
-                if (tab.getPosition()==0)
+                if (tab.getPosition()==1)
                 {
-                    mAdapter.setTitle(TitleDefaute);
-                    mAdapter.notifyDataSetChanged();
+//                    mainHandle.sendEmptyMessage(MSG_222);
+                }else if (tab.getPosition()==0){
+//                    mainHandle.sendEmptyMessage(MSG_333);
                 }
             }
 
@@ -142,55 +158,18 @@ public class TechnologyExecutionActivity extends WWBackActivity implements Techn
         /**
          *
          */
-
-
-//        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(TechnologyExecutionActivity.this);
-//        my_recycle_view.setLayoutManager(linearLayoutManager);
-//
-//        stringArray = getResources().getStringArray(R.array.technology_execution);
-//        data.addAll(Arrays.asList(stringArray));
-//        my_recycle_view.addItemDecoration(new TimeLineItemTopBottomDecoration(), 0);
-//
-//        notDataView = this.getLayoutInflater().inflate(R.layout.taskcomon_empty_view, (ViewGroup) my_recycle_view.getParent(), false);
-//        errorView = this.getLayoutInflater().inflate(R.layout.taskcommon_error_view, (ViewGroup) my_recycle_view.getParent(), false);
-//
-//        adapter = new BaseQuickAdapter<String, MyBaseViewHolder>(R.layout.timeline_item) {
-//            @Override
-//            protected void convert(MyBaseViewHolder helper, String item) {
-//                helper.setText(R.id.tv_title, item);
-//                helper.setText(R.id.tv_sub_title, App.Mancompany);
-//            }
-//        };
-//        my_recycle_view.setAdapter(adapter);
-//        adapter.setOnItemClickListener(this);
-//        AskForBackgroud();
-//        orderidBtn.setClickable(false);
+         mItemTouchListener=(ItemTouchListener) fragment1;
     }
+
 
     @Override
-    public void OnFragmentItemClick(String title) {
-
-        //刷新 fragmentManager数据
-
-        //跳转到tablayout下一个
-
-        TabLayout.Tab tabAt = mTabLayout.getTabAt(1);
-        tabAt.setText(title);
+    public void OnFragmentItemClick(ArrayList<RelatedDetailBean> title) {
+        if (mItemTouchListener!=null)
+        {
+            mItemTouchListener.sendRelatedDetail(title);
+            viewPager.setCurrentItem(1);
+        }
     }
-
-//    @OnClick(R.id.component_qrcode)
-//    public void componentClick() {
-//        Intent intent = new Intent(this, CaptureActivity.class);
-//        startActivityForResult(intent, RESULT_COMPONENT);
-//    }
-//
-//    @OnClick(R.id.orderid_qrcode)
-//    public void orderIdClick() {
-//       if (!ClickUtils.isFastDoubleClick()) {
-//           //弹出选择对话框
-//           spinnerDialog.showSpinerDialog();
-//       }
-//    }
 
     /**
      * ViewPager adpter的内容填充
@@ -227,6 +206,77 @@ public class TechnologyExecutionActivity extends WWBackActivity implements Techn
         }
     }
 
+
+    boolean[] fragmentsUpdateFlag = {false, false, false, false};
+
+
+    Fragment fragment = new TechnologyExecutionFragment();
+
+    Fragment fragment1 = new Test1Fragment();
+
+    Fragment[] fragments1={fragment,fragment1};
+
+
+    public class RefreshFragmentPagerAdapter extends FragmentPagerAdapter {
+
+        private FragmentManager fm;
+
+        public RefreshFragmentPagerAdapter(FragmentManager fm) {
+            super(fm);
+            this.fm = fm;
+        }
+
+        @Override
+        public Fragment getItem(int position) {
+            Fragment fragment = fragments1[position % fragments1.length];
+            KLog.e(TAG, "getItem:position=" + position + ",fragment:"
+                    + fragment.getClass().getName() + ",fragment.tag="
+                    + fragment.getTag());
+            return fragments1[position % fragments1.length];
+        }
+
+        @Override
+        public int getCount() {
+            return fragments1.length;
+        }
+
+        @Override
+        public int getItemPosition(Object object) {
+            return POSITION_NONE;
+        }
+
+        @Override
+        public Object instantiateItem(ViewGroup container, int position) {
+            //得到缓存的fragment
+            Fragment fragment = (Fragment) super.instantiateItem(container,
+                    position);
+            //得到tag，这点很重要
+            String fragmentTag = fragment.getTag();
+
+//            if (fragmentsUpdateFlag[position % fragmentsUpdateFlag.length]) {
+//                //如果这个fragment需要更新
+//
+//                FragmentTransaction ft = fm.beginTransaction();
+//                //移除旧的fragment
+//                ft.remove(fragment);
+//                //换成新的fragment
+//                fragment = fragments1[position % fragments1.length];
+//                //添加新fragment时必须用前面获得的tag，这点很重要
+//                ft.add(container.getId(), fragment, fragmentTag);
+//                ft.attach(fragment);
+//                ft.commit();
+//
+//                //复位更新标志
+//                fragmentsUpdateFlag[position % fragmentsUpdateFlag.length] = false;
+//            }
+            return fragment;
+        }
+
+        @Override
+        public CharSequence getPageTitle(int position) {
+            return TitleString[position];
+        }
+    }
 
 
 //    //初始化 spinnerDialog

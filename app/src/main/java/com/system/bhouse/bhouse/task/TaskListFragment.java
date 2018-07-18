@@ -544,7 +544,7 @@ public class TaskListFragment extends RefreshBaseFragment implements TaskListUpd
             ViewHolder holder;
             if (convertView == null) {
                 holder = new ViewHolder();
-                convertView = mInflater.inflate(R.layout.fragment_task_list_item, parent, false);
+                convertView = inflater.inflate(R.layout.fragment_task_list_item, parent, false);
                 holder.mCheckBox = (CheckBox) convertView.findViewById(R.id.checkbox);
                 holder.mTitle = (TextView) convertView.findViewById(R.id.title);
                 holder.mDeadline = (TextView) convertView.findViewById(R.id.deadline);
@@ -662,7 +662,7 @@ public class TaskListFragment extends RefreshBaseFragment implements TaskListUpd
         @Override
         public View getHeaderView(int position, View convertView, ViewGroup parent) {
             if (convertView == null) {
-                convertView = mInflater.inflate(R.layout.divide_top_15, parent, false);
+                convertView = inflater.inflate(R.layout.divide_top_15, parent, false);
             }
 
             return convertView;

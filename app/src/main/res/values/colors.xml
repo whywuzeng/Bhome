@@ -239,6 +239,11 @@
     <color name="greed_11B57C">#11B57C</color>
     <color name="black_333333">#333333</color>
 
+    <!--multil 多选侧滑按钮颜色-->
+    <color name="bule_3692CE">#3692CE</color>
+    <color name="red_34CD8D">#34CD8D</color>
+    <color name="red_FD1543">#FD1543</color>
+
 </resources>
 
 

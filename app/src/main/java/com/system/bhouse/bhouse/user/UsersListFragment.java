@@ -175,7 +175,7 @@ public class UsersListFragment extends WWBaseFragment {
         public View getView(int position, View convertView, ViewGroup parent) {
             ItemViewHolder holder = null;
             if (convertView == null) {
-                convertView = mInflater.inflate(R.layout.activity_users_list_item, parent, false);
+                convertView = inflater.inflate(R.layout.activity_users_list_item, parent, false);
                 holder = new ItemViewHolder(convertView);
                 convertView.setTag(holder);
             }

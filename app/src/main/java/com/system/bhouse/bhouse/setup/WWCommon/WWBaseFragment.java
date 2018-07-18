@@ -2,8 +2,10 @@ package com.system.bhouse.bhouse.setup.WWCommon;
 
 import android.app.Activity;
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AlertDialog;
@@ -14,6 +16,7 @@ import android.view.ViewGroup;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.socks.library.KLog;
 import com.system.bhouse.base.Global;
 import com.system.bhouse.bhouse.R;
 import com.system.bhouse.bhouse.setup.SingleToast;
@@ -22,24 +25,22 @@ import com.system.bhouse.utils.TenUtils.T;
 
 import org.json.JSONObject;
 
+import java.lang.reflect.Field;
+
 /**
  * Created by Administrator on 2017-10-31.
  */
 
 public class WWBaseFragment extends Fragment implements FootUpdate.LoadMore, Global.StartActivity {
 
-    protected LayoutInflater mInflater;
-    protected FootUpdate mFootUpdate = new FootUpdate();
-    protected View.OnClickListener mOnClickUser = new View.OnClickListener() {
-        @Override
-        public void onClick(View v) {
-            String globalKey = (String) v.getTag();
 
-//            Intent intent = new Intent(getActivity(), UserDetailActivity_.class);
-//            intent.putExtra("globalKey", globalKey);
-//            startActivity(intent);
-        }
-    };
+    private static final String TAG = "WWBaseFragment";
+    
+    protected LayoutInflater inflater;
+    private View contentView;
+    private Context context;
+    private ViewGroup container;
+
     private ProgressDialog mProgressDialog;
 
     protected void showProgressBar(boolean show) {
@@ -61,7 +62,7 @@ public class WWBaseFragment extends Fragment implements FootUpdate.LoadMore, Glo
     }
 
     protected void listViewAddFooterSection(ListView listView) {
-        View listViewFooter = mInflater.inflate(R.layout.divide_bottom_15, listView, false);
+        View listViewFooter = inflater.inflate(R.layout.divide_bottom_15, listView, false);
         listView.addFooterView(listViewFooter, null, false);
     }
 
@@ -108,23 +109,93 @@ public class WWBaseFragment extends Fragment implements FootUpdate.LoadMore, Glo
         return mProgressDialog.isShowing();
     }
 
-
     @Override
-    public void loadMore() {
-
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        KLog.e("onAttach");
     }
 
+    @Override
+    public void onStart() {
+        super.onStart();
+        KLog.e("onStart");
+    }
+
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        KLog.e("onActivityCreated");
+    }
 
     @Override
     public void onCreate(Bundle saveInstanceState) {
         super.onCreate(saveInstanceState);
-        mInflater = LayoutInflater.from(getActivity());
+        KLog.e("onCreate");
+        inflater = LayoutInflater.from(getActivity());
+        context=getActivity().getApplicationContext();
 
         mProgressDialog = new ProgressDialog(getActivity());
         mProgressDialog.setIndeterminate(true);
         mProgressDialog.setCancelable(false);
 
         mSingleToast = new SingleToast(getActivity());
+    }
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        KLog.e("onCreateView");
+        this.inflater=inflater;
+        this.container=container;
+        onCreateView(savedInstanceState);
+        if(contentView==null)
+            return super.onCreateView(inflater,container,savedInstanceState);
+        return contentView;
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        KLog.e("onPause");
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        KLog.e("onResume");
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        KLog.e("onStop");
+    }
+
+    @Override
+    public void onDestroyView()
+    {
+        super.onDestroyView();
+        KLog.e("onDestroyView");
+        contentView=null;
+        container=null;
+        inflater=null;
+    }
+
+
+    // http://stackoverflow.com/questions/15207305/getting-the-error-java-lang-illegalstateexception-activity-has-been-destroyed
+    @Override
+    public void onDetach() {
+        KLog.e(TAG, "onDetach() : ");
+        super.onDetach();
+        try {
+            Field childFragmentManager = Fragment.class.getDeclaredField("mChildFragmentManager");
+            childFragmentManager.setAccessible(true);
+            childFragmentManager.set(this, null);
+
+        } catch (NoSuchFieldException e) {
+            throw new RuntimeException(e);
+        } catch (IllegalAccessException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     @Override
@@ -137,10 +208,53 @@ public class WWBaseFragment extends Fragment implements FootUpdate.LoadMore, Glo
         super.onDestroy();
     }
 
+
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        return super.onCreateView(inflater, container, savedInstanceState);
+    public void loadMore() {
+
     }
+
+
+
+
+
+    //初始化 fragment入口
+    protected void onCreateView(Bundle savedInstanceState)
+    {
+
+    }
+
+
+    public Context getApplicationContext()
+    {
+        return context;
+    }
+
+    //设置 contentView
+    public void setContentView(int layoutResID)
+    {
+        setContentView((ViewGroup)inflater.inflate(layoutResID,container,false));
+    }
+
+    public void setContentView(View view)
+    {
+        contentView=view;
+    }
+
+    public View getContentView()
+    {
+        return contentView;
+    }
+
+    public View findViewById(int id)
+    {
+        if(contentView!=null)
+        {
+            return contentView.findViewById(id);
+        }
+        return null;
+    }
+
 
 
     protected void showDialog(String title, String msg, DialogInterface.OnClickListener clickOk) {

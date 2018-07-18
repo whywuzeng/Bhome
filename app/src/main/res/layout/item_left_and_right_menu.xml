@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:orientation="horizontal"
+              android:layout_height="wrap_content"
+              android:background="@color/white"
+    >
+
+<RelativeLayout
+    android:id="@+id/rlTimeline"
+    android:layout_width="32dp"
+    android:gravity="right"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:id="@+id/tvTopLine"
+        android:layout_width="1dp"
+        android:layout_height="45dp"
+        android:layout_centerHorizontal="true"
+        android:background="@color/common_color_text_8"/>
+
+    <TextView
+        android:id="@+id/tvDot"
+        android:layout_width="8dp"
+        android:layout_height="8dp"
+        android:layout_below="@id/tvTopLine"
+        android:layout_centerHorizontal="true"
+        android:background="@drawable/timelline_dot_normal"/>
+
+    <TextView
+        android:id="@+id/tvBottom"
+        android:layout_width="1dp"
+        android:layout_height="match_parent"
+        android:layout_below="@id/tvDot"
+        android:layout_centerHorizontal="true"
+        android:background="@color/common_color_text_8"/>
+</RelativeLayout>
+
+
+<RelativeLayout
+    android:id="@+id/rl_content_layout"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="16dp"
+    android:layout_marginRight="25dp"
+    android:layout_marginLeft="18dp"
+    android:background="@drawable/bg_timeline_btn_normal"
+    >
+
+    <com.system.bhouse.bhouse.CommonTask.TechnologyExecution.BaseFragment.SwipeItemLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/swipe_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <!--android:background="@drawable/bg_timeline_btn_normal"-->
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="wrap_content"
+            android:layout_gravity="right"
+            android:layout_height="match_parent">
+
+            <com.system.bhouse.bhouse.CommonTask.TechnologyExecution.Custom.DrawableCenterTextView
+                android:id="@+id/rightremove_menu"
+                android:layout_width="@dimen/multiple_btn_with"
+                android:layout_height="match_parent"
+                android:background="@color/red_FD1543"
+                android:drawableTop="@drawable/ic_wrench"
+                android:visibility="gone"
+                style="@style/multiple_btn"
+                android:text="取消工序"
+                />
+
+            <com.system.bhouse.bhouse.CommonTask.TechnologyExecution.Custom.DrawableCenterTextView
+                android:id="@+id/right_menu"
+                android:layout_width="@dimen/multiple_btn_with"
+                android:layout_height="match_parent"
+                android:visibility="gone"
+                android:background="@color/material_grey_700"
+                android:drawableTop="@drawable/ic_pencil"
+                style="@style/multiple_btn"
+                android:text="启动工序"
+                />
+
+            <com.system.bhouse.bhouse.CommonTask.TechnologyExecution.Custom.DrawableCenterTextView
+                android:id="@+id/rightDetail_menu"
+                android:layout_width="@dimen/multiple_btn_with"
+                android:layout_height="match_parent"
+                android:background="@drawable/bg_timeline_btn_right_normal"
+                android:drawableTop="@drawable/ic_task_ref_resource"
+                style="@style/multiple_btn"
+                android:text="模板明细"
+                />
+
+
+        </LinearLayout>
+
+        <!--android:background="@drawable/bg_timeline_btn_normal"-->
+
+        <RelativeLayout
+            android:id="@+id/relativeLayout_view_bg"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:text="吊装需求"
+                android:id="@+id/tv_title"
+                android:textColor="@color/font_6"
+                android:textSize="22sp"
+                android:layout_marginTop="5dp"
+                android:layout_marginLeft="15dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+
+            <TextView
+                android:id="@+id/tv_sub_title"
+                android:text="麓谷工厂"
+                android:textSize="11sp"
+                android:layout_marginBottom="5dp"
+                android:textColor="@color/common_color_text_30"
+                android:layout_marginTop="5dp"
+                android:layout_alignLeft="@+id/tv_title"
+                android:layout_below="@+id/tv_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+
+        </RelativeLayout>
+
+    </com.system.bhouse.bhouse.CommonTask.TechnologyExecution.BaseFragment.SwipeItemLayout>
+
+</RelativeLayout>
+
+</LinearLayout>

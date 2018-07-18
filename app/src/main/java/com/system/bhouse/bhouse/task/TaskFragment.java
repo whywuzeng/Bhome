@@ -64,7 +64,7 @@ public class TaskFragment extends TaskFilterFragment implements TaskListParentUp
         pageMargin = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 4, getResources()
                 .getDisplayMetrics());
 
-        tabs.setLayoutInflater(mInflater);
+        tabs.setLayoutInflater(inflater);
 
 //        getNetwork(host, host);
 
