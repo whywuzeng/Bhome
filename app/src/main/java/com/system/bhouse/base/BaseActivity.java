@@ -1,6 +1,7 @@
 package com.system.bhouse.base;
 
 import android.content.Context;
+import android.content.res.TypedArray;
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.widget.Toolbar;
@@ -8,6 +9,7 @@ import android.text.TextUtils;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.Window;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.TextView;
@@ -88,6 +90,34 @@ public abstract class BaseActivity extends AutoLayoutActivity {
         onFindViews();
         onSetListener();
         onLoadData();
+    }
+
+    /**
+     * 以Toolbar 以例  扩充toolbar高度
+     * @param view
+     */
+    public void setHeight(View view) {
+        // 获取actionbar的高度
+        TypedArray actionbarSizeTypedArray = obtainStyledAttributes(new int[]{
+                android.R.attr.actionBarSize
+        });
+        float height = actionbarSizeTypedArray.getDimension(0, 0);
+        // ToolBar的top值
+        ViewGroup.MarginLayoutParams lp = (ViewGroup.MarginLayoutParams) view.getLayoutParams();
+        double statusBarHeight = getStatusBarHeight(this);
+        lp.height = (int) (statusBarHeight + height);
+        view.setPadding(0,(int) statusBarHeight,0, 0);
+        view.setLayoutParams(lp);
+    }
+
+    private double getStatusBarHeight(Context context) {
+        int result = 0;
+        int resourceId = context.getResources().getIdentifier("status_bar_height", "dimen",
+                "android");
+        if (resourceId > 0) {
+            result = context.getResources().getDimensionPixelSize(resourceId);
+        }
+        return result;
     }
 
     /**

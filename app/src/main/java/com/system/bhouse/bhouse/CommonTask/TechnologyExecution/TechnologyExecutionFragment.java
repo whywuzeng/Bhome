@@ -27,6 +27,7 @@ import com.system.bhouse.bhouse.CommonTask.TechnologyExecution.entity.Orderbean;
 import com.system.bhouse.bhouse.CommonTask.TechnologyExecution.entity.RelatedDetailBean;
 import com.system.bhouse.bhouse.CommonTask.TechnologyExecution.entity.TechnologyBean;
 import com.system.bhouse.bhouse.CommonTask.TechnologyExecution.selectploy.DisablePloy;
+import com.system.bhouse.bhouse.CommonTask.TechnologyExecution.selectploy.DisableRecallPloy;
 import com.system.bhouse.bhouse.CommonTask.TechnologyExecution.selectploy.SelectPloy;
 import com.system.bhouse.bhouse.CommonTask.TechnologyExecution.selectploy.TechnologSelectColorBg;
 import com.system.bhouse.bhouse.CommonTask.TechnologyExecution.selectploy.UnSelectLineDotBg;
@@ -52,6 +53,7 @@ import java.util.List;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import me.gujun.android.taggroup.TagGroup;
 
 /**
  * Created by Administrator on 2018-07-16.
@@ -106,7 +108,7 @@ public class TechnologyExecutionFragment extends WWBaseFragment implements BaseQ
     //data 工序数据
     protected List<String> data=new ArrayList<>();
 
-    protected BaseQuickAdapter<String, MyBaseViewHolder> adapter;
+    protected BaseQuickAdapter<TechnologyBean, MyBaseViewHolder> adapter;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -131,14 +133,18 @@ public class TechnologyExecutionFragment extends WWBaseFragment implements BaseQ
 
         notDataView = inflater.inflate(R.layout.taskcomon_empty_view, (ViewGroup) my_recycle_view.getParent(), false);
         errorView = inflater.inflate(R.layout.taskcommon_error_view, (ViewGroup) my_recycle_view.getParent(), false);
-
-        adapter = new BaseQuickAdapter<String, MyBaseViewHolder>(R.layout.item_left_and_right_menu) {
+        adapter = new BaseQuickAdapter<TechnologyBean, MyBaseViewHolder>(R.layout.item_left_and_right_menu) {
             @Override
-            protected void convert(MyBaseViewHolder helper, String item) {
-                helper.setText(R.id.tv_title, item);
+            protected void convert(MyBaseViewHolder helper, TechnologyBean item) {
+                helper.setText(R.id.tv_title, item.workOrderName);
                 helper.setText(R.id.tv_sub_title, App.Mancompany);
                 SwipeItemLayout layout = (SwipeItemLayout) helper.getView(R.id.swipe_layout);
                 TextView Rightview = (TextView) helper.getView(R.id.right_menu);
+                helper.setVisible(R.id.rightDetail_menu,item.isRelateForm);
+                TagGroup tagGroup = (TagGroup) helper.getView(R.id.tag_group);
+                TagGroup tagGroup1 = (TagGroup) helper.getView(R.id.tag_group1);
+                tagGroup.setTags(item.getStartTime());
+                tagGroup1.setTags(getContextMessage(item.isHang));
 
                 helper.addOnClickListener(R.id.rightremove_menu);
                 helper.addOnClickListener(R.id.rightDetail_menu);
@@ -167,7 +173,6 @@ public class TechnologyExecutionFragment extends WWBaseFragment implements BaseQ
         my_recycle_view.setAdapter(adapter);
         adapter.setOnItemClickListener(this);
         adapter.setOnItemChildClickListener(this);
-//        AskForBackgroud();
         orderidBtn.setClickable(false);
         //初始化 肯定到时空的
         adapter.setEmptyView(notDataView);
@@ -208,9 +213,18 @@ public class TechnologyExecutionFragment extends WWBaseFragment implements BaseQ
 
     }
 
+    /**
+     * 启动工序 和 停止工序  模板明细 点击事件
+     * @param adapter
+     * @param view     The view whihin the ItemView that was clicked
+     * @param position The position of the view int the adapter
+     */
     @Override
     public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
-
+        if (ClickUtils.isFastDoubleClickTime(1000))
+        {
+            return;
+        }
         switch (view.getId())
         {
             case R.id.rightremove_menu:
@@ -232,6 +246,9 @@ public class TechnologyExecutionFragment extends WWBaseFragment implements BaseQ
         }
     }
 
+    /**
+     * 背景切换的Handle
+     */
     protected InnerHandle Technologyhandler = new InnerHandle((TechnologyExecutionActivity) getActivity()) {
         @Override
         public void handleMessage(Message msg) {
@@ -259,6 +276,9 @@ public class TechnologyExecutionFragment extends WWBaseFragment implements BaseQ
         }
     }
 
+    /**
+     * 请求工序接口
+     */
     private void AskForBackgroud() {
 
         ApiWebService.Get_Pro_Working_Main_poid_Json(App.getContextApp(), new ApiWebService.SuccessCall() {
@@ -268,7 +288,7 @@ public class TechnologyExecutionFragment extends WWBaseFragment implements BaseQ
                 }.getType());
 
                 if (ValueUtils.IsFirstValueExist(TechnologyBeans)) {
-                    adapter.setNewData(data);
+                    adapter.setNewData(TechnologyBeans);
 
                     Technologyhandler.postDelayed(new Runnable() {
                         @Override
@@ -294,7 +314,7 @@ public class TechnologyExecutionFragment extends WWBaseFragment implements BaseQ
     //点击响应
     protected void IntentToFragment(int position, View view) {
 
-//        ShowShort(position + "");
+        //        ShowShort(position + "");
 //
 //        TextView textView = (TextView) view.findViewById(R.id.tv_title);
 //
@@ -330,6 +350,23 @@ public class TechnologyExecutionFragment extends WWBaseFragment implements BaseQ
 //        }
     }
 
+    private String getContextMessage(boolean isHang) {
+        if (isHang) {
+            return "挂起";
+        }
+        else {
+            return "正常";
+        }
+    }
+
+    /**
+     *  Item 点击事件 响应
+     * @param adapter  the adpater
+     * @param view     The itemView within the RecyclerView that was clicked (this
+     *                 will be a view provided by the adapter)
+     * @param position The position of the view in the adapter.
+     */
+
     @Override
     public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
         performItemLayoutBg(adapter, view, position);
@@ -352,6 +389,10 @@ public class TechnologyExecutionFragment extends WWBaseFragment implements BaseQ
     private void initRecycleViewBg(BaseQuickAdapter adapter, int position) {
         View currentView = adapter.getViewByPosition(my_recycle_view, position, R.id.rl_content_layout);
         SelectColorBg(currentView);
+
+        View firstcurrentView = adapter.getViewByPosition(my_recycle_view, position-1, R.id.rl_content_layout);
+        DisableRecall(firstcurrentView);
+
         currentView.setTag(Color.rgb(51, 138, 185));
         int itemCount = adapter.getItemCount();
         for (int i = 0; i < itemCount; i++) {
@@ -359,7 +400,7 @@ public class TechnologyExecutionFragment extends WWBaseFragment implements BaseQ
                 View byPosition = adapter.getViewByPosition(my_recycle_view, i, R.id.rl_content_layout);
                 UnSelectColorBg(byPosition);
             }
-            else if (i < position) {
+            else if (i < position-1) {
                 View byPosition = adapter.getViewByPosition(my_recycle_view, i, R.id.rl_content_layout);
                 DisableBg(byPosition);
             }
@@ -374,6 +415,10 @@ public class TechnologyExecutionFragment extends WWBaseFragment implements BaseQ
         }
     }
 
+    protected void DisableRecall(View view){
+        DisableRecallPloy mDisableRecall = new TechnologSelectColorBg();
+        mDisableRecall.DisableRecall(view);
+    }
 
     protected void DisableBg(View view)
     {
@@ -467,32 +512,59 @@ public class TechnologyExecutionFragment extends WWBaseFragment implements BaseQ
     }
 
     private void StartUp(int position) {
-        ApiWebService.Get_Pro_Working_Main_poid_zx(getActivity(), new ApiWebService.SuccessCall() {
-            @Override
-            public void SuccessBack(String result) {
 
+        ApiWebService.SettingsKeyNetWork(new ApiWebService.ObjectSuccessCall() {
+            @Override
+            public void SuccessBack(Object result) {
+
+                ApiWebService.Get_Pro_Working_Main_poid_zx(getActivity(), new ApiWebService.SuccessCall() {
+                    @Override
+                    public void SuccessBack(String result) {
+                        showButtomToast(result);
+                        AskForBackgroud();
+
+                    }
+
+                    @Override
+                    public void ErrorBack(String error) {
+                        showButtomToast(error);
+                    }
+                }, TechnologyBeans.get(position).workRouteID, TechnologyBeans.get(position).workOrdersubDirectoryID);
             }
 
             @Override
-            public void ErrorBack(String error) {
+            public void ErrorBack(Object error) {
 
             }
-        }, TechnologyBeans.get(position).workRouteID, TechnologyBeans.get(position).workOrdersubDirectoryID);
+        });
     }
 
     private void Cancel(int position)
     {
-        ApiWebService.Get_Pro_Working_Main_poid_zxf(getActivity(), new ApiWebService.SuccessCall() {
+        ApiWebService.SettingsKeyNetWork(new ApiWebService.ObjectSuccessCall() {
             @Override
-            public void SuccessBack(String result) {
+            public void SuccessBack(Object result) {
 
+                ApiWebService.Get_Pro_Working_Main_poid_zxf(getActivity(), new ApiWebService.SuccessCall() {
+                    @Override
+                    public void SuccessBack(String result) {
+                        showButtomToast(result);
+                        if (result.contains("成功"))
+                        AskForBackgroud();
+                    }
+
+                    @Override
+                    public void ErrorBack(String error) {
+
+                    }
+                },TechnologyBeans.get(position).workRouteID, TechnologyBeans.get(position).workOrdersubDirectoryID);
             }
 
             @Override
-            public void ErrorBack(String error) {
+            public void ErrorBack(Object error) {
 
             }
-        },TechnologyBeans.get(position).workRouteID, TechnologyBeans.get(position).workOrdersubDirectoryID);
+        });
     }
 
     private void Detail(int position){
@@ -502,7 +574,7 @@ public class TechnologyExecutionFragment extends WWBaseFragment implements BaseQ
                 ArrayList<RelatedDetailBean> beans= App.getAppGson().fromJson(result, new TypeToken<List<RelatedDetailBean>>() {
                 }.getType());
 
-                if (mTechnologyActivityListenter!=null&&ValueUtils.IsFirstValueExist(beans))
+                if (mTechnologyActivityListenter!=null)
                 {
                     mTechnologyActivityListenter.OnFragmentItemClick(beans);
                 }

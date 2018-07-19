@@ -15,6 +15,7 @@ public class SingleToast {
 
     Context mContext;
     Toast mToast;
+    private static boolean isDebug=true;
 
     public SingleToast(Context mContext) {
         this.mContext = mContext;
@@ -26,6 +27,7 @@ public class SingleToast {
         mToast.setText(msg);
         mToast.setGravity(Gravity.BOTTOM, 0, mContext.getResources().getDimensionPixelOffset(R.dimen.toast_y));
         mToast.setDuration(Toast.LENGTH_SHORT);
+        if (isDebug)
         mToast.show();
     }
 
@@ -33,6 +35,7 @@ public class SingleToast {
         mToast.setText(messageId);
         mToast.setGravity(Gravity.BOTTOM, 0, mContext.getResources().getDimensionPixelOffset(R.dimen.toast_y));
         mToast.setDuration(Toast.LENGTH_SHORT);
+        if (isDebug)
         mToast.show();
     }
 
@@ -40,6 +43,7 @@ public class SingleToast {
         mToast.setText(id);
         mToast.setGravity(Gravity.CENTER, 0, 0);
         mToast.setDuration(Toast.LENGTH_SHORT);
+        if (isDebug)
         mToast.show();
     }
 
@@ -47,6 +51,7 @@ public class SingleToast {
         mToast.setText(msg);
         mToast.setGravity(Gravity.CENTER, 0, 0);
         mToast.setDuration(Toast.LENGTH_SHORT);
+        if (isDebug)
         mToast.show();
     }
 
@@ -54,6 +59,7 @@ public class SingleToast {
         mToast.setText(msg);
         mToast.setGravity(Gravity.CENTER, 0, 0);
         mToast.setDuration(duration);
+        if (isDebug)
         mToast.show();
     }
 
@@ -61,6 +67,7 @@ public class SingleToast {
         mToast.setText(msg);
         mToast.setGravity(Gravity.CENTER, 0, 0);
         mToast.setDuration(Toast.LENGTH_LONG);
+        if (isDebug)
         mToast.show();
     }
 
@@ -73,6 +80,7 @@ public class SingleToast {
     public static void showMiddleToast(Context context, int message) {
         Toast toast = Toast.makeText(context, message, Toast.LENGTH_SHORT);
         toast.setGravity(Gravity.CENTER, 0, 0);
+        if (isDebug)
         toast.show();
     }
 

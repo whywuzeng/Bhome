@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:app="http://schemas.android.com/apk/res-auto"
               android:layout_width="match_parent"
               android:orientation="horizontal"
-              android:layout_height="wrap_content"
               android:background="@color/white"
+              android:layout_height="wrap_content"
     >
 
 <RelativeLayout
@@ -65,7 +66,6 @@
                 android:id="@+id/rightremove_menu"
                 android:layout_width="@dimen/multiple_btn_with"
                 android:layout_height="match_parent"
-                android:background="@color/red_FD1543"
                 android:drawableTop="@drawable/ic_wrench"
                 android:visibility="gone"
                 style="@style/multiple_btn"
@@ -77,10 +77,9 @@
                 android:layout_width="@dimen/multiple_btn_with"
                 android:layout_height="match_parent"
                 android:visibility="gone"
-                android:background="@color/material_grey_700"
                 android:drawableTop="@drawable/ic_pencil"
                 style="@style/multiple_btn"
-                android:text="启动工序"
+                android:text="开始工序"
                 />
 
             <com.system.bhouse.bhouse.CommonTask.TechnologyExecution.Custom.DrawableCenterTextView
@@ -90,7 +89,7 @@
                 android:background="@drawable/bg_timeline_btn_right_normal"
                 android:drawableTop="@drawable/ic_task_ref_resource"
                 style="@style/multiple_btn"
-                android:text="模板明细"
+                android:text="关联明细"
                 />
 
 
@@ -124,6 +123,67 @@
                 android:layout_below="@+id/tv_title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"/>
+
+            <RelativeLayout
+                android:orientation="horizontal"
+                android:gravity="center"
+                android:layout_width="match_parent"
+                android:layout_height="60dp">
+
+                <me.gujun.android.taggroup.TagGroup
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/tag_group"
+                    android:layout_alignParentEnd="true"
+                    app:atg_isAppendMode="false"
+                    app:atg_inputHint="@string/BusinessVersion"
+                    app:atg_borderColor="#49C120"
+                    app:atg_textColor="#49C120"
+                    app:atg_backgroundColor="#FFFFFF"
+                    app:atg_dashBorderColor="#AAAAAA"
+                    app:atg_inputHintColor="#80000000"
+                    app:atg_inputTextColor="#DE000000"
+                    app:atg_checkedBorderColor="#49C120"
+                    app:atg_checkedTextColor="#FFFFFF"
+                    app:atg_checkedMarkerColor="#FFFFFF"
+                    app:atg_checkedBackgroundColor="#49C120"
+                    app:atg_pressedBackgroundColor="#EDEDED"
+                    app:atg_borderStrokeWidth="1dp"
+                    app:atg_textSize="13sp"
+                    app:atg_horizontalSpacing="8dp"
+                    app:atg_verticalSpacing="4dp"
+                    app:atg_horizontalPadding="12dp"
+                    app:atg_verticalPadding="3dp"/>
+
+                <me.gujun.android.taggroup.TagGroup
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_below="@+id/tag_group"
+                    android:id="@+id/tag_group1"
+                    app:atg_isAppendMode="false"
+                    app:atg_inputHint="@string/BusinessVersion"
+                    app:atg_borderColor="@color/material_blue_300"
+                    app:atg_textColor="@color/material_white90"
+                    app:atg_backgroundColor="@color/material_blue_300"
+                    app:atg_dashBorderColor="#AAAAAA"
+                    app:atg_inputHintColor="#80000000"
+                    app:atg_inputTextColor="#DE000000"
+                    app:atg_checkedBorderColor="#49C120"
+                    app:atg_checkedTextColor="#FFFFFF"
+                    app:atg_checkedMarkerColor="#FFFFFF"
+                    app:atg_checkedBackgroundColor="#49C120"
+                    app:atg_pressedBackgroundColor="#EDEDED"
+                    app:atg_borderStrokeWidth="1dp"
+                    app:atg_textSize="13sp"
+                    app:atg_horizontalSpacing="8dp"
+                    app:atg_verticalSpacing="4dp"
+                    app:atg_horizontalPadding="12dp"
+                    app:atg_verticalPadding="3dp"/>
+
+
+            </RelativeLayout>
+
 
         </RelativeLayout>
 

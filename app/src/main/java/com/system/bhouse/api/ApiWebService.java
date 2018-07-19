@@ -3127,6 +3127,42 @@ Get_Sale_Order_Car_shf(string scid, string addPer, int gsmid, int property, bool
         },request);
     }
 
+    //根据要先请求 KeyString 得到KeyTimeString
+
+    public static void SettingsKeyNetWork(ObjectSuccessCall call) {
+        Observable observableMobileKey = ApiWebService.Get_KeyTimestr(App.MobileKey);
+        observableMobileKey.subscribe(new BHBaseSubscriber<Object>(new RequestError() {
+            @Override
+            public void forRequestError(String msg) {
+                call.ErrorBack(msg);
+            }
+        }) {
+            @Override
+            public void onStart() {
+                super.onStart();
+
+            }
+
+            @Override
+            public void onCompleted() {
+                super.onCompleted();
+
+            }
+
+            @Override
+            public void onError(Throwable e) {
+                super.onError(e);
+
+            }
+
+            @Override
+            public void onNext(Object o) {
+                super.onNext(o);
+                App.KeyTimestring= o.toString();
+                call.SuccessBack(o);
+            }
+        });
+    }
 
 //大型的接口 可以接这个
     private static  Subscription getNetworkService(Subscriber mSubscriber, final SoapObject request){
@@ -3136,11 +3172,6 @@ Get_Sale_Order_Car_shf(string scid, string addPer, int gsmid, int property, bool
 
                 if (!subscriber.isUnsubscribed()) {
                         subscriber.onStart();
-//                        String methodName="Getlogin"; //(用户密码验证)
-//                        SoapObject request = new SoapObject(NAMESPACE, methodName);
-//                        request.addProperty("name","admin");
-//                        request.addProperty("pass","19900927");
-                        //创建SoapSerializationEnvelope 对象，同时指定soap版本号(之前在wsdl中看到的)
                     Object response = connectService(request);
                     if (response instanceof  SoapPrimitive||response instanceof  SoapObject)
                     {
@@ -3166,7 +3197,12 @@ Get_Sale_Order_Car_shf(string scid, string addPer, int gsmid, int property, bool
     //小型的接口(去dialog) 为多接口处理数据，回调处理  返回的是Object类型
     public static Subscriber getMutiCallback(final Context mContext, final ObjectSuccessCall call)
     {
-        return new Subscriber() {
+        return new BHBaseSubscriber<Object>(new RequestError() {
+            @Override
+            public void forRequestError(String msg) {
+
+            }
+        }) {
             @Override
             public void onStart() {
                 super.onStart();
@@ -3175,19 +3211,22 @@ Get_Sale_Order_Car_shf(string scid, string addPer, int gsmid, int property, bool
 
             @Override
             public void onCompleted() {
+                super.onCompleted();
                 ProgressUtils.getInstance().DisMissProgress();
             }
 
             @Override
             public void onError(Throwable e) {
-                L.v(tag,"",(Throwable) e);
-                T.showShort(mContext,e.getLocalizedMessage());
+                super.onError(e);
+                L.v(tag, "", (Throwable) e);
+                T.showShort(mContext, e.getLocalizedMessage());
 //                call.ErrorBack(e);
                 ProgressUtils.getInstance().DisMissProgress();
             }
 
             @Override
             public void onNext(Object o) {
+                super.onNext(o);
                 call.SuccessBack(o);
             }
         };
@@ -3266,11 +3305,6 @@ Get_Sale_Order_Car_shf(string scid, string addPer, int gsmid, int property, bool
 
                 if (!subscriber.isUnsubscribed()) {
                     subscriber.onStart();
-//                        String methodName="Getlogin"; //(用户密码验证)
-//                        SoapObject request = new SoapObject(NAMESPACE, methodName);
-//                        request.addProperty("name","admin");
-//                        request.addProperty("pass","19900927");
-                    //创建SoapSerializationEnvelope 对象，同时指定soap版本号(之前在wsdl中看到的)
                     Object response = connectService(request);
                     if (response instanceof SoapPrimitive || response instanceof SoapObject) {
                         String s = response.toString();

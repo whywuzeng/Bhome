@@ -25,6 +25,12 @@ public class TimeLineItemTopBottomDecoration extends ItemDecoration{
     }
 
     private int mSpace;
+
+    public void setTopSpace(int topSpace) {
+        this.topSpace = topSpace;
+    }
+
+    private int topSpace;
     public TimeLineItemTopBottomDecoration(){
 
     }
@@ -34,6 +40,10 @@ public class TimeLineItemTopBottomDecoration extends ItemDecoration{
         super.getItemOffsets(outRect, view, parent, state);
         if (mSpace <= 0) {
             mSpace = MeasureUtil.dip2px(App.getContextApp(), 30);
+        }
+        if (topSpace<=0)
+        {
+            topSpace = MeasureUtil.dip2px(App.getContextApp(), 30);
         }
         int childAdapterPosition = parent.getChildAdapterPosition(view);
 

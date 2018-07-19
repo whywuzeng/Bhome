@@ -55,7 +55,7 @@ public class Test1Fragment extends LazyFragment implements ItemTouchListener{
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity());
         my_recycle_view.setLayoutManager(linearLayoutManager);
 
-        my_recycle_view.addItemDecoration(new TimeLineItemTopBottomDecoration(), 0);
+        my_recycle_view.addItemDecoration(new TimeLineItemTopBottomDecoration());
 
         notDataView = inflater.inflate(R.layout.taskcomon_empty_view, (ViewGroup) my_recycle_view.getParent(), false);
         errorView = inflater.inflate(R.layout.taskcommon_error_view, (ViewGroup) my_recycle_view.getParent(), false);
@@ -94,17 +94,23 @@ public class Test1Fragment extends LazyFragment implements ItemTouchListener{
             }
         };
         my_recycle_view.setAdapter(adapter);
-        if (ValueUtils.IsFirstValueExist(this.bean))
-        {
-            adapter.setNewData(this.bean);
-        }else {
-            adapter.setEmptyView(notDataView);
-        }
     }
 
     @Override
     public void sendRelatedDetail(ArrayList<RelatedDetailBean> bean) {
         this.bean = bean;
+    }
+
+    @Override
+    protected void onFragmentStartLazy() {
+        super.onFragmentStartLazy();
+        if (ValueUtils.IsFirstValueExist(this.bean))
+        {
+            adapter.setNewData(this.bean);
+        }else {
+            adapter.setNewData(this.bean);
+            adapter.setEmptyView(notDataView);
+        }
     }
 
     protected static class MyBaseViewHolder extends BaseViewHolder {

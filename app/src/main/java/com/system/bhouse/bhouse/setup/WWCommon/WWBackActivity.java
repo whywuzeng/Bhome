@@ -55,7 +55,6 @@ public class WWBackActivity extends WWBaseActivity {
     protected void ToolbarDispayHomeAsUp()
     {
         
-
         toolbar_com=(Toolbar)findViewById(R.id.toolbar_com);
 
         if (toolbar_com!=null)
@@ -73,7 +72,9 @@ public class WWBackActivity extends WWBaseActivity {
                 }
             });
         }
+
     }
+
 
     public void setToolBarMenuOnclick(Toolbar.OnMenuItemClickListener onclick) {
         toolbar_com.setOnMenuItemClickListener(onclick);

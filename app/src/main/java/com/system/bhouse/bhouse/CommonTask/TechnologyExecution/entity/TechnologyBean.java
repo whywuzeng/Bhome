@@ -70,6 +70,12 @@ public class TechnologyBean {
     @SerializedName("计量单位")
     public String measureUnit;
 
+    @SerializedName("关联单据")
+    public boolean isRelateForm;
+
+    @SerializedName("工序挂起")
+    public boolean isHang;
+
     public double getPersonStandard() {
         return personStandard;
     }

@@ -35,6 +35,7 @@ public class SwipeItemLayout extends FrameLayout {
     private float mDownX;
     private float mDownY;
     private boolean mIsDragged;
+    private boolean mIsDownDragged;
     private boolean mSwipeEnable = true;
 
     /**
@@ -108,6 +109,7 @@ public class SwipeItemLayout extends FrameLayout {
                 mIsDragged = false;
                 mDownX = ev.getX();
                 mDownY = ev.getY();
+                checkDownDragged(ev);
                 break;
             case MotionEvent.ACTION_MOVE:
                 checkCanDragged(ev);
@@ -173,6 +175,39 @@ public class SwipeItemLayout extends FrameLayout {
         return mIsDragged || super.onTouchEvent(ev)
                 // 此判断是因为当没有点击事件时，事件会给RecylcerView响应导致无法划开菜单。
                 || (!isClickable() && mMenus.size() > 0);
+    }
+
+    private void checkDownDragged(MotionEvent ev)
+    {
+        if (mIsDownDragged){
+            return;
+        }
+
+        if (mIsOpen) {
+            int downX = (int) mDownX;
+            int downY = (int) mDownY;
+            if (isTouchContent(downX, downY)) {
+                mIsDownDragged = true;
+            }
+            else if (isTouchMenu(downX, downY)) {
+                mIsDownDragged = (isLeftMenu()) || (isRightMenu());
+            }
+        }
+        else {
+            mCurrentMenu = mMenus.get(Gravity.RIGHT);
+            mIsDownDragged = mCurrentMenu != null;
+        }
+
+        if (mIsDownDragged) {
+//            // 开始拖动后，分发down事件给DragHelper，并且发送一个cancel取消点击事件
+//            MotionEvent obtain = MotionEvent.obtain(ev);
+//            obtain.setAction(MotionEvent.ACTION_DOWN);
+//            mDragHelper.processTouchEvent(obtain);
+//            if (getParent() != null) {
+//                // 解决和父控件的滑动冲突。
+//                getParent().requestDisallowInterceptTouchEvent(true);
+//            }
+        }
     }
 
     /**

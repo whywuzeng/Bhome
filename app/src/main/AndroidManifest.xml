@@ -13,14 +13,14 @@
         <activity
             android:screenOrientation="portrait"
             android:name=".MainActivity"
-            android:theme="@style/AppTheme.Base"
+            android:theme="@style/MainAppTheme.Base"
             android:launchMode="singleTask"
            >
         </activity>
         <activity
             android:screenOrientation="portrait"
+            android:theme="@style/MainAppTheme.Base"
             android:name="com.system.bhouse.bhouse.WelcomActivity">
-
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
 
@@ -40,7 +40,7 @@
 
         <activity
             android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.Base"
+            android:theme="@style/MainAppTheme.Base"
             android:launchMode="singleTask"
             android:name="com.system.bhouse.bhouse.LoginActivity">
             <intent-filter>

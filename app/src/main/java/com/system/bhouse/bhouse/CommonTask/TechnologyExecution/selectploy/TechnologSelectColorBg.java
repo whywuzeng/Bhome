@@ -18,7 +18,7 @@ import com.system.bhouse.bhouse.R;
  * com.system.bhouse.bhouse.CommonTask.TechnologyExecution.selectploy
  */
 
-public class TechnologSelectColorBg implements SelectPloy,UnSelectPloy,DisablePloy {
+public class TechnologSelectColorBg implements SelectPloy,UnSelectPloy,DisablePloy,DisableRecallPloy {
     @Override
     public void selectBg(View view) {
         if (view==null)
@@ -30,7 +30,7 @@ public class TechnologSelectColorBg implements SelectPloy,UnSelectPloy,DisablePl
         DrawableCenterTextView rightremove_menu = (DrawableCenterTextView) view.findViewById(R.id.rightremove_menu);
 
         DrawableCenterTextView right_menu = (DrawableCenterTextView) view.findViewById(R.id.right_menu);
-        rightremove_menu.setVisibility(View.VISIBLE);
+        rightremove_menu.setVisibility(View.GONE);
         right_menu.setVisibility(View.VISIBLE);
 
         Drawable drawable = App.getContextApp().getResources().getDrawable(R.drawable.bg_timeline_btn_select);
@@ -43,6 +43,10 @@ public class TechnologSelectColorBg implements SelectPloy,UnSelectPloy,DisablePl
         subTitle.setTextColor(App.getContextApp().getResources().getColor(R.color.white));
     }
 
+    /**
+     * 没选择
+     * @param view
+     */
     @Override
     public void UnSelectbg(View view) {
         if (view==null)
@@ -52,6 +56,8 @@ public class TechnologSelectColorBg implements SelectPloy,UnSelectPloy,DisablePl
         RelativeLayout rel = (RelativeLayout) view.findViewById(R.id.rl_content_layout);
         RelativeLayout relativeLayout_view_bg= (RelativeLayout)view.findViewById(R.id.relativeLayout_view_bg);
         Drawable drawable = App.getContextApp().getResources().getDrawable(R.drawable.bg_timeline_btn_normal);
+//        DrawableCenterTextView DetailMenutv = (DrawableCenterTextView) view.findViewById(R.id.rightDetail_menu);
+//        DetailMenutv.setVisibility(View.GONE);
         rel.setBackground(drawable);
         relativeLayout_view_bg.setBackground(drawable);
         TextView textTitle = (TextView) view.findViewById(R.id.tv_title);
@@ -59,6 +65,11 @@ public class TechnologSelectColorBg implements SelectPloy,UnSelectPloy,DisablePl
         textTitle.setTextColor(App.getContextApp().getResources().getColor(R.color.font_6));
         subTitle.setTextColor(App.getContextApp().getResources().getColor(R.color.common_color_text_30));
     }
+
+    /**
+     * 已完成
+     * @param view
+     */
 
     @Override
     public void Disablebg(View view) {
@@ -93,5 +104,32 @@ public class TechnologSelectColorBg implements SelectPloy,UnSelectPloy,DisablePl
         {
             itemLayout.close();
         }
+    }
+
+    /**
+     * 单独给 启动工序 上一个 撤回工序 做的界面
+     * @param view
+     */
+    @Override
+    public void DisableRecall(View view) {
+        if (view==null)
+        {
+            return;
+        }
+        RelativeLayout rel = (RelativeLayout) view.findViewById(R.id.rl_content_layout);
+        RelativeLayout relativeLayout_view_bg= (RelativeLayout)view.findViewById(R.id.relativeLayout_view_bg);
+        Drawable drawable = App.getContextApp().getResources().getDrawable(R.drawable.bg_timeline_btn_disable);
+        rel.setBackground(drawable);
+        relativeLayout_view_bg.setBackground(drawable);
+
+        DrawableCenterTextView rightremove_menu = (DrawableCenterTextView) view.findViewById(R.id.rightremove_menu);
+        DrawableCenterTextView right_menu_menu = (DrawableCenterTextView) view.findViewById(R.id.right_menu);
+        rightremove_menu.setVisibility(View.VISIBLE);
+        right_menu_menu.setVisibility(View.GONE);
+
+        TextView textTitle = (TextView) view.findViewById(R.id.tv_title);
+        TextView subTitle = (TextView) view.findViewById(R.id.tv_sub_title);
+        textTitle.setTextColor(App.getContextApp().getResources().getColor(R.color.font_6));
+        subTitle.setTextColor(App.getContextApp().getResources().getColor(R.color.common_color_text_30));
     }
 }

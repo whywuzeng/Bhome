@@ -10,6 +10,7 @@ import android.support.v4.app.Fragment;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,6 +19,7 @@ import android.widget.TextView;
 
 import com.socks.library.KLog;
 import com.system.bhouse.base.Global;
+import com.system.bhouse.bhouse.CommonTask.TransportationManagement.adapter.BaseQuickAdapter;
 import com.system.bhouse.bhouse.R;
 import com.system.bhouse.bhouse.setup.SingleToast;
 import com.system.bhouse.bhouse.setup.program.FootUpdate;
@@ -64,6 +66,18 @@ public class WWBaseFragment extends Fragment implements FootUpdate.LoadMore, Glo
     protected void listViewAddFooterSection(ListView listView) {
         View listViewFooter = inflater.inflate(R.layout.divide_bottom_15, listView, false);
         listView.addFooterView(listViewFooter, null, false);
+    }
+
+    protected void recycleViewAddHeaderSection(RecyclerView recyclerView, BaseQuickAdapter adapter)
+    {
+        View listViewHeader = LayoutInflater.from(getContext()).inflate(R.layout.divide_top_15, recyclerView, false);
+        adapter.addHeaderView(listViewHeader);
+    }
+
+    protected void recycleViewAddFooterSection(RecyclerView recyclerView, BaseQuickAdapter adapter)
+    {
+        View listViewFooter = inflater.inflate(R.layout.divide_bottom_15, recyclerView, false);
+        adapter.addFooterView(listViewFooter);
     }
 
     protected ActionBar getActionBar() {

@@ -116,6 +116,7 @@ dependencies {
     implementation 'com.android.support:design:26.0.0-alpha1'
     implementation 'com.android.support:appcompat-v7:26.0.0-alpha1'
     implementation 'com.android.support:cardview-v7:26.0.0-alpha1'
+    implementation 'com.android.support:support-dynamic-animation:25.4.0'
     implementation 'org.apache.httpcomponents:httpcore:4.4.2'
     implementation files('libs/ksoap2-android-assembly-3.0.0-RC.4-jar-with-dependencies.jar')
     implementation 'io.reactivex:rxandroid:1.1.0'

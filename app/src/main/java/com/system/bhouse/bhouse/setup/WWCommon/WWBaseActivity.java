@@ -236,7 +236,9 @@ public class WWBaseActivity extends AppCompatActivity implements StartActivity {
         if (actionBar != null) {
             actionBar.setElevation(2);
         }
+
     }
+
 
     @Override
     protected void onDestroy() {

@@ -263,6 +263,7 @@ public class MainActivity extends BaseActivity implements  TopMiddleMenu.OnMenuI
             houseKeeperIv.setBackgroundResource(R.drawable.bg_reddot_myselfhuise);
         }
 
+        setHeight(toolbar);
     }
 
     //更新apk的网络请求  这个地址已经失效。

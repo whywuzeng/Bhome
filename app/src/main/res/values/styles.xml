@@ -406,7 +406,13 @@
     <style name="multiple_btn" >
         <item name="android:textSize">14sp</item>
         <item name="android:gravity">center_horizontal</item>
-        <item name="android:textColor">@color/white</item>
+        <item name="android:textColor">@color/grey</item>
         <item name="android:drawablePadding">5dp</item>
+        <item name="android:background">@color/grey_E8ECF1</item>
+    </style>
+
+    <!--往后兼容沉浸式布局的Activity的style  此设置在 style 设置完状态栏消失后  设置此为true可以显示状态栏-->
+    <style name="SleepLayoutStyle">
+        <item name="android:fitsSystemWindows">true</item>
     </style>
 </resources>

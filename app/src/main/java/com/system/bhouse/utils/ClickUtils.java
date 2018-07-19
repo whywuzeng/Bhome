@@ -31,7 +31,39 @@ public class ClickUtils {
             Log.d(TAG, "lastClickTime:" + sLastClickTime);
             Log.d(TAG,"时间间隔:"+(nowTime - sLastClickTime));
         }
-        if ((nowTime - sLastClickTime) < 250) {
+        if ((nowTime - sLastClickTime) < 500) {
+
+            if (sIsDebug){
+                Log.d(TAG,"快速点击");
+                Log.d(TAG, BLANK_LOG);
+            }
+            return true;
+        } else {
+            sLastClickTime = nowTime;
+
+            if (sIsDebug){
+                Log.d(TAG,"lastClickTime:" + sLastClickTime);
+                Log.d(TAG,"不是快速点击");
+                Log.d(TAG,BLANK_LOG);
+            }
+            return false;
+        }
+    }
+
+    /**
+     * 自定义间隔时间
+     * @param timediff
+     * @return
+     */
+    public static boolean isFastDoubleClickTime(int timediff) {
+        long nowTime = SystemClock.elapsedRealtime();//从开机到现在的毫秒数（手机睡眠(sleep)的时间也包括在内）
+
+        if (sIsDebug){
+            Log.d(TAG,"nowTime:" + nowTime);
+            Log.d(TAG, "lastClickTime:" + sLastClickTime);
+            Log.d(TAG,"时间间隔:"+(nowTime - sLastClickTime));
+        }
+        if ((nowTime - sLastClickTime) < timediff) {
 
             if (sIsDebug){
                 Log.d(TAG,"快速点击");
