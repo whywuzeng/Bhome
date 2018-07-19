@@ -15,6 +15,7 @@ import com.system.bhouse.bhouse.CommonTask.TransportationManagement.adapter.Base
 import com.system.bhouse.bhouse.CommonTask.Widget.TimeLineItemTopBottomDecoration;
 import com.system.bhouse.bhouse.R;
 import com.system.bhouse.bhouse.setup.WWCommon.LazyFragment;
+import com.system.bhouse.utils.ValueUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -43,6 +44,7 @@ public class Test1Fragment extends LazyFragment implements ItemTouchListener{
     protected BaseQuickAdapter<RelatedDetailBean, MyBaseViewHolder> adapter;
     private View notDataView;
     private View errorView;
+    private ArrayList<RelatedDetailBean> bean;
 
     //初始化布局
     @Override
@@ -92,12 +94,17 @@ public class Test1Fragment extends LazyFragment implements ItemTouchListener{
             }
         };
         my_recycle_view.setAdapter(adapter);
-        adapter.setEmptyView(notDataView);
+        if (ValueUtils.IsFirstValueExist(this.bean))
+        {
+            adapter.setNewData(this.bean);
+        }else {
+            adapter.setEmptyView(notDataView);
+        }
     }
 
     @Override
     public void sendRelatedDetail(ArrayList<RelatedDetailBean> bean) {
-        adapter.setNewData(bean);
+        this.bean = bean;
     }
 
     protected static class MyBaseViewHolder extends BaseViewHolder {

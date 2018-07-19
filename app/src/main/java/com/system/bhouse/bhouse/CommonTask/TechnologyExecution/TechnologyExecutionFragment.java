@@ -1,0 +1,532 @@
+package com.system.bhouse.bhouse.CommonTask.TechnologyExecution;
+
+import android.app.Activity;
+import android.content.Context;
+import android.content.Intent;
+import android.graphics.Color;
+import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
+import android.support.annotation.Nullable;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.TextView;
+
+import com.google.gson.reflect.TypeToken;
+import com.system.bhouse.Custom.OnSpinerItemClick;
+import com.system.bhouse.Custom.SpinnerDialog;
+import com.system.bhouse.api.ApiWebService;
+import com.system.bhouse.base.App;
+import com.system.bhouse.bhouse.CommonTask.TechnologyExecution.BaseFragment.SwipeItemLayout;
+import com.system.bhouse.bhouse.CommonTask.TechnologyExecution.entity.Orderbean;
+import com.system.bhouse.bhouse.CommonTask.TechnologyExecution.entity.RelatedDetailBean;
+import com.system.bhouse.bhouse.CommonTask.TechnologyExecution.entity.TechnologyBean;
+import com.system.bhouse.bhouse.CommonTask.TechnologyExecution.selectploy.DisablePloy;
+import com.system.bhouse.bhouse.CommonTask.TechnologyExecution.selectploy.SelectPloy;
+import com.system.bhouse.bhouse.CommonTask.TechnologyExecution.selectploy.TechnologSelectColorBg;
+import com.system.bhouse.bhouse.CommonTask.TechnologyExecution.selectploy.UnSelectLineDotBg;
+import com.system.bhouse.bhouse.CommonTask.TechnologyExecution.selectploy.UnSelectPloy;
+import com.system.bhouse.bhouse.CommonTask.TransportationManagement.adapter.BaseQuickAdapter;
+import com.system.bhouse.bhouse.CommonTask.TransportationManagement.adapter.BaseViewHolder;
+import com.system.bhouse.bhouse.CommonTask.Widget.TimeLineItemTopBottomDecoration;
+import com.system.bhouse.bhouse.R;
+import com.system.bhouse.bhouse.setup.WWCommon.WWBaseFragment;
+import com.system.bhouse.utils.ClickUtils;
+import com.system.bhouse.utils.ValueUtils;
+import com.zijunlin.Zxing.Demo.CaptureActivity;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.lang.ref.WeakReference;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
+import butterknife.Bind;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
+
+/**
+ * Created by Administrator on 2018-07-16.
+ * <p>
+ * by author wz
+ * <p>
+ * com.system.bhouse.bhouse.CommonTask.TechnologyExecution
+ */
+
+public class TechnologyExecutionFragment extends WWBaseFragment implements BaseQuickAdapter.OnItemClickListener,BaseQuickAdapter.OnItemChildClickListener{
+
+    private static final int RESULT_LOCAL = 2;
+
+    public static final String RESULTQRCOMPONENT = "resultQrComponent";
+
+    public static final String ORDER_ID = "order_id";
+
+    public static final int RESULT_COMPONENT = 2 << 2;
+
+    //二维码构件码
+    public String resultQrcomponent = null;
+
+    //订单ID
+    public String Order_Id = null;
+
+    @Bind(R.id.my_recycle_view)
+    RecyclerView my_recycle_view;
+
+    private View notDataView;
+    private View errorView;
+
+    //数据的集合
+    private ArrayList<TechnologyBean> TechnologyBeans;
+
+    //数据显示控件
+    @Bind(R.id.tv_component_content)
+    TextView tv_component_content;
+
+    @Bind(R.id.tv_orderid_content)
+    TextView tv_orderid_content;
+    private SpinnerDialog spinnerDialog;
+
+    @Bind(R.id.orderid_qrcode)
+    Button orderidBtn;
+
+    //订单编号集合
+    ArrayList<Orderbean> items=new ArrayList<>();
+
+    //data工序数组
+    protected String[] stringArray;
+
+    //data 工序数据
+    protected List<String> data=new ArrayList<>();
+
+    protected BaseQuickAdapter<String, MyBaseViewHolder> adapter;
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        Bundle arguments = getArguments();
+        if (arguments!=null) {
+            String title = arguments.getString("title");
+        }
+    }
+
+    @Nullable
+    @Override
+    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        View rootView = inflater.inflate(R.layout.technology_layout_fragment, container, false);
+        ButterKnife.bind(this,rootView);
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity());
+        my_recycle_view.setLayoutManager(linearLayoutManager);
+
+        stringArray = getResources().getStringArray(R.array.technology_execution);
+        data.addAll(Arrays.asList(stringArray));
+        my_recycle_view.addItemDecoration(new TimeLineItemTopBottomDecoration(), 0);
+
+        notDataView = inflater.inflate(R.layout.taskcomon_empty_view, (ViewGroup) my_recycle_view.getParent(), false);
+        errorView = inflater.inflate(R.layout.taskcommon_error_view, (ViewGroup) my_recycle_view.getParent(), false);
+
+        adapter = new BaseQuickAdapter<String, MyBaseViewHolder>(R.layout.item_left_and_right_menu) {
+            @Override
+            protected void convert(MyBaseViewHolder helper, String item) {
+                helper.setText(R.id.tv_title, item);
+                helper.setText(R.id.tv_sub_title, App.Mancompany);
+                SwipeItemLayout layout = (SwipeItemLayout) helper.getView(R.id.swipe_layout);
+                TextView Rightview = (TextView) helper.getView(R.id.right_menu);
+
+                helper.addOnClickListener(R.id.rightremove_menu);
+                helper.addOnClickListener(R.id.rightDetail_menu);
+                helper.addOnClickListener(R.id.right_menu);
+                //
+                layout.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        if (layout.isOpen())
+                        {
+                            layout.close();
+                        }else {
+                            layout.open();
+                        }
+                    }
+                });
+
+//                if (Rightview != null) {
+//                    Rightview.setOnClickListener(v -> {
+////                        mItemTouchListener.onRightMenuClick("right " + helper.getAdapterPosition());
+//                        layout.close();
+//                    });
+//                }
+            }
+        };
+        my_recycle_view.setAdapter(adapter);
+        adapter.setOnItemClickListener(this);
+        adapter.setOnItemChildClickListener(this);
+//        AskForBackgroud();
+        orderidBtn.setClickable(false);
+        //初始化 肯定到时空的
+        adapter.setEmptyView(notDataView);
+
+        return rootView;
+    }
+
+    @OnClick(R.id.component_qrcode)
+    public void componentClick() {
+        Intent intent = new Intent(getActivity(), CaptureActivity.class);
+        startActivityForResult(intent, RESULT_COMPONENT);
+    }
+
+    @OnClick(R.id.orderid_qrcode)
+    public void orderIdClick() {
+        if (!ClickUtils.isFastDoubleClick()) {
+            //弹出选择对话框
+            spinnerDialog.showSpinerDialog();
+        }
+    }
+
+    //初始化 spinnerDialog
+    private void showSpinnerDialog() {
+        orderidBtn.setClickable(true);
+        //这个数据  是由 扫码二维码得到的数据.
+
+        spinnerDialog = new SpinnerDialog<Orderbean>(getActivity(), items, getActivity().getResources().getString(R.string.lookup_order_id));
+        spinnerDialog.bindOnSpinerListener(new OnSpinerItemClick<Orderbean>() {
+
+            @Override
+            public void onClick(Orderbean item, int position) {
+                tv_orderid_content.setText(item.oriderNumber);
+                Order_Id=item.oriderid;
+                //重新请求工序
+                AskForBackgroud();
+            }
+        });
+
+    }
+
+    @Override
+    public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
+
+        switch (view.getId())
+        {
+            case R.id.rightremove_menu:
+                Cancel(position);
+                break;
+            case R.id.rightDetail_menu:
+                Detail(position);
+                break;
+            case R.id.right_menu:
+                StartUp(position);
+                break;
+        }
+    }
+
+    protected static class MyBaseViewHolder extends BaseViewHolder {
+
+        public MyBaseViewHolder(View view) {
+            super(view);
+        }
+    }
+
+    protected InnerHandle Technologyhandler = new InnerHandle((TechnologyExecutionActivity) getActivity()) {
+        @Override
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+
+            if (ValueUtils.IsFirstValueExist(TechnologyBeans)) {
+
+                for (int i = 0; i < TechnologyBeans.size(); i++) {
+                    TechnologyBean technologyBean = TechnologyBeans.get(i);
+                    if (technologyBean.getWorkOrderStatus().equals("执行中")) {
+                        initRecycleViewBg(adapter, technologyBean.getWorkOrderSequence() - 1);
+                    }
+                }
+            }
+        }
+    };
+
+
+    //弱引用 Handle的写法
+    public class InnerHandle extends Handler {
+        private final WeakReference<TechnologyExecutionActivity> wwTimeLineActivityWeakReference;
+
+        public InnerHandle(TechnologyExecutionActivity mActivity){
+            this.wwTimeLineActivityWeakReference=new WeakReference<TechnologyExecutionActivity>(mActivity);
+        }
+    }
+
+    private void AskForBackgroud() {
+
+        ApiWebService.Get_Pro_Working_Main_poid_Json(App.getContextApp(), new ApiWebService.SuccessCall() {
+            @Override
+            public void SuccessBack(String result) {
+                TechnologyBeans = App.getAppGson().fromJson(result, new TypeToken<List<TechnologyBean>>() {
+                }.getType());
+
+                if (ValueUtils.IsFirstValueExist(TechnologyBeans)) {
+                    adapter.setNewData(data);
+
+                    Technologyhandler.postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            Technologyhandler.sendEmptyMessage(1);
+                        }
+                    }, 500);
+
+                }
+                else {
+                    adapter.setEmptyView(notDataView);
+                }
+
+            }
+
+            @Override
+            public void ErrorBack(String error) {
+
+            }
+        }, resultQrcomponent, Order_Id);
+    }
+
+    //点击响应
+    protected void IntentToFragment(int position, View view) {
+
+//        ShowShort(position + "");
+//
+//        TextView textView = (TextView) view.findViewById(R.id.tv_title);
+//
+//        if (!TextUtils.isEmpty(textView.getText()))
+//        {  //调用接口方法 回调给Activity
+//            if (mTechnologyActivityListenter!=null)
+//            {
+//                mTechnologyActivityListenter.OnFragmentItemClick(textView.getText().toString());
+//            }
+//        }
+//        switch (position) {
+//            case 0:
+//
+//                break;
+//            case 1:
+//
+//                break;
+//            case 2:
+//
+//                break;
+//            case 3:
+//
+//                break;
+//            case 4:
+//
+//                break;
+//            case 5:
+//
+//                break;
+//            case 6:
+//
+//                break;
+//        }
+    }
+
+    @Override
+    public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
+        performItemLayoutBg(adapter, view, position);
+        IntentToFragment(position,view);
+    }
+
+    private void performItemLayoutBg(BaseQuickAdapter adapter, View view, int position) {
+//        TechnologSelectColorBg technologSelectColorBg = new TechnologSelectColorBg();
+//        technologSelectColorBg.performItemLayoutopen(view);
+//        int itemCount = adapter.getItemCount();
+//        for (int i = 0; i < itemCount; i++) {
+//            if (i!=position)
+//            {
+//                View byPosition = adapter.getViewByPosition(my_recycle_view, i, R.id.rl_content_layout);
+//                technologSelectColorBg.performItemLayoutClose(view);
+//            }
+//        }
+    }
+
+    private void initRecycleViewBg(BaseQuickAdapter adapter, int position) {
+        View currentView = adapter.getViewByPosition(my_recycle_view, position, R.id.rl_content_layout);
+        SelectColorBg(currentView);
+        currentView.setTag(Color.rgb(51, 138, 185));
+        int itemCount = adapter.getItemCount();
+        for (int i = 0; i < itemCount; i++) {
+            if (i > position) {
+                View byPosition = adapter.getViewByPosition(my_recycle_view, i, R.id.rl_content_layout);
+                UnSelectColorBg(byPosition);
+            }
+            else if (i < position) {
+                View byPosition = adapter.getViewByPosition(my_recycle_view, i, R.id.rl_content_layout);
+                DisableBg(byPosition);
+            }
+            if (i <= position) {
+                View byPosition = adapter.getViewByPosition(my_recycle_view, i, R.id.rlTimeline);
+                SelectLineDotBg(byPosition);
+            }
+            else {
+                View byPosition = adapter.getViewByPosition(my_recycle_view, i, R.id.rlTimeline);
+                UnSelectLineDotBg(byPosition);
+            }
+        }
+    }
+
+
+    protected void DisableBg(View view)
+    {
+        DisablePloy ploy = new TechnologSelectColorBg();
+        ploy.Disablebg(view);
+    }
+
+    protected void UnSelectLineDotBg(View view) {
+        UnSelectPloy ploy = new UnSelectLineDotBg();
+        ploy.UnSelectbg(view);
+    }
+
+    protected void SelectLineDotBg(View view) {
+        SelectPloy ploy = new UnSelectLineDotBg();
+        ploy.selectBg(view);
+    }
+
+    protected void SelectColorBg(View view) {
+        SelectPloy ploy = new TechnologSelectColorBg();
+        ploy.selectBg(view);
+    }
+
+    protected void UnSelectColorBg(View view) {
+        UnSelectPloy ploy = new TechnologSelectColorBg();
+        ploy.UnSelectbg(view);
+    }
+
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        ButterKnife.unbind(this);
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        switch (requestCode) {
+            case RESULT_COMPONENT:
+                QrCodeComponent(resultCode, data);
+                break;
+        }
+    }
+
+    private void QrCodeComponent(int resultCode, Intent data) {
+        if (resultCode == Activity.RESULT_OK) {
+            Bundle bundle = data.getBundleExtra("bundle");
+            String resultQr = bundle.getString("result");
+            int extraPosition = bundle.getInt("position");
+
+            ApiWebService.Get_Pro_Working_Main_poid_byprid_QR_Code_Json(getActivity(), new ApiWebService.SuccessCall() {
+                @Override
+                public void SuccessBack(String result) {
+                    //[{"订单ID":"08776473ea6a4c0ea7a3291d4aa0d359","订单编号":"SCDD-7-201807-0008"}]
+                    String orderID = null;
+                    String orderNumber = null;
+                    try {
+                        JSONArray jsonArray = new JSONArray(result);
+                        Orderbean orderbean;
+                        for (int i=0;i<jsonArray.length();i++)
+                        {
+                            JSONObject jsonObject = jsonArray.getJSONObject(i);
+                            orderID = jsonObject.optString("订单ID", "");
+                            orderNumber = jsonObject.optString("订单编号", "");
+                            orderbean=new Orderbean();
+                            orderbean.oriderid=orderID;
+                            orderbean.oriderNumber=orderNumber;
+                            items.add(orderbean);
+                        }
+                        showSpinnerDialog();
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    } finally {
+                        if (!TextUtils.isEmpty(orderID) && !TextUtils.isEmpty(orderNumber)) {
+                            resultQrcomponent = resultQr;
+                            Order_Id = orderID;
+
+                            //显示textview数值
+                            tv_component_content.setText(resultQr);
+                        }else{
+                            tv_component_content.setText("");
+                        }
+                    }
+                }
+
+                @Override
+                public void ErrorBack(String error) {
+
+                }
+            }, resultQr);
+        }
+    }
+
+    private void StartUp(int position) {
+        ApiWebService.Get_Pro_Working_Main_poid_zx(getActivity(), new ApiWebService.SuccessCall() {
+            @Override
+            public void SuccessBack(String result) {
+
+            }
+
+            @Override
+            public void ErrorBack(String error) {
+
+            }
+        }, TechnologyBeans.get(position).workRouteID, TechnologyBeans.get(position).workOrdersubDirectoryID);
+    }
+
+    private void Cancel(int position)
+    {
+        ApiWebService.Get_Pro_Working_Main_poid_zxf(getActivity(), new ApiWebService.SuccessCall() {
+            @Override
+            public void SuccessBack(String result) {
+
+            }
+
+            @Override
+            public void ErrorBack(String error) {
+
+            }
+        },TechnologyBeans.get(position).workRouteID, TechnologyBeans.get(position).workOrdersubDirectoryID);
+    }
+
+    private void Detail(int position){
+        ApiWebService.Get_Pro_Working_Item_r_poid_Json(getActivity(), new ApiWebService.SuccessCall() {
+            @Override
+            public void SuccessBack(String result) {
+                ArrayList<RelatedDetailBean> beans= App.getAppGson().fromJson(result, new TypeToken<List<RelatedDetailBean>>() {
+                }.getType());
+
+                if (mTechnologyActivityListenter!=null&&ValueUtils.IsFirstValueExist(beans))
+                {
+                    mTechnologyActivityListenter.OnFragmentItemClick(beans);
+                }
+            }
+
+            @Override
+            public void ErrorBack(String error) {
+
+            }
+        },TechnologyBeans.get(position).workOrdersubDirectoryID);
+    }
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        if (context instanceof TechnologyActivityListenter)
+        {
+            mTechnologyActivityListenter=(TechnologyActivityListenter) context;
+        }
+    }
+
+    private TechnologyActivityListenter mTechnologyActivityListenter;
+
+    interface TechnologyActivityListenter {
+        public void OnFragmentItemClick(ArrayList<RelatedDetailBean> title);
+    }
+}
