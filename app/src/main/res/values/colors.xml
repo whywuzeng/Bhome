@@ -129,6 +129,7 @@
     <color name="material_black75">#bf000000</color>
     <color name="material_black80">#cc000000</color>
     <color name="material_black95">#f2000000</color>
+    <color name="material_blue_50">#23B7D7</color>
     <color name="material_blue_100">#afefff</color>
     <color name="material_blue_200">#afbfff</color>
     <color name="material_blue_300">#91a7ff</color>

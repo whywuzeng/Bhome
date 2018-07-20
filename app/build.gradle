@@ -168,6 +168,9 @@ dependencies {
     implementation 'me.gujun.android.taggroup:library:1.4@aar'
     // popdialogwindow
     implementation 'com.github.pinguo-zhouwei:CustomPopwindow:2.1.1'
+    //处理19状态栏
+    implementation 'com.readystatesoftware.systembartint:systembartint:1.0.3'
+
     //内存泄漏
     //    debugImplementation 'com.squareup.leakcanary:leakcanary-android:1.3'
     //    releaseImplementation 'com.squareup.leakcanary:leakcanary-android-no-op:1.3'

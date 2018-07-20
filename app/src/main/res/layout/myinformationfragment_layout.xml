@@ -6,9 +6,6 @@
               android:background="@color/twolitte_gray"
               android:layout_height="match_parent">
 
-    <com.system.bhouse.bhouse.CommonTask.TechnologyExecution.Custom.SpringScrollView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
     <LinearLayout
                   android:orientation="vertical"
                   android:layout_width="match_parent"
@@ -572,7 +569,5 @@
     </LinearLayout>
 
     </LinearLayout>
-
-    </com.system.bhouse.bhouse.CommonTask.TechnologyExecution.Custom.SpringScrollView>
 
 </LinearLayout>

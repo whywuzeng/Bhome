@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+             android:layout_width="match_parent"
+             android:layout_height="wrap_content"
+             xmlns:tools="http://schemas.android.com/tools"
+             tools:showIn="@layout/activity_main"
+             android:background="@color/material_blue_50">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal">
+
+
+        <TextView
+            android:id="@+id/tv_content_jitang"
+            android:paddingRight="6dp"
+            android:paddingLeft="6dp"
+            android:layout_gravity="center_vertical"
+            android:textColor="@color/white"
+            android:textSize="23sp"
+            android:text="每一段不努力的时光，都是对生命的辜负"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+    </LinearLayout>
+
+    <View
+        android:id="@+id/bg_content"
+        android:layout_width="match_parent"
+        android:layout_height="100dp"/>
+
+</FrameLayout>
+
+

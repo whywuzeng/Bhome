@@ -25,8 +25,16 @@ public class IndexViewPager extends ViewPager {
     }
 
     @Override
-    public void scrollTo(int x, int y) {
-        super.scrollTo(x, y);
+    protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
+//        int height = 0;
+//        for (int i = 0; i < getChildCount(); i++) {
+//            View child = getChildAt(i);
+//            child.measure(widthMeasureSpec, MeasureSpec.makeMeasureSpec(0, MeasureSpec.UNSPECIFIED));
+//            int h = child.getMeasuredHeight();
+//            if (h > height) height = h;
+//        }
+//        heightMeasureSpec = MeasureSpec.makeMeasureSpec(height, MeasureSpec.EXACTLY);
+        super.onMeasure(widthMeasureSpec, heightMeasureSpec);
     }
 
     @Override
@@ -46,12 +54,6 @@ public class IndexViewPager extends ViewPager {
     }
 
     @Override
-    public void setCurrentItem(int item) {
-        // TODO Auto-generated method stub
-        super.setCurrentItem(item);
-    }
-
-    @Override
     public boolean onInterceptTouchEvent(MotionEvent arg0) {
         // TODO Auto-generated method stub
         if (isCanScroll) {
@@ -59,6 +61,5 @@ public class IndexViewPager extends ViewPager {
         } else {
             return false;
         }
-
     }
 }

@@ -35,8 +35,6 @@ public class TechnologyBean {
 
     @SerializedName("人员定额")
     public double personStandard;
-    @SerializedName("关联单据")
-    public boolean isAssociated;
     @SerializedName("备注")
     public String beizhu;
     @SerializedName("工序ID")
@@ -84,13 +82,6 @@ public class TechnologyBean {
         this.personStandard = personStandard;
     }
 
-    public boolean isIsAssociated() {
-        return isAssociated;
-    }
-
-    public void setIsAssociated(boolean isAssociated) {
-        this.isAssociated = isAssociated;
-    }
 
     public String getBeizhu() {
         return beizhu;

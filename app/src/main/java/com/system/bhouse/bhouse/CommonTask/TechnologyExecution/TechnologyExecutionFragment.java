@@ -38,6 +38,8 @@ import com.system.bhouse.bhouse.CommonTask.Widget.TimeLineItemTopBottomDecoratio
 import com.system.bhouse.bhouse.R;
 import com.system.bhouse.bhouse.setup.WWCommon.WWBaseFragment;
 import com.system.bhouse.utils.ClickUtils;
+import com.system.bhouse.utils.TenUtils.TimeConstants;
+import com.system.bhouse.utils.TenUtils.TimeUtils;
 import com.system.bhouse.utils.ValueUtils;
 import com.zijunlin.Zxing.Demo.CaptureActivity;
 
@@ -46,6 +48,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.lang.ref.WeakReference;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -143,7 +146,7 @@ public class TechnologyExecutionFragment extends WWBaseFragment implements BaseQ
                 helper.setVisible(R.id.rightDetail_menu,item.isRelateForm);
                 TagGroup tagGroup = (TagGroup) helper.getView(R.id.tag_group);
                 TagGroup tagGroup1 = (TagGroup) helper.getView(R.id.tag_group1);
-                tagGroup.setTags(item.getStartTime());
+                tagGroup.setTags("耗时:"+TimeUtils.getTimeSpan(item.getStartTime(),item.getEndTime(), new SimpleDateFormat("yyyy-MM-dd HH:mm:ss"), TimeConstants.SEC));
                 tagGroup1.setTags(getContextMessage(item.isHang));
 
                 helper.addOnClickListener(R.id.rightremove_menu);

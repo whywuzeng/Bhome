@@ -6,11 +6,6 @@
               android:orientation="vertical"
     >
 
-    <com.system.bhouse.Common.widget.NhorizontalScrollView
-        android:scrollbars="none"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
     <LinearLayout
         android:layout_width="match_parent"
         android:orientation="vertical"
@@ -102,8 +97,6 @@
         </RelativeLayout>
 
     </LinearLayout>
-
-    </com.system.bhouse.Common.widget.NhorizontalScrollView>
 
 
 </LinearLayout>
