@@ -24,6 +24,7 @@ import android.util.Log;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.TextureView;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
@@ -227,6 +228,12 @@ public class MainActivity extends BaseActivity implements  TopMiddleMenu.OnMenuI
      */
     @Bind(R.id.coordinatorlayout)
     CoordinatorLayout coordinatorlayout;
+
+    @Bind(R.id.action_capture)
+    ImageView action_capture;
+
+    @Bind(R.id.my_textureview)
+    TextureView my_textureview;
 
 
 
@@ -489,8 +496,7 @@ public class MainActivity extends BaseActivity implements  TopMiddleMenu.OnMenuI
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_main, menu);
-        return true;
+        return super.onCreateOptionsMenu(menu);
     }
 
     //翻页的条件回调
@@ -791,6 +797,14 @@ public class MainActivity extends BaseActivity implements  TopMiddleMenu.OnMenuI
                 }
 
                 return false;
+            }
+        });
+
+        action_capture.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent1 = new Intent(MainActivity.this, InformationActivity.class);
+                startActivity(intent1);
             }
         });
     }

@@ -44,6 +44,11 @@ public class Scene {
         }
     }
 
+    public void clear()
+    {
+        actors.clear();
+    }
+
     public void setWidth(int width) {
         this.width = width;
     }

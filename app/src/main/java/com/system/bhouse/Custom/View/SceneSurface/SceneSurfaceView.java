@@ -1,6 +1,7 @@
 package com.system.bhouse.Custom.View.SceneSurface;
 
 import android.content.Context;
+import android.graphics.PixelFormat;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.SurfaceHolder;
@@ -37,6 +38,10 @@ public class SceneSurfaceView extends SurfaceView implements SurfaceHolder.Callb
         surfaceHolder = getHolder();
         surfaceHolder.addCallback(this);
 
+//        setZOrderOnTop(true);
+//        setZOrderMediaOverlay(true);
+        getHolder().setFormat(PixelFormat.TRANSLUCENT);
+
         setFocusable(true);
         setFocusableInTouchMode(true);
         this.setKeepScreenOn(true);
@@ -59,7 +64,7 @@ public class SceneSurfaceView extends SurfaceView implements SurfaceHolder.Callb
     public void surfaceCreated(SurfaceHolder holder) {
         Log.e("weather", "surfaceCreated");
         if (renderThread == null) {
-            renderThread = new RenderThread(surfaceHolder, getContext());
+//            renderThread = new RenderThread(surfaceHolder, getContext());
             renderThread.start();
         }
     }

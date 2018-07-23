@@ -11,12 +11,13 @@
         android:layout_height="match_parent"
         android:gravity="center"
         >
-       <com.system.bhouse.Custom.View.SceneSurface.SceneSurfaceView
+       <com.system.bhouse.Custom.View.SceneSurface.SceneTextureView
+           android:id="@+id/my_textureview"
            android:layout_height="match_parent"
            android:layout_width="match_parent"
            >
 
-       </com.system.bhouse.Custom.View.SceneSurface.SceneSurfaceView>
+       </com.system.bhouse.Custom.View.SceneSurface.SceneTextureView>
 
         <TextView
             android:id="@+id/tv_content_jitang"
