@@ -38,10 +38,11 @@ public class SceneTextureView extends TextureView implements TextureView.Surface
     }
 
     private void init() {
-        this.setSurfaceTextureListener(this);
-        setFocusable(true);
-        setFocusableInTouchMode(true);
-        this.setKeepScreenOn(true);
+        setSurfaceTextureListener(this);
+        setOpaque(false);
+//        setFocusable(true);
+//        setFocusableInTouchMode(true);
+//        this.setKeepScreenOn(true);
     }
 
 
@@ -50,7 +51,7 @@ public class SceneTextureView extends TextureView implements TextureView.Surface
         Log.e("weather", "onSurfaceTextureAvailable");
         if (renderThread == null) {
             renderThread = new RenderHandleThread(new Surface(surface), getContext());
-
+            renderThread.updateSize(width,height);
             renderThread.start();
         }
     }
@@ -63,8 +64,10 @@ public class SceneTextureView extends TextureView implements TextureView.Surface
     @Override
     public boolean onSurfaceTextureDestroyed(SurfaceTexture surface) {
 //        renderThread.getRenderHandler().sendEmptyMessage(1);
+
         renderThread.quit();
         renderThread = null;
+
         return true;
     }
 
@@ -89,5 +92,11 @@ public class SceneTextureView extends TextureView implements TextureView.Surface
     protected void onFinishInflate() {
         super.onFinishInflate();
         Log.d("weather", "onFinishInflate");
+    }
+
+    public void DrawLastBg(){
+        if (renderThread!=null&&renderThread.getmReceiver()!=null) {
+            renderThread.getmReceiver().sendEmptyMessage(RenderHandleThread.MSG_CLEAR);
+        }
     }
 }

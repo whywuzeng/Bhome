@@ -24,7 +24,6 @@ import android.util.Log;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.TextureView;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
@@ -39,6 +38,7 @@ import com.readystatesoftware.systembartint.SystemBarTintManager;
 import com.socks.library.KLog;
 import com.system.bhouse.Custom.AppBarStateChangeListener;
 import com.system.bhouse.Custom.ShowDeviceMessageCustomDialog;
+import com.system.bhouse.Custom.View.SceneSurface.SceneTextureView;
 import com.system.bhouse.api.ApiServiceUtils;
 import com.system.bhouse.api.ApiWebService;
 import com.system.bhouse.base.App;
@@ -233,7 +233,7 @@ public class MainActivity extends BaseActivity implements  TopMiddleMenu.OnMenuI
     ImageView action_capture;
 
     @Bind(R.id.my_textureview)
-    TextureView my_textureview;
+    SceneTextureView my_textureview;
 
 
 
@@ -945,6 +945,12 @@ public class MainActivity extends BaseActivity implements  TopMiddleMenu.OnMenuI
         }
     }
 
+    @Override
+    protected void onPause() {
+        super.onPause();
+        my_textureview.DrawLastBg();
+    }
+
     /**
      * AppBar 滑动回调
      */
@@ -960,14 +966,8 @@ public class MainActivity extends BaseActivity implements  TopMiddleMenu.OnMenuI
             //根据偏移百分比 计算透明值
             float scale2 = (float) offset / (scrollRange /2);
             int alpha2 = (int) (255 * scale2);
-            bgToolbarOpen.setBackgroundColor(Color.argb(alpha2, 35, 183, 215));
+//          bgToolbarOpen.setBackgroundColor(Color.argb(alpha2, 35, 183, 215));
             Log.e(TAG, "alpha2: "+alpha2);
-//            if (offset<123) {
-//                bgToolbarOpen.setBackgroundColor(Color.argb(alpha2, 255, 255, 255)); //35,183,215
-//            }else if (offset>305)
-//            {
-//                bgToolbarOpen.setBackgroundColor(Color.argb(alpha2, 255, 255, 255));
-//            }
 
         } else {//当滑动超过一半，收缩状态下toolbar显示内容，根据收缩位置，改变透明值
             toolbarClose.setVisibility(View.VISIBLE);
@@ -978,40 +978,25 @@ public class MainActivity extends BaseActivity implements  TopMiddleMenu.OnMenuI
             Log.e(TAG, "alpha3: "+alpha3);
             bgToolbarClose.setBackgroundColor(Color.argb(alpha3, 35, 183, 215));//变到0 alpha3
 
-//            if (offset>305) {
-//                bgToolbarClose.setBackgroundColor(Color.argb(alpha3, 255, 255, 255)); //35,183,215
-//            }else if (offset<123)
-//            {
-//                bgToolbarClose.setBackgroundColor(Color.argb(alpha3, 255, 255, 255));
-//            }
         }
         //根据偏移百分比计算扫一扫布局的透明度值
         float scale = (float) offset / scrollRange;
         int alpha = (int) (255 * scale);
 
         Log.e(TAG, "onOffsetChanged: "+offset);
-        bgContent.setBackgroundColor(Color.argb(alpha, 255, 255, 255));
-//        if (offset>305) {
-//            bgContent.setBackgroundColor(Color.argb(alpha, 255, 255, 255)); //35,183,215
-//        }else if (offset<260)
-//        {
-//            bgContent.setBackgroundColor(Color.argb(0, 255, 255, 255));
-//        }
+
+//        bgContent.setBackgroundColor(Color.argb(alpha, 255, 255, 255));
+
         AppBarStateChangeListener.State state=AppBarStateChangeListener.State.IDLE;
         if (verticalOffset == 0) {
             if (state != AppBarStateChangeListener.State.EXPANDED) {
                 state = AppBarStateChangeListener.State.EXPANDED;//修改为展开状态
 
-//                bindingView.titleTv.setVisibility(View.GONE);
-//                bindingView.toolbar.setNavigationIcon(R.drawable.nav_icon_white_return);
 
                 getWindow().getDecorView().setSystemUiVisibility(
                         View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN | View.SYSTEM_UI_FLAG_VISIBLE);
             }
         } else if (Math.abs(verticalOffset) >= appBarLayout.getTotalScrollRange()) {
-
-//            bindingView.titleTv.setVisibility(View.VISIBLE);
-//            bindingView.toolbar.setNavigationIcon(R.drawable.nav_icon_return);
 
             state = AppBarStateChangeListener.State.COLLAPSED;//修改为折叠状态
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
@@ -1041,13 +1026,8 @@ public class MainActivity extends BaseActivity implements  TopMiddleMenu.OnMenuI
                 }
                 float alphalight = (255 * scaleLight);
 
-//                bindingView.titleTv.setTextColor(Color.argb((int) alpha, 53,55,58));
-//
-//                bindingView.toolbar.setNavigationIcon(R.drawable.nav_icon_return);
             } else {
 
-//                bindingView.titleTv.setVisibility(View.GONE);
-//                bindingView.toolbar.setNavigationIcon(R.drawable.nav_icon_white_return);
 
             }
         }

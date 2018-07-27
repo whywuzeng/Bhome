@@ -232,4 +232,17 @@
         <item>数量</item>
     </string-array>
 
+    <!--模具分配 分录详情-->
+    <string-array name="module_itemsection_order">
+        <item>物料编码</item>
+        <item>构件二维码</item>
+        <item>物料名称</item>
+        <item>规格型号</item>
+        <item>单位</item>
+        <item>开始日期</item>
+        <item>结束日期</item>
+        <item>模具名称</item>
+        <item>数量</item>
+    </string-array>
+
 </resources>

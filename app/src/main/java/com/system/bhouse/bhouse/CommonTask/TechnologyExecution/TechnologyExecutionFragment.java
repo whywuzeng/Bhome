@@ -3,7 +3,6 @@ package com.system.bhouse.bhouse.CommonTask.TechnologyExecution;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -38,7 +37,6 @@ import com.system.bhouse.bhouse.CommonTask.Widget.TimeLineItemTopBottomDecoratio
 import com.system.bhouse.bhouse.R;
 import com.system.bhouse.bhouse.setup.WWCommon.WWBaseFragment;
 import com.system.bhouse.utils.ClickUtils;
-import com.system.bhouse.utils.TenUtils.TimeConstants;
 import com.system.bhouse.utils.TenUtils.TimeUtils;
 import com.system.bhouse.utils.ValueUtils;
 import com.zijunlin.Zxing.Demo.CaptureActivity;
@@ -143,16 +141,36 @@ public class TechnologyExecutionFragment extends WWBaseFragment implements BaseQ
                 helper.setText(R.id.tv_sub_title, App.Mancompany);
                 SwipeItemLayout layout = (SwipeItemLayout) helper.getView(R.id.swipe_layout);
                 TextView Rightview = (TextView) helper.getView(R.id.right_menu);
+                //关联明细
                 helper.setVisible(R.id.rightDetail_menu,item.isRelateForm);
                 TagGroup tagGroup = (TagGroup) helper.getView(R.id.tag_group);
                 TagGroup tagGroup1 = (TagGroup) helper.getView(R.id.tag_group1);
-                tagGroup.setTags("耗时:"+TimeUtils.getTimeSpan(item.getStartTime(),item.getEndTime(), new SimpleDateFormat("yyyy-MM-dd HH:mm:ss"), TimeConstants.SEC));
-                tagGroup1.setTags(getContextMessage(item.isHang));
+                if (TextUtils.isEmpty(item.getStartTime())||TextUtils.isEmpty(item.getEndTime()))
+                {
+                    tagGroup.setVisibility(View.GONE);
+                }else {
+                    tagGroup.setVisibility(View.VISIBLE);
+                    tagGroup.setTags(String.format("耗时:%s", TimeUtils.getFitTimeSpan(item.getStartTime(), item.getEndTime(), new SimpleDateFormat("yyyy-MM-dd HH:mm:ss"), 3)));
+                    tagGroup1.setTags(getContextMessage(item.isHang,tagGroup1));
+                }
+
+                if (item.getWorkOrderStatus().equals("执行中")) {
+                    SelectColorBg(helper.itemView);
+                    SelectLineDotBg(helper.itemView);
+                }else if(item.getWorkOrderStatus().equals("未开始"))
+                {
+                    UnSelectColorBg(helper.itemView);
+                    UnSelectLineDotBg(helper.itemView);
+                }else if (item.getWorkOrderStatus().equals("已完成"))
+                {
+                    DisableBg(helper.itemView);
+                    SelectLineDotBg(helper.itemView);
+                }
 
                 helper.addOnClickListener(R.id.rightremove_menu);
                 helper.addOnClickListener(R.id.rightDetail_menu);
                 helper.addOnClickListener(R.id.right_menu);
-                //
+
                 layout.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -177,7 +195,7 @@ public class TechnologyExecutionFragment extends WWBaseFragment implements BaseQ
         adapter.setOnItemClickListener(this);
         adapter.setOnItemChildClickListener(this);
         orderidBtn.setClickable(false);
-        //初始化 肯定到时空的
+        //初始化 肯定到是空的
         adapter.setEmptyView(notDataView);
 
         return rootView;
@@ -262,7 +280,8 @@ public class TechnologyExecutionFragment extends WWBaseFragment implements BaseQ
                 for (int i = 0; i < TechnologyBeans.size(); i++) {
                     TechnologyBean technologyBean = TechnologyBeans.get(i);
                     if (technologyBean.getWorkOrderStatus().equals("执行中")) {
-                        initRecycleViewBg(adapter, technologyBean.getWorkOrderSequence() - 1);
+                        View firstcurrentView = adapter.getViewByPosition(my_recycle_view, technologyBean.getWorkOrderSequence() - 2, R.id.rl_content_layout);
+                        DisableRecall(firstcurrentView);
                     }
                 }
             }
@@ -293,13 +312,7 @@ public class TechnologyExecutionFragment extends WWBaseFragment implements BaseQ
                 if (ValueUtils.IsFirstValueExist(TechnologyBeans)) {
                     adapter.setNewData(TechnologyBeans);
 
-                    Technologyhandler.postDelayed(new Runnable() {
-                        @Override
-                        public void run() {
-                            Technologyhandler.sendEmptyMessage(1);
-                        }
-                    }, 500);
-
+                    Technologyhandler.sendEmptyMessageDelayed(1,1000);
                 }
                 else {
                     adapter.setEmptyView(notDataView);
@@ -353,9 +366,11 @@ public class TechnologyExecutionFragment extends WWBaseFragment implements BaseQ
 //        }
     }
 
-    private String getContextMessage(boolean isHang) {
+    private String getContextMessage(boolean isHang, TagGroup tagGroup1) {
         if (isHang) {
+            tagGroup1.submitTag();
             return "挂起";
+//            TagView childAt = tagGroup1.getChildAt(0);
         }
         else {
             return "正常";
@@ -389,21 +404,25 @@ public class TechnologyExecutionFragment extends WWBaseFragment implements BaseQ
 //        }
     }
 
+
+
     private void initRecycleViewBg(BaseQuickAdapter adapter, int position) {
+        //已选中item
         View currentView = adapter.getViewByPosition(my_recycle_view, position, R.id.rl_content_layout);
         SelectColorBg(currentView);
-
+        //已选中上一个Item
         View firstcurrentView = adapter.getViewByPosition(my_recycle_view, position-1, R.id.rl_content_layout);
         DisableRecall(firstcurrentView);
 
-        currentView.setTag(Color.rgb(51, 138, 185));
         int itemCount = adapter.getItemCount();
         for (int i = 0; i < itemCount; i++) {
             if (i > position) {
+                //在已选择的下面Item
                 View byPosition = adapter.getViewByPosition(my_recycle_view, i, R.id.rl_content_layout);
                 UnSelectColorBg(byPosition);
             }
             else if (i < position-1) {
+                //在已选择的上面Item
                 View byPosition = adapter.getViewByPosition(my_recycle_view, i, R.id.rl_content_layout);
                 DisableBg(byPosition);
             }
@@ -579,7 +598,7 @@ public class TechnologyExecutionFragment extends WWBaseFragment implements BaseQ
 
                 if (mTechnologyActivityListenter!=null)
                 {
-                    mTechnologyActivityListenter.OnFragmentItemClick(beans);
+                    mTechnologyActivityListenter.OnFragmentItemClick(resultQrcomponent,Order_Id,beans);
                 }
             }
 
@@ -602,6 +621,6 @@ public class TechnologyExecutionFragment extends WWBaseFragment implements BaseQ
     private TechnologyActivityListenter mTechnologyActivityListenter;
 
     interface TechnologyActivityListenter {
-        public void OnFragmentItemClick(ArrayList<RelatedDetailBean> title);
+         void OnFragmentItemClick(String componentQr,String OrderId,ArrayList<RelatedDetailBean> title);
     }
 }

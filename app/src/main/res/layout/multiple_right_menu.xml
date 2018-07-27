@@ -65,8 +65,10 @@
                     android:id="@+id/rightremove_menu"
                     android:layout_width="@dimen/multiple_btn_with"
                     android:layout_height="match_parent"
-                    android:background="@color/red_FD1543"
+                    android:background="@color/red_62B436"
                     android:drawableTop="@drawable/ic_wrench"
+                    android:textColor="@color/white"
+                    android:visibility="gone"
                     style="@style/multiple_btn"
                     android:text="删除"
                     />
@@ -77,7 +79,8 @@
                     android:layout_height="match_parent"
                     style="@style/multiple_btn"
                     android:drawableTop="@drawable/ic_menu_add"
-                    android:background="@color/bule_3692CE"
+                    android:background="@color/material_blue_60"
+                    android:textColor="@color/white"
                     android:text="新建"
                     />
 
@@ -88,7 +91,7 @@
                     android:background="@drawable/bg_timeline_btn_right_normal"
                     android:drawableTop="@drawable/ic_pencil"
                     style="@style/multiple_btn"
-                    android:text="修改"
+                    android:text="查看"
                     />
 
             </LinearLayout>

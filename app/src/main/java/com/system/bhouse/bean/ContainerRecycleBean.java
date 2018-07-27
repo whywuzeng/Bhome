@@ -69,6 +69,8 @@ public class ContainerRecycleBean implements Parcelable {
     public String ceng;
     @SerializedName("层ID")
     public String cengID;
+    @SerializedName("库位")
+    public String Wid;
     @SerializedName("录入人")
     public String entryPeople;
     @SerializedName("录入时间")

@@ -8,8 +8,10 @@ import android.os.Message;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ListView;
 import android.widget.PopupWindow;
 import android.widget.TextView;
@@ -50,6 +52,8 @@ public class WWBaseActivity extends AppCompatActivity implements StartActivity {
     private ProgressDialog mProgressDialog;
 
     protected int REFRESH_DATA=0x4564654;
+    protected View notDataView;
+    protected View errorView;
 
     protected void listViewAddFootSection(ListView listView) {
         View listViewFooter = getLayoutInflater().inflate(R.layout.divide_bottom_15, listView, false);
@@ -59,6 +63,20 @@ public class WWBaseActivity extends AppCompatActivity implements StartActivity {
     protected void listViewAddHeaderSection(ListView listView) {
         View listViewHeader = getLayoutInflater().inflate(R.layout.divide_top_15, listView, false);
         listView.addHeaderView(listViewHeader, null, false);
+    }
+
+    protected void recycleViewAddEmptySection(RecyclerView mRecyclerView)
+    {
+        notDataView = getLayoutInflater().inflate(R.layout.taskcomon_empty_view, (ViewGroup) mRecyclerView.getParent(), false);
+        errorView = getLayoutInflater().inflate(R.layout.taskcommon_error_view,(ViewGroup)mRecyclerView.getParent(), false);
+    }
+
+    protected void setErrorViewContext(String errorMsg)
+    {
+        if (errorView!=null){
+            TextView viewById = (TextView) errorView.findViewById(R.id.tv_msg_context);
+            viewById.setText(errorMsg);
+        }
     }
 
     /**
@@ -81,7 +99,6 @@ public class WWBaseActivity extends AppCompatActivity implements StartActivity {
             mProgressDialog.hide();
         }
     }
-
 
     protected void showProgressBar(boolean show, int message) {
         String s = getString(message);
@@ -110,6 +127,8 @@ public class WWBaseActivity extends AppCompatActivity implements StartActivity {
     {
 
     }
+
+
 
     //模拟等待
     protected final void exampleLoadingFinishe(final String msg)

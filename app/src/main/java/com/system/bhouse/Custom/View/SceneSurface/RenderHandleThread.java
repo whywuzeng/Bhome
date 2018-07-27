@@ -3,6 +3,7 @@ package com.system.bhouse.Custom.View.SceneSurface;
 import android.content.Context;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
+import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Rect;
 import android.os.Handler;
@@ -24,6 +25,10 @@ public class RenderHandleThread extends HandlerThread implements Handler.Callbac
 
     public static final int MSG_START = 100 << 4;
     public static final int MSG_CLEAR = 200 << 4;
+
+    public Handler getmReceiver() {
+        return mReceiver;
+    }
 
     private Handler mReceiver;
 
@@ -72,6 +77,7 @@ public class RenderHandleThread extends HandlerThread implements Handler.Callbac
     public boolean quit() {
         // 退出前清除所有的消息
         mRunning = false;
+//        surfaceHolder=null;
         mReceiver.removeCallbacksAndMessages(null);
         return super.quit();
     }
@@ -89,6 +95,11 @@ public class RenderHandleThread extends HandlerThread implements Handler.Callbac
                 }
                 break;
             case MSG_CLEAR:
+                //最后绘制一次背景
+                if (!mRunning) return true;
+                if (scene.getWidth() != 0 && scene.getHeight() != 0) {
+                    drawBg();
+                }
                 scene.clear();
                 break;
         }
@@ -100,14 +111,46 @@ public class RenderHandleThread extends HandlerThread implements Handler.Callbac
         return true;
     }
 
-    private void draw() {
+    private void drawBg() {
+        try {
+            if (surfaceHolder!=null) {
+                synchronized (surfaceHolder) {
+                    if (surfaceHolder!=null)
+                    {
+                        Canvas canvas = surfaceHolder.lockCanvas(mSurfaceRect);
+                        if (canvas != null&&surfaceHolder!=null&&surfaceHolder.isValid()&&!mRunning) {
+                            canvas.drawColor(Color.rgb(35, 183, 215));
+                            surfaceHolder.unlockCanvasAndPost(canvas);
+                        }
+                    }
+                }
+            }
 
-        Canvas canvas = surfaceHolder.lockCanvas(mSurfaceRect);
-        if (canvas != null&&surfaceHolder!=null&&surfaceHolder.isValid()&&mRunning) {
-//            canvas.drawColor(Color.TRANSPARENT, PorterDuff.Mode.CLEAR);
-            scene.draw(canvas);
-            surfaceHolder.unlockCanvasAndPost(canvas);
+        } catch (Exception e) {
+            e.printStackTrace();
         }
+
+
+    }
+
+    private void draw() {
+        try {
+        if (surfaceHolder!=null) {
+            synchronized (surfaceHolder) {
+                if (surfaceHolder!=null)
+                {
+                    Canvas canvas = surfaceHolder.lockCanvas(mSurfaceRect);
+                    if (canvas != null&&surfaceHolder!=null&&surfaceHolder.isValid()&&mRunning) {
+                        scene.draw(canvas);
+                        surfaceHolder.unlockCanvasAndPost(canvas);
+                    }
+                }
+            }
+        }
+
+    } catch (Exception e) {
+        e.printStackTrace();
+    }
     }
 
     public void updateSize(int width, int height) {

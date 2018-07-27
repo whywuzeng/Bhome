@@ -163,10 +163,10 @@ public class TechnologyExecutionActivity extends WWBackActivity implements Techn
 
 
     @Override
-    public void OnFragmentItemClick(ArrayList<RelatedDetailBean> title) {
+    public void OnFragmentItemClick(String componentQr,String OrderId,ArrayList<RelatedDetailBean> title) {
         if (mItemTouchListener!=null)
         {
-            mItemTouchListener.sendRelatedDetail(title);
+            mItemTouchListener.sendRelatedDetail(componentQr,OrderId,title);
             viewPager.setCurrentItem(1);
         }
     }

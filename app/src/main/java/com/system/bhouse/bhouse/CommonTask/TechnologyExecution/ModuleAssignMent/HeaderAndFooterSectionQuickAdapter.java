@@ -1,9 +1,11 @@
-package com.system.bhouse.bhouse.CommonTask.TransportationManagement.adapter;
+package com.system.bhouse.bhouse.CommonTask.TechnologyExecution.ModuleAssignMent;
 
 import android.view.ViewGroup;
 import android.widget.Filter;
 
-import com.system.bhouse.bhouse.CommonTask.TransportationManagement.adapter.entity.SectionEntity;
+import com.system.bhouse.bhouse.CommonTask.TechnologyExecution.ModuleAssignMent.Bean.HeaderAndFooterSectionEntity;
+import com.system.bhouse.bhouse.CommonTask.TransportationManagement.adapter.BaseQuickAdapter;
+import com.system.bhouse.bhouse.CommonTask.TransportationManagement.adapter.BaseViewHolder;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -11,11 +13,13 @@ import java.util.List;
 /**
  * https://github.com/CymChad/BaseRecyclerViewAdapterHelper
  */
-public abstract class BaseSectionQuickAdapter<T extends SectionEntity, K extends BaseViewHolder> extends BaseQuickAdapter<T, K> implements android.widget.Filterable{
+public abstract class HeaderAndFooterSectionQuickAdapter<T extends HeaderAndFooterSectionEntity, K extends BaseViewHolder> extends BaseQuickAdapter<T, K> implements android.widget.Filterable{
 
 
     protected int mSectionHeadResId;
     protected static final int SECTION_HEADER_VIEW = 0x00000444;
+    protected int mSectionFooterResId;
+    protected static final int SECTION_FOOTER_VIEW= 0x00000333;
 
     /**
      * Same as QuickAdapter#QuickAdapter(Context,int) but with
@@ -25,27 +29,40 @@ public abstract class BaseSectionQuickAdapter<T extends SectionEntity, K extends
      * @param layoutResId      The layout resource id of each item.
      * @param data             A new list is created out of this one to avoid mutable list
      */
-    public BaseSectionQuickAdapter(int layoutResId, int sectionHeadResId, List<T> data) {
+    public HeaderAndFooterSectionQuickAdapter(int layoutResId, int sectionHeadResId,int sectionFooterResId, List<T> data) {
         super(layoutResId, data);
         this.mSectionHeadResId = sectionHeadResId;
+        this.mSectionFooterResId=sectionFooterResId;
     }
 
     @Override
     protected int getDefItemViewType(int position) {
-        return mData.get(position).isHeader ? SECTION_HEADER_VIEW : 0;
+        if (mData.get(position).isHeader)
+        {
+            return SECTION_HEADER_VIEW;
+        }else if (mData.get(position).isFooter)
+        {
+            return SECTION_FOOTER_VIEW;
+        }else {
+            return 0;
+        }
     }
 
     @Override
     protected K onCreateDefViewHolder(ViewGroup parent, int viewType) {
-        if (viewType == SECTION_HEADER_VIEW)
+        if (viewType == SECTION_HEADER_VIEW) {
             return createBaseViewHolder(getItemView(mSectionHeadResId, parent));
+        }else if (viewType == SECTION_FOOTER_VIEW)
+        {
+            return createBaseViewHolder(getItemView(mSectionFooterResId,parent));
+        }
 
         return super.onCreateDefViewHolder(parent, viewType);
     }
 
     @Override
     protected boolean isFixedViewType(int type) {
-        return super.isFixedViewType(type) || type == SECTION_HEADER_VIEW;
+        return super.isFixedViewType(type) || type == SECTION_HEADER_VIEW ||type ==SECTION_FOOTER_VIEW;
     }
 
     @Override
@@ -55,6 +72,9 @@ public abstract class BaseSectionQuickAdapter<T extends SectionEntity, K extends
                 setFullSpan(holder);
                 convertHead(holder, getItem(position - getHeaderLayoutCount()));
                 break;
+            case SECTION_FOOTER_VIEW:
+                setFullSpan(holder);
+                converFooter(holder,getItem(position -getHeaderLayoutCount() -getFooterLayoutCount()));
             default:
                 super.onBindViewHolder(holder, position);
                 break;
@@ -62,6 +82,8 @@ public abstract class BaseSectionQuickAdapter<T extends SectionEntity, K extends
     }
 
     protected abstract void convertHead(K helper, T item);
+
+    protected abstract void converFooter(K helper , T item);
 
     private ArrayList<T> copyBProBOMs= new ArrayList<>();
 
@@ -153,6 +175,7 @@ public abstract class BaseSectionQuickAdapter<T extends SectionEntity, K extends
     public interface FilterRefreshListener<T>{
         //是否包含 prefixString
         public String getIsFilter(String prefixString, T value);
+        //更新数据位置
         public void onAdapterRefresh();
     }
 

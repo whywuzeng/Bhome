@@ -31,6 +31,8 @@ import rx.android.schedulers.AndroidSchedulers;
 public abstract class BaseContentMessageActivity extends WWBackActivity {
 
     protected Dialog bottomDialog;
+    private TextView tvQrcode;
+
     /**
      * show1 展示 dialog
      */
@@ -50,7 +52,7 @@ public abstract class BaseContentMessageActivity extends WWBackActivity {
         TextView tvCheck = (TextView) contentView.findViewById(R.id.tv_check);
         TextView tvFanCheck = (TextView) contentView.findViewById(R.id.tv_fanCheck);
         TextView tvDelete = (TextView)contentView.findViewById(R.id.tv_delete);
-        TextView tvQrcode = (TextView)contentView.findViewById(R.id.tv_qrcode);
+        tvQrcode = (TextView)contentView.findViewById(R.id.tv_qrcode);
 
         llCheck.setVisibility(mStatusBean.getBean().visCheckBtn?View.VISIBLE:View.GONE);
         llModify.setVisibility(mStatusBean.getBean().visModifyBtn?View.VISIBLE:View.GONE);
@@ -65,7 +67,7 @@ public abstract class BaseContentMessageActivity extends WWBackActivity {
         }).debounce(350, TimeUnit.MILLISECONDS).observeOn(AndroidSchedulers.mainThread()).subscribe(V -> {
             L.e("double click");
             bottomDialog.dismiss();
-            tvQrcodeAction();
+            tvQrcodeAction(tvQrcode);
         });
 
 
@@ -75,7 +77,7 @@ public abstract class BaseContentMessageActivity extends WWBackActivity {
         }).debounce(350, TimeUnit.MILLISECONDS).observeOn(AndroidSchedulers.mainThread()).subscribe(V -> {
             L.e("double click");
             bottomDialog.dismiss();
-            tvDeleteAction();
+            tvDeleteAction(tvDelete);
         });
 
 
@@ -85,12 +87,12 @@ public abstract class BaseContentMessageActivity extends WWBackActivity {
         }).debounce(350, TimeUnit.MILLISECONDS).observeOn(AndroidSchedulers.mainThread()).subscribe(V -> {
             L.e("double click");
             bottomDialog.dismiss();
-            tvFanCheckAction();
+            tvFanCheckAction(tvFanCheck);
         });
 
 
         tvModify.setOnClickListener(v -> {
-            tvModifyCheckAction();
+            tvModifyAction(tvModify);
         });
 
         Observable.create(subscriber -> {
@@ -99,7 +101,7 @@ public abstract class BaseContentMessageActivity extends WWBackActivity {
         }).debounce(350, TimeUnit.MILLISECONDS).observeOn(AndroidSchedulers.mainThread()).subscribe(V -> {
             L.e("double click");
             bottomDialog.dismiss();
-            tvSubmitAction();
+            tvSubmitActionforList(tvSubmit);
         });
 
 
@@ -109,7 +111,7 @@ public abstract class BaseContentMessageActivity extends WWBackActivity {
         }).debounce(350, TimeUnit.MILLISECONDS).observeOn(AndroidSchedulers.mainThread()).subscribe(V -> {
             L.e("double click");
             bottomDialog.dismiss();
-            tvCheckAction();
+            tvCheckAction(tvCheck);
         });
 
 
@@ -122,17 +124,21 @@ public abstract class BaseContentMessageActivity extends WWBackActivity {
         bottomDialog.show();
     }
 
-   protected abstract void tvQrcodeAction();
+    protected void setTvQrcodeContext(String text){
+        tvQrcode.setText(text);
+    }
 
-    protected abstract void tvDeleteAction();
+   protected abstract void tvQrcodeAction(TextView tvQrcode);
 
-    protected abstract void tvFanCheckAction();
+    protected abstract void tvDeleteAction(TextView tvDelete);
 
-    protected abstract void tvModifyCheckAction();
+    protected abstract void tvFanCheckAction(TextView tvFanCheck);
 
-    protected abstract void tvSubmitAction();
+    protected abstract void tvModifyAction(TextView tvModify);
 
-    protected abstract void tvCheckAction();
+    protected abstract void tvSubmitActionforList(TextView tvSubmit);
+
+    protected abstract void tvCheckAction(TextView tvCheck);
 
     protected boolean isVisBottom(RecyclerView recyclerView){
         LinearLayoutManager layoutManager = (LinearLayoutManager) recyclerView.getLayoutManager();

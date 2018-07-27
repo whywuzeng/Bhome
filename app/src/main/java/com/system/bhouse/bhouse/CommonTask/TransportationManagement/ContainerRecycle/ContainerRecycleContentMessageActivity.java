@@ -6,7 +6,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.PersistableBundle;
-import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.helper.ItemTouchHelper;
@@ -26,6 +25,7 @@ import com.system.bhouse.base.App;
 import com.system.bhouse.base.StatusBean;
 import com.system.bhouse.base.SubmitStatusBeanImpl;
 import com.system.bhouse.bean.ContainerRecycleBean;
+import com.system.bhouse.bean.wareHouseBean;
 import com.system.bhouse.bhouse.CommonTask.adapter.TreeWidget.TreeRecyclerAdapter;
 import com.system.bhouse.bhouse.CommonTask.adapter.TreeWidget.base.ViewHolder;
 import com.system.bhouse.bhouse.CommonTask.adapter.TreeWidget.item.GroupItem;
@@ -36,7 +36,7 @@ import com.system.bhouse.bhouse.CommonTask.utils.ComTaskContentItemSectionItemTo
 import com.system.bhouse.bhouse.R;
 import com.system.bhouse.bhouse.setup.WWCommon.WWBackActivity;
 import com.system.bhouse.bhouse.setup.utils.LabelNumPickerDialog;
-import com.system.bhouse.ui.sectioned.SectionedRecyclerViewAdapter;
+import com.system.bhouse.utils.ClickUtils;
 import com.system.bhouse.utils.TenUtils.L;
 import com.system.bhouse.utils.TenUtils.T;
 import com.zijunlin.Zxing.Demo.CaptureActivity;
@@ -115,19 +115,6 @@ public class ContainerRecycleContentMessageActivity extends WWBackActivity imple
 
         mRecyclerViewAdapter = new MyTaskContentAdapter();
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
-
-        GridLayoutManager manager = new GridLayoutManager(this, 1);
-        manager.setSpanSizeLookup(new GridLayoutManager.SpanSizeLookup() {
-            @Override
-            public int getSpanSize(int position) {
-                switch (mRecyclerViewAdapter.getSectionItemViewType(position)) {
-                    case SectionedRecyclerViewAdapter.VIEW_TYPE_HEADER:
-                        return 0;
-                    default:
-                        return 1;
-                }
-            }
-        });
 
         listView.setLayoutManager(linearLayoutManager);
 
@@ -270,6 +257,16 @@ public class ContainerRecycleContentMessageActivity extends WWBackActivity imple
             }
             viewModels.add(viewModel);
 
+            viewModel = new SortChildItem.ViewModel();
+            viewModel.name = "仓库";
+            viewModel.value = this.comTaskBeans.get(0).Wid;
+            viewModel.isQrcodeBtn=true;
+            viewModel.key = "Wid";
+            if (mStatus.isNewStatus() || mStatus.isModifyStatus()) {
+                viewModel.isClick = true;
+            }
+            viewModels.add(viewModel);
+
             viewModel=new SortChildItem.ViewModel();
             viewModel.name="车牌号";
             viewModel.value= this.comTaskBeans.get(0).getLicensePlate();
@@ -383,6 +380,11 @@ public class ContainerRecycleContentMessageActivity extends WWBackActivity imple
             intent.putExtra("position",holder.getAdapterPosition());
             startActivityForResult(intent,REQUST_QRCODE);
 
+        }else if (data.name.equals("仓库"))
+        {
+            Intent intent = new Intent(ContainerRecycleContentMessageActivity.this, CaptureActivity.class);
+            intent.putExtra("position",holder.getAdapterPosition());
+            startActivityForResult(intent, REQUST_QRCODE);
         }
         else if (data.name.equals("业务日期")) {
             CommonDateTimePickerFragment commonDateTimePickerFragment = new CommonDateTimePickerFragment();
@@ -495,7 +497,7 @@ public class ContainerRecycleContentMessageActivity extends WWBackActivity imple
                         mRecyclerViewAdapter.notifyDataSetChanged();
 
                         getDateRefresh(comTaskBeans.get(0).container, extraPosition, "货柜");
-                        getDateRefresh(comTaskBeans.get(0).licensePlate,extraPosition+1,"车牌号");
+                        getDateRefresh(comTaskBeans.get(0).licensePlate,extraPosition+2,"车牌号");
                     }
 
                     @Override
@@ -503,6 +505,29 @@ public class ContainerRecycleContentMessageActivity extends WWBackActivity imple
 
                     }
                 }, resultQr, comTaskBeans.get(0).cartrips);
+            }else if (extraPosition ==4)
+            {
+                //获取仓库位数据
+                ApiWebService.B_Get_Ware_house(this, new ApiWebService.SuccessCall() {
+                    @Override
+                    public void SuccessBack(String result) {
+
+                        ArrayList<wareHouseBean> carNo = App.getAppGson().fromJson(result, new TypeToken<List<wareHouseBean>>() {
+                        }.getType());
+                        if (carNo.isEmpty()) {
+                            T.showShort(ContainerRecycleContentMessageActivity.this, getResources().getString(R.string.Qrcode_result));
+                            return;
+                        }
+                        comTaskBeans.get(0).Wid = carNo.get(0).getWareHouseName();
+                        getDateRefresh(carNo.get(0).getWareHouseName(), extraPosition, "仓库");
+                    }
+
+                    @Override
+                    public void ErrorBack(String error) {
+
+                    }
+                },resultQr);
+
             }
         }
     }
@@ -656,6 +681,13 @@ public class ContainerRecycleContentMessageActivity extends WWBackActivity imple
             for (ContainerRecycleBean receBean : comTaskBeans) {
                 receBean.licensePlate = viewModel.value;
             }
+        }else if (viewModel.name.equals("仓库"))
+        {
+            if (viewModel.value==null||!viewModel.value.equals(date))
+                viewModel.value = date;
+            for (ContainerRecycleBean receBean : comTaskBeans) {
+                receBean.Wid = viewModel.value;
+            }
         }
         headerProperties.put(viewModel.key,viewModel.value);
         treeItem.setData(viewModel);
@@ -671,7 +703,6 @@ public class ContainerRecycleContentMessageActivity extends WWBackActivity imple
      * 请求数据
      */
     private void testData() {
-
         ApiWebService.Get_Sale_Order_Car_ContainerView_Json(this, new ApiWebService.SuccessCall() {
             @Override
             public void SuccessBack(String result) {
@@ -689,7 +720,9 @@ public class ContainerRecycleContentMessageActivity extends WWBackActivity imple
 
             @Override
             public void ErrorBack(String error) {
-
+                comTaskBeans.add(new ContainerRecycleBean());
+                mRecyclerViewAdapter.notifyDataSetChanged();
+                TopListViewInit();
             }
         }, HId);
         //上个result id 值
@@ -966,7 +999,7 @@ public class ContainerRecycleContentMessageActivity extends WWBackActivity imple
         }
         int size = this.comTaskBeans.size();
         String[][] billtable = null;
-        billtable = new String[size][19];
+        billtable = new String[size][20];
         for (int i = 0; i < size; i++) {
             ContainerRecycleBean confirmationReceBean = comTaskBeans.get(i);
 
@@ -989,6 +1022,7 @@ public class ContainerRecycleContentMessageActivity extends WWBackActivity imple
             billtable[i][16] = confirmationReceBean.projectID;
             billtable[i][17] = confirmationReceBean.dongID;
             billtable[i][18] = confirmationReceBean.cengID;
+            billtable[i][19] = confirmationReceBean.Wid;
         }
         if (mStatus.isNewStatus()) {
 
@@ -1109,7 +1143,8 @@ public class ContainerRecycleContentMessageActivity extends WWBackActivity imple
     @OptionsItem
     protected final void action_operat_status() {
         Observable<Object> objectObservable = Observable.create(subscriber -> {
-            show1();
+            if (!ClickUtils.isFastDoubleClickTime(1000))
+             show1();
         });
         Observable observableMobileKey = ApiWebService.Get_KeyTimestr(App.MobileKey);
         observableMobileKey.concatWith(objectObservable).subscribe(new Subscriber() {

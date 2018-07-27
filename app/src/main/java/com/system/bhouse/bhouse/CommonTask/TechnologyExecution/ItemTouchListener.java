@@ -13,5 +13,5 @@ import java.util.ArrayList;
  */
 
 public interface ItemTouchListener {
-    void sendRelatedDetail(ArrayList<RelatedDetailBean> bean);
+    void sendRelatedDetail(String componentQr, String orderId, ArrayList<RelatedDetailBean> bean);
 }

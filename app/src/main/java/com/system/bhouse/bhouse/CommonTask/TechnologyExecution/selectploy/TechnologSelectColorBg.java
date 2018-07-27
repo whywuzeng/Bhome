@@ -19,6 +19,8 @@ import com.system.bhouse.bhouse.R;
  */
 
 public class TechnologSelectColorBg implements SelectPloy,UnSelectPloy,DisablePloy,DisableRecallPloy {
+
+    //已选中item Bg
     @Override
     public void selectBg(View view) {
         if (view==null)
@@ -79,6 +81,11 @@ public class TechnologSelectColorBg implements SelectPloy,UnSelectPloy,DisablePl
         }
         RelativeLayout rel = (RelativeLayout) view.findViewById(R.id.rl_content_layout);
         RelativeLayout relativeLayout_view_bg= (RelativeLayout)view.findViewById(R.id.relativeLayout_view_bg);
+        DrawableCenterTextView rightremove_menu = (DrawableCenterTextView) view.findViewById(R.id.rightremove_menu);
+
+        DrawableCenterTextView right_menu = (DrawableCenterTextView) view.findViewById(R.id.right_menu);
+        rightremove_menu.setVisibility(View.GONE);
+        right_menu.setVisibility(View.GONE);
         Drawable drawable = App.getContextApp().getResources().getDrawable(R.drawable.bg_timeline_btn_disable);
         rel.setBackground(drawable);
         relativeLayout_view_bg.setBackground(drawable);
@@ -107,7 +114,7 @@ public class TechnologSelectColorBg implements SelectPloy,UnSelectPloy,DisablePl
     }
 
     /**
-     * 单独给 启动工序 上一个 撤回工序 做的界面
+     * 单独给 启动工序 上一个 撤回工序 做的界面  //已选中上一个Item
      * @param view
      */
     @Override

@@ -3084,6 +3084,586 @@ Get_Sale_Order_Car_shf(string scid, string addPer, int gsmid, int property, bool
         return getNetworkService(mContext,call,request);
     }
 
+    /**
+     接口名称：获取模具分配单详细信息
+     接口地址：http://192.168.11.96:7785/Service1.asmx
+     接口函数：
+     Get_Production_order_MouldView_Json(string p_moid_r, int gsmid, int property, bool IsSubtitle)
+     */
+    public static Subscription Get_Production_order_MouldView_Json(final Context mContext, final SuccessCall call,String p_moid_r)
+    {
+        String methodName="Get_Production_order_MouldView_Json";
+        SoapObject request = new SoapObject(NAMESPACE, methodName);
+        request.addProperty("p_moid_r",p_moid_r);
+        request.addProperty("gsmid",App.GSMID);
+        request.addProperty("property",App.Property);
+        request.addProperty("IsSubtitle",App.IsSub);
+        return getNetworkService(mContext,call,request);
+    }
+
+    /**
+     * 接口名称：获取模具分配单编号
+     接口地址：http://192.168.11.96:7785/Service1.asmx
+     接口函数：
+     Get_Production_order_Mould_po_Number(int gsmid, int property, bool IsSubtitle)
+     */
+    public static Subscription Get_Production_order_Mould_po_Number(final Context mContext, final SuccessCall call )
+    {
+        String methodName="Get_Production_order_Mould_po_Number";
+        SoapObject request = new SoapObject(NAMESPACE, methodName);
+        request.addProperty("gsmid",App.GSMID);
+        request.addProperty("property",App.Property);
+        request.addProperty("IsSubtitle",App.IsSub);
+        return getNetworkService(mContext,call,request);
+    }
+    /**
+     * 接口名称：根据生产订单和二维码获取需要分配模具的构件信息
+     接口地址：http://192.168.11.96:7785/Service1.asmx
+     接口函数：
+     Get_Production_order_Mould_bypoid_Json(string poid, string prid_QR_Code, int gsmid, int property, bool IsSubtitle)
+     */
+    public static Subscription Get_Production_order_Mould_bypoid_Json(final Context mContext, final SuccessCall call,String poid,String prid_QR_Code)
+    {
+        String methodName="Get_Production_order_Mould_bypoid_Json";
+        SoapObject request = new SoapObject(NAMESPACE, methodName);
+        request.addProperty("poid",poid);
+        request.addProperty("prid_QR_Code",prid_QR_Code);
+        request.addProperty("gsmid",App.GSMID);
+        request.addProperty("property",App.Property);
+        request.addProperty("IsSubtitle",App.IsSub);
+        return getNetworkServiceNoProgress(mContext,call,request);
+    }
+
+    /**
+     * 接口名称：根据订单ID与开始和结束日期获取可分配的模具信息
+     接口地址：http://192.168.11.96:7785/Service1.asmx
+     接口函数：
+     Get_Production_order_Mould_Mouldfp_Json(string poid, string prid_QR_Code, string prid, DateTime startdate, DateTime enddate, int gsmid, int property, bool IsSubtitle)
+     */
+    public static Subscription Get_Production_order_Mould_Mouldfp_Json(final Context mContext, final SuccessCall call,String poid, String prid_QR_Code,String prid,String startdate, String enddate)
+    {
+        String methodName="Get_Production_order_Mould_Mouldfp_Json";
+        SoapObject request = new SoapObject(NAMESPACE, methodName);
+        request.addProperty("poid",poid);
+        request.addProperty("prid_QR_Code",prid_QR_Code);
+        request.addProperty("prid",prid);
+        request.addProperty("startdate",startdate);
+        request.addProperty("enddate",enddate);
+        request.addProperty("gsmid",App.GSMID);
+        request.addProperty("property",App.Property);
+        request.addProperty("IsSubtitle",App.IsSub);
+        return getNetworkService(mContext,call,request);
+    }
+
+    /**
+     * 接口名称：新增模具分配信息
+     接口地址：http://192.168.11.96:7785/Service1.asmx
+     接口函数：
+     Get_Production_order_Mould_Add(string billtablestr, int gsmid, int property, bool IsSubtitle, string Keystring, string KeysTimetring, string username)
+     */
+    public static Subscription Get_Production_order_Mould_Add(final Context mContext, final SuccessCall call,String[][] billtablestr)
+    {
+
+        String s1=null;
+        try {
+            JSONArray jsonArray = new JSONArray(billtablestr);
+            s1 = jsonArray.toString();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        String methodName="Get_Production_order_Mould_Add";
+        SoapObject request = new SoapObject(NAMESPACE, methodName);
+        request.addProperty("billtablestr",s1);
+        request.addProperty("gsmid",App.GSMID);
+        request.addProperty("property",App.Property);
+        request.addProperty("IsSubtitle",App.IsSub);
+        request.addProperty("Keystring",App.MobileKey);
+        request.addProperty("KeysTimetring",App.KeyTimestring);
+        request.addProperty("username",App.USER_INFO);
+        return getNetworkService(mContext,call,request);
+    }
+
+    /**
+     * 接口名称：修改模具分配信息
+     接口地址：http://192.168.11.96:7785/Service1.asmx
+     接口函数：
+     Get_Production_order_Mould_Eedit(string billtablestr, string p_moid, int gsmid, int property, bool IsSubtitle, string Keystring, string KeysTimetring, string username)
+     */
+    public static Subscription Get_Production_order_Mould_Eedit(final Context mContext, final SuccessCall call,String[][] billtablestr,String p_moid)
+    {
+
+        String s1=null;
+        try {
+            JSONArray jsonArray = new JSONArray(billtablestr);
+            s1 = jsonArray.toString();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        String methodName="Get_Production_order_Mould_Eedit";
+        SoapObject request = new SoapObject(NAMESPACE, methodName);
+        request.addProperty("billtablestr",s1);
+        request.addProperty("p_moid",p_moid);
+        request.addProperty("gsmid",App.GSMID);
+        request.addProperty("property",App.Property);
+        request.addProperty("IsSubtitle",App.IsSub);
+        request.addProperty("Keystring",App.MobileKey);
+        request.addProperty("KeysTimetring",App.KeyTimestring);
+        request.addProperty("username",App.USER_INFO);
+        return getNetworkService(mContext,call,request);
+    }
+
+    /**
+     * 接口名称：删除模具分配信息
+     接口地址：http://192.168.11.96:7785/Service1.asmx
+     接口函数：
+     Get_Production_order_Mould_Del(string p_moid, string addPer, int gsmid, int property, bool IsSubtitle, string Keystring, string KeysTimetring, string username)
+     */
+    public static Subscription Get_Production_order_Mould_Del(final Context mContext, final SuccessCall call,String p_moid)
+    {
+        String methodName="Get_Production_order_Mould_Del";
+        SoapObject request = new SoapObject(NAMESPACE, methodName);
+        request.addProperty("p_moid",p_moid);
+        request.addProperty("addPer", App.menname);
+        request.addProperty("gsmid",App.GSMID);
+        request.addProperty("property",App.Property);
+        request.addProperty("IsSubtitle",App.IsSub);
+        request.addProperty("Keystring",App.MobileKey);
+        request.addProperty("KeysTimetring",App.KeyTimestring);
+        request.addProperty("username",App.USER_INFO);
+        return getNetworkService(mContext,call,request);
+    }
+
+    /**
+     * 接口名称：审核模具分配信息
+     接口地址：http://192.168.11.96:7785/Service1.asmx
+     接口函数：
+     Get_Production_order_Mould_sh(string p_moid, string addPer, int gsmid, int property, bool IsSubtitle, string Keystring, string KeysTimetring, string username)
+     */
+    public static Subscription Get_Production_order_Mould_sh(final Context mContext, final SuccessCall call,String p_moid)
+    {
+        String methodName="Get_Production_order_Mould_sh";
+        SoapObject request = new SoapObject(NAMESPACE, methodName);
+        request.addProperty("p_moid",p_moid);
+        request.addProperty("addPer", App.menname);
+        request.addProperty("gsmid",App.GSMID);
+        request.addProperty("property",App.Property);
+        request.addProperty("IsSubtitle",App.IsSub);
+        request.addProperty("Keystring",App.MobileKey);
+        request.addProperty("KeysTimetring",App.KeyTimestring);
+        request.addProperty("username",App.USER_INFO);
+        return getNetworkService(mContext,call,request);
+    }
+
+    /**
+     * 接口名称：反审核模具分配信息
+     接口地址：http://192.168.11.96:7785/Service1.asmx
+     接口函数：
+     Get_Production_order_Mould_shf(string p_moid, string addPer, int gsmid, int property, bool IsSubtitle, string Keystring, string KeysTimetring, string username)
+     */
+    public static Subscription Get_Production_order_Mould_shf(final Context mContext, final SuccessCall call,String p_moid)
+    {
+        String methodName="Get_Production_order_Mould_shf";
+        SoapObject request = new SoapObject(NAMESPACE, methodName);
+        request.addProperty("p_moid",p_moid);
+        request.addProperty("addPer", App.menname);
+        request.addProperty("gsmid",App.GSMID);
+        request.addProperty("property",App.Property);
+        request.addProperty("IsSubtitle",App.IsSub);
+        request.addProperty("Keystring",App.MobileKey);
+        request.addProperty("KeysTimetring",App.KeyTimestring);
+        request.addProperty("username",App.USER_INFO);
+        return getNetworkService(mContext,call,request);
+    }
+
+    /**
+     * 台车分配单
+     接口名称：获取台车分配单详细信息
+     接口地址：http://192.168.11.96:7785/Service1.asmx
+     接口函数：
+     Get_Production_order_TrolleyView_Json(string p_Tid_r, int gsmid, int property, bool IsSubtitle)
+     */
+    public static Subscription Get_Production_order_TrolleyView_Json(final Context mContext, final SuccessCall call,String p_Tid_r)
+    {
+        String methodName="Get_Production_order_TrolleyView_Json";
+        SoapObject request = new SoapObject(NAMESPACE, methodName);
+        request.addProperty("p_Tid_r",p_Tid_r);
+        request.addProperty("gsmid",App.GSMID);
+        request.addProperty("property",App.Property);
+        request.addProperty("IsSubtitle",App.IsSub);
+        return getNetworkService(mContext,call,request);
+    }
+
+    /**
+     * 接口名称：获取台车分配单编号
+     接口地址：http://192.168.11.96:7785/Service1.asmx
+     接口函数：
+     Get_Production_order_Trolleypo_Number(int gsmid, int property, bool IsSubtitle)
+     */
+    public static Subscription Get_Production_order_Trolleypo_Number(final Context mContext, final SuccessCall call )
+    {
+        String methodName="Get_Production_order_Trolleypo_Number";
+        SoapObject request = new SoapObject(NAMESPACE, methodName);
+        request.addProperty("gsmid",App.GSMID);
+        request.addProperty("property",App.Property);
+        request.addProperty("IsSubtitle",App.IsSub);
+        return getNetworkService(mContext,call,request);
+    }
+
+    /**
+     * 接口名称：根据生产订单和二维码获取需要分配台车的构件模具信息
+     接口地址：http://192.168.11.96:7785/Service1.asmx
+     接口函数：
+     Get_Production_order_Trolley_bypoid_Json(string poid, string prid_QR_Code, int gsmid, int property, bool IsSubtitle)
+     */
+    public static Subscription Get_Production_order_Trolley_bypoid_Json(final Context mContext, final SuccessCall call,String poid,String prid_QR_Code)
+    {
+        String methodName="Get_Production_order_Trolley_bypoid_Json";
+        SoapObject request = new SoapObject(NAMESPACE, methodName);
+        request.addProperty("poid",poid);
+        request.addProperty("prid_QR_Code",prid_QR_Code);
+        request.addProperty("gsmid",App.GSMID);
+        request.addProperty("property",App.Property);
+        request.addProperty("IsSubtitle",App.IsSub);
+        return getNetworkService(mContext,call,request);
+    }
+
+    /**
+     * 接口名称：根据订单ID与开始和结束日期获取可分配的台车信息
+     接口地址：http://192.168.11.96:7785/Service1.asmx
+     接口函数：
+     Get_Production_order_Trolley_Trolleyfp_Json(string poid, string prid_QR_Code, string Moid, DateTime startdate, DateTime enddate, int gsmid, int property, bool IsSubtitle)
+     */
+    public static Subscription Get_Production_order_Trolley_Trolleyfp_Json(final Context mContext, final SuccessCall call,String poid, String prid_QR_Code,String prid,String startdate, String enddate)
+    {
+        String methodName="Get_Production_order_Trolley_Trolleyfp_Json";
+        SoapObject request = new SoapObject(NAMESPACE, methodName);
+        request.addProperty("poid",poid);
+        request.addProperty("prid_QR_Code",prid_QR_Code);
+        request.addProperty("prid",prid);
+        request.addProperty("startdate",startdate);
+        request.addProperty("enddate",enddate);
+        request.addProperty("gsmid",App.GSMID);
+        request.addProperty("property",App.Property);
+        request.addProperty("IsSubtitle",App.IsSub);
+        return getNetworkService(mContext,call,request);
+    }
+
+    /**
+     * 接口名称：新增台车分配信息
+     接口地址：http://192.168.11.96:7785/Service1.asmx
+     接口函数：
+     Get_Production_order_Trolley_Add(string billtablestr, int gsmid, int property, bool IsSubtitle, string Keystring, string KeysTimetring, string username)
+     */
+    public static Subscription Get_Production_order_Trolley_Add(final Context mContext, final SuccessCall call,String[][] billtablestr)
+    {
+
+        String s1=null;
+        try {
+            JSONArray jsonArray = new JSONArray(billtablestr);
+            s1 = jsonArray.toString();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        String methodName="Get_Production_order_Trolley_Add";
+        SoapObject request = new SoapObject(NAMESPACE, methodName);
+        request.addProperty("billtablestr",s1);
+        request.addProperty("gsmid",App.GSMID);
+        request.addProperty("property",App.Property);
+        request.addProperty("IsSubtitle",App.IsSub);
+        request.addProperty("Keystring",App.MobileKey);
+        request.addProperty("KeysTimetring",App.KeyTimestring);
+        request.addProperty("username",App.USER_INFO);
+        return getNetworkService(mContext,call,request);
+    }
+
+    /**
+     * 接口名称：修改台车分配信息
+     接口地址：http://192.168.11.96:7785/Service1.asmx
+     接口函数：
+     Get_Production_order_Trolley_Eedit(string billtablestr, string p_Tid, int gsmid, int property, bool IsSubtitle, string Keystring, string KeysTimetring, string username)
+     */
+    public static Subscription Get_Production_order_Trolley_Eedit(final Context mContext, final SuccessCall call,String[][] billtablestr,String p_Tid)
+    {
+
+        String s1=null;
+        try {
+            JSONArray jsonArray = new JSONArray(billtablestr);
+            s1 = jsonArray.toString();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        String methodName="Get_Production_order_Trolley_Eedit";
+        SoapObject request = new SoapObject(NAMESPACE, methodName);
+        request.addProperty("billtablestr",s1);
+        request.addProperty("p_Tid",p_Tid);
+        request.addProperty("gsmid",App.GSMID);
+        request.addProperty("property",App.Property);
+        request.addProperty("IsSubtitle",App.IsSub);
+        request.addProperty("Keystring",App.MobileKey);
+        request.addProperty("KeysTimetring",App.KeyTimestring);
+        request.addProperty("username",App.USER_INFO);
+        return getNetworkService(mContext,call,request);
+    }
+
+    /**
+     * 接口名称：删除台车分配信息
+     接口地址：http://192.168.11.96:7785/Service1.asmx
+     接口函数：
+     Get_Production_order_Trolley_Del(string p_Tid, string addPer, int gsmid, int property, bool IsSubtitle, string Keystring, string KeysTimetring, string username)
+     */
+    public static Subscription Get_Production_order_Trolley_Del(final Context mContext, final SuccessCall call,String p_Tid)
+    {
+        String methodName="Get_Production_order_Trolley_Del";
+        SoapObject request = new SoapObject(NAMESPACE, methodName);
+        request.addProperty("p_Tid",p_Tid);
+        request.addProperty("addPer", App.menname);
+        request.addProperty("gsmid",App.GSMID);
+        request.addProperty("property",App.Property);
+        request.addProperty("IsSubtitle",App.IsSub);
+        request.addProperty("Keystring",App.MobileKey);
+        request.addProperty("KeysTimetring",App.KeyTimestring);
+        request.addProperty("username",App.USER_INFO);
+        return getNetworkService(mContext,call,request);
+    }
+
+    /**
+     * 接口名称：审核台车分配信息
+     接口地址：http://192.168.11.96:7785/Service1.asmx
+     接口函数：
+     Get_Production_order_Trolley_sh(string p_Tid, string addPer, int gsmid, int property, bool IsSubtitle, string Keystring, string KeysTimetring, string username)
+     */
+    public static Subscription Get_Production_order_Trolley_sh(final Context mContext, final SuccessCall call,String p_Tid)
+    {
+        String methodName="Get_Production_order_Trolley_sh";
+        SoapObject request = new SoapObject(NAMESPACE, methodName);
+        request.addProperty("p_Tid",p_Tid);
+        request.addProperty("addPer", App.menname);
+        request.addProperty("gsmid",App.GSMID);
+        request.addProperty("property",App.Property);
+        request.addProperty("IsSubtitle",App.IsSub);
+        request.addProperty("Keystring",App.MobileKey);
+        request.addProperty("KeysTimetring",App.KeyTimestring);
+        request.addProperty("username",App.USER_INFO);
+        return getNetworkService(mContext,call,request);
+    }
+
+    /**
+     * 接口名称：反审核台车分配信息
+     接口地址：http://192.168.11.96:7785/Service1.asmx
+     接口函数：
+     Get_Production_order_Trolley_shf(string p_Tid, string addPer, int gsmid, int property, bool IsSubtitle, string Keystring, string KeysTimetring, string username)
+     */
+    public static Subscription Get_Production_order_Trolley_shf(final Context mContext, final SuccessCall call,String p_Tid)
+    {
+        String methodName="Get_Production_order_Trolley_shf";
+        SoapObject request = new SoapObject(NAMESPACE, methodName);
+        request.addProperty("p_Tid",p_Tid);
+        request.addProperty("addPer", App.menname);
+        request.addProperty("gsmid",App.GSMID);
+        request.addProperty("property",App.Property);
+        request.addProperty("IsSubtitle",App.IsSub);
+        request.addProperty("Keystring",App.MobileKey);
+        request.addProperty("KeysTimetring",App.KeyTimestring);
+        request.addProperty("username",App.USER_INFO);
+        return getNetworkService(mContext,call,request);
+    }
+
+    /**
+     * 人工分配单
+     接口名称：获取人工分配单详细信息
+     接口地址：http://192.168.11.96:7785/Service1.asmx
+     接口函数：
+     Get_Production_order_PerView_Json(string Per_id, int gsmid, int property, bool IsSubtitle)
+     */
+    public static Subscription Get_Production_order_PerView_Json(final Context mContext, final SuccessCall call,String Per_id)
+    {
+        String methodName="Get_Production_order_PerView_Json";
+        SoapObject request = new SoapObject(NAMESPACE, methodName);
+        request.addProperty("Per_id",Per_id);
+        request.addProperty("gsmid",App.GSMID);
+        request.addProperty("property",App.Property);
+        request.addProperty("IsSubtitle",App.IsSub);
+        return getNetworkService(mContext,call,request);
+    }
+
+    /**
+     * 接口名称：获取人工分配单编号
+     接口地址：http://192.168.11.96:7785/Service1.asmx
+     接口函数：
+     Get_Production_order_Per_po_Number(int gsmid, int property, bool IsSubtitle)
+     */
+    public static Subscription Get_Production_order_Per_po_Number(final Context mContext, final SuccessCall call )
+    {
+        String methodName="Get_Production_order_Per_po_Number";
+        SoapObject request = new SoapObject(NAMESPACE, methodName);
+        request.addProperty("gsmid",App.GSMID);
+        request.addProperty("property",App.Property);
+        request.addProperty("IsSubtitle",App.IsSub);
+        return getNetworkService(mContext,call,request);
+    }
+
+    /**
+     接口名称：根据生产订单和二维码，工序资源ID获取需要分配的人工分配信息
+     接口地址：http://192.168.11.96:7785/Service1.asmx
+     接口函数：
+     Get_Production_order_Per_bypoid_Json(string poid, string prid_QR_Code, string pwid_i_r_p, int gsmid, int property, bool IsSubtitle)
+     */
+    public static Subscription Get_Production_order_Per_bypoid_Json(final Context mContext, final SuccessCall call,String poid,String prid_QR_Code,String pwid_i_r_p)
+    {
+        String methodName="Get_Production_order_Per_bypoid_Json";
+        SoapObject request = new SoapObject(NAMESPACE, methodName);
+        request.addProperty("poid",poid);
+        request.addProperty("prid_QR_Code",prid_QR_Code);
+        request.addProperty("pwid_i_r_p",pwid_i_r_p);
+        request.addProperty("gsmid",App.GSMID);
+        request.addProperty("property",App.Property);
+        request.addProperty("IsSubtitle",App.IsSub);
+        return getNetworkService(mContext,call,request);
+    }
+
+    /**
+     *
+     接口名称：查询职员信息
+     接口地址：http://192.168.11.96:7785/Service1.asmx
+     接口函数：
+     Get_Production_order_Per_Member_Json(int rowcount,string mennumber,int gsmid, int property, bool IsSubtitle)传入参数：
+     */
+    public static Subscription Get_Production_order_Per_Member_Json(final Context mContext, final SuccessCall call,int rowcount,String mennumber )
+    {
+        String methodName="Get_Production_order_Per_Member_Json";
+        SoapObject request = new SoapObject(NAMESPACE, methodName);
+        request.addProperty("rowcount",rowcount);
+        request.addProperty("mennumber",mennumber);
+        request.addProperty("gsmid",App.GSMID);
+        request.addProperty("property",App.Property);
+        request.addProperty("IsSubtitle",App.IsSub);
+        return getNetworkService(mContext,call,request);
+    }
+
+    /**
+     * 接口名称：新增人工分配信息
+     接口地址：http://192.168.11.96:7785/Service1.asmx
+     接口函数：
+     Get_Production_order_Per_Add(string billtablestr, int gsmid, int property, bool IsSubtitle, string Keystring, string KeysTimetring, string username)
+     */
+    public static Subscription Get_Production_order_Per_Add(final Context mContext, final SuccessCall call,String[][] billtablestr)
+    {
+
+        String s1=null;
+        try {
+            JSONArray jsonArray = new JSONArray(billtablestr);
+            s1 = jsonArray.toString();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        String methodName="Get_Production_order_Per_Add";
+        SoapObject request = new SoapObject(NAMESPACE, methodName);
+        request.addProperty("billtablestr",s1);
+        request.addProperty("gsmid",App.GSMID);
+        request.addProperty("property",App.Property);
+        request.addProperty("IsSubtitle",App.IsSub);
+        request.addProperty("Keystring",App.MobileKey);
+        request.addProperty("KeysTimetring",App.KeyTimestring);
+        request.addProperty("username",App.USER_INFO);
+        return getNetworkService(mContext,call,request);
+    }
+
+    /**
+     * 接口名称：修改人工分配信息
+     接口地址：http://192.168.11.96:7785/Service1.asmx
+     接口函数：
+     Get_Production_order_Per_Eedit(string billtablestr, string Per_id, int gsmid, int property, bool IsSubtitle, string Keystring, string KeysTimetring, string username)
+     */
+    public static Subscription Get_Production_order_Per_Eedit(final Context mContext, final SuccessCall call,String[][] billtablestr,String Per_id)
+    {
+
+        String s1=null;
+        try {
+            JSONArray jsonArray = new JSONArray(billtablestr);
+            s1 = jsonArray.toString();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        String methodName="Get_Production_order_Per_Eedit";
+        SoapObject request = new SoapObject(NAMESPACE, methodName);
+        request.addProperty("billtablestr",s1);
+        request.addProperty("Per_id",Per_id);
+        request.addProperty("gsmid",App.GSMID);
+        request.addProperty("property",App.Property);
+        request.addProperty("IsSubtitle",App.IsSub);
+        request.addProperty("Keystring",App.MobileKey);
+        request.addProperty("KeysTimetring",App.KeyTimestring);
+        request.addProperty("username",App.USER_INFO);
+        return getNetworkService(mContext,call,request);
+    }
+
+
+    /**
+     * 接口名称：删除人工分配信息
+     接口地址：http://192.168.11.96:7785/Service1.asmx
+     接口函数：
+     Get_Production_order_Per_Del(string Per_id, string addPer, int gsmid, int property, bool IsSubtitle, string Keystring, string KeysTimetring, string username)
+     */
+    public static Subscription Get_Production_order_Per_Del(final Context mContext, final SuccessCall call,String Per_id)
+    {
+        String methodName="Get_Production_order_Per_Del";
+        SoapObject request = new SoapObject(NAMESPACE, methodName);
+        request.addProperty("Per_id",Per_id);
+        request.addProperty("addPer", App.menname);
+        request.addProperty("gsmid",App.GSMID);
+        request.addProperty("property",App.Property);
+        request.addProperty("IsSubtitle",App.IsSub);
+        request.addProperty("Keystring",App.MobileKey);
+        request.addProperty("KeysTimetring",App.KeyTimestring);
+        request.addProperty("username",App.USER_INFO);
+        return getNetworkService(mContext,call,request);
+    }
+
+    /**
+     * 接口名称：审核人工分配信息
+     接口地址：http://192.168.11.96:7785/Service1.asmx
+     接口函数：
+     Get_Production_order_Per_sh(string Per_id, string addPer, int gsmid, int property, bool IsSubtitle, string Keystring, string KeysTimetring, string username)s
+     */
+    public static Subscription Get_Production_order_Per_sh(final Context mContext, final SuccessCall call,String Per_id)
+    {
+        String methodName="Get_Production_order_Per_sh";
+        SoapObject request = new SoapObject(NAMESPACE, methodName);
+        request.addProperty("Per_id",Per_id);
+        request.addProperty("addPer", App.menname);
+        request.addProperty("gsmid",App.GSMID);
+        request.addProperty("property",App.Property);
+        request.addProperty("IsSubtitle",App.IsSub);
+        request.addProperty("Keystring",App.MobileKey);
+        request.addProperty("KeysTimetring",App.KeyTimestring);
+        request.addProperty("username",App.USER_INFO);
+        return getNetworkService(mContext,call,request);
+    }
+
+    /**
+     * 接口名称：反审核人工分配信息
+     接口地址：http://192.168.11.96:7785/Service1.asmx
+     接口函数：
+     Get_Production_order_Per_shf(string Per_id, string addPer, int gsmid, int property, bool IsSubtitle, string Keystring, string KeysTimetring, string username)
+     */
+    public static Subscription Get_Production_order_Per_shf(final Context mContext, final SuccessCall call,String Per_id)
+    {
+        String methodName="Get_Production_order_Per_shf";
+        SoapObject request = new SoapObject(NAMESPACE, methodName);
+        request.addProperty("Per_id",Per_id);
+        request.addProperty("addPer", App.menname);
+        request.addProperty("gsmid",App.GSMID);
+        request.addProperty("property",App.Property);
+        request.addProperty("IsSubtitle",App.IsSub);
+        request.addProperty("Keystring",App.MobileKey);
+        request.addProperty("KeysTimetring",App.KeyTimestring);
+        request.addProperty("username",App.USER_INFO);
+        return getNetworkService(mContext,call,request);
+    }
+
 
     /**
      * //小型的接口
@@ -3127,6 +3707,7 @@ Get_Sale_Order_Car_shf(string scid, string addPer, int gsmid, int property, bool
         },request);
     }
 
+     //联合请求
     //根据要先请求 KeyString 得到KeyTimeString
 
     public static void SettingsKeyNetWork(ObjectSuccessCall call) {

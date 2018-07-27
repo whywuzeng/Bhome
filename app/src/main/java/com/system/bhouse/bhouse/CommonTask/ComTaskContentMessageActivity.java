@@ -10,6 +10,7 @@ import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import com.google.gson.reflect.TypeToken;
 import com.system.bhouse.Custom.ShowDeviceMessageCustomDialog;
@@ -731,7 +732,7 @@ public class ComTaskContentMessageActivity extends BaseContentMessageActivity im
     }
 
 
-    protected void tvQrcodeAction() {
+    protected void tvQrcodeAction(TextView tvQrcode) {
         ApiWebService.Get_Hois_Req_QR_Code_Create(this, new ApiWebService.SuccessCall() {
             @Override
             public void SuccessBack(String result) {
@@ -752,7 +753,7 @@ public class ComTaskContentMessageActivity extends BaseContentMessageActivity im
         super.onPause();
     }
 
-    protected void tvSubmitAction(){
+    protected void tvSubmitActionforList(TextView tvSubmit){
         if (TextUtils.isEmpty(idValue.get("projectName"))) {
             T.showShort(this, "项目为空不能提交");
             return;
@@ -836,7 +837,7 @@ public class ComTaskContentMessageActivity extends BaseContentMessageActivity im
         },billtable, App.GSMID, App.Property, App.IsSub, App.MobileKey, App.KeyTimestring, App.USER_INFO);
     }
 
-    protected void tvCheckAction(){
+    protected void tvCheckAction(TextView tvCheck){
 
         ApiWebService.Get_Hois_Req_sh(this, new ApiWebService.SuccessCall() {
             @Override
@@ -853,7 +854,7 @@ public class ComTaskContentMessageActivity extends BaseContentMessageActivity im
         },idValue.get("ID"), App.USER_INFO, App.GSMID, App.Property, App.IsSub, App.MobileKey, App.KeyTimestring, App.USER_INFO);
     }
 
-    protected void tvFanCheckAction(){
+    protected void tvFanCheckAction(TextView tvFanCheck){
         ApiWebService.Get_Hois_Req_shf(this, new ApiWebService.SuccessCall() {
             @Override
             public void SuccessBack(String result) {
@@ -870,11 +871,11 @@ public class ComTaskContentMessageActivity extends BaseContentMessageActivity im
     }
 
     @Override
-    protected void tvModifyCheckAction() {
+    protected void tvModifyAction(TextView tvModify) {
 
     }
 
-    protected void tvDeleteAction(){
+    protected void tvDeleteAction(TextView tvDelete){
         ApiWebService.Get_Hois_Req_Del(this, new ApiWebService.SuccessCall() {
             @Override
             public void SuccessBack(String result) {

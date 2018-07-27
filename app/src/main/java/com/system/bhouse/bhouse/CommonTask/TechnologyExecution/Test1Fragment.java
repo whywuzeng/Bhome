@@ -5,16 +5,21 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 
+import com.system.bhouse.api.ApiWebService;
 import com.system.bhouse.base.App;
+import com.system.bhouse.base.CheckStatusBeanImpl;
+import com.system.bhouse.base.StatusBean;
+import com.system.bhouse.base.SubmitStatusBeanImpl;
 import com.system.bhouse.bhouse.CommonTask.TechnologyExecution.BaseFragment.SwipeItemLayout;
+import com.system.bhouse.bhouse.CommonTask.TechnologyExecution.ModuleAssignMent.ModuleAssignMentContentMessageActivity_;
 import com.system.bhouse.bhouse.CommonTask.TechnologyExecution.entity.RelatedDetailBean;
 import com.system.bhouse.bhouse.CommonTask.TransportationManagement.adapter.BaseQuickAdapter;
 import com.system.bhouse.bhouse.CommonTask.TransportationManagement.adapter.BaseViewHolder;
 import com.system.bhouse.bhouse.CommonTask.Widget.TimeLineItemTopBottomDecoration;
 import com.system.bhouse.bhouse.R;
 import com.system.bhouse.bhouse.setup.WWCommon.LazyFragment;
+import com.system.bhouse.config.Const;
 import com.system.bhouse.utils.ValueUtils;
 
 import java.util.ArrayList;
@@ -30,7 +35,7 @@ import butterknife.Bind;
  * com.system.bhouse.bhouse.CommonTask.TechnologyExecution
  */
 
-public class Test1Fragment extends LazyFragment implements ItemTouchListener{
+public class Test1Fragment extends LazyFragment implements ItemTouchListener, BaseQuickAdapter.OnItemChildClickListener {
 
     @Bind(R.id.my_recycle_view)
     RecyclerView my_recycle_view;
@@ -45,6 +50,11 @@ public class Test1Fragment extends LazyFragment implements ItemTouchListener{
     private View notDataView;
     private View errorView;
     private ArrayList<RelatedDetailBean> bean;
+    private StatusBean mStatusBean;
+
+    private String componentQr;
+
+    private String orderId;
 
     //初始化布局
     @Override
@@ -54,6 +64,8 @@ public class Test1Fragment extends LazyFragment implements ItemTouchListener{
 
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity());
         my_recycle_view.setLayoutManager(linearLayoutManager);
+
+        mStatusBean=new StatusBean();
 
         my_recycle_view.addItemDecoration(new TimeLineItemTopBottomDecoration());
 
@@ -67,10 +79,17 @@ public class Test1Fragment extends LazyFragment implements ItemTouchListener{
                 helper.setText(R.id.tv_sub_title, App.Mancompany);
                 if (item.getDocumentStatus().equals("已完成")) {
                     helper.setBackgroundRes(R.id.relative_bg, R.drawable.bg_timeline_btn_disable);
+
                 }else{
                     helper.setBackgroundRes(R.id.relative_bg, R.drawable.bg_timeline_btn_normal);
                 }
-                TextView Rightview = (TextView) helper.getView(R.id.right_menu);
+                helper.setGone(R.id.right_menu,item.getDocumentStatus().equals("已完成"));
+
+                helper.setGone(R.id.left_menu,item.getDocumentStatus().equals(""));
+
+                helper.addOnClickListener(R.id.right_menu);
+                helper.addOnClickListener(R.id.left_menu);
+
                 SwipeItemLayout layout = (SwipeItemLayout) helper.getView(R.id.swipe_layout);
 
                 layout.setOnClickListener(new View.OnClickListener() {
@@ -85,6 +104,7 @@ public class Test1Fragment extends LazyFragment implements ItemTouchListener{
                     }
                 });
 
+
 //                if (Rightview != null) {
 //                    Rightview.setOnClickListener(v -> {
 ////                        mItemTouchListener.onRightMenuClick("right " + helper.getAdapterPosition());
@@ -94,11 +114,16 @@ public class Test1Fragment extends LazyFragment implements ItemTouchListener{
             }
         };
         my_recycle_view.setAdapter(adapter);
+        adapter.setOnItemChildClickListener(this);
+
     }
 
     @Override
-    public void sendRelatedDetail(ArrayList<RelatedDetailBean> bean) {
+    public void sendRelatedDetail(String componentQr, String orderId, ArrayList<RelatedDetailBean> bean) {
+        this.componentQr=componentQr;
+        this.orderId=orderId;
         this.bean = bean;
+
     }
 
     @Override
@@ -110,6 +135,50 @@ public class Test1Fragment extends LazyFragment implements ItemTouchListener{
         }else {
             adapter.setNewData(this.bean);
             adapter.setEmptyView(notDataView);
+        }
+
+    }
+
+    /**
+     * 删除 查看 修改 三个按钮的调用
+     * @param adapter
+     * @param view     The view whihin the ItemView that was clicked
+     * @param position The position of the view int the adapter
+     */
+    @Override
+    public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
+        switch (view.getId())
+        {
+            //查看
+            case R.id.right_menu:
+               if (this.bean.get(position).getDocumentStatus().equals(Const.Completed_STATUS))
+               {
+                    //审核状态
+                   CheckStatusBeanImpl checkStatusBean = new CheckStatusBeanImpl();
+                   checkStatusBean.setVisCheckFBtn(true);
+                   mStatusBean.setBean(checkStatusBean);
+                   mStatusBean.setLookStatus(true);
+               }
+                ModuleAssignMentContentMessageActivity_.intent(this).HId(this.bean.get(position).getSoutceID()).mStatus(mStatusBean).start();
+                break;
+
+            case R.id.left_menu:
+                //新建
+                ApiWebService.Get_Production_order_Mould_po_Number(getActivity(), new ApiWebService.SuccessCall() {
+                    @Override
+                    public void SuccessBack(String result) {
+                        StatusBean statusBean = new StatusBean();
+                        statusBean.setBean(new SubmitStatusBeanImpl().setVisSubmitBtn(true).setVisQRBtn(true));
+                        statusBean.setNewStatus(true);
+                        ModuleAssignMentContentMessageActivity_.intent(getActivity()).HId("").receiptHnumber(result).componentQr(componentQr).orderId(orderId).mStatus(statusBean).start();
+                    }
+
+                    @Override
+                    public void ErrorBack(String error) {
+
+                    }
+                });
+                break;
         }
     }
 

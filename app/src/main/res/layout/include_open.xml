@@ -16,7 +16,6 @@
            android:layout_height="match_parent"
            android:layout_width="match_parent"
            >
-
        </com.system.bhouse.Custom.View.SceneSurface.SceneTextureView>
 
         <TextView
@@ -24,7 +23,8 @@
             android:paddingRight="6dp"
             android:paddingLeft="6dp"
             android:textColor="@color/white"
-            android:layout_centerInParent="true"
+            android:layout_alignParentBottom="true"
+            android:layout_marginBottom="30dp"
             android:textSize="23sp"
             android:text="每一段不努力的时光，都是对生命的辜负"
             android:layout_width="wrap_content"

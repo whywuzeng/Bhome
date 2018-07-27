@@ -38,9 +38,9 @@ public class CloudLeft extends Actor {
         if (!isInit) {
             Log.d("weather", "cloud init");
             initPositionX = width * 0.039F;
-            initPositionY = height * 0.69F;
+            initPositionY = height * 0.25F;
             frame = BitmapFactory.decodeResource(context.getResources(), R.drawable.fine_day_cloud1);
-            box.set(0, 0, frame.getWidth(), frame.getHeight());
+            box.set(0, 0, frame.getWidth(), frame.getHeight());//图片大小
             matrix.reset();
             matrix.setScale(2f, 2f);
             matrix.mapRect(targetBox, box);
@@ -49,7 +49,7 @@ public class CloudLeft extends Actor {
             return;
         }
         //移动
-        matrix.postTranslate(0.5F, 0);
+        matrix.postTranslate(0.05F, 0);
         //边界处理
         matrix.mapRect(targetBox, box);
         if (targetBox.left > width) {
