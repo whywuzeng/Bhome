@@ -32,12 +32,15 @@ public abstract class BaseContentMessageActivity extends WWBackActivity {
 
     protected Dialog bottomDialog;
     private TextView tvQrcode;
+    private LinearLayout llQrcodeAdd;
+    private TextView tvQrcodeAdd;
+    private StatusBean mStatusBean;
 
     /**
      * show1 展示 dialog
      */
     protected void show1(StatusBean mStatusBean) {
-
+        this.mStatusBean=mStatusBean;
         bottomDialog = new Dialog(this, R.style.BottomDialog);
         View contentView = LayoutInflater.from(this).inflate(R.layout.taskmessage_dialog_content_normal, null);
         bottomDialog.setContentView(contentView);
@@ -46,6 +49,7 @@ public abstract class BaseContentMessageActivity extends WWBackActivity {
         LinearLayout llCheck = (LinearLayout) contentView.findViewById(R.id.ll_check);
         LinearLayout llFanCheck = (LinearLayout) contentView.findViewById(R.id.ll_fanCheck);
         LinearLayout llQrcode = (LinearLayout) contentView.findViewById(R.id.ll_qrcode);
+         llQrcodeAdd =(LinearLayout)contentView.findViewById(R.id.ll_qrcode_add);
 
         TextView tvModify = (TextView) contentView.findViewById(R.id.tv_modify);
         TextView tvSubmit = (TextView) contentView.findViewById(R.id.tv_submit);
@@ -53,13 +57,24 @@ public abstract class BaseContentMessageActivity extends WWBackActivity {
         TextView tvFanCheck = (TextView) contentView.findViewById(R.id.tv_fanCheck);
         TextView tvDelete = (TextView)contentView.findViewById(R.id.tv_delete);
         tvQrcode = (TextView)contentView.findViewById(R.id.tv_qrcode);
+        tvQrcodeAdd = (TextView)contentView.findViewById(R.id.tv_qrcode_add);
 
-        llCheck.setVisibility(mStatusBean.getBean().visCheckBtn?View.VISIBLE:View.GONE);
-        llModify.setVisibility(mStatusBean.getBean().visModifyBtn?View.VISIBLE:View.GONE);
-        llFanCheck.setVisibility(mStatusBean.getBean().visCheckFBtn?View.VISIBLE:View.GONE);
-        tvDelete.setVisibility(mStatusBean.getBean().visDeleteBtn?View.VISIBLE:View.GONE);
-        llQrcode.setVisibility(mStatusBean.getBean().visQRBtn?View.VISIBLE:View.GONE);
-        llSubmit.setVisibility(mStatusBean.getBean().visSubmitBtn?View.VISIBLE:View.GONE);
+        tvQrcodeAdd.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (mSetOnAddItemClickListener!=null)
+                {
+                    mSetOnAddItemClickListener.onAddItemClick(v);
+                }
+                bottomDialog.dismiss();
+            }
+        });
+
+        ShowPolicy(mStatusBean, llModify, llSubmit, llCheck, llFanCheck, llQrcode, tvDelete);
+        /**
+         * 增加的qrAdd item条目 产线分配
+         */
+
 
         Observable.create(subscriber -> {
             tvQrcode.setOnClickListener(v ->{subscriber.onNext(v);
@@ -124,8 +139,43 @@ public abstract class BaseContentMessageActivity extends WWBackActivity {
         bottomDialog.show();
     }
 
-    protected void setTvQrcodeContext(String text){
+    /**
+     *  用于子类 重写 Policy方法
+     * @param mStatusBean
+     * @param llModify
+     * @param llSubmit
+     * @param llCheck
+     * @param llFanCheck
+     * @param llQrcode
+     * @param tvDelete
+     */
+    protected void ShowPolicy(StatusBean mStatusBean, LinearLayout llModify, LinearLayout llSubmit, LinearLayout llCheck, LinearLayout llFanCheck, LinearLayout llQrcode, TextView tvDelete) {
+
+        llCheck.setVisibility(mStatusBean.getBean().visCheckBtn? View.VISIBLE:View.GONE);
+        llModify.setVisibility(mStatusBean.getBean().visModifyBtn?View.VISIBLE:View.GONE);
+        llFanCheck.setVisibility(mStatusBean.getBean().visCheckFBtn?View.VISIBLE:View.GONE);
+        tvDelete.setVisibility(mStatusBean.getBean().visDeleteBtn?View.VISIBLE:View.GONE);
+        llQrcode.setVisibility(mStatusBean.getBean().visQRBtn?View.VISIBLE:View.GONE);
+        llSubmit.setVisibility(mStatusBean.getBean().visSubmitBtn?View.VISIBLE:View.GONE);
+
+    }
+
+    protected void setTvQrcodeContext(String text,int invisiable){
         tvQrcode.setText(text);
+        tvQrcode.setVisibility(invisiable);
+    }
+
+    /**
+     * 设置显示 tvAddContext item
+     */
+    protected boolean addInvisiable;
+    protected void setTvQrAddContext(String text,boolean invisiable)
+    {
+        tvQrcodeAdd.setText(text);
+        addInvisiable=invisiable;
+        llQrcodeAdd.setVisibility(invisiable?View.VISIBLE:View.GONE);
+        if (addInvisiable)
+            llQrcodeAdd.setVisibility(mStatusBean.getBean().visQRBtn?View.VISIBLE:View.GONE);
     }
 
    protected abstract void tvQrcodeAction(TextView tvQrcode);
@@ -155,5 +205,17 @@ public abstract class BaseContentMessageActivity extends WWBackActivity {
         }else {
             return false;
         }
+    }
+
+    public void setmSetOnAddItemClickListener(SetOnAddItemClickListener mSetOnAddItemClickListener) {
+        this.mSetOnAddItemClickListener = mSetOnAddItemClickListener;
+    }
+
+    private SetOnAddItemClickListener mSetOnAddItemClickListener;
+
+
+
+    public interface SetOnAddItemClickListener{
+        void onAddItemClick(View view);
     }
 }

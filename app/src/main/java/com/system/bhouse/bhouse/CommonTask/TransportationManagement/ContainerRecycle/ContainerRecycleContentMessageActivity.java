@@ -1143,7 +1143,7 @@ public class ContainerRecycleContentMessageActivity extends WWBackActivity imple
     @OptionsItem
     protected final void action_operat_status() {
         Observable<Object> objectObservable = Observable.create(subscriber -> {
-            if (!ClickUtils.isFastDoubleClickTime(1000))
+            if (!ClickUtils.isFastDoubleClick())
              show1();
         });
         Observable observableMobileKey = ApiWebService.Get_KeyTimestr(App.MobileKey);

@@ -24,7 +24,7 @@ public class BaseBean {
         ListenerContext = listenerContext;
     }
 
-    private int ListenerContext;
+    public int ListenerContext;
 
     public boolean isDisableDelete() {
         return disableDelete;

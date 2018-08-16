@@ -19,6 +19,9 @@ import android.view.View;
 
 import com.system.bhouse.api.ApiWebService;
 import com.system.bhouse.base.App;
+import com.system.bhouse.bhouse.CommonTask.MaintainManagement.MaintainIntoWareHouse.MaintainIntoWareHouseActivity;
+import com.system.bhouse.bhouse.CommonTask.MaintainManagement.MaintainOutWareHouse.MaintainOutWareHouseActivity;
+import com.system.bhouse.bhouse.CommonTask.MaintainManagement.StationCarDetachModule.StationCarDetachModuleActivity;
 import com.system.bhouse.bhouse.CommonTask.MaterialControl.FinishedStorage.FinishedStorageActivity;
 import com.system.bhouse.bhouse.CommonTask.MaterialControl.PickingOutLibary.PickingOutLibaryActivity;
 import com.system.bhouse.bhouse.CommonTask.MaterialControl.PlateMaterial.PlateMaterialActivity;
@@ -48,6 +51,7 @@ import butterknife.ButterKnife;
  * Created by Administrator on 2018-06-20.
  * <p>
  * by author wz
+ * 生产工作台
  * <p>
  * com.system.bhouse.bhouse.CommonTask.ProduceManagement
  */
@@ -129,10 +133,22 @@ public class ProduceActivity extends WWBackActivity implements BaseQuickAdapter.
                startActivity(intent);
                break;
             case 7:
-
-                intent = new Intent(ProduceActivity.this, TechnologyExecutionActivity.class);
+               intent = new Intent(ProduceActivity.this, TechnologyExecutionActivity.class);
+               startActivity(intent);
+               break;
+            case 9:
+                intent = new Intent(ProduceActivity.this, MaintainIntoWareHouseActivity.class);
                 startActivity(intent);
                 break;
+            case 10:
+                intent = new Intent(ProduceActivity.this, MaintainOutWareHouseActivity.class);
+                startActivity(intent);
+                break;
+            case 12:
+                intent = new Intent(ProduceActivity.this, StationCarDetachModuleActivity.class);
+                startActivity(intent);
+                break;
+
         }
     }
 

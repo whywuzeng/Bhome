@@ -3,11 +3,15 @@ package com.system.bhouse.utils.TenUtils;
 import android.annotation.SuppressLint;
 import android.support.annotation.NonNull;
 
+import com.system.bhouse.config.Const;
+
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 import java.util.Locale;
 
 /**
@@ -280,6 +284,32 @@ public final class TimeUtils {
                                         @NonNull final DateFormat format,
                                         final int precision) {
         long delta = string2Millis(time1, format) - string2Millis(time2, format);
+        return millis2FitTimeSpan(Math.abs(delta), precision);
+    }
+
+    /**
+     * Return the fit time span.
+     *
+     * @param time1     The first formatted time string.
+     * @param time2     The second formatted time string.
+     * @param format    The format.
+     * @param precision The precision of time span.
+     *                  <ul>
+     *                  <li>precision = 0, return null</li>
+     *                  <li>precision = 1, return 天</li>
+     *                  <li>precision = 2, return 天, 小时</li>
+     *                  <li>precision = 3, return 天, 小时, 分钟</li>
+     *                  <li>precision = 4, return 天, 小时, 分钟, 秒</li>
+     *                  <li>precision &gt;= 5，return 天, 小时, 分钟, 秒, 毫秒</li>
+     *                  </ul>
+     * @return the fit time span
+     */
+    public static String getFitTimeSpanTwoFormat(final String time1,
+                                        final String time2,
+                                        @NonNull final DateFormat format,
+                                        @NonNull final DateFormat format1,
+                                        final int precision) {
+        long delta = string2Millis(time1, format) - string2Millis(time2, format1);
         return millis2FitTimeSpan(Math.abs(delta), precision);
     }
 
@@ -1486,6 +1516,41 @@ public final class TimeUtils {
      */
     public static String getChineseZodiac(final String time) {
         return getChineseZodiac(string2Date(time, DEFAULT_FORMAT));
+    }
+
+    /**
+     * 2018-06-28 09:09:29 item.getStartTime()
+     * 时间格式
+     */
+    public static String getSimpleDataString(final String time)
+    {
+            String time1=time;
+//        2018-06-28 09:09:29
+            String regEx="[^0-9]";
+            String[] split = time.split(regEx);
+            split[0]= Const.SimpleDataString[0];
+            split[1]=Const.SimpleDataString[1];
+            split[2]=Const.SimpleDataString[2];
+            split[3]=Const.SimpleDataString[3];
+            split[4]=Const.SimpleDataString[4];
+            split[5]=Const.SimpleDataString[5];
+
+            String regEx1="[0-9]";
+            String[] split1 = time.split(regEx1);
+            // 4  6  10  12
+
+        List<String> tmp = new ArrayList<String>();
+        for(String str:split1){
+            if(str!=null && str.length()!=0){
+                tmp.add(str);
+            }
+        }
+        split1= tmp.toArray(new String[0]);
+
+        StringBuilder stringBuilder=new StringBuilder(split[0]);
+        stringBuilder.append(split1[0]).append(split[1]).append(split1[1]).append(split[2]).append(split1[2]).append(split[3]).append(split1[3]).append(split[4]).append(split1[4]).append(split[5]);
+//            String s = split[0] + split1[4] + split[1] + split1[6] + split[2] + " " + split[3] + split1[10] + split[4] + split1[12] + split[5];
+            return stringBuilder.toString();
     }
 
     /**

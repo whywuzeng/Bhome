@@ -245,4 +245,134 @@
         <item>数量</item>
     </string-array>
 
+    <!--人工分配 分录详情-->
+    <string-array name="people_itemsection_order">
+
+        <item>职员编号</item>
+        <item>职员名称</item>
+
+    </string-array>
+
+    <!--台车分配 分录详情-->
+    <string-array name="stationcar_itemsection_order">
+        <item>物料编码</item>
+        <item>构件二维码</item>
+        <item>物料名称</item>
+        <item>规格型号</item>
+        <item>单位</item>
+        <item>开始日期</item>
+        <item>结束日期</item>
+        <item>模具名称</item>
+        <item>台车名称</item>
+        <item>产线名称</item>
+        <item>数量</item>
+    </string-array>
+
+    <!--模具投料 分录详情-->
+    <string-array name="modulefeeding_itemsection_order">
+        <item>构件二维码</item>
+        <item>物料编码</item>
+        <item>物料名称</item>
+        <item>规格型号</item>
+        <item>单位</item>
+        <item>模具名称</item>
+        <item>台车名称</item>
+        <item>数量</item>
+    </string-array>
+
+    <!--养护入库 分录详情-->
+    <string-array name="maintenance_itemsection_order">
+        <item>模具名称</item>
+        <item>养护开始时间</item>
+        <item>养护结束时间</item>
+        <item>构件二维码</item>
+        <item>构件编码</item>
+        <item>构件名称</item>
+        <item>规格型号</item>
+        <item>计量单位名称</item>
+        <item>数量</item>
+    </string-array>
+
+    <!--养护出库 分录详情-->
+    <string-array name="maintenance_out_itemsection_order">
+        <item>模具名称</item>
+        <item>养护开始时间</item>
+        <item>养护结束时间</item>
+        <item>构件二维码</item>
+        <item>构件编码</item>
+        <item>构件名称</item>
+        <item>规格型号</item>
+        <item>计量单位名称</item>
+        <item>数量</item>
+    </string-array>
+
+    <!--构件脱模 分录详情-->
+    <string-array name="component_takeoff_itemsection_order">
+        <item>模具名称</item>
+        <item>养护开始时间</item>
+        <item>养护结束时间</item>
+        <item>构件二维码</item>
+        <item>构件编码</item>
+        <item>构件名称</item>
+        <item>规格型号</item>
+        <item>计量单位名称</item>
+        <item>数量</item>
+    </string-array>
+
+    <!--构件入库 分录详情-->
+    <string-array name="component_intoWareHouse_itemsection_order">
+        <item>物料编码</item>
+        <item>二维码</item>
+        <item>物料名称</item>
+        <item>规格型号</item>
+        <item>单位</item>
+        <item>质检类型</item>
+        <item>描述</item>
+        <item>仓库名称</item>
+        <item>入库数量</item>
+    </string-array>
+
+    <!--养护入库 列表详情-->
+    <string-array name="maintaininto_warehouse">
+        <item>单据编号</item>
+        <item>仓库</item>
+        <item>台车</item>
+        <item>录入人</item>
+        <item>录入时间</item>
+    </string-array>
+
+    <!--养护出库 列表详情-->
+    <string-array name="maintainout_warehouse">
+        <item>单据编号</item>
+        <item>仓库</item>
+        <item>台车</item>
+        <item>录入人</item>
+        <item>录入时间</item>
+    </string-array>
+
+    <!--台车模具分离 列表详情-->
+    <string-array name="stationmodule_detach">
+        <item>单据编号</item>
+        <item>台车名称</item>
+        <item>业务日期</item>
+        <item>模具名称</item>
+        <item>状态</item>
+        <item>录入人</item>
+        <item>录入时间</item>
+    </string-array>
+
+
+    <!--台车模具分离 分录详情-->
+    <string-array name="stationmodule_detach_itemsection_order">
+        <item>物料编码</item>
+        <item>二维码</item>
+        <item>物料名称</item>
+        <item>规格型号</item>
+        <item>单位</item>
+        <item>开始日期</item>
+        <item>结束日期</item>
+        <item>模具名称</item>
+        <item>台车名称</item>
+        <item>数量</item>
+    </string-array>
 </resources>

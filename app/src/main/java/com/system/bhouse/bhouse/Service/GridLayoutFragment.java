@@ -377,6 +377,7 @@ public class GridLayoutFragment extends Fragment implements GvMainAdapter.ImageC
             case 4:
                 break;
             case 2:
+                //生产管理
                intent = new Intent(getActivity(), ProduceActivity.class);
                startActivity(intent);
 

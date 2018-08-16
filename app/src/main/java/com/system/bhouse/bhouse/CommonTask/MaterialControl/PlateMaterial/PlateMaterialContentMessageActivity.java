@@ -133,7 +133,7 @@ public class PlateMaterialContentMessageActivity extends WWBackActivity implemen
         mRecyclerViewAdapter.notifyDataSetChanged();
 
         testData();
-//        TopListViewInit(this.comTaskBeans);
+//      TopListViewInit(this.comTaskBeans);
         setScrollViewFirst();
     }
 
@@ -1119,7 +1119,7 @@ public class PlateMaterialContentMessageActivity extends WWBackActivity implemen
     @OptionsItem
     protected final void action_operat_status() {
         Observable<Object> objectObservable = Observable.create(subscriber -> {
-            if (ButtonUtils.isFastDoubleClick()) {
+            if (!ButtonUtils.isFastDoubleClick()) {
                 show1();
             }
         });

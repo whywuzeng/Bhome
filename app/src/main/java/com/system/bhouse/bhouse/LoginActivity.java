@@ -392,9 +392,9 @@ public class LoginActivity extends AutoLayoutActivity {
                                     if (stu_name.equals("否")) {
                                         T.showShort(LoginActivity.this, "当前设备不兼容");
                                         //handle跳转至
-//                                        Message obtain = Message.obtain();
-//                                        obtain.what = Integer.valueOf(1);
-//                                        handler.sendMessage(obtain);
+                                        Message obtain = Message.obtain();
+                                        obtain.what = Integer.valueOf(1);
+                                        handler.sendMessage(obtain);
                                     }
                                     else if (stu_name.equals("是")&&isLogin){
                                         //handle跳转至

@@ -42,6 +42,8 @@ public class WWBaseFragment extends Fragment implements FootUpdate.LoadMore, Glo
     private View contentView;
     private Context context;
     private ViewGroup container;
+    protected View notDataView;
+    protected View errorView;
 
     private ProgressDialog mProgressDialog;
 
@@ -78,6 +80,20 @@ public class WWBaseFragment extends Fragment implements FootUpdate.LoadMore, Glo
     {
         View listViewFooter = inflater.inflate(R.layout.divide_bottom_15, recyclerView, false);
         adapter.addFooterView(listViewFooter);
+    }
+
+    protected void recycleViewAddEmptySection(RecyclerView mRecyclerView)
+    {
+        notDataView = getActivity().getLayoutInflater().inflate(R.layout.taskcomon_empty_view, (ViewGroup) mRecyclerView.getParent(), false);
+        errorView = getActivity().getLayoutInflater().inflate(R.layout.taskcommon_error_view,(ViewGroup)mRecyclerView.getParent(), false);
+    }
+
+    protected void setErrorViewContext(String errorMsg)
+    {
+        if (errorView!=null){
+            TextView viewById = (TextView) errorView.findViewById(R.id.tv_msg_context);
+            viewById.setText(errorMsg);
+        }
     }
 
     protected ActionBar getActionBar() {

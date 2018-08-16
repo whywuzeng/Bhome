@@ -19,7 +19,7 @@ public abstract class HeaderAndFooterSectionQuickAdapter<T extends HeaderAndFoot
     protected int mSectionHeadResId;
     protected static final int SECTION_HEADER_VIEW = 0x00000444;
     protected int mSectionFooterResId;
-    protected static final int SECTION_FOOTER_VIEW= 0x00000333;
+    protected static final int SECTION_FOOTER_VIEW= 0x00001313;
 
     /**
      * Same as QuickAdapter#QuickAdapter(Context,int) but with
@@ -75,6 +75,7 @@ public abstract class HeaderAndFooterSectionQuickAdapter<T extends HeaderAndFoot
             case SECTION_FOOTER_VIEW:
                 setFullSpan(holder);
                 converFooter(holder,getItem(position -getHeaderLayoutCount() -getFooterLayoutCount()));
+                break;
             default:
                 super.onBindViewHolder(holder, position);
                 break;

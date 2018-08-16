@@ -17,6 +17,7 @@ import com.system.bhouse.bean.BaseBean;
 
 public class ModuleAssignmentBean extends BaseBean implements Parcelable {
 
+
     /**
      * ID : 62a284e9de544d40919c9cc4f53892bc
      * 二维码 : DZXQ-7-201806-0009.1002.1084.0100.003.1

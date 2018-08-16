@@ -1,6 +1,5 @@
 package com.system.bhouse.bhouse.CommonTask.TechnologyExecution.ModuleAssignMent;
 
-import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
@@ -18,6 +17,7 @@ import com.google.gson.reflect.TypeToken;
 import com.system.bhouse.Custom.ShowDeviceMessageCustomDialog;
 import com.system.bhouse.api.ApiWebService;
 import com.system.bhouse.base.App;
+import com.system.bhouse.base.CheckStatusBeanImpl;
 import com.system.bhouse.base.StatusBean;
 import com.system.bhouse.base.SubmitStatusBeanImpl;
 import com.system.bhouse.bhouse.CommonTask.BaseTaskFragment.BaseContentMessageActivity;
@@ -34,6 +34,7 @@ import com.system.bhouse.bhouse.CommonTask.common.CommonDateTimePickerFragment;
 import com.system.bhouse.bhouse.CommonTask.utils.ComTaskContentItemSectionItemTouchHelper;
 import com.system.bhouse.bhouse.R;
 import com.system.bhouse.bhouse.setup.utils.onMutiDataSetListener;
+import com.system.bhouse.config.Const;
 import com.system.bhouse.utils.ClickUtils;
 import com.system.bhouse.utils.TenUtils.L;
 import com.system.bhouse.utils.TenUtils.T;
@@ -92,9 +93,6 @@ public class ModuleAssignMentContentMessageActivity extends BaseContentMessageAc
     @Extra
     String orderId;
 
-    private final static String STATUS_SAVE="保存";
-    private final static String STATUS_CHECK="审核";
-
     private ArrayList<ModuleAssignmentBean> comTaskBeans = new ArrayList<>();
     private ArrayList<ModuleAssignmentBeanSection> assignmentBeanSectionArrayList=new ArrayList<>() ;
     private TreeRecyclerAdapter treeRecyclerAdapter;
@@ -102,7 +100,6 @@ public class ModuleAssignMentContentMessageActivity extends BaseContentMessageAc
     public static final int RESULT_SORTITEM_SELECTPROJECT = 1001;
     public static final int REQUST_QRCODE = 1008;
 
-    private Dialog bottomDialog;
     private String STATE_COMTASK = "state_comtask";
     private HashMap<String,String> headerProperties=new HashMap<>();
     private ModuleAssignmentSectionAdapter moduleAssignmentSectionAdapter;
@@ -123,9 +120,9 @@ public class ModuleAssignMentContentMessageActivity extends BaseContentMessageAc
         listView.setAdapter(moduleAssignmentSectionAdapter);
         listView.addItemDecoration(new TimeLineItemTopBottomDecoration());
         moduleAssignmentSectionAdapter.setOnItemChildClickListener(this);
+
         testData();
-//      TopListViewInit(this.comTaskBeans);
-        BottomAction();
+
         setScrollViewFirst();
     }
 
@@ -142,17 +139,12 @@ public class ModuleAssignMentContentMessageActivity extends BaseContentMessageAc
         }
     }
 
-    /**
-     * 初始布局  为列表布局
-     * param comTaskBeans
-     */
-    private void TopListViewInit() {
-        /**
-         * 进行判断 mStatus 状态
-         */
+    private void initStatusData(){
+
         //得到初始数据，处理单据状态
         if (mStatus.isNewStatus()) {
             setActionBarMidlleTitle("新增模具分配");
+            BottomAction();
         }
         else {
             setActionBarMidlleTitle("模具分配");
@@ -167,6 +159,15 @@ public class ModuleAssignMentContentMessageActivity extends BaseContentMessageAc
         }else if (ValueUtils.IsFirstValueExist(this.comTaskBeans)){
             receiptHnumber=this.comTaskBeans.get(0).hNumbe;
         }
+    }
+
+    /**
+     * 初始布局  为列表布局
+     * param comTaskBeans
+     */
+    private void TopListViewInit() {
+
+        initStatusData();
 
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
 
@@ -196,6 +197,37 @@ public class ModuleAssignMentContentMessageActivity extends BaseContentMessageAc
         topListView.setLayoutManager(linearLayoutManager);
         topListView.setAdapter(treeRecyclerAdapter);
         treeRecyclerAdapter.getItemManager().replaceAllItem(groupItems);
+    }
+
+    /*
+    请求有数据返回  才去判断是否状态相同
+     */
+    private void ifStateForOrderId() {
+        if (!ValueUtils.IsFirstValueExist(comTaskBeans))
+        {
+            return;
+        }
+
+        //提交  请求有数据 就是保存状态
+        if (comTaskBeans.get(0).getStatus().equals(Const.SAVE_STATUS)) {
+            /**
+             * 请求有数据,就是
+             */
+                //保存状态
+                SubmitStatusBeanImpl submitStatusBean = new SubmitStatusBeanImpl();
+                submitStatusBean.setVisCheckBtn(true).setVisDeleteBtn(true).setVisModifyBtn(true);
+                mStatus.setBean(submitStatusBean);
+                mStatus.setLookStatus(true);
+                return;
+        }else if (comTaskBeans.get(0).getStatus().equals(Const.CHECK_STATUS))
+        {
+                //审核状态
+                CheckStatusBeanImpl checkStatusBean = new CheckStatusBeanImpl();
+                checkStatusBean.setVisCheckFBtn(true);
+                mStatus.setBean(checkStatusBean);
+                mStatus.setLookStatus(true);
+                return;
+        }
     }
 
 
@@ -409,31 +441,6 @@ public class ModuleAssignMentContentMessageActivity extends BaseContentMessageAc
 
                     }
                 },HId,resultQr);
-            }else {
-                //分录下的Item 回调.
-//                ApiWebService.B_Get_Ware_house(this, new ApiWebService.SuccessCall() {
-//                    @Override
-//                    public void SuccessBack(String result) {
-//
-//                        ArrayList<ModuleAssignmentBean> loadingcarbean = App.getAppGson().fromJson(result, new TypeToken<List<ModuleAssignmentBean>>() {
-//                        }.getType());
-//
-//                        if (!ValueUtils.IsFirstValueExist(loadingcarbean))
-//                            return;
-//                        comTaskBeans.get(extraPosition).setWareHouseID(loadingcarbean.get(0).wareHouseID);
-//                        comTaskBeans.get(extraPosition).setWareHouseName(loadingcarbean.get(0).wareHouseName);
-//
-//                        ArrayList<ModuleAssignmentBean> clone = (ArrayList<ModuleAssignmentBean>)comTaskBeans.clone();
-//                        comTaskBeans.clear();
-//                        comTaskBeans.addAll(clone);
-//                        mRecyclerViewAdapter.notifyDataSetChanged();
-//                    }
-//
-//                    @Override
-//                    public void ErrorBack(String error) {
-//
-//                    }
-//                },resultQr);
             }
         }
     }
@@ -453,37 +460,6 @@ public class ModuleAssignMentContentMessageActivity extends BaseContentMessageAc
             String extraBOMID = data.getStringExtra("BOMID");
         }
     }
-
-    //得到分录的数据
-//    private void getEntriesData(String extra) {
-//        ApiWebService.Get_Sale_Order_Hois_Req_Json(this, new ApiWebService.SuccessCall() {
-//            @Override
-//            public void SuccessBack(String result) {
-//
-//                ArrayList<ModuleAssignmentBean> loadingcarbean = App.getAppGson().fromJson(result, new TypeToken<List<ModuleAssignmentBean>>() {
-//                }.getType());
-//
-//                for (ModuleAssignmentBean bean : loadingcarbean) {
-//                    bean.hNumbe = comTaskBeans.get(0).getHNumbe();
-//                    bean.cartrips = comTaskBeans.get(0).getCartrips();
-//                    bean.containerName = comTaskBeans.get(0).getContainerName();
-//                    bean.containerID = comTaskBeans.get(0).getContainerID();
-//                    bean.requireDate = comTaskBeans.get(0).getRequireDate();
-//                    bean.description = comTaskBeans.get(0).getDescription();
-//                    bean.entryPeople = comTaskBeans.get(0).getEntryPeople();
-//                }
-//                comTaskBeans.clear();
-//                comTaskBeans.addAll(loadingcarbean);
-//                mRecyclerViewAdapter.notifyDataSetChanged();
-//
-//            }
-//
-//            @Override
-//            public void ErrorBack(String error) {
-//
-//            }
-//        }, extra);
-//    }
 
     public static ArrayList<ModuleAssignmentBean> removeDupliById(List<ModuleAssignmentBean> persons) {
         Set<ModuleAssignmentBean> personSet = new TreeSet<>((o1, o2) -> {
@@ -581,41 +557,47 @@ public class ModuleAssignMentContentMessageActivity extends BaseContentMessageAc
                 break;
             //增加item 按钮
             case R.id.btn_addItem:
-
+                onImgItemAdd(view,position);
                 break;
+            /**
+             * item 加个 常量ID
+             */
+
         }
     }
-
 
     public static class KeyType {
         public int key;
         public String type;
     }
 
-
     /**
      * 请求主数据
      */
     private void testData() {
-
-        ApiWebService.Get_Production_order_MouldView_Json(this, new ApiWebService.SuccessCall() {
+        comTaskBeans.clear();
+        ApiWebService.Get_Production_order_MouldView_Json_poidprid_QR_Code(this, new ApiWebService.SuccessCall() {
             @Override
             public void SuccessBack(String result) {
                 ArrayList<ModuleAssignmentBean> tomTaskBeans = App.getAppGson().fromJson(result, new TypeToken<List<ModuleAssignmentBean>>() {
                 }.getType());
                 //为空就创建一个新的空对象
                 if (tomTaskBeans.isEmpty()) {
-
+                    //默认空数据
                     moduleAssignmentSectionAdapter.setEmptyView(notDataView);
                     //为头recycleView 设置空数据
                     comTaskBeans.add(new ModuleAssignmentBean());
                 }
                 else {
                     comTaskBeans.addAll(tomTaskBeans);
+                    /**
+                     * 进行判断 mStatus 状态  判断状态是否一致  不一致进行订单状态变更
+                     */
+                    ifStateForOrderId();
                     ClearAssignMentSectionArrayList();
                 }
-                moduleAssignmentSectionAdapter.notifyDataSetChanged();
                 TopListViewInit();
+                moduleAssignmentSectionAdapter.notifyDataSetChanged();
             }
 
             @Override
@@ -625,7 +607,7 @@ public class ModuleAssignMentContentMessageActivity extends BaseContentMessageAc
                 //设置Empty  ErrorView
                 moduleAssignmentSectionAdapter.setEmptyView(errorView);
             }
-        }, HId);
+        },orderId,componentQr);
     }
 
     /**
@@ -644,7 +626,7 @@ public class ModuleAssignMentContentMessageActivity extends BaseContentMessageAc
     private int ikey = 0;
 
     public void onItemClick(View view, View textView, int position) {
-//        ModuleAssignmentBean searchHistroyBeans = workflowSection.getSearchHistroyBeans(position);
+//        ComponentIntoWareHouseBean searchHistroyBeans = workflowSection.getSearchHistroyBeans(position);
 //        if (textView.getTag() == "1111") {
 //            if (TextUtils.isEmpty(searchHistroyBeans.getModuleID()))
 //                return;
@@ -698,10 +680,10 @@ public class ModuleAssignMentContentMessageActivity extends BaseContentMessageAc
 
 
     //点击增加的按钮
-    public void onImgItemAdd(View view, int position, RecyclerView.ViewHolder holder) {
+    public void onImgItemAdd(View view, int position) {
         if (comTaskBeans == null)
             return;
-//        ModuleAssignmentBean dataBean = new ModuleAssignmentBean();
+//        ComponentIntoWareHouseBean dataBean = new ComponentIntoWareHouseBean();
 //        comTaskBeans.add(dataBean);
 //
 //        mRecyclerViewAdapter.notifyItemInserted(comTaskBeans.size());
@@ -724,113 +706,6 @@ public class ModuleAssignMentContentMessageActivity extends BaseContentMessageAc
         }
     }
 
-//    /**
-//     * show1 展示 dialog
-//     */
-//    private void show1() {
-//        bottomDialog = new Dialog(this, R.style.BottomDialog);
-//        View contentView = LayoutInflater.from(this).inflate(R.layout.confirmation_dialog_content_normal, null);
-//        bottomDialog.setContentView(contentView);
-//        LinearLayout llModify = (LinearLayout) contentView.findViewById(R.id.ll_modify);
-//        LinearLayout llSubmit = (LinearLayout) contentView.findViewById(R.id.ll_submit);
-//        LinearLayout llCheck = (LinearLayout) contentView.findViewById(R.id.ll_check);
-//        LinearLayout llFanCheck = (LinearLayout) contentView.findViewById(R.id.ll_fanCheck);
-//        LinearLayout llQrcode = (LinearLayout) contentView.findViewById(R.id.ll_qrcode);
-//
-//        TextView tvModify = (TextView) contentView.findViewById(R.id.tv_modify);
-//        TextView tvSubmit = (TextView) contentView.findViewById(R.id.tv_submit);
-//        TextView tvCheck = (TextView) contentView.findViewById(R.id.tv_check);
-//        TextView tvFanCheck = (TextView) contentView.findViewById(R.id.tv_fanCheck);
-//        TextView tvDelete = (TextView) contentView.findViewById(R.id.tv_delete);
-//        TextView tvQrcode = (TextView) contentView.findViewById(R.id.tv_qrcode);
-//
-//        tvQrcode.setText("可领料信息");
-//
-//        /**
-//         * 这里{按键会变化View.GONE}
-//         */
-//
-//        llCheck.setVisibility(mStatus.getBean().visCheckBtn?View.VISIBLE:View.GONE);
-//        llModify.setVisibility(mStatus.getBean().visModifyBtn?View.VISIBLE:View.GONE);
-//        llFanCheck.setVisibility(mStatus.getBean().visCheckFBtn?View.VISIBLE:View.GONE);
-//        tvDelete.setVisibility(mStatus.getBean().visDeleteBtn?View.VISIBLE:View.GONE);
-//        llQrcode.setVisibility(mStatus.getBean().visQRBtn?View.VISIBLE:View.GONE);
-//        llSubmit.setVisibility(mStatus.getBean().visSubmitBtn?View.VISIBLE:View.GONE);
-//
-//        Observable.create(subscriber -> {
-//            tvQrcode.setOnClickListener(v -> {
-//                subscriber.onNext(v);
-//            });
-//        }).debounce(350, TimeUnit.MILLISECONDS).observeOn(AndroidSchedulers.mainThread()).subscribe(V -> {
-//            L.e("double click");
-//            bottomDialog.dismiss();
-//            tvQrcodeAction(tvQrcode);
-//        });
-//
-//        Observable.create(subscriber -> {
-//            tvDelete.setOnClickListener(v -> {
-//                subscriber.onNext(v);
-//            });
-//        }).debounce(350, TimeUnit.MILLISECONDS).observeOn(AndroidSchedulers.mainThread()).subscribe(V -> {
-//            L.e("double click");
-//            bottomDialog.dismiss();
-//            tvDeleteAction(tvDelete);
-//        });
-//
-//        Observable.create(subscriber -> {
-//            tvFanCheck.setOnClickListener(v -> {
-//                subscriber.onNext(v);
-//            });
-//        }).debounce(350, TimeUnit.MILLISECONDS).observeOn(AndroidSchedulers.mainThread()).subscribe(V -> {
-//            L.e("double click");
-//            bottomDialog.dismiss();
-//            tvFanCheckAction(tvFanCheck);
-//        });
-//
-//        Observable.create(subscriber -> {
-//            tvModify.setOnClickListener(v -> {
-//                subscriber.onNext(v);
-//            });
-//        }).debounce(350, TimeUnit.MILLISECONDS).observeOn(AndroidSchedulers.mainThread()).subscribe(V -> {
-//            L.e("double click");
-//            bottomDialog.dismiss();
-//            tvModifyAction(tvModify);
-//        });
-//
-//        Observable.create(subscriber -> {
-//            tvSubmit.setOnClickListener(v -> {
-//                subscriber.onNext(v);
-//            });
-//        }).debounce(350, TimeUnit.MILLISECONDS).observeOn(AndroidSchedulers.mainThread()).subscribe(V -> {
-//            L.e("double click");
-//            bottomDialog.dismiss();
-//            if (mStatus.isNewStatus()) {
-//                tvSubmitActionforList(tvSubmit);
-//            }
-//            else if (mStatus.isModifyStatus()) {
-//                tvSubmitActionforList(tvSubmit);
-//            }
-//        });
-//
-//        Observable.create(subscriber -> {
-//            tvCheck.setOnClickListener(v -> {
-//                subscriber.onNext(v);
-//            });
-//        }).debounce(350, TimeUnit.MILLISECONDS).observeOn(AndroidSchedulers.mainThread()).subscribe(V -> {
-//            L.e("double click");
-//            bottomDialog.dismiss();
-//            tvCheckAction(tvCheck);
-//        });
-//
-//        ViewGroup.LayoutParams layoutParams = contentView.getLayoutParams();
-//        layoutParams.width = getResources().getDisplayMetrics().widthPixels;
-//        contentView.setLayoutParams(layoutParams);
-//        bottomDialog.getWindow().setGravity(Gravity.BOTTOM);
-//        bottomDialog.setCanceledOnTouchOutside(true);
-//        bottomDialog.getWindow().setWindowAnimations(R.style.BottomDialog_Animation);
-//        bottomDialog.show();
-//    }
-
     //单据---修改状态
     @Override
     protected void tvModifyAction(TextView tvModify) {
@@ -838,7 +713,7 @@ public class ModuleAssignMentContentMessageActivity extends BaseContentMessageAc
         mStatus.setLookStatus(true);
         mStatus.setModifyStatus(true);
         if (mStatus.isModifyStatus()) {
-            setActionBarMidlleTitle("修改完工入库");
+            setActionBarMidlleTitle("修改分配模具");
             TopListViewInit();
 
             ClearAssignMentSectionArrayList();
@@ -847,9 +722,14 @@ public class ModuleAssignMentContentMessageActivity extends BaseContentMessageAc
         }
     }
 
-    //可领料信息  二维码扫描
+    //智能分配模具
     @Override
     protected void tvQrcodeAction(TextView tvQrcode) {
+
+        if (!getComtaskSize()) {
+            T.showShort(this, "分录为空,不能提交");
+            return;
+        }
 
         ApiWebService.Get_Production_order_Mould_Mouldfp_Json(this, new ApiWebService.SuccessCall() {
             @Override
@@ -982,6 +862,7 @@ public class ModuleAssignMentContentMessageActivity extends BaseContentMessageAc
                     if (!result.contains("失败")) {
 //                        onBackPressed();
 //                        sureDataRefresh("tvSubmitAction");
+                        testData();
                     }
                 }
 
@@ -999,6 +880,7 @@ public class ModuleAssignMentContentMessageActivity extends BaseContentMessageAc
                     if (!result.contains("失败")) {
 //                        onBackPressed();
 //                        sureDataRefresh("tvSubmitAction");
+                        testData();
                     }
                 }
 
@@ -1006,7 +888,7 @@ public class ModuleAssignMentContentMessageActivity extends BaseContentMessageAc
                 public void ErrorBack(String error) {
 
                 }
-            }, billtable,HId);
+            }, billtable,comTaskBeans.get(0).ID);
         }
     }
 
@@ -1019,6 +901,7 @@ public class ModuleAssignMentContentMessageActivity extends BaseContentMessageAc
                 T.showShort(ModuleAssignMentContentMessageActivity.this, result);
 //                onBackPressed();
 //                sureDataRefresh("tvCheckAction");
+                testData();
             }
 
             @Override
@@ -1036,6 +919,7 @@ public class ModuleAssignMentContentMessageActivity extends BaseContentMessageAc
                 T.showShort(ModuleAssignMentContentMessageActivity.this, result);
 //                onBackPressed();
 //                sureDataRefresh("tvFanCheckAction");
+                testData();
             }
 
             @Override
@@ -1052,7 +936,8 @@ public class ModuleAssignMentContentMessageActivity extends BaseContentMessageAc
             public void SuccessBack(String result) {
                 T.showShort(ModuleAssignMentContentMessageActivity.this, result);
                 onBackPressed();
-                sureDataRefresh("tvDeleteAction");
+//                sureDataRefresh("tvDeleteAction");
+                testData();
             }
 
             @Override
@@ -1077,9 +962,9 @@ public class ModuleAssignMentContentMessageActivity extends BaseContentMessageAc
     @OptionsItem
     protected final void action_operat_status() {
         Observable<Object> objectObservable = Observable.create(subscriber -> {
-            if (!ClickUtils.isFastDoubleClickTime(1000))
+            if (!ClickUtils.isFastDoubleClick())
             show1(mStatus);
-            setTvQrcodeContext("智能分配模具");
+            setTvQrcodeContext("智能分配模具",View.VISIBLE);
         });
         Observable observableMobileKey = ApiWebService.Get_KeyTimestr(App.MobileKey);
         observableMobileKey.concatWith(objectObservable).subscribe(new Subscriber() {

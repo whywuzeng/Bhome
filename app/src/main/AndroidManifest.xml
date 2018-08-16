@@ -321,6 +321,34 @@
         <activity android:name=".CommonTask.TechnologyExecution.ModuleAssignMent.ModuleAssignMentContentMessageActivity_"
             android:screenOrientation="portrait"
             />
+        <activity android:name="com.system.bhouse.bhouse.CommonTask.TechnologyExecution.PeopleAssignment.PeopleAssignmentContentMessageActivity_"
+                  android:screenOrientation="portrait"/>
+        <activity android:name=".CommonTask.TechnologyExecution.StationCarAssignMent.StationCarAssignMentContentMessageActivity_"
+                  android:screenOrientation="portrait"/>
+        <activity android:name=".CommonTask.TechnologyExecution.ModuleFeeding.ModuleFeedingContentMessageActivity_"
+                  android:screenOrientation="portrait"/>
+
+        <activity android:name=".CommonTask.TechnologyExecution.MaintenanceIntoWarehouse.MaintenanceWarehouseContentMessageActivity_"
+                  android:screenOrientation="portrait"/>
+        <activity android:name=".CommonTask.TechnologyExecution.MaintenanceOutWarehouse.MaintenanceOutWarehouseContentMessageActivity_"
+                  android:screenOrientation="portrait"/>
+        <activity android:name=".CommonTask.TechnologyExecution.ComponentTakeOff.ComponentTakeOffContentMessageActivity_"
+                  android:screenOrientation="portrait"/>
+        <activity android:name="com.system.bhouse.bhouse.CommonTask.TechnologyExecution.ComponentIntoWareHouse.ComponentIntoWareHouseContentMessageActivity_"
+                  android:screenOrientation="portrait"/>
+        <activity android:name="com.system.bhouse.bhouse.CommonTask.MaintainManagement.MaintainIntoWareHouse.MaintainIntoWareHouseActivity"
+                  android:screenOrientation="portrait"/>
+        <activity android:name="com.system.bhouse.bhouse.CommonTask.MaintainManagement.MaintainIntoWareHouse.MaintainIntoWareHouseContentMessageActivity_"
+                  android:screenOrientation="portrait"/>
+        <activity android:name="com.system.bhouse.bhouse.CommonTask.MaintainManagement.MaintainOutWareHouse.MaintainOutWareHouseActivity"
+                  android:screenOrientation="portrait"/>
+
+        <activity android:name="com.system.bhouse.bhouse.CommonTask.MaintainManagement.MaintainOutWareHouse.MaintainOutWareHouseContentMessageActivity_"
+                  android:screenOrientation="portrait"/>
+        <activity android:name="com.system.bhouse.bhouse.CommonTask.MaintainManagement.StationCarDetachModule.StationCarDetachModuleActivity"
+                  android:screenOrientation="portrait"/>
+        <activity android:name="com.system.bhouse.bhouse.CommonTask.MaintainManagement.StationCarDetachModule.StationCarDetachModuleContentMessageActivity_"
+                  android:screenOrientation="portrait"/>
 
         <meta-data
             android:name="design_width"

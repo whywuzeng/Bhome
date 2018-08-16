@@ -26,10 +26,11 @@ public class BProBOM extends BaseBean implements Parcelable {
 
 
     private String ID;
-    @SerializedName(value = "编码",alternate = {"车次","货柜编码","需求编号"})
+    @SerializedName(value = "编码",alternate = {"车次","货柜编码","需求编号","职员编码","台车编码"})
     private String coding;
-    @SerializedName(value = "名称",alternate = {"装柜数","货柜名称","项目"})
+    @SerializedName(value = "名称",alternate = {"装柜数","货柜名称","项目","职员名称","台车名称"})
     private String projectname;
+    @SerializedName(value = "BOMID",alternate = {"职员ID"})
     private String BOMID;
 
     @SerializedName(value = "层")
@@ -102,6 +103,7 @@ public class BProBOM extends BaseBean implements Parcelable {
         dest.writeString(this.BOMID);
         dest.writeString(this.ceng);
         dest.writeString(this.dong);
+        dest.writeInt(this.ListenerContext);
         dest.writeByte(this.disableDelete ? (byte) 1 : (byte) 0);
         dest.writeString(this.requireDate);
         dest.writeString(this.description);
@@ -119,6 +121,7 @@ public class BProBOM extends BaseBean implements Parcelable {
         this.BOMID = in.readString();
         this.ceng = in.readString();
         this.dong = in.readString();
+        this.ListenerContext = in.readInt();
         this.disableDelete = in.readByte() != 0;
         this.requireDate = in.readString();
         this.description = in.readString();

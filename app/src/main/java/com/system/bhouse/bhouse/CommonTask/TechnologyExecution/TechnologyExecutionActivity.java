@@ -10,14 +10,13 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.view.KeyEvent;
 import android.view.ViewGroup;
 
 import com.socks.library.KLog;
-import com.system.bhouse.bhouse.CommonTask.TechnologyExecution.entity.RelatedDetailBean;
+import com.system.bhouse.bhouse.CommonTask.TechnologyExecution.entity.TechnologyBean;
 import com.system.bhouse.bhouse.R;
 import com.system.bhouse.bhouse.setup.WWCommon.WWBackActivity;
-
-import java.util.ArrayList;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -163,7 +162,7 @@ public class TechnologyExecutionActivity extends WWBackActivity implements Techn
 
 
     @Override
-    public void OnFragmentItemClick(String componentQr,String OrderId,ArrayList<RelatedDetailBean> title) {
+    public void OnFragmentItemClick(String componentQr, String OrderId, TechnologyBean title) {
         if (mItemTouchListener!=null)
         {
             mItemTouchListener.sendRelatedDetail(componentQr,OrderId,title);
@@ -276,6 +275,21 @@ public class TechnologyExecutionActivity extends WWBackActivity implements Techn
         public CharSequence getPageTitle(int position) {
             return TitleString[position];
         }
+    }
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+
+        long spaceTime = 0;
+        long firstTime = 0;
+        if (keyCode == KeyEvent.KEYCODE_BACK) {
+            if (viewPager.getCurrentItem() != 0) {
+                viewPager.setCurrentItem(0);
+
+                return false;
+            }
+        }
+        return super.onKeyDown(keyCode, event);
     }
 
 

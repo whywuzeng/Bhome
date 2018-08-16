@@ -18,7 +18,7 @@ import com.system.bhouse.bhouse.R;
  * com.system.bhouse.bhouse.CommonTask.TechnologyExecution.selectploy
  */
 
-public class TechnologSelectColorBg implements SelectPloy,UnSelectPloy,DisablePloy,DisableRecallPloy {
+public class TechnologSelectColorBg implements SelectPloy,UnSelectPloy,DisablePloy,DisableRecallPloy,NoAssociationPloy {
 
     //已选中item Bg
     @Override
@@ -33,7 +33,7 @@ public class TechnologSelectColorBg implements SelectPloy,UnSelectPloy,DisablePl
 
         DrawableCenterTextView right_menu = (DrawableCenterTextView) view.findViewById(R.id.right_menu);
         rightremove_menu.setVisibility(View.GONE);
-        right_menu.setVisibility(View.VISIBLE);
+        right_menu.setVisibility(View.GONE);
 
         Drawable drawable = App.getContextApp().getResources().getDrawable(R.drawable.bg_timeline_btn_select);
         rel.setBackground(drawable);
@@ -133,6 +133,32 @@ public class TechnologSelectColorBg implements SelectPloy,UnSelectPloy,DisablePl
         DrawableCenterTextView right_menu_menu = (DrawableCenterTextView) view.findViewById(R.id.right_menu);
         rightremove_menu.setVisibility(View.VISIBLE);
         right_menu_menu.setVisibility(View.GONE);
+
+        TextView textTitle = (TextView) view.findViewById(R.id.tv_title);
+        TextView subTitle = (TextView) view.findViewById(R.id.tv_sub_title);
+        textTitle.setTextColor(App.getContextApp().getResources().getColor(R.color.font_6));
+        subTitle.setTextColor(App.getContextApp().getResources().getColor(R.color.common_color_text_30));
+    }
+
+    /**
+     * 无关联Item 显示策略
+     */
+    @Override
+    public void NoAssociationBg(View view) {
+        if (view==null)
+        {
+            return;
+        }
+        RelativeLayout rel = (RelativeLayout) view.findViewById(R.id.rl_content_layout);
+        RelativeLayout relativeLayout_view_bg= (RelativeLayout)view.findViewById(R.id.relativeLayout_view_bg);
+        Drawable drawable = App.getContextApp().getResources().getDrawable(R.drawable.bg_timeline_btn_disable);
+        rel.setBackground(drawable);
+        relativeLayout_view_bg.setBackground(drawable);
+
+        DrawableCenterTextView rightremove_menu = (DrawableCenterTextView) view.findViewById(R.id.rightremove_menu);
+        DrawableCenterTextView right_menu_menu = (DrawableCenterTextView) view.findViewById(R.id.right_menu);
+        rightremove_menu.setVisibility(View.VISIBLE);
+        right_menu_menu.setVisibility(View.VISIBLE);
 
         TextView textTitle = (TextView) view.findViewById(R.id.tv_title);
         TextView subTitle = (TextView) view.findViewById(R.id.tv_sub_title);

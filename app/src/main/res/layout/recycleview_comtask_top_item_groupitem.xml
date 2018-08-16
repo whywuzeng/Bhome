@@ -38,16 +38,17 @@ android:layout_height="wrap_content">
         style="@style/ComTaskContentItemTitle"
         android:text=""/>
 
-<ImageView
-    android:layout_width="0dp"
-    android:layout_weight="1.5"
-    android:paddingLeft="1dp"
-    android:src="@drawable/litte_grey_right_arrow"
-    android:paddingTop="10dp"
-    android:paddingBottom="10dp"
-    android:foregroundGravity="center_vertical"
-    android:layout_height="wrap_content"
-    />
+    <ImageView
+        android:layout_width="0dp"
+        android:layout_weight="1.5"
+        android:paddingLeft="1dp"
+        android:visibility="invisible"
+        android:src="@drawable/litte_grey_right_arrow"
+        android:paddingTop="10dp"
+        android:paddingBottom="10dp"
+        android:foregroundGravity="center_vertical"
+        android:layout_height="wrap_content"
+        />
 
 </LinearLayout>
 

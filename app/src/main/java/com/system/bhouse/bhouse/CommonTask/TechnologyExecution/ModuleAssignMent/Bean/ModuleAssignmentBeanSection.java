@@ -20,6 +20,10 @@ public class ModuleAssignmentBeanSection extends HeaderAndFooterSectionEntity<Mo
     public ModuleAssignmentBeanSection(ModuleAssignmentBean item)
     {
         super(item);
+        /**
+         * delete禁止显示
+         */
+        this.t.setDisableDelete(true);
     }
 
     public void setMore(boolean isMore){

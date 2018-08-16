@@ -150,6 +150,7 @@ public class RenderHandleThread extends HandlerThread implements Handler.Callbac
 
     } catch (Exception e) {
         e.printStackTrace();
+            quit();
     }
     }
 
