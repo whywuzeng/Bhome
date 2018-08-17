@@ -10,7 +10,6 @@ import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -36,7 +35,7 @@ import com.system.bhouse.bhouse.CommonTask.TransportationManagement.adapter.Base
 import com.system.bhouse.bhouse.CommonTask.TransportationManagement.adapter.BaseViewHolder;
 import com.system.bhouse.bhouse.CommonTask.Widget.TimeLineItemTopBottomDecoration;
 import com.system.bhouse.bhouse.R;
-import com.system.bhouse.bhouse.setup.WWCommon.WWBaseFragment;
+import com.system.bhouse.bhouse.setup.WWCommon.LazyFragment;
 import com.system.bhouse.utils.ClickUtils;
 import com.system.bhouse.utils.TenUtils.TimeUtils;
 import com.system.bhouse.utils.ValueUtils;
@@ -65,7 +64,7 @@ import me.gujun.android.taggroup.TagGroup;
  * com.system.bhouse.bhouse.CommonTask.TechnologyExecution
  */
 
-public class TechnologyExecutionFragment extends WWBaseFragment implements BaseQuickAdapter.OnItemClickListener,BaseQuickAdapter.OnItemChildClickListener{
+public class TechnologyExecutionFragment extends LazyFragment implements BaseQuickAdapter.OnItemClickListener,BaseQuickAdapter.OnItemChildClickListener{
 
     private static final int RESULT_LOCAL = 2;
 
@@ -122,11 +121,10 @@ public class TechnologyExecutionFragment extends WWBaseFragment implements BaseQ
         }
     }
 
-    @Nullable
     @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.technology_layout_fragment, container, false);
-        ButterKnife.bind(this,rootView);
+    protected void onCreateViewLazy(Bundle savedInstanceState) {
+        super.onCreateViewLazy(savedInstanceState);
+        super.setContentView(R.layout.technology_layout_fragment);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity());
         my_recycle_view.setLayoutManager(linearLayoutManager);
 
@@ -217,7 +215,6 @@ public class TechnologyExecutionFragment extends WWBaseFragment implements BaseQ
         //初始化 肯定到是空的
         adapter.setEmptyView(notDataView);
 
-        return rootView;
     }
 
     @OnClick(R.id.component_qrcode)
@@ -319,6 +316,18 @@ public class TechnologyExecutionFragment extends WWBaseFragment implements BaseQ
         public InnerHandle(TechnologyExecutionActivity mActivity){
             this.wwTimeLineActivityWeakReference=new WeakReference<TechnologyExecutionActivity>(mActivity);
         }
+    }
+
+    /**
+     * 可见时调用
+     */
+    @Override
+    protected void onFragmentStartLazy() {
+        super.onFragmentStartLazy();
+        if (!TextUtils.isEmpty(resultQrcomponent)&&!TextUtils.isEmpty(Order_Id)) {
+            AskForBackgroud();
+        }
+
     }
 
     /**
@@ -553,7 +562,8 @@ public class TechnologyExecutionFragment extends WWBaseFragment implements BaseQ
                     } finally {
                         if (!TextUtils.isEmpty(orderID) && !TextUtils.isEmpty(orderNumber)) {
                             resultQrcomponent = resultQr;
-                            Order_Id = orderID;
+                            //先给resultQrcomponent赋值
+                            // Order_Id = orderID;
 
                             //显示textview数值
                             tv_component_content.setText(resultQr);
@@ -581,8 +591,6 @@ public class TechnologyExecutionFragment extends WWBaseFragment implements BaseQ
                     @Override
                     public void SuccessBack(String result) {
                         showButtomToast(result);
-                        AskForBackgroud();
-
                     }
 
                     @Override
@@ -609,8 +617,6 @@ public class TechnologyExecutionFragment extends WWBaseFragment implements BaseQ
                     @Override
                     public void SuccessBack(String result) {
                         showButtomToast(result);
-                        if (result.contains("成功"))
-                        AskForBackgroud();
                     }
 
                     @Override

@@ -35,7 +35,7 @@ public class TechnologyBaseBean extends BaseBean {
     public String quotaTime;
     @SerializedName("数量")
     public double number;
-    @SerializedName(value = "源单ID",alternate = {"来源单据ID"})
+    @SerializedName(value = "源单ID",alternate = {"来源单据ID","来源类型ID"})
     public String sourceID;
     @SerializedName("规格型号")
     public String specification;

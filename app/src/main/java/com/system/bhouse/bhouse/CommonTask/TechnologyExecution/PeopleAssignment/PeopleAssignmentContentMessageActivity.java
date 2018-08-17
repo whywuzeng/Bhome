@@ -158,12 +158,14 @@ public class PeopleAssignmentContentMessageActivity extends BaseContentMessageAc
         else {
             setActionBarMidlleTitle(module_name);
         }
-
+        //查看 状态 也会传值 receiptHnumber  但是comTaskBeans 保存状态也有值
         if (!TextUtils.isEmpty(receiptHnumber)) {
-            if (getComtaskSize()) {
+            if (getComtaskSize()&&comTaskBeans.get(0).hNumbe.isEmpty()) {
                 for (PeopleAssignmentBean bean : comTaskBeans) {
                     bean.hNumbe = receiptHnumber;
                 }
+            }else if (ValueUtils.IsFirstValueExist(this.comTaskBeans)){
+                receiptHnumber=this.comTaskBeans.get(0).hNumbe;
             }
         }else if (ValueUtils.IsFirstValueExist(this.comTaskBeans)){
             receiptHnumber=this.comTaskBeans.get(0).hNumbe;

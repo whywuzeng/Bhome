@@ -14,7 +14,6 @@ import com.system.bhouse.api.manager.ExceptionConverter.AbsAPICallback;
 import com.system.bhouse.api.manager.ExceptionConverter.ApiException;
 import com.system.bhouse.api.manager.ExceptionConverter.MyGsonConverterFactory;
 import com.system.bhouse.api.manager.RetrofitManager;
-import com.system.bhouse.bhouse.Annotation.GET;
 import com.system.bhouse.bhouse.Bean.NewsModel;
 import com.system.bhouse.bhouse.CommonTask.TechnologyExecution.MaintenanceOutWarehouse.Bean.MaintenanceOutWarehouseBean;
 import com.system.bhouse.bhouse.SingleList.SingleList;
@@ -46,8 +45,6 @@ import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
 import retrofit2.http.Path;
 import rx.Observable;
-import rx.android.schedulers.AndroidSchedulers;
-import rx.schedulers.Schedulers;
 
 /**
  * Created by Administrator on 2018-07-02.
@@ -245,8 +242,7 @@ public class TestUnit {
     @Test
     public void Apitest(){
         ApiService service = ApiService.Factory.createService();
-        service.request1("").subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
+        service.request1("news")
                 .subscribe(new AbsAPICallback<NewsModel>("网络错误","解析错误","未知错误") {
                     @Override
                     protected void onError(ApiException ex) {
@@ -326,8 +322,8 @@ public class TestUnit {
                     // OkHttpClient配置是一样的,静态创建一次即可
                     // 指定缓存路径,缓存大小100Mb
 
-                    sOkHttpClient = new OkHttpClient.Builder().
-                            addInterceptor(mLoggingInterceptor).retryOnConnectionFailure(true)
+                    sOkHttpClient = new OkHttpClient.Builder()
+
                             .connectTimeout(30, TimeUnit.SECONDS).build();
 
                 }
@@ -340,7 +336,7 @@ public class TestUnit {
     //ApiService.java
     public interface ApiService {
 
-        @GET("{id}")
+        @retrofit2.http.GET("{id}")
         Observable<NewsModel> request1(@Path("id") String request);
 
 //        @POST("app/api")

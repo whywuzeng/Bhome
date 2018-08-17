@@ -1,7 +1,5 @@
 package com.system.bhouse.api.manager.ExceptionConverter;
 
-import android.util.Log;
-
 import com.google.gson.Gson;
 
 import java.io.IOException;
@@ -32,7 +30,7 @@ public class GsonResponseBodyConverter<T> implements Converter<ResponseBody,T> {
     public T convert(ResponseBody value) throws IOException {
         String response = value.string();
         try {
-            Log.d("Network", "response>>" + response);
+//            Log.d("Network", "response>>" + response);
             //ResultResponse 只解析result字段
             ResultResponse resultResponse = gson.fromJson(response, ResultResponse.class);
             if (resultResponse.getResult() == 0){

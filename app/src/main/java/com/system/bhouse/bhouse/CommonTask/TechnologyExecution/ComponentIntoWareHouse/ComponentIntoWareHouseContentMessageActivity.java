@@ -161,10 +161,14 @@ public class ComponentIntoWareHouseContentMessageActivity extends BaseContentMes
         }
 
         if (!TextUtils.isEmpty(receiptHnumber)) {
-            if (getComtaskSize()) {
+            if (getComtaskSize()&&comTaskBeans.get(0).hNumbe.isEmpty()) {
+                //新建状态 给comtaskBeans赋值
                 for (ComponentIntoWareHouseBean bean : comTaskBeans) {
                     bean.hNumbe = receiptHnumber;
                 }
+            }else if (ValueUtils.IsFirstValueExist(this.comTaskBeans)) {
+                //传了 receiptHnumber  但是保存状态
+                receiptHnumber = this.comTaskBeans.get(0).hNumbe;
             }
         }
         else if (ValueUtils.IsFirstValueExist(this.comTaskBeans)) {
@@ -262,7 +266,8 @@ public class ComponentIntoWareHouseContentMessageActivity extends BaseContentMes
             viewModel.name = "业务日期";
             viewModel.value = this.comTaskBeans.get(0).getRequireDate();
             viewModel.key = "requireDate";
-            viewModel.isClick = false;
+          if (mStatus.isModifyStatus() || mStatus.isNewStatus())
+              viewModel.isClick = true;
             viewModels.add(viewModel);
             headerProperties.put(viewModel.key,viewModel.value);
 
@@ -694,44 +699,29 @@ public class ComponentIntoWareHouseContentMessageActivity extends BaseContentMes
     private void CleartreeRecyclerAdapter(){
         List<TreeItem> datas = treeRecyclerAdapter.getDatas();
         KeyType keyType = new KeyType();
-//        for (TreeItem treeItem:datas)
-//        {
-//            if (treeItem instanceof GroupItem){
-//                if (((GroupItem)treeItem).TitleKey.equals(LETTERS[0]))
-//                {
-//                    keyType.key=4;
-//                    ((ArrayList<SortChildItem.ViewModel>)datas.get(0).getData()).addAll(makeChlidData(keyType,mStatus));
-//                }else if (((GroupItem)treeItem).TitleKey.equals(LETTERS[1]))
-//                {
-//                    keyType.key=2;
-//                    keyType.type=LETTERS[1];
-//                    ((ArrayList<SortChildItem.ViewModel>)datas.get(12).getData()).addAll(makeChlidData(keyType,mStatus));
-//                }else if (((GroupItem)treeItem).TitleKey.equals(LETTERS[2]))
-//                {
-//                    keyType.key=2;
-//                    keyType.type=LETTERS[2];
-//                    ((ArrayList<SortChildItem.ViewModel>)datas.get(15).getData()).addAll(makeChlidData(keyType,mStatus));
-//                }
-//            }
-//        }
 
-        ArrayList<SortChildItem.ViewModel> viewModels = new ArrayList<>();
+        List<SortChildItem.ViewModel> viewModels = new ArrayList<>();
+        List<TreeItem> treeItems =new ArrayList<>();
+        /**
+         * 要修改datas  重新塞入sortChildItem 对象
+          */
         keyType.key = 4;
-        viewModels.addAll(makeChlidData(keyType, mStatus));
+        treeItems.addAll(GroupItemRefresh(datas, Const.LETTERS[0], makeChlidData(keyType, mStatus)));
+//        viewModels.addAll(makeChlidData(keyType, mStatus));
         keyType.key = 2;
         keyType.type = Const.LETTERS[1];
-        viewModels.addAll(makeChlidData(keyType, mStatus));
+        treeItems.addAll(GroupItemRefresh(datas, Const.LETTERS[1], makeChlidData(keyType, mStatus)));
+//        viewModels.addAll(makeChlidData(keyType, mStatus));
         keyType.key = 2;
         keyType.type = Const.LETTERS[2];
-        viewModels.addAll(makeChlidData(keyType, mStatus));
+        treeItems.addAll(GroupItemRefresh(datas, Const.LETTERS[2], makeChlidData(keyType, mStatus)));
+//        viewModels.addAll(makeChlidData(keyType, mStatus));
 
         for (int i=0,j=0;i<datas.size();i++,j++)
         {
             if (datas.get(i) instanceof SortChildItem)
             {
-
-                ((SortChildItem) datas.get(i)).setData(viewModels.get(j));
-
+                 datas.set(i,treeItems.get(j)); //重新塞入 treeItems
             }else if (datas.get(i) instanceof GroupItem)
             {
                 j--;
@@ -740,6 +730,19 @@ public class ComponentIntoWareHouseContentMessageActivity extends BaseContentMes
 
 //        treeRecyclerAdapter.getItemManager().addItems(datas);
         treeRecyclerAdapter.getItemManager().notifyDataChanged();
+    }
+
+    private List<TreeItem> GroupItemRefresh(List<TreeItem> datas, String letter, ArrayList<SortChildItem.ViewModel> data) {
+        for (TreeItem item : datas) {
+            if (item instanceof GroupItem) {
+                GroupItem item1 = (GroupItem) item;
+                if (item1.TitleKey.equals(letter)) {
+                    ((GroupItem) item).setData(data);
+                    return item1.getAllChilds();
+                }
+            }
+        }
+        return null;
     }
 
     /**
@@ -848,7 +851,7 @@ public class ComponentIntoWareHouseContentMessageActivity extends BaseContentMes
     //单据---修改状态
     @Override
     protected void tvModifyAction(TextView tvModify) {
-        mStatus.setBean(new SubmitStatusBeanImpl().setVisSubmitBtn(true).setVisQRBtn(true));
+        mStatus.setBean(new SubmitStatusBeanImpl().setVisSubmitBtn(true));
         mStatus.setLookStatus(true);
         mStatus.setModifyStatus(true);
         if (mStatus.isModifyStatus()) {
@@ -943,43 +946,6 @@ public class ComponentIntoWareHouseContentMessageActivity extends BaseContentMes
         }, orderId, componentQr);
 
         //"7efaf36e001d414b94326c0a04d47e29"
-    }
-
-    private void getProductionOrderTray() {
-        ApiWebService.Get_Production_order_Tray_Is_Moid_qr_byRow_Json(this, new ApiWebService.SuccessCall() {
-            @Override
-            public void SuccessBack(String result) {
-
-                ArrayList<ComponentIntoWareHouseBean> loadingcarbean = App.getAppGson().fromJson(result, new TypeToken<List<ComponentIntoWareHouseBean>>() {
-                }.getType());
-
-                if (loadingcarbean.isEmpty()) {
-                    T.showShort(ComponentIntoWareHouseContentMessageActivity.this, getResources().getString(R.string.Qrcode_result));
-                }
-
-                //清空 二维码为空的
-                for (ComponentIntoWareHouseBean receBean : comTaskBeans) {
-                    if (TextUtils.isEmpty(receBean.ID)) {
-                        comTaskBeans.remove(receBean);
-                    }
-                }
-                comTaskBeans.clear();
-                if (!(loadingcarbean.size() == 0)) {
-                    comTaskBeans.addAll(loadingcarbean);
-                }
-
-                CleartreeRecyclerAdapter();
-
-                ClearAssignMentSectionArrayList();
-                componentIntoWareHouseSectionAdapter.notifyDataSetChanged();
-
-            }
-
-            @Override
-            public void ErrorBack(String error) {
-
-            }
-        }, orderId, componentQr, comTaskBeans.get(0).getID());
     }
 
     @Override

@@ -48,6 +48,8 @@ public abstract class AbsAPICallback<T> extends Subscriber<T> {
             throwable = throwable.getCause();
         }
 
+//        ConnectException  这个异常 连接异常w
+
         ApiException ex;
         if (e instanceof HttpException){             //HTTP错误
             HttpException httpException = (HttpException) e;

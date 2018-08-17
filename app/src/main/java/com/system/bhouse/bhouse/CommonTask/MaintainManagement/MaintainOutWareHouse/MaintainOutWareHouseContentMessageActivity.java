@@ -767,7 +767,7 @@ public class MaintainOutWareHouseContentMessageActivity extends BaseContentMessa
             public void ErrorBack(String error) {
 
             }
-        },comTaskBeans.get(0).stationCarID,comTaskBeans.get(0).wareHouseID);
+        },comTaskBeans.get(0).stationCarID,comTaskBeans.get(0).productionLineID);
 
 //        ApiWebService.Get_Production_order_Tray_Is_Moid_qr_Tray_Db(this, new ApiWebService.SuccessCall() {
 //            @Override

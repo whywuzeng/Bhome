@@ -17,7 +17,7 @@ public class MaintenanceOutWarehouseBean extends TechnologyBaseBean implements P
 
     @SerializedName("产线ID")
     public String productionLineID;
-    @SerializedName("产线名称")
+    @SerializedName(value = "产线名称",alternate = {"产线"})
     public String productionLineName;
     @SerializedName("台车ID")
     public String stationCarID;
