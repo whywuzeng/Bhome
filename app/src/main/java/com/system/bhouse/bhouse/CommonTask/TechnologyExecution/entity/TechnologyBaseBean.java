@@ -19,7 +19,7 @@ public class TechnologyBaseBean extends BaseBean {
     public String Qrcode;
     @SerializedName("分录ID")
     public String subDirectoryID;
-    @SerializedName(value = "单据编号",alternate = {"台车模具分离单编号"})
+    @SerializedName(value = "单据编号",alternate = {"台车模具分离单编号","入库单编号"})
     public String hNumbe="";
     @SerializedName(value = "开始日期" ,alternate = {""})
     public String startTime;

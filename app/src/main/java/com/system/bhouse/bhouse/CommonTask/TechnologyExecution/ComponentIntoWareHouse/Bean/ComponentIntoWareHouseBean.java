@@ -41,8 +41,6 @@ public class ComponentIntoWareHouseBean extends TechnologyBaseBean {
      */
     @SerializedName("来源类型")
     public String soureTableType;
-    @SerializedName("来源类型ID")
-    public String soureTableTypeID;
     @SerializedName("来源类型表")
     public String soureTable;
 

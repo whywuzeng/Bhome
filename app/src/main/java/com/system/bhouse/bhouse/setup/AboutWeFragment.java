@@ -20,6 +20,7 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.readystatesoftware.viewbadger.BadgeView;
 import com.system.bhouse.Custom.ShowDeviceMessageCustomDialog;
+import com.system.bhouse.Custom.TagGroup.TagGroup;
 import com.system.bhouse.base.App;
 import com.system.bhouse.base.Global;
 import com.system.bhouse.bean.EventBean.EventOrganization;
@@ -44,7 +45,6 @@ import org.androidannotations.annotations.ViewById;
 
 import de.greenrobot.event.EventBus;
 import de.hdodenhof.circleimageview.CircleImageView;
-import me.gujun.android.taggroup.TagGroup;
 
 /**
  * Created by Administrator on 2018-03-19.

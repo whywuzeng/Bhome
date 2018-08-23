@@ -6,7 +6,9 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.NestedScrollView;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -254,6 +256,19 @@ public class WWBaseFragment extends Fragment implements FootUpdate.LoadMore, Glo
 
     }
 
+    //添加滑动响应
+    protected void setScrollViewFirst() {
+
+        NestedScrollView mNestedScrollView = (NestedScrollView) findViewById(R.id.nested_view);
+        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mNestedScrollView.setScrollY(0);
+            }
+        });
+    }
 
     public Context getApplicationContext()
     {

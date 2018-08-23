@@ -18,6 +18,7 @@ import android.widget.TextView;
 import com.google.gson.reflect.TypeToken;
 import com.system.bhouse.Custom.OnSpinerItemClick;
 import com.system.bhouse.Custom.SpinnerDialog;
+import com.system.bhouse.Custom.TagGroup.TagGroup;
 import com.system.bhouse.api.ApiWebService;
 import com.system.bhouse.base.App;
 import com.system.bhouse.bhouse.CommonTask.TechnologyExecution.BaseFragment.RecycleViewAdapterManager;
@@ -54,7 +55,6 @@ import java.util.List;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import me.gujun.android.taggroup.TagGroup;
 
 /**
  * Created by Administrator on 2018-07-16.

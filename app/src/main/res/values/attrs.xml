@@ -338,4 +338,13 @@
         <attr name="stickOffset" format="dimension" />
     </declare-styleable>
 
+    <!--tagGroup declare-style-->
+
+    <declare-styleable name="TagGroup"><attr format="boolean" name="atg_isAppendMode"/>
+        <attr name="atg_AppendStyle"><enum name="state_normal" value="0x12"/> <enum name="state_input" value="0x13"/> <enum name="state_static" value="0x14"/> </attr>
+        <attr format="string" name="atg_inputHint"/><attr format="color" name="atg_borderColor"/><attr format="color" name="atg_textColor"/><attr format="color" name="atg_backgroundColor"/><attr format="color" name="atg_dashBorderColor"/><attr format="color" name="atg_inputHintColor"/><attr format="color" name="atg_inputTextColor"/><attr format="color" name="atg_checkedBorderColor"/><attr format="color" name="atg_checkedTextColor"/><attr format="color" name="atg_checkedMarkerColor"/><attr format="color" name="atg_checkedBackgroundColor"/><attr format="color" name="atg_pressedBackgroundColor"/><attr format="dimension" name="atg_borderStrokeWidth"/><attr format="dimension" name="atg_textSize"/><attr format="dimension" name="atg_horizontalSpacing"/><attr format="dimension" name="atg_verticalSpacing"/><attr format="dimension" name="atg_horizontalPadding"/><attr format="dimension" name="atg_verticalPadding"/></declare-styleable>
+    <declare-styleable name="Themes"><attr format="reference" name="tagGroupStyle"/></declare-styleable>
+
+
+
 </resources>

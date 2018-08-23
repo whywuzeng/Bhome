@@ -1,6 +1,7 @@
 package com.system.bhouse.bhouse.CommonTask.TechnologyExecution;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -11,12 +12,20 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.view.KeyEvent;
+import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.socks.library.KLog;
 import com.system.bhouse.bhouse.CommonTask.TechnologyExecution.entity.TechnologyBean;
 import com.system.bhouse.bhouse.R;
 import com.system.bhouse.bhouse.setup.WWCommon.WWBackActivity;
+import com.system.bhouse.utils.MeasureUtil;
+
+import java.lang.reflect.Field;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -122,14 +131,14 @@ public class TechnologyExecutionActivity extends WWBackActivity implements Techn
 //      mAdapter = new MyViewPagerAdapter(getSupportFragmentManager());
         viewPager.setAdapter(pagerAdapter);
 
-        mTabLayout.setupWithViewPager(viewPager);
+//        mTabLayout.setupWithViewPager(viewPager);
 
-//        // 适配器必须重写getPageTitle()方法
-//        mTabLayout.setTabsFromPagerAdapter(pagerAdapter);
-//        // 监听TabLayout的标签选择，当标签选中时ViewPager切换
-//        mTabLayout.setOnTabSelectedListener(new TabLayout.ViewPagerOnTabSelectedListener(viewPager));
-//        // 监听ViewPager的页面切换，当页面切换时TabLayout的标签跟着切换
-//        viewPager.setOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(mTabLayout));
+        // 适配器必须重写getPageTitle()方法
+        mTabLayout.setTabsFromPagerAdapter(pagerAdapter);
+        // 监听TabLayout的标签选择，当标签选中时ViewPager切换
+        mTabLayout.setOnTabSelectedListener(new ViewPagerOnTabSelectedListener(viewPager));
+        // 监听ViewPager的页面切换，当页面切换时TabLayout的标签跟着切换
+        viewPager.setOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(mTabLayout));
 
         // 当选中的Tab切换时，点击事件
         mTabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
@@ -137,9 +146,9 @@ public class TechnologyExecutionActivity extends WWBackActivity implements Techn
             public void onTabSelected(TabLayout.Tab tab) {
                 if (tab.getPosition()==1)
                 {
-//                    mainHandle.sendEmptyMessage(MSG_222);
+
                 }else if (tab.getPosition()==0){
-//                    mainHandle.sendEmptyMessage(MSG_333);
+
                 }
             }
 
@@ -151,6 +160,13 @@ public class TechnologyExecutionActivity extends WWBackActivity implements Techn
             @Override
             public void onTabReselected(TabLayout.Tab tab) {
 
+            }
+        });
+
+        mTabLayout.post(new Runnable() {
+            @Override
+            public void run() {
+//                reflex(mTabLayout);
             }
         });
 
@@ -290,6 +306,96 @@ public class TechnologyExecutionActivity extends WWBackActivity implements Techn
             }
         }
         return super.onKeyDown(keyCode, event);
+    }
+
+    /**
+     * 自定义 ViewpagerOnTabSelectedListener  自定义规则 不点击position=1
+     */
+    public static class ViewPagerOnTabSelectedListener implements TabLayout.OnTabSelectedListener {
+        private final ViewPager mViewPager;
+
+        public ViewPagerOnTabSelectedListener(ViewPager viewPager) {
+            mViewPager = viewPager;
+        }
+
+        @Override
+        public void onTabSelected(TabLayout.Tab tab) {
+            if (tab.getPosition()!=1)
+            mViewPager.setCurrentItem(tab.getPosition());
+        }
+
+        @Override
+        public void onTabUnselected(TabLayout.Tab tab) {
+            // No-op
+        }
+
+        @Override
+        public void onTabReselected(TabLayout.Tab tab) {
+            // No-op
+        }
+    }
+
+    /**
+     * 这 调整tabview底线的宽度
+     * @param tabLayout
+     */
+    public void reflex(final TabLayout tabLayout){
+        //了解源码得知 线的宽度是根据 tabView的宽度来设置的
+        tabLayout.post(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    //拿到tabLayout的mTabStrip属性
+                    LinearLayout mTabStrip = (LinearLayout) tabLayout.getChildAt(0);
+
+                    int dp10 = MeasureUtil.dip2px(tabLayout.getContext(), 40);
+
+                    try {
+                        Method method = mTabStrip.getClass().getDeclaredMethod("setSelectedIndicatorColor", int.class);
+                        method.setAccessible(true);
+                        method.invoke(mTabStrip, Color.parseColor("#FFC3C3C3"));
+                    } catch (NoSuchMethodException | InvocationTargetException e) {
+                        e.printStackTrace();
+                    }
+
+                    for (int i = 0; i < mTabStrip.getChildCount(); i++) {
+                        View tabView = mTabStrip.getChildAt(i);
+
+                        //拿到tabView的mTextView属性  tab的字数不固定一定用反射取mTextView
+                        Field mTextViewField = tabView.getClass().getDeclaredField("mTextView");
+                        mTextViewField.setAccessible(true);
+
+                        TextView mTextView = (TextView) mTextViewField.get(tabView);
+
+                        tabView.setPadding(0, 0, 0, 0);
+
+                        //因为我想要的效果是   字多宽线就多宽，所以测量mTextView的宽度
+                        int width = 0;
+                        width = mTextView.getWidth();
+                        if (width == 0) {
+                            mTextView.measure(0, 0);
+                            width = mTextView.getMeasuredWidth();
+                        }
+
+
+                        //设置tab左右间距为10dp  注意这里不能使用Padding 因为源码中线的宽度是根据 tabView的宽度来设置的
+                        LinearLayout.LayoutParams params = (LinearLayout.LayoutParams) tabView.getLayoutParams();
+                        params.width = width;
+                        params.leftMargin = dp10;
+                        params.rightMargin = dp10;
+                        tabView.setLayoutParams(params);
+
+                        tabView.invalidate();
+                    }
+
+                } catch (NoSuchFieldException e) {
+                    e.printStackTrace();
+                } catch (IllegalAccessException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+
     }
 
 

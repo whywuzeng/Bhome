@@ -757,6 +757,16 @@ public class MaintainOutWareHouseContentMessageActivity extends BaseContentMessa
      */
     private void TvAddQrAction() {
 
+        if (TextUtils.isEmpty(this.comTaskBeans.get(0).getStationCarName())) {
+            T.showShort(this, "台车为空不能提交");
+            return;
+        }
+
+        if (TextUtils.isEmpty(this.comTaskBeans.get(0).getProductionLineName())) {
+            T.showShort(this, "产线为空不能提交");
+            return;
+        }
+
         ApiWebService.Get_Production_order_yhy_Out_Mould_Db(this, new ApiWebService.SuccessCall() {
             @Override
             public void SuccessBack(String result) {
@@ -773,7 +783,7 @@ public class MaintainOutWareHouseContentMessageActivity extends BaseContentMessa
 //            @Override
 //            public void SuccessBack(String result) {
 //
-//                ArrayList<StationCarDetachModuleBean> loadingcarbean = App.getAppGson().fromJson(result, new TypeToken<List<StationCarDetachModuleBean>>() {}.getType());
+//                ArrayList<LoadingIntoWareHouseBean> loadingcarbean = App.getAppGson().fromJson(result, new TypeToken<List<LoadingIntoWareHouseBean>>() {}.getType());
 //
 //                if (!ValueUtils.IsFirstValueExist(loadingcarbean))
 //                    return;
@@ -981,6 +991,15 @@ public class MaintainOutWareHouseContentMessageActivity extends BaseContentMessa
             T.showShort(this, Const.Entry_is_empty);
             return;
         }
+        if (TextUtils.isEmpty(this.comTaskBeans.get(0).getStationCarName())) {
+            T.showShort(this, "台车为空不能提交");
+            return;
+        }
+
+        if (TextUtils.isEmpty(this.comTaskBeans.get(0).getProductionLineName())) {
+            T.showShort(this, "产线为空不能提交");
+            return;
+        }
 
         ApiWebService.Get_Production_order_yhy_Out_Trolley_Db(this, new ApiWebService.SuccessCall() {
             @Override
@@ -1120,6 +1139,17 @@ public class MaintainOutWareHouseContentMessageActivity extends BaseContentMessa
             T.showShort(this, Const.Entry_is_empty);
             return;
         }
+
+        if (TextUtils.isEmpty(this.comTaskBeans.get(0).getStationCarName())) {
+                T.showShort(this, "台车为空不能提交");
+                return;
+            }
+
+        if (TextUtils.isEmpty(this.comTaskBeans.get(0).getProductionLineName())) {
+            T.showShort(this, "产线为空不能提交");
+            return;
+        }
+
 //        for (int i=0;i<comTaskBeans.size();i++) {
 //            if (TextUtils.isEmpty(this.comTaskBeans.get(i).getModuleID())) {
 //                T.showShort(this, "第"+(i+1)+"行的模具为空不能提交");
@@ -1162,8 +1192,8 @@ public class MaintainOutWareHouseContentMessageActivity extends BaseContentMessa
                 public void SuccessBack(String result) {
                     showButtomToast(result);
                     if (!result.contains("失败")) {
-//                        onBackPressed();
-//                        sureDataRefresh("tvSubmitAction");
+                        onBackPressed();
+                        sureDataRefresh("tvSubmitAction");
                     }
                 }
 
@@ -1186,7 +1216,6 @@ public class MaintainOutWareHouseContentMessageActivity extends BaseContentMessa
                 T.showShort(MaintainOutWareHouseContentMessageActivity.this, result);
 //                onBackPressed();
 //                sureDataRefresh("tvCheckAction");
-                testData();
             }
 
             @Override
@@ -1204,7 +1233,6 @@ public class MaintainOutWareHouseContentMessageActivity extends BaseContentMessa
                 T.showShort(MaintainOutWareHouseContentMessageActivity.this, result);
 //                onBackPressed();
 //                sureDataRefresh("tvFanCheckAction");
-                testData();
             }
 
             @Override
@@ -1221,7 +1249,7 @@ public class MaintainOutWareHouseContentMessageActivity extends BaseContentMessa
             public void SuccessBack(String result) {
                 T.showShort(MaintainOutWareHouseContentMessageActivity.this, result);
                 onBackPressed();
-//                sureDataRefresh("tvDeleteAction");
+                sureDataRefresh("tvDeleteAction");
             }
 
             @Override

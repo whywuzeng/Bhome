@@ -13,6 +13,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.system.bhouse.bean.BProBOM;
+import com.system.bhouse.bhouse.CommonTask.MaintainManagement.LoadingIntoWareHouse.adpter.LoadingIntoSectionAdapter;
 import com.system.bhouse.bhouse.CommonTask.TransportationManagement.LoadingCarOrder.CommonSectionAdapter;
 import com.system.bhouse.bhouse.CommonTask.TransportationManagement.adapter.BaseQuickAdapter;
 import com.system.bhouse.bhouse.CommonTask.TransportationManagement.adapter.BaseSectionQuickAdapter;
@@ -48,13 +49,17 @@ public class CommonPickerActivity extends WWBackActivity implements AdapterView.
     Spinner spDwon;
     private ArrayAdapter<String> stringArrayAdapter;
     private ArrayList<MySection> mySections;
-    private CommonSectionAdapter commonSectionAdapter;
+    private BaseSectionQuickAdapter commonSectionAdapter;
 
     @AfterViews
     public void initFragment() {
         setActionBarMidlleTitle(title);
         initData();
-         commonSectionAdapter = new CommonSectionAdapter(LayoutID, R.layout.layout_home_recommend_empty, mySections);
+        if (!isNewsAdapter) {
+            commonSectionAdapter = new CommonSectionAdapter(LayoutID, R.layout.layout_home_recommend_empty, mySections);
+        }else {
+            commonSectionAdapter=new LoadingIntoSectionAdapter(LayoutID, R.layout.layout_home_recommend_empty, mySections);
+        }
 //        myAdapter = new MyAdapter();
         commonSectionAdapter.setFriends(mySections);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
@@ -63,7 +68,7 @@ public class CommonPickerActivity extends WWBackActivity implements AdapterView.
         queryEdit();
     }
 
-    private void initData() {
+    private  void initData() {
         mySections=new ArrayList<>();
         if (!bProBOMs.isEmpty())
         {
@@ -173,6 +178,9 @@ public class CommonPickerActivity extends WWBackActivity implements AdapterView.
 
     @Extra
     Integer LayoutID;
+
+    @Extra
+    boolean isNewsAdapter;
 
     private int Count=50;
 

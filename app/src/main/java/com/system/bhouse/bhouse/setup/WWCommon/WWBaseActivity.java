@@ -272,84 +272,12 @@ public class WWBaseActivity extends AppCompatActivity implements StartActivity {
         super.onDestroy();
     }
 
-//    protected void initSetting() {
-//        networkImpl.initSetting();
-//    }
-//
-//    @Override
-//    public void parseJson(int code, JSONObject respanse, String tag, int pos, Object data) throws JSONException {
-//    }
-//
-//    protected void getNextPageNetwork(String url, final String tag) {
-//        networkImpl.getNextPageNetwork(url, tag);
-//    }
-//
-//    protected void postNetwork(RequestData request, String tag) {
-//        postNetwork(request.url, request.params, tag);
-//    }
-//
-//    protected void postNetwork(RequestData request, String tag, Object data) {
-//        postNetwork(request.url, request.params, tag, -1, data);
-//    }
-//
-//    protected void postNetwork(String url, String tag) {
-//        postNetwork(url, new RequestParams(), tag);
-//    }
-//
-//    protected void postNetwork(String url, RequestParams params, final String tag) {
-//        networkImpl.loadData(url, params, tag, -1, null, NetworkImpl.Request.Post);
-//    }
-//
-//    protected void postNetwork(String url, RequestParams params, final String tag, int dataPos, Object data) {
-//        networkImpl.loadData(url, params, tag, dataPos, data, NetworkImpl.Request.Post);
-//    }
-//
-//    @Override
-//    public void getNetwork(String url, final String tag) {
-//        networkImpl.loadData(url, null, tag, -1, null, NetworkImpl.Request.Get);
-//    }
-//
-//    protected void getNetwork(String url, final String tag, int dataPos, Object data) {
-//        networkImpl.loadData(url, null, tag, dataPos, data, NetworkImpl.Request.Get);
-//    }
-//
-//    protected void putNetwork(String url, RequestParams params, final String tag) {
-//        networkImpl.loadData(url, params, tag, -1, null, NetworkImpl.Request.Put);
-//    }
-//
-//    protected void putNetwork(String url, RequestParams params, String tag, int pos, Object object) {
-//        networkImpl.loadData(url, params, tag, pos, object, NetworkImpl.Request.Put);
-//    }
-//
-//    protected void putNetwork(String url, final String tag, int dataPos, Object data) {
-//        networkImpl.loadData(url, null, tag, dataPos, data, NetworkImpl.Request.Put);
-//    }
-//
-//    protected void deleteNetwork(String url, final String tag) {
-//        networkImpl.loadData(url, null, tag, -1, null, NetworkImpl.Request.Delete);
-//    }
-//
-//    protected void deleteNetwork(String url, RequestParams params, final String tag) {
-//        networkImpl.loadData(url, params, tag, -1, null, NetworkImpl.Request.Delete);
-//    }
-//
-//    protected void deleteNetwork(String url, final String tag, Object id) {
-//        networkImpl.loadData(url, null, tag, -1, id, NetworkImpl.Request.Delete);
-//    }
-//
-//    protected void deleteNetwork(String url, final String tag, int dataPos, Object id) {
-//        networkImpl.loadData(url, null, tag, dataPos, id, NetworkImpl.Request.Delete);
-//    }
 
     protected void showDialog(String title, String msg, DialogInterface.OnClickListener clickOk) {
         showDialog(title, msg, clickOk, null);
     }
 
 
-//    protected void showListDialog() {
-//        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-//        AlertDialog dialog = builder.setItems()
-//    }
 
     protected void showDialog(String title, String msg, DialogInterface.OnClickListener clickOk,
                               DialogInterface.OnClickListener clickCancel) {
@@ -406,22 +334,6 @@ public class WWBaseActivity extends AppCompatActivity implements StartActivity {
         mSingleToast.showButtomToast(messageId);
     }
 
-//    protected void iconfromNetwork(ImageView view, String url) {
-//        imageLoadTool.loadImage(view, Global.makeSmallUrl(view, url));
-//    }
-//
-//    protected void iconfromNetwork(ImageView view, String url, SimpleImageLoadingListener animate) {
-//        imageLoadTool.loadImage(view, Global.makeSmallUrl(view, url), animate);
-//    }
-//
-//    protected void imagefromNetwork(ImageView view, String url) {
-//        imageLoadTool.loadImageFromUrl(view, url);
-//    }
-
-//    protected void imagefromNetwork(ImageView view, String url, DisplayImageOptions options) {
-//        url = Global.translateStaticIcon(url);
-//        imageLoadTool.loadImageFromUrl(view, url, options);
-//    }
 
     public void initDialogLoading() {
         if (mDialogProgressPopWindow == null) {

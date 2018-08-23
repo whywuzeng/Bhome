@@ -983,7 +983,8 @@ public class StationCarDetachModuleContentMessageActivity extends BaseContentMes
                     showButtomToast(result);
 
                     if (!result.contains("失败")) {
-
+                        onBackPressed();
+                        sureDataRefresh("tvSubmitAction");
                     }
                 }
 
@@ -1013,7 +1014,7 @@ public class StationCarDetachModuleContentMessageActivity extends BaseContentMes
             public void SuccessBack(String result) {
                 T.showShort(StationCarDetachModuleContentMessageActivity.this, result);
                 onBackPressed();
-//                sureDataRefresh("tvDeleteAction");
+                sureDataRefresh("tvDeleteAction");
             }
 
             @Override

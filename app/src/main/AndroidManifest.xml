@@ -349,6 +349,12 @@
                   android:screenOrientation="portrait"/>
         <activity android:name="com.system.bhouse.bhouse.CommonTask.MaintainManagement.StationCarDetachModule.StationCarDetachModuleContentMessageActivity_"
                   android:screenOrientation="portrait"/>
+        <activity android:name=".CommonTask.MaintainManagement.LoadingIntoWareHouse.LoadingIntoWareHouseActivity"
+            android:screenOrientation="portrait"
+            />
+        <activity android:name="com.system.bhouse.bhouse.CommonTask.MaintainManagement.LoadingIntoWareHouse.LoadingIntoWareHouseContentMessageActivity_"
+                  android:screenOrientation="portrait"/>
+        <activity android:name=".CommonTask.MaintainManagement.LoadingIntoWareHouseFragment.Fragment.LoadingIntoWareHouseContentActivity"/>
 
         <meta-data
             android:name="design_width"

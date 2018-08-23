@@ -154,7 +154,7 @@ public class BaseAssignViewHolder {
      * ll_top2 --- tv_count_measure_id ---tv_count_measure---vv_top_22
      * ll_top3 --- tv_count_amount_id ---tv_count_amount---vv_top_3
      * ll_top4 --- tv_count_id ---tv_count---vv_top_4
-     * ll_top5 --- tv_unit_id ---tv_unit---vv_top_5
+     * ll_top5 --- tv_unit_id ---tv_unit---ll_bottom_5_iv_right_arrow--vv_top_5
      * ll_top6 --- tv_requireNum_id ---tv_requireNum---vv_top_6
      * ll_bottom_4 --- tv_ReceiptAmount_id ---tv_ReceiptAmount---ll_bottom_4_iv_right_arrow-- vv_bottom_4
      * ll_projectName --- tv_projectName_id ---tv_projectName---vv_projectName

@@ -152,7 +152,7 @@ public class MaintenanceWarehouseContentMessageActivity extends BaseContentMessa
         //得到初始数据，处理单据状态
         if (mStatus.isNewStatus()) {
             setActionBarMidlleTitle("新增" + module_name);
-            BottomAction();
+//            BottomAction();
         }
         else {
             setActionBarMidlleTitle(module_name);

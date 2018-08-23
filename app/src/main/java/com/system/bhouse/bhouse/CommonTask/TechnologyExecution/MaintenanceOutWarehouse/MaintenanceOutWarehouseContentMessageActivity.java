@@ -155,7 +155,7 @@ public class MaintenanceOutWarehouseContentMessageActivity extends BaseContentMe
         //得到初始数据，处理单据状态
         if (mStatus.isNewStatus()) {
             setActionBarMidlleTitle("新增" + module_name);
-            BottomAction();
+//            BottomAction();
         }
         else {
             setActionBarMidlleTitle(module_name);
@@ -663,7 +663,7 @@ public class MaintenanceOutWarehouseContentMessageActivity extends BaseContentMe
 //            @Override
 //            public void SuccessBack(String result) {
 //
-//                ArrayList<StationCarDetachModuleBean> loadingcarbean = App.getAppGson().fromJson(result, new TypeToken<List<StationCarDetachModuleBean>>() {}.getType());
+//                ArrayList<LoadingIntoWareHouseBean> loadingcarbean = App.getAppGson().fromJson(result, new TypeToken<List<LoadingIntoWareHouseBean>>() {}.getType());
 //
 //                if (!ValueUtils.IsFirstValueExist(loadingcarbean))
 //                    return;
@@ -1142,7 +1142,7 @@ public class MaintenanceOutWarehouseContentMessageActivity extends BaseContentMe
 //        ApiWebService.Get_Production_order_Tray_Is_Moid_qr_Del(this, new ApiWebService.SuccessCall() {
 //            @Override
 //            public void SuccessBack(String result) {
-//                T.showShort(StationCarDetachModuleContentMessageActivity.this, result);
+//                T.showShort(LoadingIntoWareHouseContentMessageActivity.this, result);
 //                onBackPressed();
 ////                sureDataRefresh("tvDeleteAction");
 //                testData();

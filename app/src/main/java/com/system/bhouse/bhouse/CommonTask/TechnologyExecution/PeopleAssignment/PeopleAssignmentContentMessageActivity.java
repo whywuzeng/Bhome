@@ -1029,12 +1029,12 @@ public class PeopleAssignmentContentMessageActivity extends BaseContentMessageAc
             T.showShort(this, Const.Entry_is_empty);
             return;
         }
-//        for (int i=0;i<comTaskBeans.size();i++) {
-//            if (TextUtils.isEmpty(this.comTaskBeans.get(i).getModuleID())) {
-//                T.showShort(this, "第"+(i+1)+"行的模具为空不能提交");
-//                return;
-//            }
-//        }
+        for (int i=0;i<comTaskBeans.size();i++) {
+            if (TextUtils.isEmpty(this.comTaskBeans.get(i).getStaffCoding())) {
+                T.showShort(this, "第"+(i+1)+"行的员工为空不能提交");
+                return;
+            }
+        }
         int size = this.comTaskBeans.size();
         String[][] billtable = null;
         billtable = new String[size][15];

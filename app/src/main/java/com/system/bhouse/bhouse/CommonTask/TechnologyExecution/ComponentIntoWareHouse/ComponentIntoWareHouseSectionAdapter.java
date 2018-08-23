@@ -66,6 +66,8 @@ public class ComponentIntoWareHouseSectionAdapter extends HeaderAndFooterSection
             helper.setVisible(R.id.iv_subBeizhu, false);
             helper.setVisible(R.id.ll_bottom_4_iv_right_arrow,true);
             helper.setImageResource(R.id.ll_bottom_4_iv_right_arrow,R.drawable.ic_qrcode);
+            //分录的点击事件
+            helper.addOnClickListener(R.id.ll_bottom_4);
         }
         else if (statusBean.isLookStatus()) {
             helper.setVisible(R.id.img_delete_item, false);
@@ -81,8 +83,6 @@ public class ComponentIntoWareHouseSectionAdapter extends HeaderAndFooterSection
         //防止doubleClick
         helper.addOnClickListener(R.id.img_delete_item);
 
-        //分录的点击事件
-        helper.addOnClickListener(R.id.ll_bottom_4);
 
     }
 

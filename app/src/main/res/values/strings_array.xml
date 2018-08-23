@@ -375,4 +375,29 @@
         <item>台车名称</item>
         <item>数量</item>
     </string-array>
+
+    <!--装柜入库 列表详情-->
+    <string-array name="loadingwarehouse_detach">
+        <item>单据编号</item>
+        <item>入库仓库</item>
+        <item>业务日期</item>
+        <item>货柜</item>
+        <item>状态</item>
+        <item>录入人</item>
+        <item>录入时间</item>
+    </string-array>
+
+    <!--装柜入库 分录详情-->
+    <string-array name="loadingwarehouse_itemsection_order">
+        <item>物料二维码</item>
+        <item>物料编码</item>
+        <item>物料名称</item>
+        <item>规格型号</item>
+        <item>单位</item>
+        <item>出库仓库</item>
+        <item>需求数量</item>
+        <item>项目</item>
+        <item>栋</item>
+        <item>层</item>
+    </string-array>
 </resources>

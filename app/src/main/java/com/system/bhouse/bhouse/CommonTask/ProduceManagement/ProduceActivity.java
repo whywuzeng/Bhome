@@ -19,6 +19,7 @@ import android.view.View;
 
 import com.system.bhouse.api.ApiWebService;
 import com.system.bhouse.base.App;
+import com.system.bhouse.bhouse.CommonTask.MaintainManagement.LoadingIntoWareHouse.LoadingIntoWareHouseActivity;
 import com.system.bhouse.bhouse.CommonTask.MaintainManagement.MaintainIntoWareHouse.MaintainIntoWareHouseActivity;
 import com.system.bhouse.bhouse.CommonTask.MaintainManagement.MaintainOutWareHouse.MaintainOutWareHouseActivity;
 import com.system.bhouse.bhouse.CommonTask.MaintainManagement.StationCarDetachModule.StationCarDetachModuleActivity;
@@ -148,7 +149,10 @@ public class ProduceActivity extends WWBackActivity implements BaseQuickAdapter.
                 intent = new Intent(ProduceActivity.this, StationCarDetachModuleActivity.class);
                 startActivity(intent);
                 break;
-
+            case 13:
+               intent= new Intent(ProduceActivity.this,LoadingIntoWareHouseActivity.class);
+               startActivity(intent);
+               break;
         }
     }
 

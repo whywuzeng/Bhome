@@ -68,7 +68,7 @@ public class WWBackActivity extends WWBaseActivity {
             toolbar_com.setNavigationOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    finish();
+                    onBackPressed();
                 }
             });
         }

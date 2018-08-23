@@ -310,7 +310,12 @@ public final class TimeUtils {
                                         @NonNull final DateFormat format1,
                                         final int precision) {
         long delta = string2Millis(time1, format) - string2Millis(time2, format1);
-        return millis2FitTimeSpan(Math.abs(delta), precision);
+        String timeSpanContent = millis2FitTimeSpan(Math.abs(delta), precision);
+        if(timeSpanContent.isEmpty())
+        {
+            return "少于1分钟";
+        }
+        return timeSpanContent;
     }
 
     /**

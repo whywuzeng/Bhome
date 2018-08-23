@@ -724,21 +724,22 @@ public class MaintainIntoWareHouseContentMessageActivity extends BaseContentMess
      * addQr 按钮的 处理事件 模具调拨
      */
     private void TvAddQrAction() {
+
+        if (TextUtils.isEmpty(this.comTaskBeans.get(0).getStationCarName())) {
+            T.showShort(this, "台车为空不能提交");
+            return;
+        }
+
+        if (TextUtils.isEmpty(this.comTaskBeans.get(0).getWareHouse())) {
+            T.showShort(this, "养护窑为空不能提交");
+            return;
+        }
+
         ApiWebService.Get_Production_order_yhy_In_Mould_Db(this, new ApiWebService.SuccessCall() {
             @Override
             public void SuccessBack(String result) {
 
                 showButtomToast(result);
-//                ArrayList<MaintenanceWarehouseBean> loadingcarbean = App.getAppGson().fromJson(result, new TypeToken<List<MaintenanceWarehouseBean>>() {}.getType());
-//
-//                if (!ValueUtils.IsFirstValueExist(loadingcarbean))
-//                    return;
-//
-//                comTaskBeans.get(0).setProductionLineID(loadingcarbean.get(0).productionLineID);
-//                comTaskBeans.get(0).setProductionLineName(loadingcarbean.get(0).productionLineName);
-//
-//                ClearAssignMentSectionArrayList();
-//                MaintainIntoWareHouseSectionAdapter.notifyDataSetChanged();
             }
 
             @Override
@@ -970,6 +971,16 @@ public class MaintainIntoWareHouseContentMessageActivity extends BaseContentMess
             return;
         }
 
+        if (TextUtils.isEmpty(this.comTaskBeans.get(0).getStationCarName())) {
+            T.showShort(this, "台车为空不能提交");
+            return;
+        }
+
+        if (TextUtils.isEmpty(this.comTaskBeans.get(0).getWareHouse())) {
+            T.showShort(this, "养护窑为空不能提交");
+            return;
+        }
+
         ApiWebService.Get_Production_order_yhy_In_Trolley_Db(this, new ApiWebService.SuccessCall() {
             @Override
             public void SuccessBack(String result) {
@@ -1108,6 +1119,17 @@ public class MaintainIntoWareHouseContentMessageActivity extends BaseContentMess
             T.showShort(this, Const.Entry_is_empty);
             return;
         }
+
+
+        if (TextUtils.isEmpty(this.comTaskBeans.get(0).getStationCarName())) {
+            T.showShort(this, "台车为空不能提交");
+            return;
+        }
+
+        if (TextUtils.isEmpty(this.comTaskBeans.get(0).getWareHouse())) {
+            T.showShort(this, "养护窑为空不能提交");
+            return;
+        }
 //        for (int i=0;i<comTaskBeans.size();i++) {
 //            if (TextUtils.isEmpty(this.comTaskBeans.get(i).getModuleID())) {
 //                T.showShort(this, "第"+(i+1)+"行的模具为空不能提交");
@@ -1147,12 +1169,11 @@ public class MaintainIntoWareHouseContentMessageActivity extends BaseContentMess
             ApiWebService.Get_Production_order_yhy_In_Add(this, new ApiWebService.SuccessCall() {
                 @Override
                 public void SuccessBack(String result) {
-                 showButtomToast(result);
+                    showButtomToast(result);
 
                     if (!result.contains("失败")) {
-//                        onBackPressed();
-//                        sureDataRefresh("tvSubmitAction");
-//                        testData();
+                        onBackPressed();
+                        sureDataRefresh("tvSubmitAction");
                     }
                 }
 
@@ -1166,11 +1187,10 @@ public class MaintainIntoWareHouseContentMessageActivity extends BaseContentMess
             ApiWebService.Get_Production_order_Trolley_Eedit(this, new ApiWebService.SuccessCall() {
                 @Override
                 public void SuccessBack(String result) {
-                 showButtomToast(result);
+                    showButtomToast(result);
                     if (!result.contains("失败")) {
-//                        onBackPressed();
-//                        sureDataRefresh("tvSubmitAction");
-//                        testData();
+                        onBackPressed();
+                        sureDataRefresh("tvSubmitAction");
                     }
                 }
 
@@ -1191,7 +1211,6 @@ public class MaintainIntoWareHouseContentMessageActivity extends BaseContentMess
              showButtomToast(result);
 //                onBackPressed();
 //                sureDataRefresh("tvCheckAction");
-                testData();
             }
 
             @Override
@@ -1209,7 +1228,6 @@ public class MaintainIntoWareHouseContentMessageActivity extends BaseContentMess
               showButtomToast(result);
 //                onBackPressed();
 //                sureDataRefresh("tvFanCheckAction");
-                testData();
             }
 
             @Override
@@ -1226,8 +1244,7 @@ public class MaintainIntoWareHouseContentMessageActivity extends BaseContentMess
             public void SuccessBack(String result) {
               showButtomToast(result);
                 onBackPressed();
-//                sureDataRefresh("tvDeleteAction");
-                testData();
+                sureDataRefresh("tvDeleteAction");
             }
 
             @Override

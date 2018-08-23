@@ -130,7 +130,7 @@
                 android:gravity="center_vertical"
                 android:layout_height="60dp">
 
-                <me.gujun.android.taggroup.TagGroup
+                <com.system.bhouse.Custom.TagGroup.TagGroup
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:id="@+id/tag_group"
@@ -157,13 +157,14 @@
                     app:atg_horizontalPadding="12dp"
                     app:atg_verticalPadding="3dp"/>
 
-                <me.gujun.android.taggroup.TagGroup
+                <com.system.bhouse.Custom.TagGroup.TagGroup
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentEnd="true"
                     android:layout_below="@+id/tag_group"
                     android:id="@+id/tag_group1"
                     android:focusable="false"
+                    app:atg_AppendStyle="state_static"
                     android:clickable="false"
                     app:atg_isAppendMode="false"
                     app:atg_inputHint="@string/BusinessVersion"
@@ -185,13 +186,15 @@
                     app:atg_horizontalPadding="12dp"
                     app:atg_verticalPadding="3dp"/>
 
-                <me.gujun.android.taggroup.TagGroup
+                <com.system.bhouse.Custom.TagGroup.TagGroup
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/tag_group"
                     android:layout_alignParentEnd="true"
                     android:id="@+id/tag_group_beauty_inverse"
                     style="@style/TagGroup.Beauty_Red.Inverse"
+                    app:atg_isAppendMode="false"
+                    app:atg_AppendStyle="state_static"
                     android:layout_marginTop="5dp" />
 
 

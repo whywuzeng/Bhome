@@ -4822,7 +4822,7 @@ Get_Sale_Order_Car_shf(string scid, string addPer, int gsmid, int property, bool
         request.addProperty("gsmid",App.GSMID);
         request.addProperty("property",App.Property);
         request.addProperty("IsSubtitle",App.IsSub);
-        return getNetworkService(mContext,call,request);
+        return getNetworkServiceNoProgress(mContext,call,request);
     }
 
     /**

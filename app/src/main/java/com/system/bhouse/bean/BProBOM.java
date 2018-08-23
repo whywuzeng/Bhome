@@ -24,13 +24,12 @@ public class BProBOM extends BaseBean implements Parcelable {
      * BOMID :
      */
 
-
     private String ID;
-    @SerializedName(value = "编码",alternate = {"车次","货柜编码","需求编号","职员编码","台车编码"})
+    @SerializedName(value = "编码",alternate = {"车次","货柜编码","需求编号","职员编码","台车编码","装车编号"})
     private String coding;
-    @SerializedName(value = "名称",alternate = {"装柜数","货柜名称","项目","职员名称","台车名称"})
+    @SerializedName(value = "名称",alternate = {"装柜数","货柜名称","职员名称","台车名称"})
     private String projectname;
-    @SerializedName(value = "BOMID",alternate = {"职员ID"})
+    @SerializedName(value = "BOMID",alternate = {"职员ID","货柜ID"})
     private String BOMID;
 
     @SerializedName(value = "层")
@@ -38,6 +37,27 @@ public class BProBOM extends BaseBean implements Parcelable {
     @SerializedName(value = "栋")
     private String dong;
 
+    public String getContainerDate() {
+        return containerDate;
+    }
+
+    public void setContainerDate(String containerDate) {
+        this.containerDate = containerDate;
+    }
+
+    public String getProjectming() {
+        return projectming;
+    }
+
+    public void setProjectming(String projectming) {
+        this.projectming = projectming;
+    }
+
+    @SerializedName("项目")
+    private String projectming;
+
+    @SerializedName("装柜日期")
+    private String containerDate;
 
     public String getCeng() {
         return ceng;
@@ -103,6 +123,8 @@ public class BProBOM extends BaseBean implements Parcelable {
         dest.writeString(this.BOMID);
         dest.writeString(this.ceng);
         dest.writeString(this.dong);
+        dest.writeString(this.containerDate);
+        dest.writeString(this.containerDate);
         dest.writeInt(this.ListenerContext);
         dest.writeByte(this.disableDelete ? (byte) 1 : (byte) 0);
         dest.writeString(this.requireDate);
@@ -121,6 +143,8 @@ public class BProBOM extends BaseBean implements Parcelable {
         this.BOMID = in.readString();
         this.ceng = in.readString();
         this.dong = in.readString();
+        this.containerDate = in.readString();
+        this.containerDate = in.readString();
         this.ListenerContext = in.readInt();
         this.disableDelete = in.readByte() != 0;
         this.requireDate = in.readString();
