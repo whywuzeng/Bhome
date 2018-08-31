@@ -108,7 +108,6 @@
         <item name="android:activityCloseEnterAnimation">@anim/in_from_left</item>
         <item name="android:activityCloseExitAnimation">@anim/out_to_right</item>
 
-        <!-- 配置app自己的theme -->
     </style>
      <!--车次管理   -->
     <style name="to_from_dialog" parent="@android:style/Theme.Dialog">
@@ -266,13 +265,17 @@
     </style>
 
     <!--灰色框  白色底-->
-
+    <!--粉色框 圆的 -->
     <style name="GreyBoxButton">
         <item name="android:background"> @drawable/selector_layout_common_radius_v8</item>
     </style>
-
+  <!--粉色框 方的 -->
     <style name="GreyBoxButtonfang">
         <item name="android:background"> @drawable/selector_layout_common_radius_v8_fang</item>
+    </style>
+    <!--没有框 只有背景点击效果-->
+    <style name="GreyBoxButtonNofang">
+        <item name="android:background"> @drawable/selector_layout_common_radius_v8_nofang</item>
     </style>
 
     <style name="GreySimpleButtonfang">

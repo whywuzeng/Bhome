@@ -14,7 +14,7 @@ import com.system.bhouse.bhouse.R;
  * com.example.wz1.mysigninapplication.Base
  */
 
-public class BaseBackFragment extends MySupportFragment {
+public class BaseBackFragment extends BaseMySupportFragment {
 
     protected void initToolbarNav(Toolbar toolbar) {
         toolbar.setNavigationIcon(R.drawable.ic_keyboard_arrow_left);

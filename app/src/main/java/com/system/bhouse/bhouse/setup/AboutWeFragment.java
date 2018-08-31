@@ -4,12 +4,16 @@ import android.app.Activity;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.v7.app.AlertDialog;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewTreeObserver;
 import android.widget.ImageView;
@@ -33,6 +37,7 @@ import com.system.bhouse.bhouse.setup.notification.MyNotificationActivity_;
 import com.system.bhouse.bhouse.setup.notification.bean.XGNotification;
 import com.system.bhouse.bhouse.setup.utils.CameraPhotoUtil;
 import com.system.bhouse.bhouse.setup.utils.FileUtil;
+import com.system.bhouse.utils.MeasureBarHeightUtils;
 import com.system.bhouse.utils.TenUtils.T;
 import com.system.bhouse.utils.ViewUtil;
 import com.system.bhouse.utils.sharedpreferencesuser;
@@ -103,6 +108,15 @@ public class AboutWeFragment extends WWBaseFragment {
     TagGroup tag_group;
     @ViewById(R.id.tag_group1)
     TagGroup tag_group1;
+
+    @ViewById(R.id.toolbar)
+    Toolbar mToolbar;
+
+    @ViewById(R.id.action_capture)
+    ImageView actionCapture;
+
+    @ViewById(R.id.tv_toolbar_title_mid)
+    TextView tvToolbarTitleMid;
 
     @AfterViews
     public void initAboutWeFrag() {
@@ -183,7 +197,52 @@ public class AboutWeFragment extends WWBaseFragment {
             }
         });
 
+        initView();
     }
+
+    private void initView() {
+        mToolbar.setTitleTextColor(Color.WHITE);
+
+        ((AppCompatActivity)getActivity()).setSupportActionBar(mToolbar);
+
+        mToolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+//                mDrawerLayout.openDrawer(Gravity.LEFT);
+                Intent intent = new Intent(getActivity(), MyselfActivity.class);
+                getActivity().startActivity(intent);
+
+            }
+        });
+
+        //toolbar button的点击的回调
+        mToolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+                switch (item.getItemId()) {
+                    //二维码扫描管理  //组织架构的选择界面
+                    case R.id.action_capture:
+                        Intent intent1 = new Intent(getActivity(), InformationActivity.class);
+                        startActivity(intent1);
+                        break;
+                }
+                return false;
+            }
+        });
+
+        actionCapture.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent1 = new Intent(getActivity(), InformationActivity.class);
+                startActivity(intent1);
+            }
+        });
+
+        tvToolbarTitleMid.setText("我的");
+        MeasureBarHeightUtils.setHeight(mToolbar,getActivity());
+    }
+
 
     private void ShowLogoutDialog() {
         ShowDeviceMessageCustomDialog.Builder builder = new ShowDeviceMessageCustomDialog.Builder(getActivity());

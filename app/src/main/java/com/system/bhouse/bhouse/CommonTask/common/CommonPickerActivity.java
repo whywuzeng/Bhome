@@ -13,7 +13,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.system.bhouse.bean.BProBOM;
-import com.system.bhouse.bhouse.CommonTask.MaintainManagement.LoadingIntoWareHouse.adpter.LoadingIntoSectionAdapter;
+import com.system.bhouse.bhouse.CommonTask.MaintainManagement.LoadingIntoWareHouseFragment.Fragment.adpter.LoadingIntoSectionAdapter;
 import com.system.bhouse.bhouse.CommonTask.TransportationManagement.LoadingCarOrder.CommonSectionAdapter;
 import com.system.bhouse.bhouse.CommonTask.TransportationManagement.adapter.BaseQuickAdapter;
 import com.system.bhouse.bhouse.CommonTask.TransportationManagement.adapter.BaseSectionQuickAdapter;

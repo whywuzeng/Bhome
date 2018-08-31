@@ -66,7 +66,7 @@ public class LazyFragment extends WWBaseFragment {
         //可见，但还没被初始化
         if (isVisibleToUser && !isInit && getContentView() != null) {
             onCreateViewLazy(savedInstancseState);
-            isInit = true;
+            isInit = true; //标志 是否执行了 onCreateViewLazy
             onResumeLazy();//TODO
         }
         //已经被初始化(正常加载)过了
@@ -104,7 +104,7 @@ public class LazyFragment extends WWBaseFragment {
             layout.addView(view);
         }
         else {
-            //否则开门见山，直接加载
+            //否则开门见山，直接加载  不需要lazy加载
             super.setContentView(view);
         }
     }

@@ -2,7 +2,6 @@ package com.system.bhouse.bhouse.CommonTask.MaintainManagement.LoadingIntoWareHo
 
 import android.os.Bundle;
 
-import com.system.bhouse.bhouse.CommonTask.MaintainManagement.LoadingIntoWareHouse.LoadingIntoWareHouseFragment_;
 import com.system.bhouse.bhouse.R;
 import com.system.bhouse.bhouse.setup.WWCommon.WWBackActivity;
 

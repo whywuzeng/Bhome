@@ -2,15 +2,21 @@ package com.system.bhouse.bhouse.CompanyNews;
 
 import android.app.ActivityOptions;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
+import android.view.MenuItem;
 import android.view.View;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.socks.library.KLog;
@@ -28,8 +34,11 @@ import com.system.bhouse.bhouse.CompanyNews.adapter.OnItemClickAdapter;
 import com.system.bhouse.bhouse.CompanyNews.adapter.OnLoadMoreListener;
 import com.system.bhouse.bhouse.CompanyNews.common.DataLoadType;
 import com.system.bhouse.bhouse.R;
+import com.system.bhouse.bhouse.phone.activity.InformationActivity;
+import com.system.bhouse.bhouse.setup.MyselfActivity;
 import com.system.bhouse.bhouse.setup.WWCommon.RefreshBaseFragment;
 import com.system.bhouse.utils.ClickUtils;
+import com.system.bhouse.utils.MeasureBarHeightUtils;
 import com.system.bhouse.utils.MeasureUtil;
 import com.system.bhouse.utils.TenUtils.GlideUtils;
 import com.system.bhouse.utils.TenUtils.T;
@@ -73,6 +82,15 @@ public class NewsListFragment extends RefreshBaseFragment implements RequestCall
     @ViewById(R.id.swipeRefreshLayout)
     SwipeRefreshLayout refresh_layout;
 
+    @ViewById(R.id.toolbar)
+    Toolbar mToolbar;
+
+    @ViewById(R.id.action_capture)
+    ImageView actionCapture;
+
+    @ViewById(R.id.tv_toolbar_title_mid)
+    TextView tvToolbarTitleMid;
+
     private boolean mIsRefresh;
     private int mStartPage;
     private Subscription mSubscription;
@@ -106,7 +124,52 @@ public class NewsListFragment extends RefreshBaseFragment implements RequestCall
         emptyView = getActivity().getLayoutInflater().inflate(R.layout.taskcomon_empty_view, null, false);
         initRefreshLayout();
         requestNewsList(this, mNewsType, mNewsId, mStartPage);
+        initView();
 
+    }
+
+    private void initView() {
+        mToolbar.setTitleTextColor(Color.WHITE);
+
+        ((AppCompatActivity)getActivity()).setSupportActionBar(mToolbar);
+
+        mToolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+//                mDrawerLayout.openDrawer(Gravity.LEFT);
+                Intent intent = new Intent(getActivity(), MyselfActivity.class);
+                getActivity().startActivity(intent);
+
+            }
+        });
+
+        //toolbar button的点击的回调
+        mToolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+                switch (item.getItemId()) {
+                    //二维码扫描管理  //组织架构的选择界面
+                    case R.id.action_capture:
+                        Intent intent1 = new Intent(getActivity(), InformationActivity.class);
+                        startActivity(intent1);
+                        break;
+                }
+                return false;
+            }
+        });
+
+        actionCapture.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent1 = new Intent(getActivity(), InformationActivity.class);
+                startActivity(intent1);
+            }
+        });
+
+        tvToolbarTitleMid.setText("企业说");
+
+        MeasureBarHeightUtils.setHeight(mToolbar,getActivity());
     }
 
     public Subscription requestNewsList(final RequestCallBack<List<NeteastNewsSummary>> callback, String type, final String id, int startPage) {

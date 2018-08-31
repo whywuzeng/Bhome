@@ -15,8 +15,12 @@
         android:layout_height="wrap_content">
 
         <LinearLayout
+            android:id="@+id/ll_component_qrcode"
             android:layout_width="match_parent"
             android:orientation="horizontal"
+            style="@style/GreySimpleButtonfang"
+            android:clickable="true"
+            android:focusable="true"
             android:paddingBottom="9dp"
             android:paddingTop="9dp"
             android:layout_height="wrap_content">
@@ -65,8 +69,12 @@
            style="@style/DivideLine05dp"/>
 
         <LinearLayout
+            android:id="@+id/ll_orderid_qrcode"
             android:layout_width="match_parent"
             android:orientation="horizontal"
+            style="@style/GreySimpleButtonfang"
+            android:clickable="true"
+            android:focusable="true"
             android:paddingBottom="9dp"
             android:paddingTop="9dp"
             android:layout_height="wrap_content">

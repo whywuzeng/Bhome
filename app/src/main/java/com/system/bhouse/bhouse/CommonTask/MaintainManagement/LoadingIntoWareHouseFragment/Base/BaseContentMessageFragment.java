@@ -32,8 +32,8 @@ public abstract class BaseContentMessageFragment extends BaseBackFragment {
 
     protected Dialog bottomDialog;
     private TextView tvQrcode;
-    private LinearLayout llQrcodeAdd;
-    private TextView tvQrcodeAdd;
+    protected LinearLayout llQrcodeAdd;
+    protected TextView tvQrcodeAdd;
     private StatusBean mStatusBean;
 
     /**

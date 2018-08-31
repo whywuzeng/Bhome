@@ -217,13 +217,13 @@ public class TechnologyExecutionFragment extends LazyFragment implements BaseQui
 
     }
 
-    @OnClick(R.id.component_qrcode)
+    @OnClick(R.id.ll_component_qrcode)
     public void componentClick() {
         Intent intent = new Intent(getActivity(), CaptureActivity.class);
         startActivityForResult(intent, RESULT_COMPONENT);
     }
 
-    @OnClick(R.id.orderid_qrcode)
+    @OnClick(R.id.ll_orderid_qrcode)
     public void orderIdClick() {
         if (!ClickUtils.isFastDoubleClick()) {
             //弹出选择对话框
@@ -362,40 +362,6 @@ public class TechnologyExecutionFragment extends LazyFragment implements BaseQui
     //点击响应
     protected void IntentToFragment(int position, View view) {
 
-        //        ShowShort(position + "");
-//
-//        TextView textView = (TextView) view.findViewById(R.id.tv_title);
-//
-//        if (!TextUtils.isEmpty(textView.getText()))
-//        {  //调用接口方法 回调给Activity
-//            if (mTechnologyActivityListenter!=null)
-//            {
-//                mTechnologyActivityListenter.OnFragmentItemClick(textView.getText().toString());
-//            }
-//        }
-//        switch (position) {
-//            case 0:
-//
-//                break;
-//            case 1:
-//
-//                break;
-//            case 2:
-//
-//                break;
-//            case 3:
-//
-//                break;
-//            case 4:
-//
-//                break;
-//            case 5:
-//
-//                break;
-//            case 6:
-//
-//                break;
-//        }
     }
 
     private String getContextMessage(boolean isHang, TagGroup tagGroup1,TagGroup tagRed) {

@@ -63,9 +63,9 @@ public abstract class BaseSectionQuickAdapter<T extends SectionEntity, K extends
 
     protected abstract void convertHead(K helper, T item);
 
-    private ArrayList<T> copyBProBOMs= new ArrayList<>();
+    private List<T> copyBProBOMs= new ArrayList<>();
 
-    public void setFriends(ArrayList<T> data) {
+    public void setFriends(List<T> data) {
         //复制数据
         this.copyBProBOMs.addAll(data);
         mData = data;

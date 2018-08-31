@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.view.View;
 import android.view.animation.Animation;
@@ -13,13 +14,12 @@ import com.system.bhouse.bhouse.CommonTask.MaintainManagement.LoadingIntoWareHou
 import com.system.bhouse.bhouse.CommonTask.MaintainManagement.LoadingIntoWareHouseFragment.fragmentation_core.fragmentation.SupportFragmentDelegate;
 import com.system.bhouse.bhouse.CommonTask.MaintainManagement.LoadingIntoWareHouseFragment.fragmentation_core.fragmentation.SupportHelper;
 import com.system.bhouse.bhouse.CommonTask.MaintainManagement.LoadingIntoWareHouseFragment.fragmentation_core.fragmentation.anim.FragmentAnimator;
-import com.system.bhouse.bhouse.setup.WWCommon.WWBaseFragment;
 
 /**
  * 展示自定制的MySupportFragment，不继承SupportFragment
  * Created by YoKey on 17/6/24.
  */
-public class MySupportFragment extends WWBaseFragment implements ISupportFragment {
+public class MySupportFragment extends Fragment implements ISupportFragment {
     final SupportFragmentDelegate mDelegate = new SupportFragmentDelegate(this);
     protected FragmentActivity _mActivity;
 
@@ -46,6 +46,7 @@ public class MySupportFragment extends WWBaseFragment implements ISupportFragmen
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
+        setHasOptionsMenu(true);
         super.onCreate(savedInstanceState);
         mDelegate.onCreate(savedInstanceState);
     }

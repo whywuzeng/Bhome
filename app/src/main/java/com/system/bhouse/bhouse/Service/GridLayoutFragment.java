@@ -1,27 +1,47 @@
 package com.system.bhouse.bhouse.Service;
 
+import android.annotation.TargetApi;
+import android.app.Activity;
 import android.app.ActivityOptions;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.Resources;
+import android.content.res.TypedArray;
 import android.graphics.Canvas;
+import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Rect;
+import android.graphics.Typeface;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.AppBarLayout;
+import android.support.design.widget.CoordinatorLayout;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewTreeObserver;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.GridView;
+import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import com.readystatesoftware.systembartint.SystemBarTintManager;
 import com.socks.library.KLog;
+import com.system.bhouse.Custom.AppBarStateChangeListener;
+import com.system.bhouse.Custom.View.SceneSurface.SceneTextureView;
 import com.system.bhouse.adpter.GalleryViewflowAdapter;
 import com.system.bhouse.api.manager.RetrofitManager;
 import com.system.bhouse.api.manager.service.Api;
@@ -37,6 +57,8 @@ import com.system.bhouse.bhouse.R;
 import com.system.bhouse.bhouse.Service.NewsListUI.NewsListSection;
 import com.system.bhouse.bhouse.Service.NewsListUI.TaskListSection;
 import com.system.bhouse.bhouse.Service.adpter.GvMainAdapter;
+import com.system.bhouse.bhouse.phone.activity.InformationActivity;
+import com.system.bhouse.bhouse.setup.MyselfActivity;
 import com.system.bhouse.ui.CircleFlowIndicator;
 import com.system.bhouse.ui.ViewFlow;
 import com.system.bhouse.ui.sectioned.SectionedRecyclerViewAdapter;
@@ -45,6 +67,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import butterknife.Bind;
+import butterknife.ButterKnife;
 import rx.Observable;
 import rx.Subscription;
 import rx.functions.Func1;
@@ -59,7 +83,10 @@ import rx.functions.Func2;
  * UpdateDate: 2016.8.17
  * 主界面的 main 的九宫格界面  加了viewflow;
  */
-public class GridLayoutFragment extends Fragment implements GvMainAdapter.ImageClick {
+public class GridLayoutFragment extends Fragment implements GvMainAdapter.ImageClick,AppBarLayout.OnOffsetChangedListener {
+
+    private static final String TAG = "GridLayoutFragment";
+
     private GridView GvMain;
     private ViewFlow mHomeViewflow;
     private CircleFlowIndicator mHomeViewflowindic;
@@ -79,6 +106,7 @@ public class GridLayoutFragment extends Fragment implements GvMainAdapter.ImageC
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View inflate = inflater.inflate(R.layout.fragment_gridlayout, container, false);
+        ButterKnife.bind(this,inflate);
         GvMain= (GridView)inflate.findViewById(R.id.GvMain);
         mHomeViewflow=(ViewFlow)inflate.findViewById(R.id.mHomeViewflow);
         mHomeViewflowindic=(CircleFlowIndicator)inflate.findViewById(R.id.mHomeViewflowindic);
@@ -91,7 +119,56 @@ public class GridLayoutFragment extends Fragment implements GvMainAdapter.ImageC
         GvMain.setClickable(false);
         gvMainAdapter.setmImageClick(this);
 
+        initView();
+
         return inflate;
+    }
+
+    private void initView() {
+        toolbar.setTitleTextColor(Color.WHITE);
+
+        ((AppCompatActivity)getActivity()).setSupportActionBar(toolbar);
+
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+//                mDrawerLayout.openDrawer(Gravity.LEFT);
+                Intent intent = new Intent(getActivity(), MyselfActivity.class);
+               getActivity().startActivity(intent);
+
+            }
+        });
+
+        //toolbar button的点击的回调
+        toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+                switch (item.getItemId()) {
+                    //二维码扫描管理  //组织架构的选择界面
+                    case R.id.action_capture:
+                        Intent intent1 = new Intent(getActivity(), InformationActivity.class);
+                        startActivity(intent1);
+                        break;
+
+                }
+
+                return false;
+            }
+        });
+
+        appBar.addOnOffsetChangedListener(this);
+
+        action_capture.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent1 = new Intent(getActivity(), InformationActivity.class);
+                startActivity(intent1);
+            }
+        });
+
+        initToolBarSrocll();
+        setHeight(toolbar);
     }
 
     private void initViewFlow() {
@@ -144,6 +221,262 @@ public class GridLayoutFragment extends Fragment implements GvMainAdapter.ImageC
         mRecyclerViewAdapter_task.notifyDataSetChanged();
     }
 
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+
+        appBar.removeOnOffsetChangedListener(this);
+        ButterKnife.unbind(this);
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        my_textureview.DrawLastBg();
+    }
+
+    //                                        增加Appbar效果代码
+    //////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+    /**
+     * toolbar 测量的高度
+     */
+    private int height;
+
+    /**
+     * toolbar 是否测量宽度了
+     */
+    private boolean hasMeasured;
+
+    @Bind(R.id.toolbar)
+    public Toolbar toolbar;
+
+    /**
+     * toolbar滑动
+     */
+    @Bind(R.id.app_bar)
+    public AppBarLayout appBar;
+    /**
+     * 大布局背景，遮罩层
+     */
+    @Bind(R.id.bg_content)
+    public View bgContent;
+    /**
+     * 展开状态下toolbar显示的内容
+     */
+    @Bind(R.id.include_toolbar_open)
+    public View toolbarOpen;
+    /**
+     * 展开状态下toolbar的遮罩层
+     */
+    @Bind(R.id.bg_toolbar_open)
+    public View bgToolbarOpen;
+    /**
+     * 收缩状态下toolbar显示的内容
+     */
+    @Bind(R.id.include_toolbar_close)
+    public View toolbarClose;
+    /**
+     * 收缩状态下toolbar的遮罩层
+     */
+    @Bind(R.id.bg_toolbar_close)
+    public View bgToolbarClose;
+
+    /**
+     * 鸡汤字
+     */
+    @Bind(R.id.tv_content_jitang)
+    TextView tv_content_jitang;
+
+    /**
+     * coordinatorlayout
+     */
+    @Bind(R.id.coordinatorlayout)
+    CoordinatorLayout coordinatorlayout;
+
+    @Bind(R.id.action_capture)
+    ImageView action_capture;
+
+    @Bind(R.id.my_textureview)
+    SceneTextureView my_textureview;
+
+    /**
+     * AppBar 滑动回调
+     */
+    @Override
+    public void onOffsetChanged(AppBarLayout appBarLayout, int verticalOffset) {
+        //垂直方向偏移量
+        int offset = Math.abs(verticalOffset);
+        //最大偏移距离
+        int scrollRange = appBarLayout.getTotalScrollRange();
+        if (offset <= scrollRange / 2) {//当滑动没超过一半，展开状态下toolbar显示内容，根据收缩位置，改变透明值
+            toolbarOpen.setVisibility(View.VISIBLE);
+            toolbarClose.setVisibility(View.GONE);
+            //根据偏移百分比 计算透明值
+            float scale2 = (float) offset / (scrollRange /2);
+            int alpha2 = (int) (255 * scale2);
+//          bgToolbarOpen.setBackgroundColor(Color.argb(alpha2, 35, 183, 215));
+            Log.e(TAG, "alpha2: "+alpha2);
+
+        } else {//当滑动超过一半，收缩状态下toolbar显示内容，根据收缩位置，改变透明值
+            toolbarClose.setVisibility(View.VISIBLE);
+            toolbarOpen.setVisibility(View.GONE);
+            float scale3 = (float) (scrollRange  - offset) / (scrollRange/2);
+//            float scale3 = (float) offset / scrollRange;
+            int alpha3 = (int) (255 * scale3);
+            Log.e(TAG, "alpha3: "+alpha3);
+            bgToolbarClose.setBackgroundColor(Color.argb(alpha3, 35, 183, 215));//变到0 alpha3
+
+        }
+        //根据偏移百分比计算扫一扫布局的透明度值
+        float scale = (float) offset / scrollRange;
+        int alpha = (int) (255 * scale);
+
+        Log.e(TAG, "onOffsetChanged: "+offset);
+
+//        bgContent.setBackgroundColor(Color.argb(alpha, 255, 255, 255));
+
+        AppBarStateChangeListener.State state=AppBarStateChangeListener.State.IDLE;
+        if (verticalOffset == 0) {
+            if (state != AppBarStateChangeListener.State.EXPANDED) {
+                state = AppBarStateChangeListener.State.EXPANDED;//修改为展开状态
+
+
+                getActivity().getWindow().getDecorView().setSystemUiVisibility(
+                        View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN | View.SYSTEM_UI_FLAG_VISIBLE);
+                setStatusBarColor(getActivity(), R.color.transparent);
+            }
+        } else if (Math.abs(verticalOffset) >= appBarLayout.getTotalScrollRange()) {
+
+            state = AppBarStateChangeListener.State.COLLAPSED;//修改为折叠状态
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                getActivity().getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN | View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
+            }else {
+                setStatusBarColor(getActivity(), R.color.material_blue_50);
+            }
+
+        } else {
+            if (Math.abs(verticalOffset) > height) {
+
+//                bindingView.titleTv.setVisibility(View.VISIBLE);
+                float scaleLight =  1- height / (float) Math.abs(verticalOffset);
+                if (state != AppBarStateChangeListener.State.IDLE) {
+
+                    if (state == AppBarStateChangeListener.State.COLLAPSED && scaleLight < 0.55) {//由折叠变为展开
+//                        bindingView.toolbar.setNavigationIcon(R.drawable.nav_icon_white_return);
+                        getActivity().getWindow().getDecorView().setSystemUiVisibility(
+                                View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN | View.SYSTEM_UI_FLAG_VISIBLE);
+                    } else {
+                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                            getActivity().getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN | View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
+                        }else {
+                            setStatusBarColor(getActivity(), R.color.material_blue_50);
+                        }
+                    }
+
+                    state = AppBarStateChangeListener.State.IDLE;
+                }
+                float alphalight = (255 * scaleLight);
+
+            } else {
+
+
+            }
+        }
+    }
+
+    /**
+     * 修改状态栏颜色，支持4.4以上版本
+     * @param activity
+     * @param colorId
+     */
+    public static void setStatusBarColor(Activity activity, int colorId) {
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            Window window = activity.getWindow();
+//      window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+            window.setStatusBarColor(activity.getResources().getColor(colorId));
+        } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+            //使用SystemBarTint库使4.4版本状态栏变色，需要先将状态栏设置为透明
+            transparencyBar(activity);
+            SystemBarTintManager tintManager = new SystemBarTintManager(activity);
+            tintManager.setStatusBarTintEnabled(true);
+            tintManager.setStatusBarTintResource(colorId);
+        }
+    }
+
+    @TargetApi(19)
+    public static void transparencyBar(Activity activity){
+        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            Window window = activity.getWindow();
+            window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+            window.getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
+                    | View.SYSTEM_UI_FLAG_LAYOUT_STABLE);
+            window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+            window.setStatusBarColor(Color.TRANSPARENT);
+
+        } else
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+            Window window =activity.getWindow();
+            window.setFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS,
+                    WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+        }
+    }
+
+    //获取标题栏高度
+    private void measureHeight() {
+        ViewTreeObserver vto = coordinatorlayout.getViewTreeObserver();
+
+        vto.addOnPreDrawListener(new ViewTreeObserver.OnPreDrawListener() {
+            public boolean onPreDraw() {
+                if (hasMeasured == false) {
+
+                    height = toolbar.getMeasuredHeight();
+                    hasMeasured = true;
+
+                }
+                return true;
+            }
+        });
+    }
+
+    /**
+     * 以Toolbar 以例  扩充toolbar高度
+     * @param view
+     */
+    public void setHeight(View view) {
+        // 获取actionbar的高度
+        TypedArray actionbarSizeTypedArray = getActivity().obtainStyledAttributes(new int[]{
+                android.R.attr.actionBarSize
+        });
+        float height = actionbarSizeTypedArray.getDimension(0, 0);
+        // ToolBar的top值
+        ViewGroup.MarginLayoutParams lp = (ViewGroup.MarginLayoutParams) view.getLayoutParams();
+        double statusBarHeight = getStatusBarHeight(getActivity());
+        lp.height = (int) (statusBarHeight + height);
+        view.setPadding(0,(int) statusBarHeight,0, 0);
+        view.setLayoutParams(lp);
+    }
+
+    private void initToolBarSrocll() {
+        measureHeight();
+        Typeface typeFaceLight = Typeface.createFromAsset(getActivity().getAssets(),"fonts/SourceHanSansCN-ExtraLight.otf");
+        tv_content_jitang.setTypeface(typeFaceLight);
+    }
+
+
+    private double getStatusBarHeight(Context context) {
+        int result = 0;
+        int resourceId = context.getResources().getIdentifier("status_bar_height", "dimen",
+                "android");
+        if (resourceId > 0) {
+            result = context.getResources().getDimensionPixelSize(resourceId);
+        }
+        return result;
+    }
+
+
+    //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     public class SimpleDividerDecoration extends RecyclerView.ItemDecoration {
 
         private int dividerHeight;

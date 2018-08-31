@@ -1,5 +1,6 @@
 package com.system.bhouse.bhouse.CommonTask.MaintainManagement.LoadingIntoWareHouseFragment.Fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -10,7 +11,6 @@ import com.system.bhouse.api.ApiWebService;
 import com.system.bhouse.base.App;
 import com.system.bhouse.base.StatusBean;
 import com.system.bhouse.bhouse.CommonTask.BaseTaskFragment.BaseCommonListFragment;
-import com.system.bhouse.bhouse.CommonTask.MaintainManagement.LoadingIntoWareHouse.LoadingIntoWareHouseContentMessageActivity_;
 import com.system.bhouse.bhouse.CommonTask.MaintainManagement.LoadingIntoWareHouseFragment.Fragment.Bean.LoadingIntoWareHouseBean;
 import com.system.bhouse.bhouse.R;
 import com.system.bhouse.utils.TenUtils.L;
@@ -153,8 +153,13 @@ public class LoadingIntoWareHouseListFragment extends BaseCommonListFragment<Loa
             statusBean.getBean().setVisModifyBtn(true);
         }
         statusBean.setLookStatus(true);
-        LoadingIntoWareHouseContentMessageActivity_.intent(getParentFragment()).HId(mData
-                .get(position).getID() + "").receiptHnumber(mData.get(position).gethNumbe()).mStatus(statusBean).start();
+        Intent intent = new Intent(getActivity(), LoadingIntoWareHouseContentActivity.class);
+        intent.putExtra(LoadingIntoWareHouseContentActivity.H_ID_EXTRA,mData.get(position).getID()+"");
+        intent.putExtra(LoadingIntoWareHouseContentActivity.RECEIPT_HNUMBER_EXTRA,mData.get(position).gethNumbe());
+        intent.putExtra(LoadingIntoWareHouseContentActivity.M_STATUS_EXTRA,statusBean);
+        startActivity(intent);
+//        LoadingIntoWareHouseContentActivity_.intent(getParentFragment()).HId(mData
+//                .get(position).getID() + "").receiptHnumber(mData.get(position).gethNumbe()).mStatus(statusBean).start();
     }
 
 }

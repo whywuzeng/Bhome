@@ -1,5 +1,6 @@
 package com.system.bhouse.bhouse.CommonTask.MaintainManagement.LoadingIntoWareHouseFragment.Fragment;
 
+import android.content.Intent;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.view.ViewGroup;
@@ -8,8 +9,6 @@ import com.system.bhouse.api.ApiWebService;
 import com.system.bhouse.base.StatusBean;
 import com.system.bhouse.base.SubmitStatusBeanImpl;
 import com.system.bhouse.bhouse.CommonTask.BaseTaskFragment.BaseCommonFragment;
-import com.system.bhouse.bhouse.CommonTask.MaintainManagement.LoadingIntoWareHouse.LoadingIntoWareHouseContentMessageActivity_;
-import com.system.bhouse.bhouse.CommonTask.MaintainManagement.LoadingIntoWareHouse.LoadingIntoWareHouseListFragment_;
 import com.system.bhouse.bhouse.CommonTask.adapter.PageTaskFragment;
 import com.system.bhouse.bhouse.CommonTask.callback.TaskListParentUpdate;
 import com.system.bhouse.bhouse.CommonTask.callback.TaskListUpdate;
@@ -54,7 +53,11 @@ public class LoadingIntoWareHouseFragment extends BaseCommonFragment implements 
                 StatusBean statusBean = new StatusBean();
                 statusBean.setBean(new SubmitStatusBeanImpl().setVisSubmitBtn(true).setVisQRBtn(true));
                 statusBean.setNewStatus(true);
-                LoadingIntoWareHouseContentMessageActivity_.intent(getActivity()).HId("").receiptHnumber(result).mStatus(statusBean).start();
+                Intent intent = new Intent(getActivity(), LoadingIntoWareHouseContentActivity.class);
+                intent.putExtra(LoadingIntoWareHouseContentActivity.RECEIPT_HNUMBER_EXTRA,result);
+                intent.putExtra(LoadingIntoWareHouseContentActivity.M_STATUS_EXTRA,statusBean);
+                startActivity(intent);
+//                LoadingIntoWareHouseContentActivity_.intent(getActivity()).HId("").receiptHnumber(result).mStatus(statusBean).start();
             }
 
             @Override

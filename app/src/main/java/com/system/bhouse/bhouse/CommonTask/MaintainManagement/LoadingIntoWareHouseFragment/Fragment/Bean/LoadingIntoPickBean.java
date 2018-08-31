@@ -1,5 +1,8 @@
 package com.system.bhouse.bhouse.CommonTask.MaintainManagement.LoadingIntoWareHouseFragment.Fragment.Bean;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import com.google.gson.annotations.SerializedName;
 
 /**
@@ -10,7 +13,7 @@ import com.google.gson.annotations.SerializedName;
  * com.system.bhouse.bhouse.CommonTask.MaintainManagement.LoadingIntoWareHouse.Bean
  */
 
-public class LoadingIntoPickBean {
+public class LoadingIntoPickBean implements Parcelable {
 
     /**
      * 备注 :
@@ -136,4 +139,53 @@ public class LoadingIntoPickBean {
     public void setProjectName(String projectName) {
         this.projectName = projectName;
     }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(this.beizhu);
+        dest.writeString(this.ceng);
+        dest.writeString(this.entryPeople);
+        dest.writeString(this.entryTime);
+        dest.writeString(this.dong);
+        dest.writeString(this.containerDate);
+        dest.writeString(this.loadingCarNumber);
+        dest.writeString(this.orderID);
+        dest.writeString(this.loadingCarID);
+        dest.writeString(this.containerName);
+        dest.writeString(this.projectName);
+    }
+
+    public LoadingIntoPickBean() {
+    }
+
+    protected LoadingIntoPickBean(Parcel in) {
+        this.beizhu = in.readString();
+        this.ceng = in.readString();
+        this.entryPeople = in.readString();
+        this.entryTime = in.readString();
+        this.dong = in.readString();
+        this.containerDate = in.readString();
+        this.loadingCarNumber = in.readString();
+        this.orderID = in.readString();
+        this.loadingCarID = in.readString();
+        this.containerName = in.readString();
+        this.projectName = in.readString();
+    }
+
+    public static final Parcelable.Creator<LoadingIntoPickBean> CREATOR = new Parcelable.Creator<LoadingIntoPickBean>() {
+        @Override
+        public LoadingIntoPickBean createFromParcel(Parcel source) {
+            return new LoadingIntoPickBean(source);
+        }
+
+        @Override
+        public LoadingIntoPickBean[] newArray(int size) {
+            return new LoadingIntoPickBean[size];
+        }
+    };
 }

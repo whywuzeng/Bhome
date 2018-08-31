@@ -3,11 +3,17 @@ package com.system.bhouse.bhouse.CommonTask.MaintainManagement.LoadingIntoWareHo
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Handler;
+import android.support.annotation.Nullable;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -20,8 +26,10 @@ import com.system.bhouse.base.CheckStatusBeanImpl;
 import com.system.bhouse.base.StatusBean;
 import com.system.bhouse.base.SubmitStatusBeanImpl;
 import com.system.bhouse.bean.BProBOM;
+import com.system.bhouse.bean.wareHouseBean;
 import com.system.bhouse.bhouse.CommonTask.BaseTaskFragment.BaseContentMessageActivity;
 import com.system.bhouse.bhouse.CommonTask.MaintainManagement.LoadingIntoWareHouseFragment.Base.BaseContentMessageFragment;
+import com.system.bhouse.bhouse.CommonTask.MaintainManagement.LoadingIntoWareHouseFragment.Fragment.Bean.LoadingIntoPickBean;
 import com.system.bhouse.bhouse.CommonTask.MaintainManagement.LoadingIntoWareHouseFragment.Fragment.Bean.LoadingIntoWareHouseBean;
 import com.system.bhouse.bhouse.CommonTask.MaintainManagement.LoadingIntoWareHouseFragment.Fragment.Bean.LoadingIntoWareHouseBeanSection;
 import com.system.bhouse.bhouse.CommonTask.TransportationManagement.adapter.BaseQuickAdapter;
@@ -38,18 +46,9 @@ import com.system.bhouse.bhouse.R;
 import com.system.bhouse.bhouse.setup.utils.onMutiDataSetListener;
 import com.system.bhouse.config.Const;
 import com.system.bhouse.utils.ClickUtils;
-import com.system.bhouse.utils.TenUtils.L;
 import com.system.bhouse.utils.TenUtils.T;
 import com.system.bhouse.utils.ValueUtils;
 import com.zijunlin.Zxing.Demo.CaptureActivity;
-
-import org.androidannotations.annotations.AfterViews;
-import org.androidannotations.annotations.EActivity;
-import org.androidannotations.annotations.Extra;
-import org.androidannotations.annotations.OnActivityResult;
-import org.androidannotations.annotations.OptionsItem;
-import org.androidannotations.annotations.OptionsMenu;
-import org.androidannotations.annotations.ViewById;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -57,6 +56,7 @@ import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
 
+import butterknife.Bind;
 import de.greenrobot.event.EventBus;
 import rx.Observable;
 import rx.Subscriber;
@@ -69,37 +69,49 @@ import rx.Subscriber;
  * <p>
  * com.system.bhouse.bhouse.CommonTask
  */
-@EActivity(R.layout.activity_comtask_content_layout)
-@OptionsMenu(R.menu.menu_comtask)
 public class LoadingIntoWareHouseContentMessageFragment extends BaseContentMessageFragment implements  GroupItem.onChildItemClickListener, onMutiDataSetListener ,BaseQuickAdapter.OnItemChildClickListener,BaseContentMessageActivity.SetOnAddItemClickListener {
 
     public static final String TAG = "comtaskcontentmessageactivity";
     private static final String module_name = "装柜入库";
 
+    public static final String ARG_HID="arg_hid";
+    public static final String ARG_RECEIPTHNUMBER="arg_receipthnumber";
+    public static final String ARG_MSTATUS="arg_mstatus";
+    public static final String ARG_COMPONENTQR="arg_componentqr";
+    public static final String ARG_ORDERID="arg_orderid";
+    public static final String ARG_WORKORDERID="arg_workorderid";
+    //表头
+    public static final String ON_CHILD_ITEM_CLICK = "onChildItemClick";
 
-    @ViewById
+    //分录
+    public static final String ON_ITEM_CHILD_CLICK = "onItemChildClick";
+
+    @Bind(R.id.listView)
     RecyclerView listView;
-    @ViewById
+    @Bind(R.id.topListView)
     RecyclerView topListView;
-    @ViewById
+    @Bind(R.id.tv_title_live_layout)
     TextView tv_title_live_layout;
+    @Bind(R.id.toolbar_com)
+    Toolbar toolbar;
 
-    @Extra
+
+//    @Extra
     String HId;
 
-    @Extra
+//    @Extra
     String receiptHnumber;
 
-    @Extra
+//    @Extra
     StatusBean mStatus;
 
-    @Extra
+//    @Extra
     String componentQr;
 
-    @Extra
+//    @Extra
     String orderId;
 
-    @Extra
+//    @Extra
     String workOrderID;
 
     private ArrayList<LoadingIntoWareHouseBean> comTaskBeans = new ArrayList<>();
@@ -114,32 +126,101 @@ public class LoadingIntoWareHouseContentMessageFragment extends BaseContentMessa
     private com.system.bhouse.bhouse.CommonTask.MaintainManagement.LoadingIntoWareHouseFragment.Fragment.LoadingIntoWareHouseSectionAdapter LoadingIntoWareHouseSectionAdapter;
     private ArrayList<SortChildItem.ViewModel> TopViewHolders;
 
+    public static LoadingIntoWareHouseContentMessageFragment newInstance(String HId,String receiptHnumber,StatusBean mStatus,String componentQr,String orderId, String workOrderID) {
+        
+        Bundle args = new Bundle();
+        args.putString(ARG_HID,HId);
+        args.putString(ARG_RECEIPTHNUMBER,receiptHnumber);
+        args.putSerializable(ARG_MSTATUS,mStatus);
+        args.putString(ARG_COMPONENTQR,componentQr);
+        args.putString(ARG_ORDERID,orderId);
+        args.putString(ARG_WORKORDERID,workOrderID);
+
+        LoadingIntoWareHouseContentMessageFragment fragment = new LoadingIntoWareHouseContentMessageFragment();
+        fragment.setArguments(args);
+        return fragment;
+    }
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+    }
+
+    //加载布局 初始化数据
     @Override
     protected void onCreateView(Bundle savedInstanceState) {
         super.onCreateView(savedInstanceState);
+        setContentView(R.layout.activity_comtask_content_layout);
+        Bundle bundle = getArguments();
+        if (bundle!=null)
+        {
+            HId=bundle.getString(ARG_HID);
+            receiptHnumber= bundle.getString(ARG_RECEIPTHNUMBER);
+            mStatus= (StatusBean) bundle.getSerializable(ARG_MSTATUS);
+            componentQr=bundle.getString(ARG_COMPONENTQR);
+            orderId=bundle.getString(ARG_ORDERID);
+            workOrderID=bundle.getString(ARG_WORKORDERID);
+        }
     }
 
-    @AfterViews
-    public void initComTaskActivity() {
-        tv_title_live_layout.setText(module_name + "分录");
+    //lazyView 懒加载
+    @Override
+    public void onLazyInitView(@Nullable Bundle savedInstanceState) {
+        super.onLazyInitView(savedInstanceState);
 
-        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(_mActivity);
+        tv_title_live_layout.setText(module_name + "分录");
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(_mActivity,LinearLayoutManager.VERTICAL,false);
         listView.setLayoutManager(linearLayoutManager);
         recycleViewAddEmptySection(listView);
         String[] stringArray = getResources().getStringArray(R.array.loadingwarehouse_itemsection_order);
 
         LoadingIntoWareHouseSectionAdapter = new LoadingIntoWareHouseSectionAdapter(R.layout.activity_comtask_content_layout_item, R.layout.layout_home_recommend_empty_noheight, R.layout.comtask_content_item_footer,assignmentBeanSectionArrayList,stringArray,mStatus);
-
         listView.setNestedScrollingEnabled(false);
 
         listView.setAdapter(LoadingIntoWareHouseSectionAdapter);
         listView.addItemDecoration(new TimeLineItemTopBottomDecoration());
         LoadingIntoWareHouseSectionAdapter.setOnItemChildClickListener(this);
-
         testData();
+        ((AppCompatActivity) getActivity()).setSupportActionBar(toolbar);
+        initToolbarNav(toolbar);
 
         setScrollViewFirst();
         setmSetOnAddItemClickListener(this);
+        DefaultItemAnimator defaultItemAnimator = new DefaultItemAnimator();
+        defaultItemAnimator.setRemoveDuration(600);
+        defaultItemAnimator.setAddDuration(600);
+        listView.setItemAnimator(defaultItemAnimator);
+    }
+
+    protected void initToolbarListener(){
+
+    }
+
+    /**
+     * toolbar 回退
+     * @param toolbar
+     */
+    @Override
+    protected void initToolbarNav(Toolbar toolbar) {
+        toolbar.setNavigationIcon(R.drawable.ic_keyboard_arrow_left);
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ((LoadingIntoWareHouseContentActivity)_mActivity).onBackPressedSupport();
+            }
+        });
+    }
+
+    //对用户可见时回调
+    @Override
+    public void onSupportVisible() {
+        super.onSupportVisible();
+    }
+
+    //对用户不可见时回调
+    @Override
+    public void onSupportInvisible() {
+        super.onSupportInvisible();
     }
 
     private void initStatusData(){
@@ -209,7 +290,7 @@ public class LoadingIntoWareHouseContentMessageFragment extends BaseContentMessa
         }
 
         //提交  请求有数据 就是保存状态
-        if (comTaskBeans.get(0).getStatus().trim().equals(Const.SAVE_STATUS)) {
+        if (comTaskBeans.get(0).getStatus().trim().equals(Const.SUBMIT_STATUS)) {
             /**
              * 请求有数据,就是
              */
@@ -223,7 +304,7 @@ public class LoadingIntoWareHouseContentMessageFragment extends BaseContentMessa
         else if (comTaskBeans.get(0).getStatus().trim().equals(Const.CHECK_STATUS)) {
             //审核状态  养护出库审核状态也可以删除
             CheckStatusBeanImpl checkStatusBean = new CheckStatusBeanImpl();
-            checkStatusBean.setVisCheckFBtn(true).setVisDeleteBtn(true);
+            checkStatusBean.setVisCheckFBtn(true);
             mStatus.setBean(checkStatusBean);
             mStatus.setLookStatus(true);
             return;
@@ -348,10 +429,16 @@ public class LoadingIntoWareHouseContentMessageFragment extends BaseContentMessa
      */
     @Override
     public void onChildItemClick(SortChildItem.ViewModel data, ViewHolder holder) {
+
+        if (ClickUtils.isFastDoubleClick())
+        {
+            return;
+        }
+
         String type = "";
         if (data.name.equals("仓库")) {
 
-            if (headerProperties.get("containerName").isEmpty())
+            if (comTaskBeans.get(0).getContainerID().isEmpty())
             {
                 showButtomToast("请先选择货柜");
                 return;
@@ -360,6 +447,7 @@ public class LoadingIntoWareHouseContentMessageFragment extends BaseContentMessa
             //扫二维码 台车
             Intent intent = new Intent(_mActivity, CaptureActivity.class);
             intent.putExtra("position",holder.getAdapterPosition());
+            intent.putExtra("tag", ON_CHILD_ITEM_CLICK);
             startActivityForResult(intent,REQUST_QRCODE);
         }
         else if (data.name.equals("业务日期")) {
@@ -428,35 +516,94 @@ public class LoadingIntoWareHouseContentMessageFragment extends BaseContentMessa
         builder.create().show();
     }
 
-    //扫描回调 带出信息
-    @OnActivityResult(REQUST_QRCODE)
-    void resultGetRequstQrcode(int result, Intent data) {
-        if (result == RESULT_OK) {
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        menu.clear();
+        inflater.inflate(R.menu.menu_comtask,menu);
+        super.onCreateOptionsMenu(menu, inflater);
+    }
+
+    /**
+     * 重写 显示QrAdd 显示策略
+     * @param text
+     * @param invisiable
+     */
+    @Override
+    protected void setTvQrAddContext(String text, boolean invisiable) {
+        tvQrcodeAdd.setText(text);
+        addInvisiable=invisiable;
+        llQrcodeAdd.setVisibility(invisiable?View.VISIBLE:View.GONE);
+        if (addInvisiable)
+            llQrcodeAdd.setVisibility(mStatus.getBean().visCheckBtn?View.VISIBLE:View.GONE);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (ClickUtils.isFastDoubleClick()) {
+            return super.onOptionsItemSelected(item);
+        }
+        switch (item.getItemId()) {
+            case R.id.action_operat_status:
+
+                Observable<Object> objectObservable = Observable.create(subscriber -> {
+                    show1(mStatus);
+                    setTvQrcodeContext("装车订单拉取", View.VISIBLE);
+                    setTvQrAddContext("货柜调拨", true);
+                });
+                Observable observableMobileKey = ApiWebService.Get_KeyTimestr(App.MobileKey);
+                observableMobileKey.concatWith(objectObservable).subscribe(new Subscriber() {
+                    @Override
+                    public void onCompleted() {
+
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+
+                    }
+
+                    @Override
+                    public void onNext(Object o) {
+                        App.KeyTimestring = o.toString();
+                    }
+                });
+
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == REQUST_QRCODE && resultCode == RESULT_OK && data != null) {
             Bundle bundle = data.getBundleExtra("bundle");
             String resultQr = bundle.getString("result");
-            int extraPosition = bundle.getInt("position");
+            int extraPosition = bundle.getInt("position",-2);
+            String tag = bundle.getString("tag");
             //
-            if (extraPosition==-1) {
-                //出库仓库
+            if (tag.equals(ON_ITEM_CHILD_CLICK)) {
+                //分录的出库仓库
                 ApiWebService.B_Get_Ware_house(_mActivity, new ApiWebService.SuccessCall() {
                     @Override
                     public void SuccessBack(String result) {
 
-                        ArrayList<LoadingIntoWareHouseBean> loadingcarbean = App.getAppGson().fromJson(result, new TypeToken<List<LoadingIntoWareHouseBean>>() {
+                        ArrayList<wareHouseBean> carNo = App.getAppGson().fromJson(result, new TypeToken<List<wareHouseBean>>() {
                         }.getType());
 
-                        if (!ValueUtils.IsFirstValueExist(loadingcarbean))
+                        if (!ValueUtils.IsFirstValueExist(carNo)) {
+                            showButtomToast(getResources().getString(R.string.Qrcode_result));
                             return;
-                        for (LoadingIntoWareHouseBean bean : comTaskBeans) {
-                            bean.setStorageID(loadingcarbean.get(0).getOutLibID());
-//                            bean.setStationCarCoding(loadingcarbean.get(0).stationCarCoding);
-                            bean.setStorageWarehouse(loadingcarbean.get(0).getOutLibWarehouse());
                         }
-//                        headerProperties.put("stationCarCoding",loadingcarbean.get(0).stationCarCoding);
-                        headerProperties.put("storageID",loadingcarbean.get(0).getOutLibID());
+
+                        comTaskBeans.get(extraPosition).setOutLibID(carNo.get(0).getWareHouseID());
+                        comTaskBeans.get(extraPosition).setOutLibWarehouse(carNo.get(0).getWareHouseName());
+
+                        headerProperties.put("outLibID",comTaskBeans.get(0).getOutLibID());
 
                         ClearAssignMentSectionArrayList();
-                        LoadingIntoWareHouseSectionAdapter.notifyDataSetChanged();
+                        LoadingIntoWareHouseSectionAdapter.notifyItemChanged(extraPosition);
                     }
 
                     @Override
@@ -465,26 +612,28 @@ public class LoadingIntoWareHouseContentMessageFragment extends BaseContentMessa
                     }
                 },resultQr);
 
-            }else if (extraPosition==2)
+            }else if (extraPosition==4&&tag.equals(ON_CHILD_ITEM_CLICK))
             {
                 //入库仓库
                 ApiWebService.B_Get_Ware_house(_mActivity, new ApiWebService.SuccessCall() {
                     @Override
                     public void SuccessBack(String result) {
 
-                        ArrayList<LoadingIntoWareHouseBean> loadingcarbean = App.getAppGson().fromJson(result, new TypeToken<List<LoadingIntoWareHouseBean>>() {
+                        ArrayList<wareHouseBean> carNo = App.getAppGson().fromJson(result, new TypeToken<List<wareHouseBean>>() {
                         }.getType());
 
-                        if (!ValueUtils.IsFirstValueExist(loadingcarbean))
+                        if (!ValueUtils.IsFirstValueExist(carNo)) {
+                            showButtomToast(getResources().getString(R.string.Qrcode_result));
                             return;
+                        }
                         for (LoadingIntoWareHouseBean bean : comTaskBeans) {
-                            bean.setStorageID(loadingcarbean.get(0).getStorageID());
+                            bean.setStorageID(carNo.get(0).getWareHouseID());
 //                            bean.setStationCarCoding(loadingcarbean.get(0).stationCarCoding);
-                            bean.setStorageWarehouse(loadingcarbean.get(0).getStorageWarehouse());
+                            bean.setStorageWarehouse(carNo.get(0).getWareHouseName());
                         }
 //                        headerProperties.put("stationCarCoding",loadingcarbean.get(0).stationCarCoding);
-                        headerProperties.put("storageID",loadingcarbean.get(0).getStorageID());
-                        getDateRefresh(loadingcarbean.get(0).getStorageWarehouse(),extraPosition,"仓库");
+                        headerProperties.put("storageID",comTaskBeans.get(0).getStorageID());
+                        getDateRefresh(comTaskBeans.get(0).getStorageWarehouse(),extraPosition,"仓库");
                     }
 
                     @Override
@@ -496,49 +645,56 @@ public class LoadingIntoWareHouseContentMessageFragment extends BaseContentMessa
         }
     }
 
-    /**
-     * pickActivity 结束回调  职员信息回调
-     * param result
-     * param data
-     */
-    @OnActivityResult(RESULT_SORTITEM_SELECTPROJECT)
-    void resultProjcetName(int result, Intent data) {
-        if (result == RESULT_OK) {
-            String extrasName = data.getStringExtra("projectname");
-            int extraPosition = data.getIntExtra("position", 0);
-            String extra = data.getStringExtra("HId");
-            String extraCoding = data.getStringExtra("coding");
-            String extraBOMID = data.getStringExtra("BOMID");
-
+    @Override
+    public void onFragmentResult(int requestCode, int resultCode, Bundle data) {
+        super.onFragmentResult(requestCode, resultCode, data);
+        if (requestCode == RESULT_SORTITEM_SELECTPROJECT && resultCode == RESULT_OK && data != null)
+        {
+            String extrasName = data.getString(LoadingIntoWareHousePickerFragment.BUNDLE_RESULT_ARGS_PROJECTNAME);
+            int extraPosition = data.getInt(LoadingIntoWareHousePickerFragment.BUNDLE_RESULT_AGES_POSITION, 0);
+            String extra = data.getString(LoadingIntoWareHousePickerFragment.BUNDLE_RESULT_AGES_HID); //订单ID
+            String extraCoding = data.getString(LoadingIntoWareHousePickerFragment.BUNDLE_RESULT_AGES_CODING);
+            String extraBOMID = data.getString(LoadingIntoWareHousePickerFragment.BUNDLE_RESULT_AGES_BOMID);//货柜Id
+            String containerName = data.getString(LoadingIntoWareHousePickerFragment.BUNDLE_RESULT_AGES_CONTAINER);//货柜name
+//            this.comTaskBeans.get(0).setContainerID(extraBOMID);
+//            this.comTaskBeans.get(0).setContainerName(containerName);
+            headerProperties.put("containerID",extraBOMID);
+            headerProperties.put("containerName",containerName);
 
             ApiWebService.Get_Production_order_Container_bysoid_Json(_mActivity, new ApiWebService.SuccessCall() {
                 @Override
                 public void SuccessBack(String result) {
                     ArrayList<LoadingIntoWareHouseBean> loadingcarbean = App.getAppGson().fromJson(result, new TypeToken<List<LoadingIntoWareHouseBean>>() {
-                        }.getType());
+                    }.getType());
 
-                        if (!ValueUtils.IsFirstValueExist(loadingcarbean)) {
-                            showButtomToast(R.string.Qrcode_result);
-                            return;
-                        }
+                    if (!ValueUtils.IsFirstValueExist(loadingcarbean)) {
+                        showButtomToast(R.string.Qrcode_result);
+                        return;
+                    }
 
+                    for (LoadingIntoWareHouseBean bean : loadingcarbean) {
+                        bean.setContainerID(extraBOMID);
+                        bean.setContainerName(containerName);
+                        bean.sethNumbe(receiptHnumber);
+                    }
+
+
+                    if (!(loadingcarbean.size() == 0)) {
                         comTaskBeans.clear();
+                        comTaskBeans.addAll(loadingcarbean);
+                    }
 
-                if (!(loadingcarbean.size() == 0)) {
-                    comTaskBeans.clear();
-                    comTaskBeans.addAll(loadingcarbean);
-                }
-
-                getDateRefresh(comTaskBeans.get(0).getStorageWarehouse(),3,"货柜");
-                ClearAssignMentSectionArrayList();
-                LoadingIntoWareHouseSectionAdapter.notifyDataSetChanged();
+                    getDateRefresh(comTaskBeans.get(0).getContainerName(),2,"货柜");
+                    getDateRefresh(comTaskBeans.get(0).getStorageWarehouse(),4,"仓库");
+                    ClearAssignMentSectionArrayList();
+                    LoadingIntoWareHouseSectionAdapter.notifyDataSetChanged();
                 }
 
                 @Override
                 public void ErrorBack(String error) {
 
                 }
-            },"224d3c3d9f55412a95ec7e9b880b695b");
+            },extra);
         }
     }
 
@@ -626,6 +782,14 @@ public class LoadingIntoWareHouseContentMessageFragment extends BaseContentMessa
                 viewModel.value = date;
 
             for (int i = 0; i < comTaskBeans.size(); i++) {
+                comTaskBeans.get(i).setContainerName(viewModel.value);
+            }
+        }else if (viewModel.name.equals("仓库"))
+        {
+            if (viewModel.value==null||!viewModel.value.equals(date))
+                viewModel.value = date;
+
+            for (int i = 0; i < comTaskBeans.size(); i++) {
                 comTaskBeans.get(i).setStorageWarehouse(viewModel.value);
             }
         }
@@ -640,6 +804,8 @@ public class LoadingIntoWareHouseContentMessageFragment extends BaseContentMessa
      */
     @Override
     public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
+        if (ClickUtils.isFastDoubleClick())
+            return;
         switch (view.getId()) {
             //每个item删除标准
             case R.id.img_delete_item:
@@ -658,10 +824,10 @@ public class LoadingIntoWareHouseContentMessageFragment extends BaseContentMessa
 
             case R.id.ll_top5:
                 Intent intent = new Intent(_mActivity, CaptureActivity.class);
-                intent.putExtra("position",-1);
+                intent.putExtra("position",position);
+                intent.putExtra("tag", ON_ITEM_CHILD_CLICK);
                 startActivityForResult(intent,REQUST_QRCODE);
                 break;
-
         }
     }
 
@@ -709,7 +875,7 @@ public class LoadingIntoWareHouseContentMessageFragment extends BaseContentMessa
         ApiWebService.Get_Production_order_Container_Container_Db(_mActivity, new ApiWebService.SuccessCall() {
             @Override
             public void SuccessBack(String result) {
-
+                showButtomToast(result);
             }
 
             @Override
@@ -765,31 +931,51 @@ public class LoadingIntoWareHouseContentMessageFragment extends BaseContentMessa
         List<TreeItem> datas = treeRecyclerAdapter.getDatas();
         KeyType keyType = new KeyType();
 
-        ArrayList<SortChildItem.ViewModel> viewModels = new ArrayList<>();
+        List<TreeItem> treeItems =new ArrayList<>();
+        /**
+         * 要修改datas  重新塞入sortChildItem 对象  .因为在这个initChild里才进行了事件监听
+         */
         keyType.key = 4;
-        viewModels.addAll(makeChlidData(keyType, mStatus));
+        treeItems.addAll(GroupItemRefresh(datas, Const.LETTERS[0], makeChlidData(keyType, mStatus)));
         keyType.key = 2;
         keyType.type = Const.LETTERS[1];
-        viewModels.addAll(makeChlidData(keyType, mStatus));
+        treeItems.addAll(GroupItemRefresh(datas, Const.LETTERS[1], makeChlidData(keyType, mStatus)));
         keyType.key = 2;
         keyType.type = Const.LETTERS[2];
-        viewModels.addAll(makeChlidData(keyType, mStatus));
+        treeItems.addAll(GroupItemRefresh(datas, Const.LETTERS[2], makeChlidData(keyType, mStatus)));
 
         for (int i=0,j=0;i<datas.size();i++,j++)
         {
             if (datas.get(i) instanceof SortChildItem)
             {
-
-                ((SortChildItem) datas.get(i)).setData(viewModels.get(j));
-
+                datas.set(i,treeItems.get(j)); //重新塞入 treeItems
             }else if (datas.get(i) instanceof GroupItem)
             {
                 j--;
             }
         }
 
-//        treeRecyclerAdapter.getItemManager().addItems(datas);
         treeRecyclerAdapter.getItemManager().notifyDataChanged();
+    }
+
+    /**
+     *  得到对应的chilids  SortChildItem ，并重新更新了ArrayList<SortChildItem.ViewModel> data 数据
+     * @param datas
+     * @param letter
+     * @param data
+     * @return
+     */
+    private List<TreeItem> GroupItemRefresh(List<TreeItem> datas, String letter, ArrayList<SortChildItem.ViewModel> data) {
+        for (TreeItem item : datas) {
+            if (item instanceof GroupItem) {
+                GroupItem item1 = (GroupItem) item;
+                if (item1.TitleKey.equals(letter)) {
+                    ((GroupItem) item).setData(data);
+                    return item1.getAllChilds();
+                }
+            }
+        }
+        return null;
     }
 
     /**
@@ -805,47 +991,30 @@ public class LoadingIntoWareHouseContentMessageFragment extends BaseContentMessa
     }
 
 
-    private int ikey = 0;
 
     public void onImgItemDelete(int position) {
-
-        if (isDeleteAble) {//此时为增加动画效果，刷新部分数据源，防止删除错乱
-            isDeleteAble = false;//初始值为true,当点击删除按钮以后，休息0.5秒钟再让他为
-            //true,起到让数据源刷新完成的作用
-            // 删除数据
-            ikey++;
-            L.e("点击了一次" + ikey);
-            new Thread(new Runnable() {
-                @Override
-                public void run() {
-                    try {
-                        Thread.sleep(600);//休息
-                        isDeleteAble = true;//可点击按钮
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
-                }
-            }).start();
-            // adapter 刷新
-            if (position == comTaskBeans.size())
-                return;
-            if (!TextUtils.isEmpty(comTaskBeans.get(0).status) && comTaskBeans.get(0).status.equals("审核")) {
-                T.showShort(_mActivity, "该单据正在审核状态，不能删除");
-                return;
-            }
-            comTaskBeans.remove(position);
-            ClearAssignMentSectionArrayList();
-            LoadingIntoWareHouseSectionAdapter.notifyItemRemoved(position-1);
-            LoadingIntoWareHouseSectionAdapter.notifyDataSetChanged();
-//            //网上说这个方式刷新 position正确
-//            mRecyclerViewAdapter.notifyItemRangeChanged(0,comTaskBeans.size());//刷新被删除数据，以及其后面的数据
-            new Handler().postDelayed(new Runnable() {
-                @Override
-                public void run() {
-                }
-            }, 200);
-
+        comTaskBeans.remove(position);
+        ClearAssignMentSectionArrayList();
+        //不requestLayout();
+        if (position == comTaskBeans.size()) {
+            listView.setHasFixedSize(true);
         }
+        LoadingIntoWareHouseSectionAdapter.notifyItemRemoved(position);
+
+        if (position != comTaskBeans.size()) {
+            LoadingIntoWareHouseSectionAdapter.notifyItemRangeChanged(position, comTaskBeans.size() - position);
+        }
+         //等动画运行完毕 再requestLayout();
+        listView.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                listView.setHasFixedSize(false);
+                listView.requestLayout();
+            }
+        },listView.getItemAnimator().getRemoveDuration());
+
+//     //网上说这个方式刷新 position正确
+//     mRecyclerViewAdapter.notifyItemRangeChanged(0,comTaskBeans.size());//刷新被删除数据，以及其后面的数据
     }
 
 
@@ -858,8 +1027,6 @@ public class LoadingIntoWareHouseContentMessageFragment extends BaseContentMessa
          */
         LoadingIntoWareHouseBean bean;
         bean=comTaskBeans.get(0);
-
-//        comTaskBeans.add(bean1);
 
         if (!isVisBottom(listView)) {
             listView.smoothScrollToPosition(comTaskBeans.size() + 1);
@@ -886,7 +1053,7 @@ public class LoadingIntoWareHouseContentMessageFragment extends BaseContentMessa
     //单据---修改状态
     @Override
     protected void tvModifyAction(TextView tvModify) {
-        mStatus.setBean(new SubmitStatusBeanImpl().setVisSubmitBtn(true).setVisQRBtn(true));
+        mStatus.setBean(new SubmitStatusBeanImpl().setVisSubmitBtn(true));
         mStatus.setLookStatus(true);
         mStatus.setModifyStatus(true);
         if (mStatus.isModifyStatus()) {
@@ -906,8 +1073,11 @@ public class LoadingIntoWareHouseContentMessageFragment extends BaseContentMessa
         ApiWebService.Get_Production_order_Container_soid_Json(_mActivity, new ApiWebService.SuccessCall() {
             @Override
             public void SuccessBack(String result) {
-                ArrayList<BProBOM> bProBOMS= App.getAppGson().fromJson(result, new TypeToken<List<BProBOM>>(){}.getType());
-                CommonPickerActivity_.intent(LoadingIntoWareHouseContentMessageFragment.this).title("装车订单").bProBOMs(bProBOMS).LayoutID(R.layout.loadinginto_picker_item).Position(-1).isNewsAdapter(true).startForResult(RESULT_SORTITEM_SELECTPROJECT);
+
+                ArrayList<LoadingIntoPickBean> bProBOMS= App.getAppGson().fromJson(result, new TypeToken<List<LoadingIntoPickBean>>(){}.getType());
+                startForResult(LoadingIntoWareHousePickerFragment.newInstance("装车订单","-1",bProBOMS,"",-1,R.layout.loadinginto_picker_item,true), RESULT_SORTITEM_SELECTPROJECT);
+
+//                CommonPickerActivity_.intent(LoadingIntoWareHouseContentMessageFragment.this).title("装车订单").bProBOMs(bProBOMS).LayoutID(R.layout.loadinginto_picker_item).Position(-1).isNewsAdapter(true).startForResult(RESULT_SORTITEM_SELECTPROJECT);
             }
 
             @Override
@@ -916,62 +1086,6 @@ public class LoadingIntoWareHouseContentMessageFragment extends BaseContentMessa
             }
         },9999,"");
     }
-
-    /**
-     * 访问下面recycleView数据 根据生产订单和二维码获取托盘配料单信息
-     */
-    public void BottomAction(){
-
-//        ApiWebService.Get_Production_order_Trolley_Mould_bypMoid_Json(this, new ApiWebService.SuccessCall() {
-//            @Override
-//            public void SuccessBack(String result) {
-//                /**
-//                 "单据ID": "7efaf36e001d414b94326c0a04d47e29",
-//                 "单据编号": "TPFP-7-201808-0005",
-//                 "托盘ID": "0aea156d7a494628a2f8759f1b047bf5",
-//                 "托盘名称": "托盘3",
-//                 "托盘编号": "TP-7-201807-0003"
-//                 */
-//
-//                ArrayList<LoadingIntoWareHouseBean> loadingcarbean = App.getAppGson().fromJson(result, new TypeToken<List<LoadingIntoWareHouseBean>>() {}.getType());
-//
-//                if (loadingcarbean.isEmpty()) {
-//                    T.showShort(LoadingIntoWareHouseContentMessageActivity.this, getResources().getString(R.string.Qrcode_result));
-//                    return;
-//                }
-//
-//                for (LoadingIntoWareHouseBean bean : loadingcarbean) {
-//                    bean.hNumbe = headerProperties.get("hNumbe");
-//                    bean.requireDate = headerProperties.get("requireDate");
-//                    bean.description = headerProperties.get("description");
-//                    bean.entryPeople = headerProperties.get("enterPeople");
-//                    bean.moduleID = headerProperties.get("moduleID");
-//                    bean.entryPeople=headerProperties.get("enterPeople");
-//                    bean.moduleName=headerProperties.get("moduleName");
-//                    bean.moduleCoding=headerProperties.get("moduleCoding");
-//                    bean.stationCarName=headerProperties.get("stationCarName");
-//                    bean.stationCarID=headerProperties.get("stationCarID");
-//                    bean.stationCarCoding=headerProperties.get("stationCarCoding");
-//                }
-//
-//                if (!(loadingcarbean.size() == 0)) {
-//                    comTaskBeans.clear();
-//                    comTaskBeans.addAll(loadingcarbean);
-//                }
-//
-//                ClearAssignMentSectionArrayList();
-//                LoadingIntoWareHouseSectionAdapter.notifyDataSetChanged();
-//            }
-//
-//            @Override
-//            public void ErrorBack(String error) {
-//
-//            }
-//        }, comTaskBeans.get(0).getStationCarID(), comTaskBeans.get(0).getModuleID());
-
-        //"7efaf36e001d414b94326c0a04d47e29"
-    }
-
 
 
     private boolean getComtaskSize() {
@@ -1002,14 +1116,14 @@ public class LoadingIntoWareHouseContentMessageFragment extends BaseContentMessa
         }
         int size = this.comTaskBeans.size();
         String[][] billtable = null;
-        billtable = new String[size][18];
+        billtable = new String[size][19];
         for (int i = 0; i < size; i++) {
             LoadingIntoWareHouseBean confirmationReceBean = comTaskBeans.get(i);
 
             billtable[i][0] = confirmationReceBean.hNumbe;
             billtable[i][1] = confirmationReceBean.requireDate;
             billtable[i][2] = confirmationReceBean.getContainerID();
-            billtable[i][3] = confirmationReceBean.getStorageWarehouse();
+            billtable[i][3] = confirmationReceBean.getStorageID();
             billtable[i][4] = confirmationReceBean.getDescription();
             billtable[i][5] = App.menname;
             billtable[i][6] = confirmationReceBean.Qrcode;
@@ -1020,7 +1134,7 @@ public class LoadingIntoWareHouseContentMessageFragment extends BaseContentMessa
             billtable[i][11] = confirmationReceBean.measureUnitID;
             billtable[i][12] = confirmationReceBean.measureUnit;
             billtable[i][13] = confirmationReceBean.number+"";
-            billtable[i][14] = confirmationReceBean.getOutLibWarehouse();
+            billtable[i][14] = confirmationReceBean.getOutLibID();
             billtable[i][15] = confirmationReceBean.sourceID;
             billtable[i][16] = confirmationReceBean.getProjectID();
             billtable[i][17] = confirmationReceBean.getDongID();
@@ -1073,6 +1187,8 @@ public class LoadingIntoWareHouseContentMessageFragment extends BaseContentMessa
             public void SuccessBack(String result) {
                 showButtomToast(result);
                 //就是在原界面刷新
+                testData();
+                sureDataRefresh("tvCheckAction");
             }
 
             @Override
@@ -1090,6 +1206,8 @@ public class LoadingIntoWareHouseContentMessageFragment extends BaseContentMessa
             public void SuccessBack(String result) {
                 showButtomToast(result);
                 //就是在原界面刷新
+                testData();
+                sureDataRefresh("tvFanCheckAction");
             }
 
             @Override
@@ -1125,35 +1243,6 @@ public class LoadingIntoWareHouseContentMessageFragment extends BaseContentMessa
         public String wuLiao;
         public String countUnit;
         public String count;
-    }
-
-
-    @OptionsItem
-    protected final void action_operat_status() {
-        Observable<Object> objectObservable = Observable.create(subscriber -> {
-            if (!ClickUtils.isFastDoubleClick()) {
-                show1(mStatus);
-            }
-            setTvQrcodeContext("装车订单拉取",View.VISIBLE);
-            setTvQrAddContext("货柜调拨",true);
-        });
-        Observable observableMobileKey = ApiWebService.Get_KeyTimestr(App.MobileKey);
-        observableMobileKey.concatWith(objectObservable).subscribe(new Subscriber() {
-            @Override
-            public void onCompleted() {
-
-            }
-
-            @Override
-            public void onError(Throwable e) {
-
-            }
-
-            @Override
-            public void onNext(Object o) {
-                App.KeyTimestring = o.toString();
-            }
-        });
     }
 
 }

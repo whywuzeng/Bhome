@@ -48,6 +48,7 @@ public class WWBaseFragment extends Fragment implements FootUpdate.LoadMore, Glo
     protected View errorView;
 
     private ProgressDialog mProgressDialog;
+    private SingleToast mSingleToast;
 
     protected void showProgressBar(boolean show) {
         showProgressBar(show, "");
@@ -342,7 +343,6 @@ public class WWBaseFragment extends Fragment implements FootUpdate.LoadMore, Glo
             showButtomToast(R.string.connect_service_fail);
     }
 
-    SingleToast mSingleToast;
 
     public void showButtomToast(String msg) {
         if (!isResumed() || mSingleToast == null) {

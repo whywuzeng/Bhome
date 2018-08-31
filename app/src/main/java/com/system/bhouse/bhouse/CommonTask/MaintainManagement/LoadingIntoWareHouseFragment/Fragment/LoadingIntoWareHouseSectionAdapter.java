@@ -61,7 +61,7 @@ public class LoadingIntoWareHouseSectionAdapter extends HeaderAndFooterSectionQu
         initDataForView(baseAssignViewHolder,item);
 
         if (statusBean.isNewStatus() || statusBean.isModifyStatus()) {
-            helper.setVisible(R.id.img_delete_item, false);
+            helper.setVisible(R.id.img_delete_item, true);
             helper.setVisible(R.id.iv_projectName, false);
             helper.setVisible(R.id.iv_subBeizhu, false);
             helper.setVisible(R.id.ll_bottom_5_iv_right_arrow,true);
