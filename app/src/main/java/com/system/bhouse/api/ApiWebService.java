@@ -11,6 +11,8 @@ import com.system.bhouse.utils.ProgressUtils;
 import com.system.bhouse.utils.TenUtils.L;
 import com.system.bhouse.utils.TenUtils.T;
 import com.system.bhouse.utils.sharedpreferencesuser;
+import com.trello.rxlifecycle.android.ActivityEvent;
+import com.trello.rxlifecycle.components.support.RxAppCompatActivity;
 
 import org.json.JSONArray;
 import org.ksoap2.serialization.SoapObject;
@@ -91,7 +93,7 @@ public class ApiWebService {
         request.addProperty("sid",sid);
         request.addProperty("username",name);
         request.addProperty("Keystring",key);
-        return getNetworkService(mSubscriber,request);
+        return getNetworkService(mSubscriber,request,null);
     }
 
 /*    15.根据订单ID获取明细信息
@@ -102,7 +104,7 @@ public class ApiWebService {
         SoapObject request = new SoapObject(NAMESPACE, methodName);
         //integer类型
         request.addProperty("ccid",ccid);
-        return getNetworkService(mSubscriber,request);
+        return getNetworkService(mSubscriber,request,null);
     }
 
 
@@ -118,7 +120,7 @@ public class ApiWebService {
         request.addProperty("mid",mid);
         request.addProperty("statusid",statusid);
         request.addProperty("checktrue",checktrue);
-        return getNetworkService(mSubscriber,request);
+        return getNetworkService(mSubscriber,request,null);
     }
 
 
@@ -172,16 +174,16 @@ public class ApiWebService {
      * @return
      */
 
-    public static Subscription getGetWorkflowlistMessagedt(Subscriber mSubscriber,String status, int rownum, String username, String FormNumber)
-    {
-            String methodName="GetWorkflowlistMessagedt";
-        SoapObject request = new SoapObject(NAMESPACE, methodName);
-        request.addProperty("status",status);
-        request.addProperty("rownum",rownum);
-        request.addProperty("username",username);
-        request.addProperty("FormNumber",FormNumber);
-        return getNetworkService(mSubscriber,request);
-    }
+//    public static Subscription getGetWorkflowlistMessagedt(Subscriber mSubscriber,String status, int rownum, String username, String FormNumber)
+//    {
+//            String methodName="GetWorkflowlistMessagedt";
+//        SoapObject request = new SoapObject(NAMESPACE, methodName);
+//        request.addProperty("status",status);
+//        request.addProperty("rownum",rownum);
+//        request.addProperty("username",username);
+//        request.addProperty("FormNumber",FormNumber);
+//        return getNetworkService(mSubscriber,request);
+//    }
 
     /**
      * 查询当前登录公司用户当前所在单元的有权限的所有子级ID
@@ -3479,6 +3481,26 @@ Get_Sale_Order_Car_shf(string scid, string addPer, int gsmid, int property, bool
         request.addProperty("username",App.USER_INFO);
         return getNetworkService(mContext,call,request);
     }
+    /**
+     * 接口名称：台车分配-模具调拨
+     接口地址：http://192.168.11.96:7785/Service1.asmx
+     接口函数：
+     Get_Production_order_Trolley_Mould_Db(string p_Tid, string addPer, int gsmid, int property, bool IsSubtitle, string Keystring, string KeysTimetring, string username)
+     */
+    public static Subscription Get_Production_order_Trolley_Mould_Db(final Context mContext, final SuccessCall call,String p_Tid)
+    {
+        String methodName="Get_Production_order_Trolley_Mould_Db";
+        SoapObject request = new SoapObject(NAMESPACE, methodName);
+        request.addProperty("p_Tid",p_Tid);
+        request.addProperty("addPer", App.menname);
+        request.addProperty("gsmid",App.GSMID);
+        request.addProperty("property",App.Property);
+        request.addProperty("IsSubtitle",App.IsSub);
+        request.addProperty("Keystring",App.MobileKey);
+        request.addProperty("KeysTimetring",App.KeyTimestring);
+        request.addProperty("username",App.USER_INFO);
+        return getNetworkService(mContext,call,request);
+    }
 
     /**
      * 接口名称：审核台车分配信息
@@ -5029,14 +5051,14 @@ Get_Sale_Order_Car_shf(string scid, string addPer, int gsmid, int property, bool
      */
     public static Subscription getNetworkService(final Context mContext, final SuccessCall call,final SoapObject request){
 
-        return getNetworkService(new BHBaseSubscriber<String>(new RequestError() {
+        Subscription networkService = getNetworkService(new BHBaseSubscriber<String>(new RequestError() {
             @Override
             public void forRequestError(String msg) {
                 T.showShort(mContext, msg);
                 call.ErrorBack(msg);
                 ProgressUtils.getInstance().DisMissProgress();
             }
-        }){
+        }) {
             @Override
             public void onStart() {
                 super.onStart();
@@ -5059,7 +5081,9 @@ Get_Sale_Order_Car_shf(string scid, string addPer, int gsmid, int property, bool
                 super.onNext(o);
                 call.SuccessBack(o);
             }
-        },request);
+        }, request, (RxAppCompatActivity) mContext);
+//        RxSubscriptionManager.getInstanse().addRxSubscription(networkService);
+        return networkService;
     }
 
      //联合请求
@@ -5101,7 +5125,7 @@ Get_Sale_Order_Car_shf(string scid, string addPer, int gsmid, int property, bool
     }
 
 //大型的接口 可以接这个
-    private static  Subscription getNetworkService(Subscriber mSubscriber, final SoapObject request){
+    private static  Subscription getNetworkService(Subscriber mSubscriber, final SoapObject request,RxAppCompatActivity context){
         return Observable.create(new Observable.OnSubscribe<Object>() {
             @Override
             public void call(final Subscriber<? super Object> subscriber) {
@@ -5122,8 +5146,8 @@ Get_Sale_Order_Car_shf(string scid, string addPer, int gsmid, int property, bool
                     }
 
                 }
-            }}).
-            subscribeOn(Schedulers.io()).
+            }}).compose(context.<Object>bindUntilEvent(ActivityEvent.DESTROY))
+                .subscribeOn(Schedulers.io()).
 
             observeOn(AndroidSchedulers.mainThread()).subscribe(mSubscriber);
         }
@@ -5170,7 +5194,7 @@ Get_Sale_Order_Car_shf(string scid, string addPer, int gsmid, int property, bool
 
     public static Subscription getNetworkServiceNoProgress(final Context mContext, final SuccessCall call,final SoapObject request)
     {
-        return getNetworkService(new BHBaseSubscriber<String>(new RequestError() {
+        Subscription networkService = getNetworkService(new BHBaseSubscriber<String>(new RequestError() {
             @Override
             public void forRequestError(String msg) {
                 T.showShort(mContext, msg);
@@ -5197,7 +5221,9 @@ Get_Sale_Order_Car_shf(string scid, string addPer, int gsmid, int property, bool
                 super.onNext(o);
                 call.SuccessBack(o);
             }
-        },request);
+        }, request, (RxAppCompatActivity) mContext);
+//        RxSubscriptionManager.getInstanse().addRxSubscription(networkService);
+        return networkService;
     }
 
 

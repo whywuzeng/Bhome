@@ -1171,7 +1171,7 @@ public class MaintainIntoWareHouseContentMessageActivity extends BaseContentMess
                 public void SuccessBack(String result) {
                     showButtomToast(result);
 
-                    if (!result.contains("失败")) {
+                    if (!result.contains("失败")||!result.contains("对不起")) {
                         onBackPressed();
                         sureDataRefresh("tvSubmitAction");
                     }
@@ -1188,7 +1188,7 @@ public class MaintainIntoWareHouseContentMessageActivity extends BaseContentMess
                 @Override
                 public void SuccessBack(String result) {
                     showButtomToast(result);
-                    if (!result.contains("失败")) {
+                    if (!result.contains("失败")||!result.contains("对不起")) {
                         onBackPressed();
                         sureDataRefresh("tvSubmitAction");
                     }

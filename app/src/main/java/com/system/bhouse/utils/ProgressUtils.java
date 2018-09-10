@@ -56,7 +56,7 @@ public class ProgressUtils {
 
         if(viewUtils!=null &&  viewUtils.getDialog()!=null
                 && viewUtils.getDialog().isShowing()) {
-            viewUtils.dismiss();
+            viewUtils.dismissAllowingStateLoss();
         }
     }
 }

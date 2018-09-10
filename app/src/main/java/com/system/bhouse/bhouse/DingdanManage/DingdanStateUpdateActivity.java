@@ -20,7 +20,6 @@ import com.system.bhouse.base.BaseActivity;
 import com.system.bhouse.bhouse.DingdanManage.Adapter.DingdanStateUpdateAdapter;
 import com.system.bhouse.bhouse.R;
 import com.system.bhouse.utils.AppManager;
-import com.zhy.autolayout.utils.AutoUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -259,7 +258,6 @@ public class DingdanStateUpdateActivity extends BaseActivity {
 
             public MyViewHolder(View view) {
                 super(view);
-                AutoUtils.autoSize(view);
                 tv = (TextView) view.findViewById(R.id.id_num);
                 fram = (FrameLayout) view.findViewById(R.id.saleanalysis_fram);
                 iv = (ImageView) view.findViewById(R.id.image_sale_item);

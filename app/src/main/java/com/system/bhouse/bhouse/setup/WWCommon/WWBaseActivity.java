@@ -7,7 +7,6 @@ import android.os.Handler;
 import android.os.Message;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AlertDialog;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,10 +16,12 @@ import android.widget.PopupWindow;
 import android.widget.TextView;
 
 import com.system.bhouse.base.Global.StartActivity;
+import com.system.bhouse.base.rxlife.RxSubscriptionManager;
 import com.system.bhouse.bhouse.R;
 import com.system.bhouse.bhouse.setup.SingleToast;
 import com.system.bhouse.bhouse.setup.program.FootUpdate;
 import com.system.bhouse.bhouse.setup.utils.DialogUtil;
+import com.trello.rxlifecycle.components.support.RxAppCompatActivity;
 
 import java.util.concurrent.TimeUnit;
 
@@ -34,7 +35,7 @@ import rx.schedulers.Schedulers;
  * Created by Administrator on 2017-10-30.
  */
 
-public class WWBaseActivity extends AppCompatActivity implements StartActivity {
+public class WWBaseActivity extends RxAppCompatActivity implements StartActivity {
     protected LayoutInflater mInflater;
     protected FootUpdate mFootUpdate = new FootUpdate();
     protected View.OnClickListener mOnClickUser = new View.OnClickListener() {
@@ -187,10 +188,7 @@ public class WWBaseActivity extends AppCompatActivity implements StartActivity {
 //        Toolbar viewById = (Toolbar) findViewById(R.id.toolbar_com);
         TextView mTextView = (TextView)findViewById(R.id.toolbar_menu_title);
         if (mTextView!=null) {
-//            setSupportActionBar(viewById);
-//            getSupportActionBar().setTitle(title);
             mTextView.setText(title);
-
         }
     }
 
@@ -221,18 +219,6 @@ public class WWBaseActivity extends AppCompatActivity implements StartActivity {
 //                showMiddleToast(msg);
 //            }
 //        }
-//    }
-
-//    public ImageLoadTool getImageLoad() {
-//        return imageLoadTool;
-//    }
-
-//    protected boolean isLoadingFirstPage(String tag) {
-//        return networkImpl.isLoadingFirstPage(tag);
-//    }
-//
-//    protected boolean isLoadingLastPage(String tag) {
-//        return networkImpl.isLoadingLastPage(tag);
 //    }
 
     @Override
@@ -268,6 +254,7 @@ public class WWBaseActivity extends AppCompatActivity implements StartActivity {
         }
 
 //        GlobalSetting.getInstance().removeMessageNoNotify();
+        RxSubscriptionManager.getInstanse().stopAllSubscription();
 
         super.onDestroy();
     }

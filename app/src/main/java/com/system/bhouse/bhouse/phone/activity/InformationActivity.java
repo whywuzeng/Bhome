@@ -18,6 +18,7 @@ import com.romainpiel.shimmer.ShimmerButton;
 import com.system.bhouse.Custom.anim.MyJumpingBeans;
 import com.system.bhouse.api.ApiWebService;
 import com.system.bhouse.base.App;
+import com.system.bhouse.base.database.DatabaseManager;
 import com.system.bhouse.bean.EventBean.EventOrganization;
 import com.system.bhouse.bean.UserMidPerm;
 import com.system.bhouse.bhouse.R;
@@ -295,7 +296,7 @@ public class InformationActivity extends AppCompatActivity implements SimpleTree
                     App.Property=userMidPerm.getProperty();
                     App.IsSub=userMidPerm.isIsSub();
                     App.GSMID=userMidPerm.getGsmid();
-
+                    DatabaseManager.getInstance().UpdateMid(userMidPerm);
                 }
             }
         }

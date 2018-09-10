@@ -7,6 +7,7 @@ import com.system.bhouse.bhouse.CommonTask.ReplenishmentRequire.ReplenishmentReq
 import com.system.bhouse.bhouse.CommonTask.ReturnRequire.ReturnRequireActivity_;
 import com.system.bhouse.bhouse.R;
 import com.system.bhouse.bhouse.phone.activity.InformationActivity;
+import com.trello.rxlifecycle.android.ActivityEvent;
 
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.EActivity;
@@ -14,6 +15,12 @@ import org.androidannotations.annotations.OnActivityResult;
 import org.androidannotations.annotations.OptionsItem;
 import org.androidannotations.annotations.OptionsMenu;
 import org.androidannotations.annotations.ViewById;
+
+import rx.Observable;
+import rx.Subscriber;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.functions.Action1;
+import rx.schedulers.Schedulers;
 
 /**
  * Created by Administrator on 2018-02-28.
@@ -35,6 +42,30 @@ public class SiteActivity extends WWTimeLineActivity {
     void initSiteFragment() {
         setActionBarMidlleTitle("工地管理");
         initTimeLineActivity(my_recycle_view,R.array.site_labels);
+        testRxJava();
+    }
+
+    private void testRxJava() {
+        Observable.create(new Observable.OnSubscribe<String>() {
+            @Override
+            public void call(Subscriber<? super String> subscriber) {
+                int i = 0;
+                while (i < 1000000000) {
+                    i++;
+                }
+                subscriber.onNext(String.valueOf(i));
+                subscriber.onCompleted();
+            }
+        }).compose(this.<String>bindUntilEvent(ActivityEvent.DESTROY))
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Action1<String>() {
+                    @Override
+                    public void call(String s) {
+                        showButtomToast(s);
+                    }
+                });
+
     }
 
 

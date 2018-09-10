@@ -35,6 +35,8 @@ public abstract class BaseContentMessageActivity extends WWBackActivity {
     private LinearLayout llQrcodeAdd;
     private TextView tvQrcodeAdd;
     private StatusBean mStatusBean;
+    private LinearLayout llQrcodeAdd2;
+    private TextView tvQrcodeAdd2;
 
     /**
      * show1 展示 dialog
@@ -50,6 +52,7 @@ public abstract class BaseContentMessageActivity extends WWBackActivity {
         LinearLayout llFanCheck = (LinearLayout) contentView.findViewById(R.id.ll_fanCheck);
         LinearLayout llQrcode = (LinearLayout) contentView.findViewById(R.id.ll_qrcode);
          llQrcodeAdd =(LinearLayout)contentView.findViewById(R.id.ll_qrcode_add);
+        llQrcodeAdd2 = (LinearLayout)contentView.findViewById(R.id.ll_qrcode_add2);
 
         TextView tvModify = (TextView) contentView.findViewById(R.id.tv_modify);
         TextView tvSubmit = (TextView) contentView.findViewById(R.id.tv_submit);
@@ -58,8 +61,20 @@ public abstract class BaseContentMessageActivity extends WWBackActivity {
         TextView tvDelete = (TextView)contentView.findViewById(R.id.tv_delete);
         tvQrcode = (TextView)contentView.findViewById(R.id.tv_qrcode);
         tvQrcodeAdd = (TextView)contentView.findViewById(R.id.tv_qrcode_add);
+        tvQrcodeAdd2 = (TextView)contentView.findViewById(R.id.tv_qrcode_add2);
 
         tvQrcodeAdd.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (mSetOnAddItemClickListener!=null)
+                {
+                    mSetOnAddItemClickListener.onAddItemClick(v);
+                }
+                bottomDialog.dismiss();
+            }
+        });
+
+        tvQrcodeAdd2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (mSetOnAddItemClickListener!=null)
@@ -176,6 +191,15 @@ public abstract class BaseContentMessageActivity extends WWBackActivity {
         llQrcodeAdd.setVisibility(invisiable?View.VISIBLE:View.GONE);
         if (addInvisiable)
             llQrcodeAdd.setVisibility(mStatusBean.getBean().visQRBtn?View.VISIBLE:View.GONE);
+    }
+
+    protected void setTvQrAdd2Context(String text,boolean invisiable)
+    {
+        tvQrcodeAdd2.setText(text);
+        addInvisiable=invisiable;
+        llQrcodeAdd2.setVisibility(invisiable?View.VISIBLE:View.GONE);
+        if (addInvisiable)
+            llQrcodeAdd2.setVisibility(mStatusBean.getBean().visCheckBtn?View.VISIBLE:View.GONE);
     }
 
    protected abstract void tvQrcodeAction(TextView tvQrcode);

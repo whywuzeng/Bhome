@@ -189,6 +189,4 @@ public class LazyFragment extends WWBaseFragment {
 
     }
 
-
-
 }

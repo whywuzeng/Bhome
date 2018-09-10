@@ -29,8 +29,13 @@ import com.socks.library.KLog;
 import com.system.bhouse.Custom.ShowDeviceMessageCustomDialog;
 import com.system.bhouse.api.ApiWebService;
 import com.system.bhouse.base.App;
+import com.system.bhouse.base.database.AccountManager;
+import com.system.bhouse.base.database.DatabaseManager;
+import com.system.bhouse.base.database.UserProfile;
+import com.system.bhouse.base.storage.BHPrefrences;
 import com.system.bhouse.bean.UserInfo;
 import com.system.bhouse.bhouse.phone.view.WaveView;
+import com.system.bhouse.bhouse.setup.WWCommon.WWBaseActivity;
 import com.system.bhouse.bhouse.setup.notification.MyNotificationActivity_;
 import com.system.bhouse.utils.AppManager;
 import com.system.bhouse.utils.DeviceMessageUtils;
@@ -42,7 +47,6 @@ import com.tencent.android.tpush.XGCustomPushNotificationBuilder;
 import com.tencent.android.tpush.XGIOperateCallback;
 import com.tencent.android.tpush.XGPushConfig;
 import com.tencent.android.tpush.XGPushManager;
-import com.zhy.autolayout.AutoLayoutActivity;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -60,7 +64,7 @@ import rx.Subscriber;
  * Created by Administrator on 2016/3/9.
  * 登录的activity
  */
-public class LoginActivity extends AutoLayoutActivity {
+public class LoginActivity extends WWBaseActivity {
     @Bind(R.id.usernumber)
     EditText usernumber;
     @Bind(R.id.password_btn)
@@ -352,13 +356,20 @@ public class LoginActivity extends AutoLayoutActivity {
                         App.Filenum = userInfo.Filenum;
                         App.Filesize = userInfo.getFilesizeX();
                         App.Mancompany = userInfo.getManCompany();
+                        App.Fatherid=userInfo.getFatherid();
 
                         App.usertype = userInfo.getUsertype();
                         App.Property = userInfo.getProperty();
                         App.IsSub = userInfo.isIsSub();
                         App.menname = userInfo.getMenname();
                         App.mpname = userInfo.mpname;
+                        App.XinggeId=userInfo.XingeAppID;
+                        BHPrefrences.setAppProfileId(userInfo.XingeAppID);
                     }
+
+                    final UserProfile profile = new UserProfile(Long.valueOf(getIpInfoResponse[0].XingeAppID), userInfo.getUsername(), userInfo.getMid(),userInfo.getGsmid(), userInfo.MobileKey, userInfo.Filenum, userInfo.getFilesizeX(), userInfo.getManCompany(), userInfo.getProperty(),userInfo.getFatherid(), userInfo.isIsSub(), userInfo.getMenname(), userInfo.mpname, userInfo.getUsertype());
+                    DatabaseManager.getInstance().getDao().insertOrReplace(profile);
+
                     Observable regokJson = ApiWebService.Getlogin_regok_Json(deviceCpuID, deviceToken[0], ip, DiskID, memInfoIype);
                     regokJson.subscribe(new Subscriber<String>() {
                         @Override
@@ -395,6 +406,7 @@ public class LoginActivity extends AutoLayoutActivity {
                                         Message obtain = Message.obtain();
                                         obtain.what = Integer.valueOf(1);
                                         handler.sendMessage(obtain);
+                                        AccountManager.setSignState(true);
                                     }
                                     else if (stu_name.equals("是")&&isLogin){
                                         //handle跳转至
@@ -402,6 +414,8 @@ public class LoginActivity extends AutoLayoutActivity {
                                         obtain.what = Integer.valueOf(1);
                                         handler.sendMessage(obtain);
 
+                                        //已经注册并登录成功了
+                                        AccountManager.setSignState(true);
                                     }
                                 }
                             } catch (JSONException e) {

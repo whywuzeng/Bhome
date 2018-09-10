@@ -247,10 +247,6 @@ public class WWBaseFragment extends Fragment implements FootUpdate.LoadMore, Glo
 
     }
 
-
-
-
-
     //初始化 fragment入口
     protected void onCreateView(Bundle savedInstanceState)
     {
@@ -301,8 +297,6 @@ public class WWBaseFragment extends Fragment implements FootUpdate.LoadMore, Glo
         return null;
     }
 
-
-
     protected void showDialog(String title, String msg, DialogInterface.OnClickListener clickOk) {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         AlertDialog dialog = builder.setTitle(title)
@@ -337,12 +331,9 @@ public class WWBaseFragment extends Fragment implements FootUpdate.LoadMore, Glo
         }
     }
 
-
-
     public void showErrorMsg(int code, JSONObject json) {
             showButtomToast(R.string.connect_service_fail);
     }
-
 
     public void showButtomToast(String msg) {
         if (!isResumed() || mSingleToast == null) {
@@ -373,8 +364,6 @@ public class WWBaseFragment extends Fragment implements FootUpdate.LoadMore, Glo
 
         mSingleToast.showButtomToast(messageId);
     }
-
-
 
     protected void showDialogLoading() {
         if (getActivity() instanceof WWBaseActivity) {

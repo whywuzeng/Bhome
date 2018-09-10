@@ -20,7 +20,7 @@
         </activity>
         <activity
             android:screenOrientation="portrait"
-            android:theme="@style/MainAppTheme.Base"
+            android:theme="@style/Theme.Translucent"
             android:name="com.system.bhouse.bhouse.WelcomActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
@@ -53,31 +53,8 @@
 
         <activity
             android:screenOrientation="portrait"
-            android:name="com.system.bhouse.bhouse.SaleAnalysisActivity">
-        </activity>
-        <activity
-            android:screenOrientation="portrait"
             android:name="com.system.bhouse.bhouse.OrderInputActivity"></activity>
 
-        <activity
-            android:name="com.system.bhouse.bhouse.DingdanActivity"
-            android:screenOrientation="portrait">
-        </activity>
-
-
-        <activity
-            android:name="com.system.bhouse.bhouse.DrawerLayoutActivity"
-            android:screenOrientation="portrait">
-        </activity>
-
-        <activity
-            android:name="com.system.bhouse.bhouse.ConameActivity"
-            android:screenOrientation="portrait"></activity>
-
-        <activity
-            android:name="com.system.bhouse.bhouse.DingdanManage.DingdanManageActivity"
-            android:screenOrientation="portrait">
-        </activity>
 
         <activity
             android:theme="@style/Anim_fade"
@@ -112,7 +89,6 @@
 
         <activity android:name="com.system.bhouse.bhouse.ImageSelect.PhotoViewActivity"
                   android:screenOrientation="portrait"></activity>
-
 
         <activity android:name="com.system.bhouse.bhouse.DingdanManage.OneSimpleActivity"
                   android:theme="@style/Anim_fade"

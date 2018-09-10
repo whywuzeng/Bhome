@@ -4,7 +4,6 @@
               android:layout_width="match_parent"
               android:orientation="vertical"
               tools:context=".CommonTask.SiteActivity"
-              android:paddingBottom="10dp"
               android:layout_height="match_parent">
 
     <include layout="@layout/toolbar"/>
@@ -12,6 +11,7 @@
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/my_recycle_view"
+        android:background="@color/material_white95"
         android:layout_width="match_parent"
         android:scrollbars="horizontal"
         android:layout_height="wrap_content">

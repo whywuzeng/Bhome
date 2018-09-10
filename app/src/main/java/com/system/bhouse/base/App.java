@@ -3,12 +3,14 @@ package com.system.bhouse.base;
 import android.app.Activity;
 import android.app.Service;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Build;
 import android.os.Environment;
 import android.os.Vibrator;
+import android.preference.PreferenceManager;
 import android.provider.Settings;
 import android.support.multidex.MultiDexApplication;
 import android.util.Log;
@@ -21,6 +23,8 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.socks.library.KLog;
+import com.system.bhouse.base.database.DatabaseManager;
+import com.system.bhouse.base.storage.BHAppStartTimeFlag;
 import com.system.bhouse.bhouse.BuildConfig;
 import com.system.bhouse.bhouse.R;
 import com.system.bhouse.bhouse.phone.common.ConfigConsts;
@@ -31,7 +35,6 @@ import com.system.bhouse.bhouse.setup.utils.FileUtil;
 import com.system.bhouse.bhouse.task.bean.UserObject;
 import com.system.bhouse.db.DBHelper;
 import com.tencent.android.tpush.XGPushConfig;
-import com.zhy.autolayout.config.AutoLayoutConifg;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -42,6 +45,7 @@ import java.util.GregorianCalendar;
  * Created by Administrator on 2016-4-5.
  */
 public class App extends MultiDexApplication {
+    private static final String TAG = "App";
     private static Context mApp;
 
     private static SQLiteDatabase db;
@@ -110,15 +114,21 @@ public class App extends MultiDexApplication {
         return mApp;
     }
 
+    @Override
+    protected void attachBaseContext(Context base) {
+        super.attachBaseContext(base);
+        SharedPreferences defaultSharedPreferences = PreferenceManager.getDefaultSharedPreferences(base);
+        defaultSharedPreferences.edit().putLong(BHAppStartTimeFlag.TIME_FLAG.name(),System.currentTimeMillis()).apply();
+        Log.e(TAG, "attachBaseContext: time:"+ System.currentTimeMillis());
+    }
 
     @Override
     public void onCreate() {
         super.onCreate();
         //初始化LeakCanary
 //        LeakCanary.install(this);
-        mApp = this;
+        mApp=this;
         KLog.init(BuildConfig.DEBUG);
-        AutoLayoutConifg.getInstance().useDeviceSize();
         dbHelper = DBHelper.getInstance(this);
         db = dbHelper.getWritableDatabase();
         XGPushConfig.enableDebug(this,true);
@@ -128,6 +138,8 @@ public class App extends MultiDexApplication {
         mVibrator = (Vibrator) getApplicationContext().getSystemService(Service.VIBRATOR_SERVICE);
 //        SDKInitializer.initialize(getApplicationContext());
 //        T.isShow=false;
+        //数据库
+        DatabaseManager.getInstance().init(this);
 
         sEmojiNormal = getResources().getDimensionPixelSize(R.dimen.emoji_normal);
         sEmojiMonkey = getResources().getDimensionPixelSize(R.dimen.emoji_monkey);
@@ -398,5 +410,7 @@ public class App extends MultiDexApplication {
     public static String menname="";
     //职位
     public static String mpname="";
+    //信鸽Id
+    public static String XinggeId;
 
 }

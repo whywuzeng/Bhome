@@ -628,8 +628,27 @@ public class StationCarAssignMentContentMessageActivity extends BaseContentMessa
             case R.id.tv_qrcode_add:
                 TvAddQrAction();
                 break;
+            case R.id.tv_qrcode_add2:
+                TvAdd2QrAction();
 
         }
+    }
+
+    /**
+     * add2 第二个增加的 模具分配
+     */
+    private void TvAdd2QrAction() {
+        ApiWebService.Get_Production_order_Trolley_Mould_Db(this, new ApiWebService.SuccessCall() {
+            @Override
+            public void SuccessBack(String result) {
+                showButtomToast(result);
+            }
+
+            @Override
+            public void ErrorBack(String error) {
+
+            }
+        },comTaskBeans.get(0).ID);
     }
 
     /**
@@ -1127,6 +1146,7 @@ public class StationCarAssignMentContentMessageActivity extends BaseContentMessa
             }
             setTvQrcodeContext("台车智能分配",View.VISIBLE);
             setTvQrAddContext("产线智能分配",true);
+            setTvQrAdd2Context("模具调拨",true);
         });
         Observable observableMobileKey = ApiWebService.Get_KeyTimestr(App.MobileKey);
         observableMobileKey.concatWith(objectObservable).subscribe(new Subscriber() {

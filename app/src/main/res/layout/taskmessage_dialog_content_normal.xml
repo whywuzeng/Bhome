@@ -80,6 +80,31 @@
     </LinearLayout>
 
     <LinearLayout
+        android:id="@+id/ll_qrcode_add2"
+        android:orientation="vertical"
+        android:visibility="gone"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/tv_qrcode_add2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="?android:attr/selectableItemBackground"
+            android:clickable="true"
+            android:drawableLeft="@drawable/ic_view_comfy"
+            android:drawablePadding="16dp"
+            android:gravity="center_vertical"
+            android:padding="16dp"
+            android:text="生成二维码"
+            android:textColor="#666666"
+            android:textSize="14sp"/>
+
+        <include layout="@layout/divide_middle_15" />
+
+    </LinearLayout>
+
+    <LinearLayout
         android:id="@+id/ll_submit"
         android:orientation="vertical"
         android:layout_width="match_parent"

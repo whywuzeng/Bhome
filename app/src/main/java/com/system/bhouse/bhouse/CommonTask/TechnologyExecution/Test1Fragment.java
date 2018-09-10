@@ -12,6 +12,7 @@ import com.system.bhouse.base.App;
 import com.system.bhouse.base.CheckStatusBeanImpl;
 import com.system.bhouse.base.StatusBean;
 import com.system.bhouse.base.SubmitStatusBeanImpl;
+import com.system.bhouse.bhouse.CommonTask.MaintainManagement.LoadingIntoWareHouseFragment.Base.BaseBackFragment;
 import com.system.bhouse.bhouse.CommonTask.TechnologyExecution.BaseFragment.RecycleViewAdapterManager;
 import com.system.bhouse.bhouse.CommonTask.TechnologyExecution.BaseFragment.SwipeItemLayout;
 import com.system.bhouse.bhouse.CommonTask.TechnologyExecution.ComponentIntoWareHouse.ComponentIntoWareHouseContentMessageActivity_;
@@ -28,7 +29,6 @@ import com.system.bhouse.bhouse.CommonTask.TransportationManagement.adapter.Base
 import com.system.bhouse.bhouse.CommonTask.TransportationManagement.adapter.BaseViewHolder;
 import com.system.bhouse.bhouse.CommonTask.Widget.TimeLineItemTopBottomDecoration;
 import com.system.bhouse.bhouse.R;
-import com.system.bhouse.bhouse.setup.WWCommon.LazyFragment;
 import com.system.bhouse.config.Const;
 import com.system.bhouse.utils.ValueUtils;
 
@@ -45,7 +45,7 @@ import butterknife.Bind;
  * com.system.bhouse.bhouse.CommonTask.TechnologyExecution
  */
 
-public class Test1Fragment extends LazyFragment implements ItemTouchListener, BaseQuickAdapter.OnItemChildClickListener {
+public class Test1Fragment extends BaseBackFragment implements ItemTouchListener, BaseQuickAdapter.OnItemChildClickListener {
 
     @Bind(R.id.my_recycle_view)
     RecyclerView my_recycle_view;
@@ -63,16 +63,42 @@ public class Test1Fragment extends LazyFragment implements ItemTouchListener, Ba
     private String componentQr;
 
     private String orderId;
-    private TechnologyBean technologyBeans;
+    private TechnologyBean technologyBeans = null;
     private boolean isUpdate;
     private RecycleViewAdapterManager recycleViewAdapterManager;
 
+    public static final String ARG_componentQr="arg_componentQr";
+    public static final String ARG_OrderId="arg_OrderId";
+    public static final String ARG_title="arg_title";
+
+    public static Test1Fragment newInstance(String componentQr, String OrderId, TechnologyBean title) {
+        
+        Bundle args = new Bundle();
+        args.putString(ARG_componentQr,componentQr);
+        args.putString(ARG_OrderId,OrderId);
+        args.putParcelable(ARG_title,title);
+        Test1Fragment fragment = new Test1Fragment();
+        fragment.setArguments(args);
+        return fragment;
+    }
+
+    @Override
+    protected void onCreateView(Bundle savedInstanceState) {
+        super.onCreateView(savedInstanceState);
+        setContentView(R.layout.technology_layout_fragment2);
+        Bundle bundle = getArguments();
+        if (bundle!=null)
+        {
+            this.componentQr=bundle.getString(ARG_componentQr);
+            this.orderId= bundle.getString(ARG_OrderId);
+            this.technologyBeans= bundle.getParcelable(ARG_title);
+        }
+    }
+
     //初始化布局
     @Override
-    protected void onCreateViewLazy(Bundle savedInstanceState) {
-        super.onCreateViewLazy(savedInstanceState);
-        super.setContentView(R.layout.technology_layout_fragment2);
-
+    public void onLazyInitView(Bundle savedInstanceState) {
+        super.onLazyInitView(savedInstanceState);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity());
         my_recycle_view.setLayoutManager(linearLayoutManager);
 
@@ -183,16 +209,16 @@ public class Test1Fragment extends LazyFragment implements ItemTouchListener, Ba
         },technologyBean.getWorkOrdersubDirectoryID());
     }
 
+    //对用户可见时回调
     @Override
-    protected void onFragmentStartLazy() {
-        super.onFragmentStartLazy();
+    public void onSupportVisible() {
+        super.onSupportVisible();
         if (!isUpdate&&technologyBeans!=null)
-        ParseNetwork(technologyBeans);
-
+            ParseNetwork(technologyBeans);
     }
 
     /**
-     * 删除 查看 修改 三个按钮的调用
+     * 删除 查看 修改 三个按钮的调用--offline
      * @param adapter
      * @param view     The view whihin the ItemView that was clicked
      * @param position The position of the view int the adapter

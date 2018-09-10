@@ -35,6 +35,8 @@ public class UserInfo implements Parcelable {
     private int FilesizeX;
     private int property;
     private int gsmid;
+    public String XingeAppKey;
+    public String XingeAppID;
 
     @Override
     public String toString() {

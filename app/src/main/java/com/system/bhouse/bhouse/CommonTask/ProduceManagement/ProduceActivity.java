@@ -104,7 +104,7 @@ public class ProduceActivity extends WWBackActivity implements BaseQuickAdapter.
         list.add(new SectionMultipleItem(new ProduceItemDataBean(R.drawable.more_btn_forward, "养护入库"), MultipleItem.IMG, MultipleItem.IMG_SPAN_SIZE));
         list.add(new SectionMultipleItem(new ProduceItemDataBean(R.drawable.inbox_btn_vote_normal, "养护出库"), MultipleItem.IMG, MultipleItem.IMG_SPAN_SIZE));
         list.add(new SectionMultipleItem(true, "其他"));
-        list.add(new SectionMultipleItem(new ProduceItemDataBean(R.drawable.agora_handup_on, "台车磨具分离"), MultipleItem.IMG, MultipleItem.IMG_SPAN_SIZE));
+        list.add(new SectionMultipleItem(new ProduceItemDataBean(R.drawable.agora_handup_on, "台车模具分离"), MultipleItem.IMG, MultipleItem.IMG_SPAN_SIZE));
         list.add(new SectionMultipleItem(new ProduceItemDataBean(R.drawable.college_img_public_normal, "装柜入库"), MultipleItem.IMG, MultipleItem.IMG_SPAN_SIZE));
 //            list.add(new SectionMultipleItem(MultipleItem.IMG_TEXT_SPAN_SIZE, MultipleItem.TEXT_SPAN_SIZE, "content"));
 //            list.add(new SectionMultipleItem(MultipleItem.TEXT, MultipleItem.IMG_TEXT_SPAN_SIZE));

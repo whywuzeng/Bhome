@@ -49,6 +49,7 @@ import com.system.bhouse.ui.IndexViewPager;
 import com.system.bhouse.utils.AppManager;
 import com.system.bhouse.utils.LogUtil;
 import com.system.bhouse.utils.MeasureUtil;
+import com.system.bhouse.utils.TenUtils.AndroidWorkaroundUtils;
 import com.system.bhouse.utils.sharedpreferencesuser;
 import com.tencent.android.tpush.XGPushShowedResult;
 import com.zijunlin.Zxing.Demo.CaptureActivity;
@@ -209,6 +210,9 @@ public class MainActivity extends BaseActivity implements  TopMiddleMenu.OnMenuI
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        if (AndroidWorkaroundUtils.checkDeviceHasNavigationBar(this)) {
+            AndroidWorkaroundUtils.assistActivity(findViewById(android.R.id.content));
+        }
         gridLayoutFragment = new GridLayoutFragment();
         Log.e(TAG, "MainActivity onCreate: " );
         ButterKnife.bind(this);
@@ -222,13 +226,15 @@ public class MainActivity extends BaseActivity implements  TopMiddleMenu.OnMenuI
         {
             UserInfo mInfo = (UserInfo)intent.getParcelableExtra(LoginActivity.USERLOGNDATA);
                 //静态保存
-                App.USER_INFO = mInfo.getUsername();
-                App.MID = mInfo.getMid();
-                App.GSMID= mInfo.getGsmid();
-                App.MobileKey = mInfo.MobileKey;
-                App.Filenum = mInfo.Filenum;
-                App.Filesize = mInfo.getFilesizeX();
-                App.Mancompany = mInfo.getManCompany();
+//                App.USER_INFO = mInfo.getUsername();
+//                App.MID = mInfo.getMid();
+//                App.GSMID= mInfo.getGsmid();
+//                App.MobileKey = mInfo.MobileKey;
+//                App.Filenum = mInfo.Filenum;
+//                App.Filesize = mInfo.getFilesizeX();
+//                App.Mancompany = mInfo.getManCompany();
+//                App.menname=mInfo.getMenname();
+//                App.mpname=mInfo.mpname;
         }
         //更换存储的域名
         ApiWebService.setUserMaindomain();

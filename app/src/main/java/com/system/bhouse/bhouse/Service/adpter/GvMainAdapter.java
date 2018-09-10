@@ -10,7 +10,6 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.system.bhouse.bhouse.R;
-import com.zhy.autolayout.utils.AutoUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -68,7 +67,6 @@ public class GvMainAdapter extends BaseAdapter {
             // construct an item tag
             viewTag = new ItemViewTag(convertView);
             convertView.setTag(viewTag);
-            AutoUtils.autoSize(convertView);
         }
         else {
             viewTag = (ItemViewTag) convertView.getTag();

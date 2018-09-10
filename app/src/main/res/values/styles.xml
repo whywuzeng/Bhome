@@ -61,6 +61,12 @@
     <!-- 配置app自己的theme -->
 </style>
 
+    <!--解决白屏显示问题-->
+    <style name="Theme.Translucent" parent="MainAppTheme.Base">
+        <item name="android:windowFullscreen">true</item>
+        <item name="android:windowIsTranslucent">true</item>
+    </style>
+
     <style name="text_18_ffffff">
         <item name="android:textSize">18.0dip</item>
         <item name="android:textColor">@color/blue1</item>
