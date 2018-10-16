@@ -45,7 +45,7 @@
             android:orientation="vertical"
             android:layout_width="match_parent"
             android:background="@color/twolitte_gray"
-            android:layout_height="wrap_content">
+            android:layout_height="match_parent">
 
             <LinearLayout
                 android:orientation="vertical"
@@ -605,9 +605,21 @@
 
             </LinearLayout>
 
+
         </LinearLayout>
 
     </LinearLayout>
     </android.support.v4.widget.NestedScrollView>
 
 </android.support.design.widget.CoordinatorLayout>
+
+    <!--<com.system.bhouse.ui.loading.DoubleBallLoading-->
+    <!--android:layout_width="65dp"-->
+    <!--android:layout_height="20dp"-->
+    <!--/>-->
+
+    <!--<com.system.bhouse.ui.loading.DYLoadingView-->
+    <!--android:layout_width="65dp"-->
+    <!--android:layout_height="20dp"-->
+    <!--android:background="@color/material_yellow_800"-->
+    <!--/>-->

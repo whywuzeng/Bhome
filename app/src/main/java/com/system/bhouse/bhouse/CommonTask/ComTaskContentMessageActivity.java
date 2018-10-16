@@ -67,6 +67,8 @@ public class ComTaskContentMessageActivity extends BaseContentMessageActivity im
     RecyclerView listView;
     @ViewById
     RecyclerView topListView;
+    @ViewById
+    TextView tv_title_live_layout;
 
     @Extra
     String HId;
@@ -97,6 +99,7 @@ public class ComTaskContentMessageActivity extends BaseContentMessageActivity im
     @AfterViews
     public void initComTaskActivity(){
 
+        tv_title_live_layout.setText("吊装需求分录");
         mRecyclerViewAdapter=new MyTaskContentAdapter();
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
 

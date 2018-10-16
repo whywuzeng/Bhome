@@ -64,10 +64,12 @@
         <item name="android:actionBarSize">@dimen/actionBarSize</item>
         <item name="backgroundColor">@color/common_color_parentlayout_bg</item>
 
-        <item name="android:windowTranslucentStatus">false</item>
-        <item name="android:windowTranslucentNavigation">true</item>
-        <!--Android 5.x开始需要把颜色设置透明，否则导航栏会呈现系统默认的浅灰色-->
-        <item name="android:statusBarColor">@android:color/transparent</item>
+    </style>
+
+    <!--解决白屏显示问题-->
+    <style name="Theme.Translucent" parent="MainAppTheme.Base">
+        <item name="android:windowFullscreen">true</item>
+        <item name="android:windowIsTranslucent">true</item>
     </style>
 
     <style name="text_18_ffffff">

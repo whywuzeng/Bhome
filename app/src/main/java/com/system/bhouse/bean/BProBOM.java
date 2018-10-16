@@ -123,17 +123,8 @@ public class BProBOM extends BaseBean implements Parcelable {
         dest.writeString(this.BOMID);
         dest.writeString(this.ceng);
         dest.writeString(this.dong);
+        dest.writeString(this.projectming);
         dest.writeString(this.containerDate);
-        dest.writeString(this.containerDate);
-        dest.writeInt(this.ListenerContext);
-        dest.writeByte(this.disableDelete ? (byte) 1 : (byte) 0);
-        dest.writeString(this.requireDate);
-        dest.writeString(this.description);
-        dest.writeString(this.checkPeople);
-        dest.writeString(this.checkTime);
-        dest.writeString(this.entryPeople);
-        dest.writeString(this.entryTime);
-        dest.writeString(this.status);
     }
 
     protected BProBOM(Parcel in) {
@@ -143,17 +134,8 @@ public class BProBOM extends BaseBean implements Parcelable {
         this.BOMID = in.readString();
         this.ceng = in.readString();
         this.dong = in.readString();
+        this.projectming = in.readString();
         this.containerDate = in.readString();
-        this.containerDate = in.readString();
-        this.ListenerContext = in.readInt();
-        this.disableDelete = in.readByte() != 0;
-        this.requireDate = in.readString();
-        this.description = in.readString();
-        this.checkPeople = in.readString();
-        this.checkTime = in.readString();
-        this.entryPeople = in.readString();
-        this.entryTime = in.readString();
-        this.status = in.readString();
     }
 
     public static final Creator<BProBOM> CREATOR = new Creator<BProBOM>() {

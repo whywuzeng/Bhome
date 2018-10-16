@@ -41,6 +41,7 @@ import com.system.bhouse.utils.ClickUtils;
 import com.system.bhouse.utils.TenUtils.L;
 import com.system.bhouse.utils.TenUtils.T;
 import com.system.bhouse.utils.ValueUtils;
+import com.system.bhouse.utils.custom.CustomToast;
 
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.EActivity;
@@ -408,7 +409,8 @@ public class StationCarAssignMentContentMessageActivity extends BaseContentMessa
 
                         if (loadingcarbean.isEmpty())
                         {
-                            T.showShort(StationCarAssignMentContentMessageActivity.this,getResources().getString(R.string.Qrcode_result));
+//                            T.showShort(StationCarAssignMentContentMessageActivity.this,getResources().getString(R.string.Qrcode_result));
+                            CustomToast.showWarning();
                         }
 
                         for (StationCarAssignMentBean bean : loadingcarbean) {
@@ -944,7 +946,8 @@ public class StationCarAssignMentContentMessageActivity extends BaseContentMessa
                 }.getType());
 
                 if (loadingcarbean.isEmpty()) {
-                    T.showShort(StationCarAssignMentContentMessageActivity.this, getResources().getString(R.string.Qrcode_result));
+//                    T.showShort(StationCarAssignMentContentMessageActivity.this, getResources().getString(R.string.Qrcode_result));
+                    CustomToast.showWarning();
                 }
 
                 for (StationCarAssignMentBean bean : loadingcarbean) {

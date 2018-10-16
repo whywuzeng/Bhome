@@ -134,6 +134,7 @@
     <color name="material_blue_100">#afefff</color>
     <color name="material_blue_200">#afbfff</color>
     <color name="material_blue_300">#91a7ff</color>
+    <color name="material_blue_350">#23B7D7</color>
     <color name="material_blue_400">#738ffe</color>
     <color name="material_blue_500">#5677fc</color>
     <color name="material_blue_a700">#4d69ff</color>
@@ -151,7 +152,9 @@
     <color name="material_grey_50" tools:override="true">#fafafa</color>
     <color name="material_grey_600" tools:override="true">#757575</color>
     <color name="material_grey_700">#616161</color>
+    <color name="material_grey_750" tools:override="true">#8a8a8a</color>
     <color name="material_grey_800" tools:override="true">#424242</color>
+    <color name="material_grey_850" tools:override="true">#707070</color>
     <color name="material_grey_900" tools:override="true">#212121</color>
     <color name="material_indigo_a400">#3d5afe</color>
     <color name="material_purple_700">#7b1fa2</color>
@@ -251,6 +254,7 @@
     <color name="deepgrey_97AADA">#97AADA</color>
     <color name="grey_DAA520">#DAA520</color>
     <color name="red_62B436">#62B436</color>
+    <color name="c_666666">#666666</color>
 
 </resources>
 

@@ -6,6 +6,8 @@ import android.util.Log;
 import com.system.bhouse.adpter.RequestError;
 import com.system.bhouse.utils.NetworkUtils;
 
+import org.ksoap2.transport.HttpResponseException;
+
 import java.net.SocketTimeoutException;
 import java.net.UnknownHostException;
 
@@ -19,9 +21,14 @@ import rx.Subscriber;
 public class BHBaseSubscriber<T> extends Subscriber<T> {
 
     private RequestError requestError;
+    protected String errorMsg;
 
     public BHBaseSubscriber(RequestError requestError) {
         this.requestError=requestError;
+    }
+
+    public BHBaseSubscriber() {
+
     }
 
     @CallSuper
@@ -39,7 +46,7 @@ public class BHBaseSubscriber<T> extends Subscriber<T> {
     @CallSuper
     @Override
     public void onError(Throwable e) {
-        String errorMsg = null;
+         errorMsg = null;
         if (e instanceof HttpException) {
             switch (((HttpException) e).code()) {
                 case 403:
@@ -58,6 +65,29 @@ public class BHBaseSubscriber<T> extends Subscriber<T> {
                     break;
             }
         }
+        if (e instanceof HttpResponseException)
+        {
+            switch (((HttpResponseException)e).getStatusCode())
+            {
+                case 502:
+                    errorMsg="错误网关DNS,请检查是否进行代理，或者清理缓存";
+                    break;
+                case 403:
+                    errorMsg = "没有权限访问此链接！";
+                    break;
+                case 504:
+                    if (!NetworkUtils.isNetworkAvailable(App.getContextApp())) {
+                        errorMsg = "没有联网哦！";
+                    }
+                    else {
+                        errorMsg = "网络连接超时！";
+                    }
+                    break;
+                default:
+                    errorMsg = ((HttpResponseException) e).getMessage();
+                    break;
+            }
+        }
         else if (!NetworkUtils.isNetworkAvailable(App.getContextApp())) {
             errorMsg = "没有联网哦！";
         }
@@ -71,7 +101,9 @@ public class BHBaseSubscriber<T> extends Subscriber<T> {
             errorMsg = "未知异常！";
             Log.e("errorMsg","错误",e);
         }
-        requestError.forRequestError(errorMsg);
+        if (requestError!=null) {
+            requestError.forRequestError(errorMsg);
+        }
     }
 
     @CallSuper

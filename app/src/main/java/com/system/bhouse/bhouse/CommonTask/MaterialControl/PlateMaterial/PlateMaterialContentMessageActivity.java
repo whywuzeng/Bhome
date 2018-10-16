@@ -22,6 +22,7 @@ import com.google.gson.reflect.TypeToken;
 import com.system.bhouse.Custom.ShowDeviceMessageCustomDialog;
 import com.system.bhouse.api.ApiWebService;
 import com.system.bhouse.base.App;
+import com.system.bhouse.base.BHBaseSubscriber;
 import com.system.bhouse.base.StatusBean;
 import com.system.bhouse.base.SubmitStatusBeanImpl;
 import com.system.bhouse.bhouse.CommonTask.MaterialControl.PlateMaterial.StationCarBean.StationCarBean;
@@ -40,6 +41,7 @@ import com.system.bhouse.utils.TenUtils.ButtonUtils;
 import com.system.bhouse.utils.TenUtils.L;
 import com.system.bhouse.utils.TenUtils.T;
 import com.system.bhouse.utils.ValueUtils;
+import com.system.bhouse.utils.custom.CustomToast;
 import com.zijunlin.Zxing.Demo.CaptureActivity;
 
 import org.androidannotations.annotations.AfterViews;
@@ -406,8 +408,10 @@ public class PlateMaterialContentMessageActivity extends WWBackActivity implemen
                         ArrayList<PlatematerialBean> loadingcarbean = App.getAppGson().fromJson(result, new TypeToken<List<PlatematerialBean>>() {
                         }.getType());
 
-                        if (!ValueUtils.IsFirstValueExist(loadingcarbean))
+                        if (!ValueUtils.IsFirstValueExist(loadingcarbean)) {
+                            getDateRefresh("",extraPosition,"托盘");
                             return;
+                        }
                         //把主分录 值 用HeaderProperties保存起来
                         headerProperties.put("plateID", loadingcarbean.get(0).getPlateID());
                         headerProperties.put("plateName", loadingcarbean.get(0).getPlateName());
@@ -495,7 +499,8 @@ public class PlateMaterialContentMessageActivity extends WWBackActivity implemen
 
                     if (loadingcarbean.isEmpty())
                     {
-                        T.showShort(PlateMaterialContentMessageActivity.this,getResources().getString(R.string.Qrcode_result));
+//                        T.showShort(PlateMaterialContentMessageActivity.this,getResources().getString(R.string.Qrcode_result));
+                        CustomToast.showWarning();
                     }
 
                     for (PlatematerialBean bean : loadingcarbean) {
@@ -825,14 +830,34 @@ public class PlateMaterialContentMessageActivity extends WWBackActivity implemen
         llQrcode.setVisibility(mStatus.getBean().visQRBtn?View.VISIBLE:View.GONE);
         llSubmit.setVisibility(mStatus.getBean().visSubmitBtn?View.VISIBLE:View.GONE);
 
+        Observable observableMobileKey = ApiWebService.Get_KeyTimestr(App.MobileKey);
+
         Observable.create(subscriber -> {
             tvQrcode.setOnClickListener(v -> {
                 subscriber.onNext(v);
             });
         }).debounce(350, TimeUnit.MILLISECONDS).observeOn(AndroidSchedulers.mainThread()).subscribe(V -> {
-            L.e("double click");
-            bottomDialog.dismiss();
-            tvQrcodeAction();
+            observableMobileKey.concatWith(Observable.create(subscriber -> {
+                L.e("double click");
+                bottomDialog.dismiss();
+                tvQrcodeAction();
+            })).subscribe(new BHBaseSubscriber<Object>() {
+                @Override
+                public void onCompleted() {
+                    super.onCompleted();
+                }
+
+                @Override
+                public void onError(Throwable e) {
+                    super.onError(e);
+                }
+
+                @Override
+                public void onNext(Object o) {
+                    super.onNext(o);
+                    App.KeyTimestring = o.toString();
+                }
+            });
         });
 
         Observable.create(subscriber -> {
@@ -840,9 +865,27 @@ public class PlateMaterialContentMessageActivity extends WWBackActivity implemen
                 subscriber.onNext(v);
             });
         }).debounce(350, TimeUnit.MILLISECONDS).observeOn(AndroidSchedulers.mainThread()).subscribe(V -> {
-            L.e("double click");
-            bottomDialog.dismiss();
-            tvDeleteAction();
+            observableMobileKey.concatWith(Observable.create(subscriber -> {
+                L.e("double click");
+                bottomDialog.dismiss();
+                tvDeleteAction();
+            })).subscribe(new BHBaseSubscriber<Object>() {
+                @Override
+                public void onCompleted() {
+                    super.onCompleted();
+                }
+
+                @Override
+                public void onError(Throwable e) {
+                    super.onError(e);
+                }
+
+                @Override
+                public void onNext(Object o) {
+                    super.onNext(o);
+                    App.KeyTimestring = o.toString();
+                }
+            });
         });
 
         Observable.create(subscriber -> {
@@ -850,9 +893,27 @@ public class PlateMaterialContentMessageActivity extends WWBackActivity implemen
                 subscriber.onNext(v);
             });
         }).debounce(350, TimeUnit.MILLISECONDS).observeOn(AndroidSchedulers.mainThread()).subscribe(V -> {
-            L.e("double click");
-            bottomDialog.dismiss();
-            tvFanCheckAction();
+            observableMobileKey.concatWith(Observable.create(subscriber -> {
+                L.e("double click");
+                bottomDialog.dismiss();
+                tvFanCheckAction();
+            })).subscribe(new BHBaseSubscriber<Object>() {
+                @Override
+                public void onCompleted() {
+                    super.onCompleted();
+                }
+
+                @Override
+                public void onError(Throwable e) {
+                    super.onError(e);
+                }
+
+                @Override
+                public void onNext(Object o) {
+                    super.onNext(o);
+                    App.KeyTimestring = o.toString();
+                }
+            });
         });
 
         Observable.create(subscriber -> {
@@ -860,9 +921,27 @@ public class PlateMaterialContentMessageActivity extends WWBackActivity implemen
                 subscriber.onNext(v);
             });
         }).debounce(350, TimeUnit.MILLISECONDS).observeOn(AndroidSchedulers.mainThread()).subscribe(V -> {
-            L.e("double click");
-            bottomDialog.dismiss();
-            tvModifyAction();
+            observableMobileKey.concatWith(Observable.create(subscriber -> {
+                L.e("double click");
+                bottomDialog.dismiss();
+                tvModifyAction();
+            })).subscribe(new BHBaseSubscriber<Object>() {
+                @Override
+                public void onCompleted() {
+                    super.onCompleted();
+                }
+
+                @Override
+                public void onError(Throwable e) {
+                    super.onError(e);
+                }
+
+                @Override
+                public void onNext(Object o) {
+                    super.onNext(o);
+                    App.KeyTimestring = o.toString();
+                }
+            });
         });
 
         Observable.create(subscriber -> {
@@ -870,14 +949,33 @@ public class PlateMaterialContentMessageActivity extends WWBackActivity implemen
                 subscriber.onNext(v);
             });
         }).debounce(350, TimeUnit.MILLISECONDS).observeOn(AndroidSchedulers.mainThread()).subscribe(V -> {
-            L.e("double click");
-            bottomDialog.dismiss();
-            if (mStatus.isNewStatus()) {
-                tvSubmitActionforList();
-            }
-            else if (mStatus.isModifyStatus()) {
-                tvSubmitActionforList();
-            }
+
+            observableMobileKey.concatWith(Observable.create(subscriber -> {
+                L.e("double click");
+                bottomDialog.dismiss();
+                if (mStatus.isNewStatus()) {
+                    tvSubmitActionforList();
+                }
+                else if (mStatus.isModifyStatus()) {
+                    tvSubmitActionforList();
+                }
+            })).subscribe(new BHBaseSubscriber<Object>() {
+                @Override
+                public void onCompleted() {
+                    super.onCompleted();
+                }
+
+                @Override
+                public void onError(Throwable e) {
+                    super.onError(e);
+                }
+
+                @Override
+                public void onNext(Object o) {
+                    super.onNext(o);
+                    App.KeyTimestring = o.toString();
+                }
+            });
         });
 
         Observable.create(subscriber -> {
@@ -885,9 +983,27 @@ public class PlateMaterialContentMessageActivity extends WWBackActivity implemen
                 subscriber.onNext(v);
             });
         }).debounce(350, TimeUnit.MILLISECONDS).observeOn(AndroidSchedulers.mainThread()).subscribe(V -> {
-            L.e("double click");
-            bottomDialog.dismiss();
-            tvCheckAction();
+            observableMobileKey.concatWith(Observable.create(subscriber -> {
+                L.e("double click");
+                bottomDialog.dismiss();
+                tvCheckAction();
+            })).subscribe(new BHBaseSubscriber<Object>() {
+                @Override
+                public void onCompleted() {
+                    super.onCompleted();
+                }
+
+                @Override
+                public void onError(Throwable e) {
+                    super.onError(e);
+                }
+
+                @Override
+                public void onNext(Object o) {
+                    super.onNext(o);
+                    App.KeyTimestring = o.toString();
+                }
+            });
         });
 
         ViewGroup.LayoutParams layoutParams = contentView.getLayoutParams();
@@ -964,7 +1080,7 @@ public class PlateMaterialContentMessageActivity extends WWBackActivity implemen
             T.showShort(this, "分录为空,不能提交");
             return;
         }
-        if (TextUtils.isEmpty(this.comTaskBeans.get(0).getPlateName())) {
+        if (TextUtils.isEmpty(this.headerProperties.get("plateName"))) {
             T.showShort(this, "托盘为空不能提交");
             return;
         }

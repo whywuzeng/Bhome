@@ -1,13 +1,14 @@
 package com.system.bhouse.bhouse.CommonTask;
 
 import android.content.Intent;
+import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 
 import com.system.bhouse.bhouse.CommonTask.ReplenishmentRequire.ReplenishmentRequireActivity_;
 import com.system.bhouse.bhouse.CommonTask.ReturnRequire.ReturnRequireActivity_;
 import com.system.bhouse.bhouse.R;
 import com.system.bhouse.bhouse.phone.activity.InformationActivity;
-import com.trello.rxlifecycle.android.ActivityEvent;
 
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.EActivity;
@@ -37,12 +38,14 @@ public class SiteActivity extends WWTimeLineActivity {
 
     @ViewById(R.id.my_recycle_view)
     RecyclerView my_recycle_view;
+    
+    private static final String TAG = "SiteActivity";
 
     @AfterViews
     void initSiteFragment() {
         setActionBarMidlleTitle("工地管理");
         initTimeLineActivity(my_recycle_view,R.array.site_labels);
-        testRxJava();
+//        testRxJava();
     }
 
     private void testRxJava() {
@@ -56,7 +59,7 @@ public class SiteActivity extends WWTimeLineActivity {
                 subscriber.onNext(String.valueOf(i));
                 subscriber.onCompleted();
             }
-        }).compose(this.<String>bindUntilEvent(ActivityEvent.DESTROY))
+        }).compose(this.<String>bindToLifecycle())
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Action1<String>() {
@@ -105,4 +108,39 @@ public class SiteActivity extends WWTimeLineActivity {
 
     }
 
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        Log.e(TAG, "onCreate: ");
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        Log.e(TAG, "onStart: " );
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        Log.e(TAG, "onResume: " );
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        Log.e(TAG, "onPause: " );
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        Log.e(TAG, "onStop: " );
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        Log.e(TAG, "onDestroy: " );
+    }
 }

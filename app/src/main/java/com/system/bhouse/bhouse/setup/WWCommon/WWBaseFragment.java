@@ -31,6 +31,8 @@ import org.json.JSONObject;
 
 import java.lang.reflect.Field;
 
+import butterknife.ButterKnife;
+
 /**
  * Created by Administrator on 2017-10-31.
  */
@@ -177,11 +179,12 @@ public class WWBaseFragment extends Fragment implements FootUpdate.LoadMore, Glo
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         KLog.e("onCreateView");
-        this.inflater=inflater;
-        this.container=container;
+        this.inflater = inflater;
+        this.container = container;
         onCreateView(savedInstanceState);
-        if(contentView==null)
-            return super.onCreateView(inflater,container,savedInstanceState);
+        if (contentView == null) {
+            return super.onCreateView(inflater, container, savedInstanceState);
+        }
         return contentView;
     }
 
@@ -208,6 +211,7 @@ public class WWBaseFragment extends Fragment implements FootUpdate.LoadMore, Glo
     {
         super.onDestroyView();
         KLog.e("onDestroyView");
+        ButterKnife.unbind(this);
         contentView=null;
         container=null;
         inflater=null;
@@ -276,6 +280,7 @@ public class WWBaseFragment extends Fragment implements FootUpdate.LoadMore, Glo
     public void setContentView(int layoutResID)
     {
         setContentView((ViewGroup)inflater.inflate(layoutResID,container,false));
+        ButterKnife.bind(this, contentView);
     }
 
     public void setContentView(View view)

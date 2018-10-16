@@ -42,6 +42,7 @@ import com.system.bhouse.utils.ClickUtils;
 import com.system.bhouse.utils.TenUtils.L;
 import com.system.bhouse.utils.TenUtils.T;
 import com.system.bhouse.utils.ValueUtils;
+import com.system.bhouse.utils.custom.CustomToast;
 
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.EActivity;
@@ -424,7 +425,8 @@ public class ComponentTakeOffContentMessageActivity extends BaseContentMessageAc
 
                         if (loadingcarbean.isEmpty())
                         {
-                            T.showShort(ComponentTakeOffContentMessageActivity.this,getResources().getString(R.string.Qrcode_result));
+//                            T.showShort(ComponentTakeOffContentMessageActivity.this,getResources().getString(R.string.Qrcode_result));
+                            CustomToast.showWarning();
                         }
 
                         for (ComponentTakeOffBean bean : loadingcarbean) {
@@ -939,7 +941,8 @@ public class ComponentTakeOffContentMessageActivity extends BaseContentMessageAc
                 ArrayList<ComponentTakeOffBean> loadingcarbean = App.getAppGson().fromJson(result, new TypeToken<List<ComponentTakeOffBean>>() {}.getType());
 
                 if (loadingcarbean.isEmpty()) {
-                    T.showShort(ComponentTakeOffContentMessageActivity.this, getResources().getString(R.string.Qrcode_result));
+//                    T.showShort(ComponentTakeOffContentMessageActivity.this, getResources().getString(R.string.Qrcode_result));
+                    CustomToast.showWarning();
                 }
 
                 for (ComponentTakeOffBean bean : loadingcarbean) {
@@ -978,7 +981,8 @@ public class ComponentTakeOffContentMessageActivity extends BaseContentMessageAc
                 }.getType());
 
                 if (loadingcarbean.isEmpty()) {
-                    T.showShort(ComponentTakeOffContentMessageActivity.this, getResources().getString(R.string.Qrcode_result));
+//                    T.showShort(ComponentTakeOffContentMessageActivity.this, getResources().getString(R.string.Qrcode_result));
+                    CustomToast.showWarning();
                 }
 
                 //清空 二维码为空的

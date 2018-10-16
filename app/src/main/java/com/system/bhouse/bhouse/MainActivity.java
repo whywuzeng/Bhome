@@ -37,6 +37,8 @@ import com.system.bhouse.bhouse.CompanyNews.NewsListFragment;
 import com.system.bhouse.bhouse.Service.DownloadService;
 import com.system.bhouse.bhouse.Service.GridLayoutFragment;
 import com.system.bhouse.bhouse.Service.MessageService;
+import com.system.bhouse.bhouse.Service.listener.DownServiceStartListener;
+import com.system.bhouse.bhouse.phone.activity.ScanResultActivity;
 import com.system.bhouse.bhouse.setup.AboutWeFragment;
 import com.system.bhouse.bhouse.setup.AboutWeFragment_;
 import com.system.bhouse.bhouse.setup.notification.bean.XGNotification;
@@ -50,6 +52,7 @@ import com.system.bhouse.utils.AppManager;
 import com.system.bhouse.utils.LogUtil;
 import com.system.bhouse.utils.MeasureUtil;
 import com.system.bhouse.utils.TenUtils.AndroidWorkaroundUtils;
+import com.system.bhouse.utils.apk.InstallApkUtils;
 import com.system.bhouse.utils.sharedpreferencesuser;
 import com.tencent.android.tpush.XGPushShowedResult;
 import com.zijunlin.Zxing.Demo.CaptureActivity;
@@ -210,6 +213,8 @@ public class MainActivity extends BaseActivity implements  TopMiddleMenu.OnMenuI
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        getWindow().getDecorView().setSystemUiVisibility(
+                View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN | View.SYSTEM_UI_FLAG_VISIBLE);
         if (AndroidWorkaroundUtils.checkDeviceHasNavigationBar(this)) {
             AndroidWorkaroundUtils.assistActivity(findViewById(android.R.id.content));
         }
@@ -372,10 +377,25 @@ public class MainActivity extends BaseActivity implements  TopMiddleMenu.OnMenuI
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 dialog.dismiss();
-                //启动apk下载
-                DownloadService.launch(MainActivity.this, apk_urlxia, "apk");
+//                "https://www.yunzhijia.com/home/download/yzj_10.0.11_release.apk"
+                //启动apk下载  apk_urlxia
+                DownloadService.launch(MainActivity.this, apk_urlxia, "apk", new DownServiceStartListener() {
+                    @Override
+                    public void onServiceStart() {
+                        AppManager.getAppManager().AppExit(MainActivity.this);
+                    }
 
-                AppManager.getAppManager().AppExit(MainActivity.this);
+                    @Override
+                    public void onServiceEnd(File mFile) {
+                        InstallApkUtils.installApk(mFile.getPath(),MainActivity.this);
+                    }
+
+                    @Override
+                    public void onServiceError() {
+                        AppManager.getAppManager().AppExit(MainActivity.this);
+                    }
+                });
+
             }
         });
 
@@ -703,6 +723,8 @@ public class MainActivity extends BaseActivity implements  TopMiddleMenu.OnMenuI
                 break;
             case 1:
 //                TaskAddActivity_.intent(this).start();
+                final Intent intent1 = new Intent(this, ScanResultActivity.class);
+                startActivity(intent1);
                 break;
         }
     }

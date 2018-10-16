@@ -1,6 +1,8 @@
 package com.system.bhouse.base.database;
 
+import com.system.bhouse.base.App;
 import com.system.bhouse.base.storage.BHPrefrences;
+import com.system.bhouse.utils.sharedpreferencesuser;
 
 /**
  * Created by Administrator on 2018-09-07.
@@ -35,4 +37,24 @@ public class AccountManager {
             checker.onNotSignIn();
         }
     }
+
+    /**
+     * 注销
+     */
+    public static void Logout(){
+        setSignState(false);
+        DatabaseManager.getInstance().removeUserInfo();
+        //清楚保存的密码
+        sharedpreferencesuser.putUserpassword(App.getContextApp(), "");
+    }
+
+    /**
+     * PC端密码改了 与本地密码进行检验
+     */
+    public static boolean checkPass(){
+        String userpassword = sharedpreferencesuser.getUserpassword(App.getContextApp());
+        
+        return false;
+    }
+
 }

@@ -41,6 +41,7 @@ import com.system.bhouse.utils.ClickUtils;
 import com.system.bhouse.utils.TenUtils.L;
 import com.system.bhouse.utils.TenUtils.T;
 import com.system.bhouse.utils.ValueUtils;
+import com.system.bhouse.utils.custom.CustomToast;
 
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.EActivity;
@@ -257,6 +258,7 @@ public class PeopleAssignmentContentMessageActivity extends BaseContentMessageAc
             viewModel.isClick = false;
             viewModels.add(viewModel);
             headerProperties.put(viewModel.key,viewModel.value);
+            headerProperties.put("ID",this.comTaskBeans.get(0).getID());
 
             viewModel = new SortChildItem.ViewModel();
             viewModel.name = "构件";
@@ -274,6 +276,7 @@ public class PeopleAssignmentContentMessageActivity extends BaseContentMessageAc
             viewModel.isClick = false;
             viewModels.add(viewModel);
             headerProperties.put(viewModel.key,viewModel.value);
+            headerProperties.put("processResourceId",this.comTaskBeans.get(0).getProcessResourceId());
 
             viewModel = new SortChildItem.ViewModel();
             viewModel.name = "计划开始日期";
@@ -475,7 +478,8 @@ public class PeopleAssignmentContentMessageActivity extends BaseContentMessageAc
 
                         if (loadingcarbean.isEmpty())
                         {
-                            T.showShort(PeopleAssignmentContentMessageActivity.this,getResources().getString(R.string.Qrcode_result));
+//                            T.showShort(PeopleAssignmentContentMessageActivity.this,getResources().getString(R.string.Qrcode_result));
+                            CustomToast.showWarning();
                         }
 
                         for (PeopleAssignmentBean bean : loadingcarbean) {
@@ -649,6 +653,8 @@ public class PeopleAssignmentContentMessageActivity extends BaseContentMessageAc
      */
     @Override
     public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
+        if (ClickUtils.isFastDoubleClick())
+            return;
         switch (view.getId()) {
             //每个item删除标准
             case R.id.img_delete_item:
@@ -662,9 +668,7 @@ public class PeopleAssignmentContentMessageActivity extends BaseContentMessageAc
              * item 加个 常量ID
              */
             case R.id.mianLayout:
-
                 getStaffData(position);
-
                 break;
         }
     }
@@ -736,52 +740,52 @@ public class PeopleAssignmentContentMessageActivity extends BaseContentMessageAc
     private void CleartreeRecyclerAdapter(){
         List<TreeItem> datas = treeRecyclerAdapter.getDatas();
         KeyType keyType = new KeyType();
-//        for (TreeItem treeItem:datas)
-//        {
-//            if (treeItem instanceof GroupItem){
-//                if (((GroupItem)treeItem).TitleKey.equals(LETTERS[0]))
-//                {
-//                    keyType.key=4;
-//                    ((ArrayList<SortChildItem.ViewModel>)datas.get(0).getData()).addAll(makeChlidData(keyType,mStatus));
-//                }else if (((GroupItem)treeItem).TitleKey.equals(LETTERS[1]))
-//                {
-//                    keyType.key=2;
-//                    keyType.type=LETTERS[1];
-//                    ((ArrayList<SortChildItem.ViewModel>)datas.get(12).getData()).addAll(makeChlidData(keyType,mStatus));
-//                }else if (((GroupItem)treeItem).TitleKey.equals(LETTERS[2]))
-//                {
-//                    keyType.key=2;
-//                    keyType.type=LETTERS[2];
-//                    ((ArrayList<SortChildItem.ViewModel>)datas.get(15).getData()).addAll(makeChlidData(keyType,mStatus));
-//                }
-//            }
-//        }
 
-        ArrayList<SortChildItem.ViewModel> viewModels = new ArrayList<>();
+        List<TreeItem> treeItems =new ArrayList<>();
+        /**
+         * 要修改datas  重新塞入sortChildItem 对象  .因为在这个initChild里才进行了事件监听
+         */
         keyType.key = 4;
-        viewModels.addAll(makeChlidData(keyType, mStatus));
+        treeItems.addAll(GroupItemRefresh(datas, Const.LETTERS[0], makeChlidData(keyType, mStatus)));
         keyType.key = 2;
         keyType.type = Const.LETTERS[1];
-        viewModels.addAll(makeChlidData(keyType, mStatus));
+        treeItems.addAll(GroupItemRefresh(datas, Const.LETTERS[1], makeChlidData(keyType, mStatus)));
         keyType.key = 2;
         keyType.type = Const.LETTERS[2];
-        viewModels.addAll(makeChlidData(keyType, mStatus));
+        treeItems.addAll(GroupItemRefresh(datas, Const.LETTERS[2], makeChlidData(keyType, mStatus)));
 
         for (int i=0,j=0;i<datas.size();i++,j++)
         {
             if (datas.get(i) instanceof SortChildItem)
             {
-
-                ((SortChildItem) datas.get(i)).setData(viewModels.get(j));
-
+                datas.set(i,treeItems.get(j)); //重新塞入 treeItems
             }else if (datas.get(i) instanceof GroupItem)
             {
                 j--;
             }
         }
 
-//        treeRecyclerAdapter.getItemManager().addItems(datas);
         treeRecyclerAdapter.getItemManager().notifyDataChanged();
+    }
+
+    /**
+     *  得到对应的chilids  SortChildItem ，并重新更新了ArrayList<SortChildItem.ViewModel> data 数据
+     * @param datas
+     * @param letter
+     * @param data
+     * @return
+     */
+    private List<TreeItem> GroupItemRefresh(List<TreeItem> datas, String letter, ArrayList<SortChildItem.ViewModel> data) {
+        for (TreeItem item : datas) {
+            if (item instanceof GroupItem) {
+                GroupItem item1 = (GroupItem) item;
+                if (item1.TitleKey.equals(letter)) {
+                    ((GroupItem) item).setData(data);
+                    return item1.getAllChilds();
+                }
+            }
+        }
+        return null;
     }
 
     /**
@@ -813,6 +817,7 @@ public class PeopleAssignmentContentMessageActivity extends BaseContentMessageAc
     }
 
     public void onImgItemDelete(int position) {
+
 
         if (isDeleteAble) {//此时为增加动画效果，刷新部分数据源，防止删除错乱
             isDeleteAble = false;//初始值为true,当点击删除按钮以后，休息0.5秒钟再让他为
@@ -861,21 +866,18 @@ public class PeopleAssignmentContentMessageActivity extends BaseContentMessageAc
         /**
          * bottomView 数据特别多 直接复制上一个
          */
-        PeopleAssignmentBean bean;
-        bean=comTaskBeans.get(0);
-
         PeopleAssignmentBean bean1 = new PeopleAssignmentBean();
-        bean1.sethNumbe(bean.gethNumbe());
-        bean1.setOrderId(bean.getOrderId());
-        bean1.setQrcode(bean.getQrcode());
-        bean1.setProcessResourceId(bean.getProcessResourceId());
-        bean1.setProcessName(bean.getProcessName());
-        bean1.setQuotaNumber(bean.getQuotaNumber());
-        bean1.setActualNumber(bean.getActualNumber());
-        bean1.setPlannedStartDate(bean.getPlannedStartDate());
-        bean1.setPlannedEndDate(bean.getPlannedEndDate());
-        bean1.setActualEndTime(bean.getActualEndTime());
-        bean1.setDescription(bean.getDescription());
+        bean1.sethNumbe(headerProperties.get("receiptHnumber"));
+        bean1.setOrderId(orderId);
+        bean1.setQrcode(headerProperties.get("Qrcode"));
+        bean1.setProcessResourceId(headerProperties.get("processResourceId"));
+        bean1.setProcessName(headerProperties.get("processName"));
+        bean1.setQuotaNumber(Double.parseDouble(headerProperties.get("quotaNumber")));
+        bean1.setActualNumber(Double.parseDouble(headerProperties.get("actualNumber")));
+        bean1.setPlannedStartDate(headerProperties.get("plannedStartDate"));
+        bean1.setPlannedEndDate(headerProperties.get("plannedEndDate"));
+        bean1.setActualEndTime(headerProperties.get("actualEndTime"));
+        bean1.setDescription(headerProperties.get("description"));
 
         comTaskBeans.add(bean1);
 
@@ -968,7 +970,8 @@ public class PeopleAssignmentContentMessageActivity extends BaseContentMessageAc
                 }.getType());
 
                 if (loadingcarbean.isEmpty()) {
-                    T.showShort(PeopleAssignmentContentMessageActivity.this, getResources().getString(R.string.Qrcode_result));
+//                    T.showShort(PeopleAssignmentContentMessageActivity.this, getResources().getString(R.string.Qrcode_result));
+                    CustomToast.showWarning();
                     return;
                 }
 
@@ -978,7 +981,6 @@ public class PeopleAssignmentContentMessageActivity extends BaseContentMessageAc
                     bean.description = headerProperties.get("description");
                     bean.entryPeople = headerProperties.get("enterPeople");
                 }
-
                 //清空 二维码为空的
                 for (PeopleAssignmentBean receBean : comTaskBeans) {
                     if (TextUtils.isEmpty(receBean.Qrcode)) {
@@ -1093,7 +1095,7 @@ public class PeopleAssignmentContentMessageActivity extends BaseContentMessageAc
                 public void ErrorBack(String error) {
 
                 }
-            }, billtable,comTaskBeans.get(0).ID);
+            }, billtable,headerProperties.get("ID"));
         }
     }
 

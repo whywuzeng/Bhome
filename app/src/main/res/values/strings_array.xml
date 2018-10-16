@@ -89,6 +89,7 @@
         <item>层</item>
         <item>原单类型</item>
         <item>参与生产</item>
+        <item>生产外包</item>
     </string-array>
 
     <string-array name="Transportsendgoods_itemsection_order">
@@ -399,5 +400,23 @@
         <item>项目</item>
         <item>栋</item>
         <item>层</item>
+    </string-array>
+
+    <string-array name="dynamic_type">
+        <item>布模</item>
+        <item>投料</item>
+        <item>养护入库</item>
+        <item>养护出库</item>
+        <item>脱模</item>
+        <item>完工入库</item>
+    </string-array>
+
+    <string-array name="dynamic_type_params">
+        <item>all</item>
+        <item>task</item>
+        <item>topic</item>
+        <item>file</item>
+        <item>code</item>
+        <item>other</item>
     </string-array>
 </resources>

@@ -40,7 +40,7 @@ import com.system.bhouse.bhouse.CommonTask.TransportationManagement.adapter.Base
 import com.system.bhouse.bhouse.CommonTask.Widget.TimeLineItemTopBottomDecoration;
 import com.system.bhouse.bhouse.R;
 import com.system.bhouse.utils.ClickUtils;
-import com.system.bhouse.utils.TenUtils.TimeUtils;
+import com.system.bhouse.utils.blankutils.TimeUtils;
 import com.system.bhouse.utils.ValueUtils;
 import com.zijunlin.Zxing.Demo.CaptureActivity;
 
@@ -96,8 +96,6 @@ public class TechnologyExecutionFragment extends BaseBackFragment implements Bas
     @Bind(R.id.orderid_qrcode)
     Button orderidBtn;
 
-    //订单编号集合
-    ArrayList<Orderbean> items=new ArrayList<>();
 
     //data工序数组
     protected String[] stringArray;
@@ -217,8 +215,9 @@ public class TechnologyExecutionFragment extends BaseBackFragment implements Bas
                     SimpleDateFormat simpleDateEndFormat = new SimpleDateFormat(simpleDataEndString);
 
                     tagGroup.setTags(String.format("耗时:%s", TimeUtils.getFitTimeSpanTwoFormat(item.getStartTime(), item.getEndTime(), simpleDateFormat,simpleDateEndFormat,3)));
-                    getContextMessage(item.isHang,tagGroup1,groupRed);
                 }
+                getContextMessage(item.isHang,tagGroup1,groupRed);
+
 
                 if (item.getWorkOrderStatus().equals("执行中")) {
                     SelectColorBg(helper.itemView);
@@ -231,9 +230,11 @@ public class TechnologyExecutionFragment extends BaseBackFragment implements Bas
                 {
                     DisableBg(helper.itemView);
                     SelectLineDotBg(helper.itemView);
-                }else if (!item.isRelateForm){
+                }
+
+                if (!item.isRelateForm){
                     //关联明细策略
-//                    NoAssociationBg(helper.itemView);
+                    NoAssociationBg(helper.itemView);
                 }
 
                 helper.addOnClickListener(R.id.rightremove_menu);
@@ -286,26 +287,29 @@ public class TechnologyExecutionFragment extends BaseBackFragment implements Bas
     public void orderIdClick() {
         if (!ClickUtils.isFastDoubleClick()) {
             //弹出选择对话框
+            if (spinnerDialog==null||TextUtils.isEmpty(tv_component_content.getText()))
+            {
+                return;
+            }
             spinnerDialog.showSpinerDialog();
         }
     }
 
     //初始化 spinnerDialog
-    private void showSpinnerDialog() {
+    private void showSpinnerDialog(ArrayList<Orderbean> items) {
         orderidBtn.setClickable(true);
         //这个数据  是由 扫码二维码得到的数据.
+            spinnerDialog = new SpinnerDialog<Orderbean>(getActivity(), items, getActivity().getResources().getString(R.string.lookup_order_id));
+            spinnerDialog.bindOnSpinerListener(new OnSpinerItemClick<Orderbean>() {
 
-        spinnerDialog = new SpinnerDialog<Orderbean>(getActivity(), items, getActivity().getResources().getString(R.string.lookup_order_id));
-        spinnerDialog.bindOnSpinerListener(new OnSpinerItemClick<Orderbean>() {
-
-            @Override
-            public void onClick(Orderbean item, int position) {
-                tv_orderid_content.setText(item.oriderNumber);
-                Order_Id=item.oriderid;
-                //重新请求工序
-                AskForBackgroud();
-            }
-        });
+                @Override
+                public void onClick(Orderbean item, int position) {
+                    tv_orderid_content.setText(item.oriderNumber);
+                    Order_Id = item.oriderid;
+                    //重新请求工序
+                    AskForBackgroud();
+                }
+            });
     }
 
     /**
@@ -383,7 +387,7 @@ public class TechnologyExecutionFragment extends BaseBackFragment implements Bas
      */
     private void AskForBackgroud() {
 
-        ApiWebService.Get_Pro_Working_Main_poid_Json(App.getContextApp(), new ApiWebService.SuccessCall() {
+        ApiWebService.Get_Pro_Working_Main_poid_Json(getActivity(), new ApiWebService.SuccessCall() {
             @Override
             public void SuccessBack(String result) {
                 TechnologyBeans = App.getAppGson().fromJson(result, new TypeToken<List<TechnologyBean>>() {
@@ -392,7 +396,7 @@ public class TechnologyExecutionFragment extends BaseBackFragment implements Bas
                 if (ValueUtils.IsFirstValueExist(TechnologyBeans)) {
                     adapter.setNewData(TechnologyBeans);
 
-                    Technologyhandler.sendEmptyMessageDelayed(1,300);
+//                    Technologyhandler.sendEmptyMessageDelayed(1,300);
                 }
                 else {
                     adapter.setEmptyView(notDataView);
@@ -508,9 +512,14 @@ public class TechnologyExecutionFragment extends BaseBackFragment implements Bas
 //                QrCodeComponent(resultCode, data);
 //                break;
 //        }
+        //原数据置空
+        tv_orderid_content.setText("");
+        adapter.setEmptyView(notDataView);
     }
 
     private void QrCodeComponent(int resultCode, Intent data) {
+        //订单编号集合
+        ArrayList<Orderbean> items=new ArrayList<>();
         if (resultCode == 0||resultCode == Activity.RESULT_OK) {
             //返回data ==null
             if (data==null)
@@ -522,7 +531,7 @@ public class TechnologyExecutionFragment extends BaseBackFragment implements Bas
 //              String resultQr="DZXQ-7-201806-0009.1002.1084.0100.003.1";
 //            int extraPosition = bundle.getInt("position");
 
-            ApiWebService.Get_Pro_Working_Main_poid_byprid_QR_Code_Json(getActivity(), new ApiWebService.SuccessCall() {
+            ApiWebService.Get_Pro_Working_Main_poid_byprid_QR_Code_Json(_mActivity, new ApiWebService.SuccessCall() {
                 @Override
                 public void SuccessBack(String result) {
                     //[{"订单ID":"08776473ea6a4c0ea7a3291d4aa0d359","订单编号":"SCDD-7-201807-0008"}]
@@ -541,7 +550,7 @@ public class TechnologyExecutionFragment extends BaseBackFragment implements Bas
                             orderbean.oriderNumber=orderNumber;
                             items.add(orderbean);
                         }
-                        showSpinnerDialog();
+                        showSpinnerDialog(items);
                     } catch (JSONException e) {
                         e.printStackTrace();
                     } finally {

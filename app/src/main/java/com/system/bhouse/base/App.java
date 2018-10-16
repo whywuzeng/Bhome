@@ -20,6 +20,7 @@ import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.facebook.stetho.Stetho;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.socks.library.KLog;
@@ -133,7 +134,7 @@ public class App extends MultiDexApplication {
         db = dbHelper.getWritableDatabase();
         XGPushConfig.enableDebug(this,true);
         XGPushConfig.getToken(this);
-
+        initStetho();
 //        locationService = new LocationService(getApplicationContext());
         mVibrator = (Vibrator) getApplicationContext().getSystemService(Service.VIBRATOR_SERVICE);
 //        SDKInitializer.initialize(getApplicationContext());
@@ -174,6 +175,14 @@ public class App extends MultiDexApplication {
         NotificationService instance = NotificationService.getInstance(App.getContextApp());
         ColumCount=instance.findColumCount("1");
         return ColumCount;
+    }
+
+    private void initStetho() {
+        Stetho.initialize(
+                Stetho.newInitializerBuilder(this)
+                        .enableDumpapp(Stetho.defaultDumperPluginsProvider(this))
+                        .enableWebKitInspector(Stetho.defaultInspectorModulesProvider(this))
+                        .build());
     }
 
 
@@ -412,5 +421,9 @@ public class App extends MultiDexApplication {
     public static String mpname="";
     //信鸽Id
     public static String XinggeId;
+    //Is_Pro_User 项目用户
+    public static boolean Is_Pro_User;
+    //Pro_Userstring  项目集
+    public static String Pro_Userstring;
 
 }

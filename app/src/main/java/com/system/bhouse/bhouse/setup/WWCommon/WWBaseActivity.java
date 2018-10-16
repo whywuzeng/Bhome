@@ -5,9 +5,12 @@ import android.content.DialogInterface;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.os.PersistableBundle;
+import android.support.annotation.Nullable;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -36,6 +39,7 @@ import rx.schedulers.Schedulers;
  */
 
 public class WWBaseActivity extends RxAppCompatActivity implements StartActivity {
+    private  final String TAG = "WWBaseActivity";
     protected LayoutInflater mInflater;
     protected FootUpdate mFootUpdate = new FootUpdate();
     protected View.OnClickListener mOnClickUser = new View.OnClickListener() {
@@ -55,6 +59,50 @@ public class WWBaseActivity extends RxAppCompatActivity implements StartActivity
     protected int REFRESH_DATA=0x4564654;
     protected View notDataView;
     protected View errorView;
+
+    public boolean isResumed=false;
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        Log.e(TAG, "onStart: isResumed: "+String.valueOf(isResumed) );
+    }
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState, @Nullable PersistableBundle persistentState) {
+        super.onCreate(savedInstanceState, persistentState);
+        Log.e(TAG, "onCreate: isResumed: "+String.valueOf(isResumed) );
+    }
+
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if (!isResumed)
+        {
+            isResumed=!isResumed;
+        }
+        Log.e(TAG, "onResume: isResumed: "+String.valueOf(isResumed) );
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        if (isResumed)
+        {
+            isResumed=!isResumed;
+        }
+
+        Log.e(TAG, "onPause: isResumed: "+String.valueOf(isResumed) );
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        Log.e(TAG, "onStop: isResumed: "+String.valueOf(isResumed) );
+    }
+
+
 
     protected void listViewAddFootSection(ListView listView) {
         View listViewFooter = getLayoutInflater().inflate(R.layout.divide_bottom_15, listView, false);

@@ -100,6 +100,8 @@ public class LoadingCarBean extends BaseBean implements Parcelable {
     public String projectID="";
     @SerializedName("质检类型")
     public String QualityType;
+    @SerializedName("外包")
+    public boolean Is_OutPur;
 
 
     public String getID() {

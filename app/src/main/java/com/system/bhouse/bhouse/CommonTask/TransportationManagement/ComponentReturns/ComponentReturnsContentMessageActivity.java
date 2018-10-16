@@ -40,6 +40,7 @@ import com.system.bhouse.ui.sectioned.SectionedRecyclerViewAdapter;
 import com.system.bhouse.utils.TenUtils.L;
 import com.system.bhouse.utils.TenUtils.T;
 import com.system.bhouse.utils.ValueUtils;
+import com.system.bhouse.utils.custom.CustomToast;
 import com.zijunlin.Zxing.Demo.CaptureActivity;
 
 import org.androidannotations.annotations.AfterViews;
@@ -390,7 +391,8 @@ public class ComponentReturnsContentMessageActivity extends WWBackActivity imple
 
                     if (loadingcarbean.isEmpty())
                     {
-                        T.showShort(ComponentReturnsContentMessageActivity.this,getResources().getString(R.string.Qrcode_result));
+//                        T.showShort(ComponentReturnsContentMessageActivity.this,getResources().getString(R.string.Qrcode_result));
+                        CustomToast.showWarning();
                     }
 
                     for (ComponentReturnsBean bean : loadingcarbean) {
@@ -430,8 +432,17 @@ public class ComponentReturnsContentMessageActivity extends WWBackActivity imple
                     ArrayList<ComponentReturnsBean> loadingcarbean = App.getAppGson().fromJson(result, new TypeToken<List<ComponentReturnsBean>>() {
                     }.getType());
 
-                    if (!ValueUtils.IsFirstValueExist(loadingcarbean))
-                       return;
+                    if (!ValueUtils.IsFirstValueExist(loadingcarbean)) {
+//                        showMiddleToast(R.string.Qrcode_result);
+                        CustomToast.showWarning();
+                        comTaskBeans.get(extraPosition).setWareHouseID("");
+                        comTaskBeans.get(extraPosition).setWareHouseName("");
+                        ArrayList<ComponentReturnsBean> clone = (ArrayList<ComponentReturnsBean>)comTaskBeans.clone();
+                        comTaskBeans.clear();
+                        comTaskBeans.addAll(clone);
+                        mRecyclerViewAdapter.notifyDataSetChanged();
+                        return;
+                    }
                     comTaskBeans.get(extraPosition).setWareHouseID(loadingcarbean.get(0).wareHouseID);
                     comTaskBeans.get(extraPosition).setWareHouseName(loadingcarbean.get(0).wareHouseName);
 

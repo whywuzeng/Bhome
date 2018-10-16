@@ -14,5 +14,6 @@
 
     <item type="id" name="hierarchy"></item>
     <item type="id" name="isexpand"></item>
-
+    <item type="id" name="toast_message"></item>
+    <item name="toastMessage" type="id"/>
 </resources>

@@ -333,6 +333,9 @@
         <activity android:name=".CommonTask.MaintainManagement.LoadingIntoWareHouseFragment.Fragment.LoadingIntoWareHouseContentActivity"
             android:screenOrientation="portrait"
             />
+        <activity android:name=".phone.activity.ScanResultActivity"
+            android:screenOrientation="portrait"
+            />
 
         <!--<activity android:name="com.system.bhouse.bhouse.CommonTask.MaintainManagement.LoadingIntoWareHouseFragment.Fragment.LoadingIntoWareHouseContentMessageActivity_"-->
                   <!--android:screenOrientation="portrait"/>-->
@@ -352,6 +355,14 @@
         <!--  //key:开发者申请的Key-->
 
         <!-- B6:0A:5A:28:58:C4:E0:4B:74:2E:51:B3:8E:9E:C0:DC:6B:5C:28:11;com.system.bhouse.bhouse -->
+
+        <!--<provider-->
+            <!--android:name="android.support.v4.content.FileProvider"-->
+            <!--android:authorities="com.bhome.fileprovider"-->
+            <!--android:exported="false"-->
+            <!--android:grantUriPermissions="true">-->
+        <!--</provider>-->
+
 
         <service android:name="com.system.bhouse.bhouse.Service.MessageService">
         </service>

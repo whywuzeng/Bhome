@@ -4,12 +4,9 @@ package com.system.bhouse.bhouse.CommonTask;
 import android.support.annotation.NonNull;
 import android.util.Log;
 
-import com.system.bhouse.api.ApiWebService;
-import com.system.bhouse.base.App;
 import com.system.bhouse.base.rxlife.RxCompatActivity;
 import com.system.bhouse.bhouse.R;
 import com.system.bhouse.utils.LogUtil;
-import com.system.bhouse.utils.TenUtils.L;
 
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.EActivity;
@@ -40,21 +37,6 @@ public class ComTaskActivity extends RxCompatActivity {
         if (taskFragment != null) {
             getSupportFragmentManager().beginTransaction().replace(R.id.container, taskFragment).commit();
         }
-
-        ApiWebService.Get_Hois_Req_Json(this, new ApiWebService.SuccessCall() {
-
-            @Override
-            public void SuccessBack(String result) {
-                L.e(result);
-
-            }
-
-            @Override
-            public void ErrorBack(String error) {
-
-            }
-        },  50 ,  "提交" , "", App.GSMID, App.Property, App.IsSub, App.USER_INFO);
-
     }
 
     public void TestMethodRxLift(){

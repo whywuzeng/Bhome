@@ -38,10 +38,10 @@ import com.system.bhouse.bhouse.CommonTask.utils.ComTaskContentItemSectionItemTo
 import com.system.bhouse.bhouse.R;
 import com.system.bhouse.bhouse.setup.utils.onMutiDataSetListener;
 import com.system.bhouse.config.Const;
-import com.system.bhouse.utils.ClickUtils;
 import com.system.bhouse.utils.TenUtils.L;
 import com.system.bhouse.utils.TenUtils.T;
 import com.system.bhouse.utils.ValueUtils;
+import com.system.bhouse.utils.custom.CustomToast;
 
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.EActivity;
@@ -58,8 +58,6 @@ import java.util.Set;
 import java.util.TreeSet;
 
 import de.greenrobot.event.EventBus;
-import rx.Observable;
-import rx.Subscriber;
 
 /**
  * Created by Administrator on 2018-03-05.
@@ -432,7 +430,8 @@ public class MaintenanceOutWarehouseContentMessageActivity extends BaseContentMe
 
                         if (loadingcarbean.isEmpty())
                         {
-                            T.showShort(MaintenanceOutWarehouseContentMessageActivity.this,getResources().getString(R.string.Qrcode_result));
+//                            T.showShort(MaintenanceOutWarehouseContentMessageActivity.this,getResources().getString(R.string.Qrcode_result));
+                            CustomToast.showWarning();
                         }
 
                         for (MaintenanceOutWarehouseBean bean : loadingcarbean) {
@@ -948,7 +947,8 @@ public class MaintenanceOutWarehouseContentMessageActivity extends BaseContentMe
                 ArrayList<MaintenanceOutWarehouseBean> loadingcarbean = App.getAppGson().fromJson(result, new TypeToken<List<MaintenanceOutWarehouseBean>>() {}.getType());
 
                 if (loadingcarbean.isEmpty()) {
-                    T.showShort(MaintenanceOutWarehouseContentMessageActivity.this, getResources().getString(R.string.Qrcode_result));
+//                    T.showShort(MaintenanceOutWarehouseContentMessageActivity.this, getResources().getString(R.string.Qrcode_result));
+                    CustomToast.showWarning();
                 }
 
                 //清空 二维码为空的
@@ -982,7 +982,8 @@ public class MaintenanceOutWarehouseContentMessageActivity extends BaseContentMe
                 }.getType());
 
                 if (loadingcarbean.isEmpty()) {
-                    T.showShort(MaintenanceOutWarehouseContentMessageActivity.this, getResources().getString(R.string.Qrcode_result));
+//                    T.showShort(MaintenanceOutWarehouseContentMessageActivity.this, getResources().getString(R.string.Qrcode_result));
+                    CustomToast.showWarning();
                 }
 
                 //清空 二维码为空的
@@ -1179,30 +1180,30 @@ public class MaintenanceOutWarehouseContentMessageActivity extends BaseContentMe
 
     @OptionsItem
     protected final void action_operat_status() {
-        Observable<Object> objectObservable = Observable.create(subscriber -> {
-            if (!ClickUtils.isFastDoubleClick()) {
-                show1(mStatus);
-            }
-            setTvQrcodeContext("投料",View.VISIBLE);
-            setTvQrAddContext("托盘调拨",true);
-        });
-        Observable observableMobileKey = ApiWebService.Get_KeyTimestr(App.MobileKey);
-        observableMobileKey.concatWith(objectObservable).subscribe(new Subscriber() {
-            @Override
-            public void onCompleted() {
-
-            }
-
-            @Override
-            public void onError(Throwable e) {
-
-            }
-
-            @Override
-            public void onNext(Object o) {
-                App.KeyTimestring = o.toString();
-            }
-        });
+//        Observable<Object> objectObservable = Observable.create(subscriber -> {
+//            if (!ClickUtils.isFastDoubleClick()) {
+//                show1(mStatus);
+//            }
+//            setTvQrcodeContext("投料",View.VISIBLE);
+//            setTvQrAddContext("托盘调拨",true);
+//        });
+//        Observable observableMobileKey = ApiWebService.Get_KeyTimestr(App.MobileKey);
+//        observableMobileKey.concatWith(objectObservable).subscribe(new Subscriber() {
+//            @Override
+//            public void onCompleted() {
+//
+//            }
+//
+//            @Override
+//            public void onError(Throwable e) {
+//
+//            }
+//
+//            @Override
+//            public void onNext(Object o) {
+//                App.KeyTimestring = o.toString();
+//            }
+//        });
     }
 
 }

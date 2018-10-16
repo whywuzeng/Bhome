@@ -41,6 +41,7 @@ import com.system.bhouse.utils.ClickUtils;
 import com.system.bhouse.utils.TenUtils.L;
 import com.system.bhouse.utils.TenUtils.T;
 import com.system.bhouse.utils.ValueUtils;
+import com.system.bhouse.utils.custom.CustomToast;
 import com.zijunlin.Zxing.Demo.CaptureActivity;
 
 import org.androidannotations.annotations.AfterViews;
@@ -419,8 +420,14 @@ public class ComponentIntoWareHouseContentMessageActivity extends BaseContentMes
                         ArrayList<ComponentIntoWareHouseBean> loadingcarbean = App.getAppGson().fromJson(result, new TypeToken<List<ComponentIntoWareHouseBean>>() {
                         }.getType());
 
-                        if (!ValueUtils.IsFirstValueExist(loadingcarbean))
+                        if (!ValueUtils.IsFirstValueExist(loadingcarbean)) {
+                            comTaskBeans.get(extraPosition).setWareHouseID("");
+                            comTaskBeans.get(extraPosition).setWareHouse("");
+
+                            ClearAssignMentSectionArrayList();
+                            componentIntoWareHouseSectionAdapter.notifyItemChanged(extraPosition);
                             return;
+                        }
                         comTaskBeans.get(extraPosition).setWareHouseID(loadingcarbean.get(0).wareHouseID);
                         comTaskBeans.get(extraPosition).setWareHouse(loadingcarbean.get(0).wareHouse);
 
@@ -919,7 +926,8 @@ public class ComponentIntoWareHouseContentMessageActivity extends BaseContentMes
                 ArrayList<ComponentIntoWareHouseBean> loadingcarbean = App.getAppGson().fromJson(result, new TypeToken<List<ComponentIntoWareHouseBean>>() {}.getType());
 
                 if (loadingcarbean.isEmpty()) {
-                    T.showShort(ComponentIntoWareHouseContentMessageActivity.this, getResources().getString(R.string.Qrcode_result));
+//                    T.showShort(ComponentIntoWareHouseContentMessageActivity.this, getResources().getString(R.string.Qrcode_result));
+                    CustomToast.showWarning();
                 }
 
                 for (ComponentIntoWareHouseBean bean : loadingcarbean) {

@@ -18,9 +18,14 @@
         android:orientation="horizontal"
         android:layout_width="match_parent"
         android:gravity="center_vertical"
-        android:background="@color/material_blue_400"
-        android:layout_height="?attr/actionBarSize">
+        android:background="@color/material_blue_350"
+        android:layout_height="50dp">
 
+        <android.support.v7.widget.AppCompatImageView
+            android:id="@+id/img_left_back"
+            android:src="@drawable/ic_keyboard_arrow_left"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
         <TextView
             android:layout_marginLeft="10dp"
             android:drawableLeft="@drawable/bh_account"
@@ -34,10 +39,10 @@
             android:focusable="false"
             android:background="@drawable/edittext_bg_jiao"
             android:hint="组织架构"
-            android:textSize="17sp"
+            android:textSize="14sp"
             android:layout_width="0dp"
-            android:layout_weight="4"
-            android:layout_height="40dp"/>
+            android:layout_weight="3.7"
+            android:layout_height="33dp"/>
 
         <Button
             android:text="确认切换"

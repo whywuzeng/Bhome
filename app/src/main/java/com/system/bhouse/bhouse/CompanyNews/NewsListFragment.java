@@ -15,6 +15,7 @@ import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -52,8 +53,10 @@ import java.util.Map;
 
 import rx.Observable;
 import rx.Subscription;
+import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Func1;
 import rx.functions.Func2;
+import rx.schedulers.Schedulers;
 
 /**
  * ClassName: NewsListFragment<p>
@@ -96,6 +99,7 @@ public class NewsListFragment extends RefreshBaseFragment implements RequestCall
     private Subscription mSubscription;
     private boolean mHasInit;
     private View emptyView;
+    private FrameLayout layout;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -105,7 +109,6 @@ public class NewsListFragment extends RefreshBaseFragment implements RequestCall
             mNewsType = getArguments().getString(NEWS_TYPE);
             mPosition = getArguments().getInt(POSITION);
         }
-
     }
 
     public static NewsListFragment newInstance(String newsId, String newsType, int position) {
@@ -123,9 +126,19 @@ public class NewsListFragment extends RefreshBaseFragment implements RequestCall
 
         emptyView = getActivity().getLayoutInflater().inflate(R.layout.taskcomon_empty_view, null, false);
         initRefreshLayout();
-        requestNewsList(this, mNewsType, mNewsId, mStartPage);
+        if (!mHasInit) {
+            updateNewsList(null, "正在加载....", mIsRefresh ? DataLoadType.TYPE_REFRESH_FAIL : DataLoadType.TYPE_LOAD_MORE_FAIL);
+        }
         initView();
+    }
 
+    @Override
+    public void setUserVisibleHint(boolean isVisibleToUser) {
+        super.setUserVisibleHint(isVisibleToUser);
+        if (isVisibleToUser)
+        {
+            refreshData();
+        }
     }
 
     private void initView() {
@@ -194,14 +207,13 @@ public class NewsListFragment extends RefreshBaseFragment implements RequestCall
                     public Integer call(NeteastNewsSummary neteastNewsSummary, NeteastNewsSummary neteastNewsSummary2) {
                         return neteastNewsSummary2.ptime.compareTo(neteastNewsSummary.ptime);
                     }
-                }).subscribe(new BaseSubscriber<>(callback));
+                }).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe(new BaseSubscriber<>(callback));
     }
 
 
     public void beforeRequest() {
         if (!mHasInit) {
             mHasInit = true;
-
         }
     }
 
@@ -243,11 +255,9 @@ public class NewsListFragment extends RefreshBaseFragment implements RequestCall
 
         if (mAdapter == null) {
             initNewsList(data);
-        }
-        if (data.isEmpty()) {
-            mAdapter.showEmptyView(true, "");
-        }else{
-            mAdapter.showEmptyView(false, "");
+            refresh_layout.setRefreshing(true);
+            mAdapter.enableLoadMore(true);
+            return;
         }
 
         switch (type) {
@@ -387,9 +397,12 @@ public class NewsListFragment extends RefreshBaseFragment implements RequestCall
         mRecyclerView.setAdapter(mAdapter);
     }
 
+
+
     @Override
-    public void onDestroy() {
-        super.onDestroy();
+    public void onDestroyView() {
+        super.onDestroyView();
+        mAdapter=null;
         if (mSubscription != null && !mSubscription.isUnsubscribed()) {
             mSubscription.unsubscribe();
         }

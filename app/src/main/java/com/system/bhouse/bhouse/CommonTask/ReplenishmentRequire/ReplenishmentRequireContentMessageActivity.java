@@ -39,6 +39,7 @@ import com.system.bhouse.bhouse.setup.utils.LabelNumPickerDialog;
 import com.system.bhouse.ui.sectioned.SectionedRecyclerViewAdapter;
 import com.system.bhouse.utils.TenUtils.L;
 import com.system.bhouse.utils.TenUtils.T;
+import com.system.bhouse.utils.custom.CustomToast;
 import com.zijunlin.Zxing.Demo.CaptureActivity;
 
 import org.androidannotations.annotations.AfterViews;
@@ -412,7 +413,8 @@ public class ReplenishmentRequireContentMessageActivity extends WWBackActivity i
                     }.getType());
 
                     if (ntomTaskBeans.isEmpty()){
-                        T.showShort(ReplenishmentRequireContentMessageActivity.this,getResources().getString(R.string.Qrcode_result));
+//                        T.showShort(ReplenishmentRequireContentMessageActivity.this,getResources().getString(R.string.Qrcode_result));
+                        CustomToast.showWarning();
                         return;
                     }
 

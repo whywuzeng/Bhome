@@ -39,6 +39,7 @@ import com.system.bhouse.bhouse.setup.utils.LabelNumPickerDialog;
 import com.system.bhouse.utils.ClickUtils;
 import com.system.bhouse.utils.TenUtils.L;
 import com.system.bhouse.utils.TenUtils.T;
+import com.system.bhouse.utils.custom.CustomToast;
 import com.zijunlin.Zxing.Demo.CaptureActivity;
 
 import org.androidannotations.annotations.AfterViews;
@@ -371,7 +372,7 @@ public class ContainerRecycleContentMessageActivity extends WWBackActivity imple
         }
         else if (data.name.equals("货柜")) {
 
-            if(TextUtils.isEmpty(comTaskBeans.get(0).cartrips))
+            if(TextUtils.isEmpty(headerProperties.get("cartrips")))
             {
                 T.showShort(ContainerRecycleContentMessageActivity.this,"车次不能为空");
                 return;
@@ -382,6 +383,11 @@ public class ContainerRecycleContentMessageActivity extends WWBackActivity imple
 
         }else if (data.name.equals("仓库"))
         {
+            if(TextUtils.isEmpty(headerProperties.get("container")))
+            {
+                T.showShort(ContainerRecycleContentMessageActivity.this,"货柜不能为空");
+                return;
+            }
             Intent intent = new Intent(ContainerRecycleContentMessageActivity.this, CaptureActivity.class);
             intent.putExtra("position",holder.getAdapterPosition());
             startActivityForResult(intent, REQUST_QRCODE);
@@ -453,10 +459,13 @@ public class ContainerRecycleContentMessageActivity extends WWBackActivity imple
                         }.getType());
                         if (carNo.isEmpty())
                         {
-                            T.showShort(ContainerRecycleContentMessageActivity.this,getResources().getString(R.string.Qrcode_result));
+//                            T.showShort(ContainerRecycleContentMessageActivity.this,getResources().getString(R.string.Qrcode_result));
+                            CustomToast.showWarning();
+                            getDateRefresh("", extraPosition, "车次");
+                            getDateRefresh("", extraPosition+1, "货柜");
                             return;
                         }
-                        comTaskBeans.get(0).cartrips=carNo.get(0).cartrips;
+                        headerProperties.put("cartrips",carNo.get(0).cartrips);
 
                         if (!carNo.isEmpty()) {
                             getDateRefresh(carNo.get(0).cartrips, extraPosition, "车次");
@@ -481,7 +490,12 @@ public class ContainerRecycleContentMessageActivity extends WWBackActivity imple
 
                         if (loadingcarbean.isEmpty())
                         {
-                            T.showShort(ContainerRecycleContentMessageActivity.this,getResources().getString(R.string.Qrcode_result));
+//                            T.showShort(ContainerRecycleContentMessageActivity.this,getResources().getString(R.string.Qrcode_result));
+                            CustomToast.showWarning();
+                            getDateRefresh("", extraPosition, "货柜");
+                            getDateRefresh("",extraPosition+2,"车牌号");
+                            comTaskBeans.clear();
+                            mRecyclerViewAdapter.notifyDataSetChanged();
                             return;
                         }
 
@@ -504,7 +518,7 @@ public class ContainerRecycleContentMessageActivity extends WWBackActivity imple
                     public void ErrorBack(String error) {
 
                     }
-                }, resultQr, comTaskBeans.get(0).cartrips);
+                }, resultQr, headerProperties.get("cartrips"));
             }else if (extraPosition ==4)
             {
                 //获取仓库位数据
@@ -515,10 +529,13 @@ public class ContainerRecycleContentMessageActivity extends WWBackActivity imple
                         ArrayList<wareHouseBean> carNo = App.getAppGson().fromJson(result, new TypeToken<List<wareHouseBean>>() {
                         }.getType());
                         if (carNo.isEmpty()) {
-                            T.showShort(ContainerRecycleContentMessageActivity.this, getResources().getString(R.string.Qrcode_result));
+//                            T.showShort(ContainerRecycleContentMessageActivity.this, getResources().getString(R.string.Qrcode_result));
+                            CustomToast.showWarning();
+                            getDateRefresh("", extraPosition, "仓库");
                             return;
                         }
-                        comTaskBeans.get(0).Wid = carNo.get(0).getWareHouseName();
+                        comTaskBeans.get(0).Wid = carNo.get(0).getWareHouseID();
+
                         getDateRefresh(carNo.get(0).getWareHouseName(), extraPosition, "仓库");
                     }
 
@@ -685,9 +702,9 @@ public class ContainerRecycleContentMessageActivity extends WWBackActivity imple
         {
             if (viewModel.value==null||!viewModel.value.equals(date))
                 viewModel.value = date;
-            for (ContainerRecycleBean receBean : comTaskBeans) {
-                receBean.Wid = viewModel.value;
-            }
+//            for (ContainerRecycleBean receBean : comTaskBeans) {
+//                receBean.Wid = viewModel.value;
+//            }
         }
         headerProperties.put(viewModel.key,viewModel.value);
         treeItem.setData(viewModel);
@@ -989,12 +1006,16 @@ public class ContainerRecycleContentMessageActivity extends WWBackActivity imple
             T.showShort(this, "数据有误,不能提交");
             return;
         }
-        if (TextUtils.isEmpty(this.comTaskBeans.get(0).getCartrips())) {
+        if (TextUtils.isEmpty(this.headerProperties.get("cartrips"))) {
             T.showShort(this, "车次为空不能提交");
             return;
         }
-        if (TextUtils.isEmpty(this.comTaskBeans.get(0).licensePlate)) {
+        if (TextUtils.isEmpty(this.headerProperties.get("licenseplate"))) {
             T.showShort(this, "车牌为空不能提交");
+            return;
+        }
+        if (TextUtils.isEmpty(this.headerProperties.get("Wid"))) {
+            T.showShort(this, "仓库为空不能提交");
             return;
         }
         int size = this.comTaskBeans.size();

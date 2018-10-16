@@ -41,6 +41,7 @@ import com.system.bhouse.config.Const;
 import com.system.bhouse.utils.TenUtils.L;
 import com.system.bhouse.utils.TenUtils.T;
 import com.system.bhouse.utils.ValueUtils;
+import com.system.bhouse.utils.custom.CustomToast;
 
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.EActivity;
@@ -429,7 +430,8 @@ public class MaintenanceWarehouseContentMessageActivity extends BaseContentMessa
 
                         if (loadingcarbean.isEmpty())
                         {
-                            T.showShort(MaintenanceWarehouseContentMessageActivity.this,getResources().getString(R.string.Qrcode_result));
+//                            T.showShort(MaintenanceWarehouseContentMessageActivity.this,getResources().getString(R.string.Qrcode_result));
+                            CustomToast.showWarning();
                         }
 
                         for (MaintenanceWarehouseBean bean : loadingcarbean) {
@@ -945,7 +947,8 @@ public class MaintenanceWarehouseContentMessageActivity extends BaseContentMessa
                 ArrayList<MaintenanceWarehouseBean> loadingcarbean = App.getAppGson().fromJson(result, new TypeToken<List<MaintenanceWarehouseBean>>() {}.getType());
 
                 if (loadingcarbean.isEmpty()) {
-                    T.showShort(MaintenanceWarehouseContentMessageActivity.this, getResources().getString(R.string.Qrcode_result));
+//                    T.showShort(MaintenanceWarehouseContentMessageActivity.this, getResources().getString(R.string.Qrcode_result));
+                    CustomToast.showWarning();
                 }
 
                 //清空 二维码为空的
@@ -979,7 +982,8 @@ public class MaintenanceWarehouseContentMessageActivity extends BaseContentMessa
                 }.getType());
 
                 if (loadingcarbean.isEmpty()) {
-                    T.showShort(MaintenanceWarehouseContentMessageActivity.this, getResources().getString(R.string.Qrcode_result));
+//                    T.showShort(MaintenanceWarehouseContentMessageActivity.this, getResources().getString(R.string.Qrcode_result));
+                    CustomToast.showWarning();
                 }
 
                 //清空 二维码为空的

@@ -20,7 +20,7 @@ import java.io.File;
  */
 public class NotificationUtils {
     //默认的图标
-    private static final int resId= R.mipmap.ic_launcher;
+    private static final int resId= R.mipmap.mais;
 
     //默认使用应用图标的通知栏
     public static Notification showNotification(

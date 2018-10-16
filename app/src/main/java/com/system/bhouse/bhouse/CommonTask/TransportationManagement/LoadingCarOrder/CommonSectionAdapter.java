@@ -1,5 +1,7 @@
 package com.system.bhouse.bhouse.CommonTask.TransportationManagement.LoadingCarOrder;
 
+import android.text.TextUtils;
+
 import com.system.bhouse.bean.BProBOM;
 import com.system.bhouse.bhouse.CommonTask.TransportationManagement.adapter.BaseSectionQuickAdapter;
 import com.system.bhouse.bhouse.CommonTask.TransportationManagement.adapter.BaseViewHolder;
@@ -31,7 +33,7 @@ public class CommonSectionAdapter extends BaseSectionQuickAdapter<MySection, Bas
     protected void convert(BaseViewHolder helper, MySection item) {
         BProBOM bprobom = (BProBOM) item.t;
         helper.setText(R.id.tv_title,bprobom.getCoding() + "");
-        helper.setText(R.id.tv_content,bprobom.getProjectname());
+        helper.setText(R.id.tv_content, TextUtils.isEmpty(bprobom.getProjectname())?bprobom.getProjectming():bprobom.getProjectname());
         helper.setText(R.id.tv_title_1,bprobom.getDong()+"栋");
         helper.setText(R.id.tv_content_1,bprobom.getCeng()+"层");
         helper.addOnClickListener(R.id.main_layout);

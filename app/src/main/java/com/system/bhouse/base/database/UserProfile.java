@@ -24,16 +24,18 @@ public class UserProfile {
     private int property;
     private  int fatherid;
     private boolean issub;
+    private boolean Is_Pro_User;
+    private String Pro_Userstring;
     //名字
     private  String menname;
     //职位
     private  String mpname;
     private  String usertype;
-    @Generated(hash = 1863654921)
+    @Generated(hash = 1083037799)
     public UserProfile(long userId, String name, int mid, int Gsmid,
             String mobilekey, int filenum, double filesize, String mancompany,
-            int property, int fatherid, boolean issub, String menname,
-            String mpname, String usertype) {
+            int property, int fatherid, boolean issub, boolean Is_Pro_User,
+            String Pro_Userstring, String menname, String mpname, String usertype) {
         this.userId = userId;
         this.name = name;
         this.mid = mid;
@@ -45,6 +47,8 @@ public class UserProfile {
         this.property = property;
         this.fatherid = fatherid;
         this.issub = issub;
+        this.Is_Pro_User = Is_Pro_User;
+        this.Pro_Userstring = Pro_Userstring;
         this.menname = menname;
         this.mpname = mpname;
         this.usertype = usertype;
@@ -135,5 +139,17 @@ public class UserProfile {
     }
     public void setFatherid(int fatherid) {
         this.fatherid = fatherid;
+    }
+    public boolean getIs_Pro_User() {
+        return this.Is_Pro_User;
+    }
+    public void setIs_Pro_User(boolean Is_Pro_User) {
+        this.Is_Pro_User = Is_Pro_User;
+    }
+    public String getPro_Userstring() {
+        return this.Pro_Userstring;
+    }
+    public void setPro_Userstring(String Pro_Userstring) {
+        this.Pro_Userstring = Pro_Userstring;
     }
 }

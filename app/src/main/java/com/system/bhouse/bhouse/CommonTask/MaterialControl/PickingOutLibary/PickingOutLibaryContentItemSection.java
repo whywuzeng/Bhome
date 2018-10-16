@@ -114,11 +114,14 @@ public class PickingOutLibaryContentItemSection extends Section {
                     holder1.ivprojectname.setVisibility(View.INVISIBLE);
                     holder1.ivsubBeizhu.setVisibility(View.INVISIBLE);
                 }
+                holder1.iv_count_img.setImageResource(R.drawable.ic_qrcode);
+                holder1.iv_count_img.setVisibility(View.VISIBLE);
             }
             else if (statusBean.isLookStatus()) {
                 holder1.imgDeleteItem.setVisibility(View.INVISIBLE);
                 holder1.ivprojectname.setVisibility(View.INVISIBLE);
                 holder1.ivsubBeizhu.setVisibility(View.INVISIBLE);
+                holder1.iv_count_img.setVisibility(View.INVISIBLE);
             }
 
             Observable.create(subscriber -> {
@@ -279,7 +282,7 @@ public class PickingOutLibaryContentItemSection extends Section {
      * ll_top_1 --- tv_WuliaoUnit_id ---WuliaoUnit---vv_top_2
      * ll_top2 --- tv_count_measure_id ---tv_count_measure---vv_top_22
      * ll_top3 --- tv_count_amount_id ---tv_count_amount---vv_top_3
-     * ll_top4 --- tv_count_id ---tv_count---vv_top_4
+     * ll_top4 --- tv_count_id ---tv_count---vv_top_4--iv_count_img
      * ll_top5 --- tv_unit_id ---tv_unit---vv_top_5
      * ll_top6 --- tv_requireNum_id ---tv_requireNum---vv_top_6
      * ll_bottom_4 --- tv_ReceiptAmount_id ---tv_ReceiptAmount---vv_bottom_4
@@ -381,6 +384,9 @@ public class PickingOutLibaryContentItemSection extends Section {
 
         @Bind(R.id.ll_projectName)
          LinearLayout ll_projectName;
+
+        @Bind(R.id.iv_count_img)
+        ImageView iv_count_img;
 
         //6-21新增的id
         @Bind(R.id.ll_top1_deleteIv)

@@ -28,7 +28,7 @@ public class LazyFragment extends WWBaseFragment {
     private boolean isStart = false;// 是否处于可见状态，in the screen
 
     @Override
-    protected final void onCreateView(Bundle savedInstancseState) {
+    protected  void onCreateView(Bundle savedInstancseState) {
         super.onCreateView(savedInstancseState);
         Bundle bundle = getArguments();
         if (bundle != null) {
@@ -110,7 +110,7 @@ public class LazyFragment extends WWBaseFragment {
     }
 
     @Override
-    public final void onStart() {
+    public  void onStart() {
         Log.d("TAG", "onStart() : " + "getUserVisibleHint():" + getUserVisibleHint());
         super.onStart();
         if (isInit && !isStart && getUserVisibleHint()) {
@@ -121,7 +121,7 @@ public class LazyFragment extends WWBaseFragment {
 
 
     @Override
-    public final void onStop() {
+    public  void onStop() {
         super.onStop();
         if (isInit && isStart && getUserVisibleHint()) {
             isStart = false;
@@ -131,7 +131,7 @@ public class LazyFragment extends WWBaseFragment {
 
     @Override
     @Deprecated
-    public final void onResume() {
+    public  void onResume() {
         Log.d("TAG", "onResume() : " + "getUserVisibleHint():" + getUserVisibleHint());
         super.onResume();
         if (isInit) {
@@ -141,7 +141,7 @@ public class LazyFragment extends WWBaseFragment {
 
     @Override
     @Deprecated
-    public final void onPause() {
+    public  void onPause() {
         Log.d("TAG", "onPause() : " + "getUserVisibleHint():" + getUserVisibleHint());
         super.onPause();
         if (isInit) {
@@ -151,7 +151,7 @@ public class LazyFragment extends WWBaseFragment {
 
     @Override
     @Deprecated
-    public final void onDestroyView() {
+    public  void onDestroyView() {
         Log.d("TAG", "onDestroyView() : " + "getUserVisibleHint():" + getUserVisibleHint());
         super.onDestroyView();
         if (isInit) {

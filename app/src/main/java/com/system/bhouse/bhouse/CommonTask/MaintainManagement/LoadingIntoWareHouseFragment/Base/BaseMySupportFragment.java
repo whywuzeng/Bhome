@@ -252,4 +252,13 @@ public void showButtomToast(String msg) {
         }
     }
 
+    protected void setParentActionBarMidleTitle(String title)
+    {
+        TextView toolbar_title = (TextView)getView().findViewById(R.id.toolbar_title);
+        if (toolbar_title!=null)
+        {
+            toolbar_title.setText(title);
+        }
+    }
+
 }

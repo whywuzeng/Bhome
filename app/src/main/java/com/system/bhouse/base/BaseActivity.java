@@ -15,7 +15,6 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.TextView;
 
 import com.system.bhouse.base.database.DatabaseManager;
-import com.system.bhouse.base.rxlife.RxCompatActivity;
 import com.system.bhouse.bhouse.R;
 import com.system.bhouse.utils.AppManager;
 import com.system.bhouse.utils.LogUtil;
@@ -56,6 +55,11 @@ public abstract class BaseActivity extends RxAppCompatActivity {
                 }
             });
         }
+        //不是第一次进入
+            setAppData();
+    }
+
+    protected void setAppData(){
         DatabaseManager.getInstance().setAppData();
     }
 

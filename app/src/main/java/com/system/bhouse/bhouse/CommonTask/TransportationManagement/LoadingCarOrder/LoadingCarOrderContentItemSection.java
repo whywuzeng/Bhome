@@ -6,6 +6,7 @@ import android.os.Message;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -90,9 +91,22 @@ public class LoadingCarOrderContentItemSection extends Section {
             holder1.tvDong.setText(searchHistroyBeans.get(position).ceng);
             holder1.tvCengAmount.setText(searchHistroyBeans.get(position).sourceType);
             holder1.tvShifouproduce.setText(searchHistroyBeans.get(position).isIsProduce()?"是":"否");
+            holder1.cb_produce_pos.setChecked(searchHistroyBeans.get(position).Is_OutPur);
+
+            holder1.cb_produce_pos.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (mOnCBItemClickListener!=null){
+                        mOnCBItemClickListener.onItemClick(v,position);
+                    }
+                }
+            });
+
+            holder1.lll_bottom_1waibao.setVisibility(View.VISIBLE);
 
             holder1.lll_bottom_1.setVisibility(View.VISIBLE);
             holder1.vvv_bottom_1.setVisibility(View.VISIBLE);
+
 
             holder1.ll_top_1.setVisibility(View.GONE);
             holder1.vv_top_2.setVisibility(View.GONE);
@@ -101,7 +115,7 @@ public class LoadingCarOrderContentItemSection extends Section {
 
 //            holder1.tvWuliaoId,
 //            holder1.tvReceiptAmountId, 项目名称前
-            TextView[] titleContent = { holder1.tvWuliaoId, holder1.tvCountMeasureId, holder1.tvCountAmountId, holder1.tvCountId,holder1.tvUnitId,holder1.tvRequireNumId,holder1.tvReceiptAmountId,holder1.tvProjectNameId,holder1.tvDongId,holder1.tvCengAmountId,holder1.tvShifouprodeceId};
+            TextView[] titleContent = { holder1.tvWuliaoId, holder1.tvCountMeasureId, holder1.tvCountAmountId, holder1.tvCountId,holder1.tvUnitId,holder1.tvRequireNumId,holder1.tvReceiptAmountId,holder1.tvProjectNameId,holder1.tvDongId,holder1.tvCengAmountId,holder1.tvShifouprodeceId,holder1.tv_shifouproduce_idwaibao};
             int min = Math.min(this.stringArray.length, titleContent.length);
             for (int i = 0; i < min; i++) {
                 titleContent[i].setText(this.stringArray[i]);
@@ -123,9 +137,13 @@ public class LoadingCarOrderContentItemSection extends Section {
                 }else {
                     holder1.imgDeleteItem.setVisibility(View.INVISIBLE);
                 }
+                holder1.cb_produce_pos.setClickable(true);
+                holder1.cb_produce_pos.setFocusable(true);
             }
             else if (statusBean.isLookStatus()) {
                 holder1.imgDeleteItem.setVisibility(View.INVISIBLE);
+                holder1.cb_produce_pos.setClickable(false);
+                holder1.cb_produce_pos.setFocusable(false);
             }
 
             Observable.create(subscriber -> {
@@ -256,6 +274,14 @@ public class LoadingCarOrderContentItemSection extends Section {
         @Bind(R.id.vv_top_2)
         View vv_top_2;
 
+        //外包checkbox
+        @Bind(R.id.tv_shifouproduce_idwaibao)
+        TextView tv_shifouproduce_idwaibao;
+        @Bind(R.id.cb_produce_pos)
+        CheckBox cb_produce_pos;
+        @Bind(R.id.lll_bottom_1waibao)
+        LinearLayout lll_bottom_1waibao;
+
         ViewHolder(View view) {
             super(view);
             ButterKnife.bind(this, view);
@@ -266,6 +292,17 @@ public class LoadingCarOrderContentItemSection extends Section {
 
     public void setOnItemClickListener(OnItemClickListener onItemClickListener) {
         this.onItemClickListener = onItemClickListener;
+    }
+
+    public void setmOnCBItemClickListener(onCBItemClickListener mOnCBItemClickListener) {
+        this.mOnCBItemClickListener = mOnCBItemClickListener;
+    }
+
+    private onCBItemClickListener mOnCBItemClickListener;
+
+
+    public interface onCBItemClickListener{
+        void onItemClick(View view, int position);
     }
 
     public interface OnItemClickListener {

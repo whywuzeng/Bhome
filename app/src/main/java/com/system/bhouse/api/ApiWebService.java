@@ -11,7 +11,6 @@ import com.system.bhouse.utils.ProgressUtils;
 import com.system.bhouse.utils.TenUtils.L;
 import com.system.bhouse.utils.TenUtils.T;
 import com.system.bhouse.utils.sharedpreferencesuser;
-import com.trello.rxlifecycle.android.ActivityEvent;
 import com.trello.rxlifecycle.components.support.RxAppCompatActivity;
 
 import org.json.JSONArray;
@@ -106,7 +105,6 @@ public class ApiWebService {
         request.addProperty("ccid",ccid);
         return getNetworkService(mSubscriber,request,null);
     }
-
 
 
 /*    14.根据订单业务状态获取订单信息（用户，管理单元ID，当前单据状态ID，是否选中） (大型接口)
@@ -385,7 +383,9 @@ public class ApiWebService {
         request.addProperty("property",property);
         request.addProperty("IsSubtitle",IsSubtitle);
         request.addProperty("username",username);
-        return getNetworkServiceNoProgress(mContext,call,request);
+        request.addProperty("Is_Pro_User",App.Is_Pro_User);
+        request.addProperty("Pro_Userstring",App.Pro_Userstring);
+        return getNetworkService(mContext,call,request);
     }
 
     /**
@@ -443,6 +443,8 @@ public class ApiWebService {
         request.addProperty("gsmid",gsmid);
         request.addProperty("property",property);
         request.addProperty("IsSubtitle",IsSubtitle);
+        request.addProperty("Is_Pro_User",App.Is_Pro_User);
+        request.addProperty("Pro_Userstring",App.Pro_Userstring);
         return getNetworkServiceNoProgress(mContext,call,request);
     }
 
@@ -589,7 +591,9 @@ public class ApiWebService {
         request.addProperty("property",property);
         request.addProperty("IsSubtitle",IsSubtitle);
         request.addProperty("username",username);
-        return getNetworkServiceNoProgress(mContext,call,request);
+        request.addProperty("Is_Pro_User",App.Is_Pro_User);
+        request.addProperty("Pro_Userstring",App.Pro_Userstring);
+        return getNetworkService(mContext,call,request);
     }
 
     /**
@@ -649,6 +653,8 @@ public class ApiWebService {
         request.addProperty("gsmid",gsmid);
         request.addProperty("property",property);
         request.addProperty("IsSubtitle",IsSubtitle);
+        request.addProperty("Is_Pro_User",App.Is_Pro_User);
+        request.addProperty("Pro_Userstring",App.Pro_Userstring);
         return getNetworkServiceNoProgress(mContext,call,request);
     }
 
@@ -836,7 +842,9 @@ public class ApiWebService {
         request.addProperty("property",property);
         request.addProperty("IsSubtitle",IsSubtitle);
         request.addProperty("username",username);
-        return getNetworkServiceNoProgress(mContext,call,request);
+        request.addProperty("Is_Pro_User",App.Is_Pro_User);
+        request.addProperty("Pro_Userstring",App.Pro_Userstring);
+        return getNetworkService(mContext,call,request);
     }
 
     /**
@@ -879,6 +887,8 @@ public class ApiWebService {
         request.addProperty("gsmid",gsmid);
         request.addProperty("property",property);
         request.addProperty("IsSubtitle",IsSubtitle);
+        request.addProperty("Is_Pro_User",App.Is_Pro_User);
+        request.addProperty("Pro_Userstring",App.Pro_Userstring);
         return getNetworkServiceNoProgress(mContext,call,request);
     }
 
@@ -1010,7 +1020,9 @@ public class ApiWebService {
         request.addProperty("property",property);
         request.addProperty("IsSubtitle",IsSubtitle);
         request.addProperty("username",username);
-        return getNetworkServiceNoProgress(mContext,call,request);
+        request.addProperty("Is_Pro_User",App.Is_Pro_User);
+        request.addProperty("Pro_Userstring",App.Pro_Userstring);
+        return getNetworkService(mContext,call,request);
     }
 
 
@@ -1055,6 +1067,8 @@ public class ApiWebService {
         request.addProperty("gsmid",gsmid);
         request.addProperty("property",property);
         request.addProperty("IsSubtitle",IsSubtitle);
+        request.addProperty("Is_Pro_User",App.Is_Pro_User);
+        request.addProperty("Pro_Userstring",App.Pro_Userstring);
         return getNetworkServiceNoProgress(mContext,call,request);
     }
 
@@ -1227,7 +1241,7 @@ public class ApiWebService {
         request.addProperty("property",property);
         request.addProperty("IsSubtitle",IsSubtitle);
         request.addProperty("username",username);
-        return getNetworkServiceNoProgress(mContext,call,request);
+        return getNetworkService(mContext,call,request);
     }
 
     /**
@@ -1346,7 +1360,7 @@ public class ApiWebService {
         request.addProperty("property",App.Property);
         request.addProperty("IsSubtitle",App.IsSub);
         request.addProperty("username",App.USER_INFO);
-        return getNetworkServiceNoProgress(mContext,call,request);
+        return getNetworkService(mContext,call,request);
     }
 
     /**
@@ -1599,7 +1613,7 @@ public class ApiWebService {
         request.addProperty("property",App.Property);
         request.addProperty("IsSubtitle",App.IsSub);
         request.addProperty("username",App.USER_INFO);
-        return getNetworkServiceNoProgress(mContext,call,request);
+        return getNetworkService(mContext,call,request);
     }
 
     /**
@@ -1788,7 +1802,7 @@ Get_Sale_Order_Car_shf(string scid, string addPer, int gsmid, int property, bool
         request.addProperty("property",App.Property);
         request.addProperty("IsSubtitle",App.IsSub);
         request.addProperty("username",App.USER_INFO);
-        return getNetworkServiceNoProgress(mContext,call,request);
+        return getNetworkService(mContext,call,request);
     }
 
     /**
@@ -1996,7 +2010,7 @@ Get_Sale_Order_Car_shf(string scid, string addPer, int gsmid, int property, bool
         request.addProperty("property",App.Property);
         request.addProperty("IsSubtitle",App.IsSub);
         request.addProperty("username",App.USER_INFO);
-        return getNetworkServiceNoProgress(mContext,call,request);
+        return getNetworkService(mContext,call,request);
     }
 
     /**
@@ -4304,7 +4318,7 @@ Get_Sale_Order_Car_shf(string scid, string addPer, int gsmid, int property, bool
         request.addProperty("property",App.Property);
         request.addProperty("IsSubtitle",App.IsSub);
         request.addProperty("username",App.USER_INFO);
-        return getNetworkServiceNoProgress(mContext,call,request);
+        return getNetworkService(mContext,call,request);
     }
 
     /**
@@ -5146,7 +5160,7 @@ Get_Sale_Order_Car_shf(string scid, string addPer, int gsmid, int property, bool
                     }
 
                 }
-            }}).compose(context.<Object>bindUntilEvent(ActivityEvent.DESTROY))
+            }}).compose(context.<Object>bindToLifecycle())
                 .subscribeOn(Schedulers.io()).
 
             observeOn(AndroidSchedulers.mainThread()).subscribe(mSubscriber);

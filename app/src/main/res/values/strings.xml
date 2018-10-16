@@ -261,4 +261,6 @@
     <string name="look_approval">查看已处理</string>
     <string name="lookup_order_id">查找订单编号</string>
     <string name="add_tag">标签</string>
+    <string name="org_toast">当前进入:%s</string>
+    <string name="progress_text">当前进度:%d%s</string>
 </resources>

@@ -48,6 +48,7 @@ import com.system.bhouse.config.Const;
 import com.system.bhouse.utils.ClickUtils;
 import com.system.bhouse.utils.TenUtils.T;
 import com.system.bhouse.utils.ValueUtils;
+import com.system.bhouse.utils.custom.CustomToast;
 import com.zijunlin.Zxing.Demo.CaptureActivity;
 
 import java.util.ArrayList;
@@ -64,7 +65,7 @@ import rx.Subscriber;
 /**
  * Created by Administrator on 2018-03-05.
  * <p>
- *     养护出库界面
+ *     装柜入库界面
  * by author wz
  * <p>
  * com.system.bhouse.bhouse.CommonTask
@@ -437,10 +438,9 @@ public class LoadingIntoWareHouseContentMessageFragment extends BaseContentMessa
 
         String type = "";
         if (data.name.equals("仓库")) {
-
-            if (comTaskBeans.get(0).getContainerID().isEmpty())
+            if (TextUtils.isEmpty(headerProperties.get("containerName")))
             {
-                showButtomToast("请先选择货柜");
+                showButtomToast("请先订单拉取");
                 return;
             }
 
@@ -593,7 +593,17 @@ public class LoadingIntoWareHouseContentMessageFragment extends BaseContentMessa
                         }.getType());
 
                         if (!ValueUtils.IsFirstValueExist(carNo)) {
-                            showButtomToast(getResources().getString(R.string.Qrcode_result));
+//                            showButtomToast(getResources().getString(R.string.Qrcode_result));
+
+                            comTaskBeans.get(extraPosition).setOutLibID("");
+                            comTaskBeans.get(extraPosition).setOutLibWarehouse("");
+
+                            headerProperties.put("outLibID",comTaskBeans.get(0).getOutLibID());
+
+                            ClearAssignMentSectionArrayList();
+                            LoadingIntoWareHouseSectionAdapter.notifyItemChanged(extraPosition);
+
+                            CustomToast.showWarning();
                             return;
                         }
 
@@ -623,7 +633,9 @@ public class LoadingIntoWareHouseContentMessageFragment extends BaseContentMessa
                         }.getType());
 
                         if (!ValueUtils.IsFirstValueExist(carNo)) {
-                            showButtomToast(getResources().getString(R.string.Qrcode_result));
+//                            showButtomToast(getResources().getString(R.string.Qrcode_result));
+                            CustomToast.showWarning();
+                            getDateRefresh("",extraPosition,"仓库");
                             return;
                         }
                         for (LoadingIntoWareHouseBean bean : comTaskBeans) {
@@ -632,8 +644,9 @@ public class LoadingIntoWareHouseContentMessageFragment extends BaseContentMessa
                             bean.setStorageWarehouse(carNo.get(0).getWareHouseName());
                         }
 //                        headerProperties.put("stationCarCoding",loadingcarbean.get(0).stationCarCoding);
-                        headerProperties.put("storageID",comTaskBeans.get(0).getStorageID());
-                        getDateRefresh(comTaskBeans.get(0).getStorageWarehouse(),extraPosition,"仓库");
+                        headerProperties.put("storageID",carNo.get(0).getWareHouseID());
+                        headerProperties.put("storageWarehouse",carNo.get(0).getWareHouseName());
+                        getDateRefresh(carNo.get(0).getWareHouseName(),extraPosition,"仓库");
                     }
 
                     @Override
@@ -668,7 +681,8 @@ public class LoadingIntoWareHouseContentMessageFragment extends BaseContentMessa
                     }.getType());
 
                     if (!ValueUtils.IsFirstValueExist(loadingcarbean)) {
-                        showButtomToast(R.string.Qrcode_result);
+//                        showButtomToast(R.string.Qrcode_result);
+                        CustomToast.showWarning();
                         return;
                     }
 

@@ -125,7 +125,7 @@ public class LoadingIntoWareHousePickerFragment extends BaseBackFragment impleme
     public void onLazyInitView(@Nullable Bundle savedInstanceState) {
         super.onLazyInitView(savedInstanceState);
 
-        setActionBarMidlleTitle(title);
+        setParentActionBarMidleTitle(title);
         initData();
             commonSectionAdapter = new LoadingIntoSectionAdapter(LayoutID, R.layout.layout_home_recommend_empty, mySections);
 //        myAdapter = new MyAdapter();

@@ -8,6 +8,7 @@ import android.os.PersistableBundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.EditText;
@@ -43,6 +44,7 @@ import com.system.bhouse.utils.ClickUtils;
 import com.system.bhouse.utils.TenUtils.L;
 import com.system.bhouse.utils.TenUtils.T;
 import com.system.bhouse.utils.ValueUtils;
+import com.system.bhouse.utils.custom.CustomToast;
 import com.zijunlin.Zxing.Demo.CaptureActivity;
 
 import org.androidannotations.annotations.AfterViews;
@@ -55,6 +57,7 @@ import org.androidannotations.annotations.ViewById;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
@@ -75,7 +78,7 @@ import rx.Subscriber;
 @OptionsMenu(R.menu.menu_comtask)
 public class MaintainIntoWareHouseContentMessageActivity extends BaseContentMessageActivity implements  GroupItem.onChildItemClickListener, onMutiDataSetListener ,BaseQuickAdapter.OnItemChildClickListener,BaseContentMessageActivity.SetOnAddItemClickListener {
 
-    public static final String TAG = "comtaskcontentmessageactivity";
+    public static final String TAG = "MaintainIntoWareHouse";
     private static final String module_name = "养护入库";
 
 
@@ -105,6 +108,7 @@ public class MaintainIntoWareHouseContentMessageActivity extends BaseContentMess
     String workOrderID;
 
     private ArrayList<MaintenanceWarehouseBean> comTaskBeans = new ArrayList<>();
+    private ArrayList<MaintenanceWarehouseBean> allComtaskBeans = new ArrayList<>();
     private ArrayList<MaintenanceWarehouseBeanSection> assignmentBeanSectionArrayList=new ArrayList<>() ;
     private TreeRecyclerAdapter treeRecyclerAdapter;
     private boolean isDeleteAble = true;
@@ -451,46 +455,7 @@ public class MaintainIntoWareHouseContentMessageActivity extends BaseContentMess
             String resultQr = bundle.getString("result");
             int extraPosition = bundle.getInt("position");
             if (extraPosition==-1) {
-                ApiWebService.Get_Production_order_Mould_bypoid_Json(this, new ApiWebService.SuccessCall() {
-                    @Override
-                    public void SuccessBack(String result) {
 
-                        ArrayList<MaintenanceWarehouseBean> loadingcarbean = App.getAppGson().fromJson(result, new TypeToken<List<MaintenanceWarehouseBean>>() {
-                        }.getType());
-
-                        if (loadingcarbean.isEmpty())
-                        {
-                            showButtomToast(getResources().getString(R.string.Qrcode_result));
-                        }
-
-                        for (MaintenanceWarehouseBean bean : loadingcarbean) {
-                            bean.hNumbe= headerProperties.get("receiptHnumber");
-                            bean.requireDate= headerProperties.get("requireDate");
-                            bean.description=headerProperties.get("description");
-                            bean.entryPeople= headerProperties.get("enterPeople");
-                        }
-
-                        //清空 二维码为空的
-                        for (MaintenanceWarehouseBean receBean : comTaskBeans) {
-                            if (TextUtils.isEmpty(receBean.Qrcode)) {
-                                comTaskBeans.remove(receBean);
-                            }
-                        }
-                        if (!(loadingcarbean.size() == 0)) {
-                            comTaskBeans.addAll(loadingcarbean);
-                        }
-                        ArrayList<MaintenanceWarehouseBean> clone =(ArrayList<MaintenanceWarehouseBean>)comTaskBeans.clone();
-                        comTaskBeans.clear();
-                        comTaskBeans.addAll(removeDupliById(clone));
-                        ClearAssignMentSectionArrayList();
-                        MaintainIntoWareHouseSectionAdapter.notifyDataSetChanged();
-                    }
-
-                    @Override
-                    public void ErrorBack(String error) {
-
-                    }
-                },HId,resultQr);
             }else if (extraPosition==2)
             {
                 ApiWebService.Get_Production_order_yhy_byTid_Json(this, new ApiWebService.SuccessCall() {
@@ -503,7 +468,8 @@ public class MaintainIntoWareHouseContentMessageActivity extends BaseContentMess
 
                         if (loadingcarbean.isEmpty())
                         {
-                            showButtomToast(getResources().getString(R.string.Qrcode_result));
+                            CustomToast.showWarning();
+                            getDateRefresh("",extraPosition,"台车");
                         }
 
                         for (MaintenanceWarehouseBean bean : loadingcarbean) {
@@ -518,11 +484,15 @@ public class MaintainIntoWareHouseContentMessageActivity extends BaseContentMess
                             comTaskBeans.addAll(loadingcarbean);
                         }
 
-                        CleartreeRecyclerAdapter();
+                        ArrayList<MaintenanceWarehouseBean> clone =(ArrayList<MaintenanceWarehouseBean>)comTaskBeans.clone();
+                        allComtaskBeans.addAll(clone);
+                        comTaskBeans.clear();
+                        comTaskBeans.addAll(removeEmptyQrcode(clone));
 
                         ClearAssignMentSectionArrayList();
                         MaintainIntoWareHouseSectionAdapter.notifyDataSetChanged();
-//                        getDateRefresh();
+                        CleartreeRecyclerAdapter();
+
                     }
 
                     @Override
@@ -550,19 +520,29 @@ public class MaintainIntoWareHouseContentMessageActivity extends BaseContentMess
 
             if (ValueUtils.IsFirstValueExist(comTaskBeans))
             {
-                 for (MaintenanceWarehouseBean bean : comTaskBeans)
-                 {
-                     bean.wareHouse=extrasName;
-                     bean.wareHouseID=extra;
-                 }
+                for (MaintenanceWarehouseBean bean : comTaskBeans)
+                {
+                    bean.wareHouse=extrasName;
+                    bean.wareHouseID=extra;
+                }
             }
+            if (ValueUtils.IsFirstValueExist(allComtaskBeans))
+            {
+                for (MaintenanceWarehouseBean bean : allComtaskBeans)
+                {
+                    bean.wareHouse=extrasName;
+                    bean.wareHouseID=extra;
+                }
+            }
+
             getDateRefresh(extrasName,extraPosition,"养护窑库");
         }
     }
 
+
     public static ArrayList<MaintenanceWarehouseBean> removeDupliById(List<MaintenanceWarehouseBean> persons) {
         Set<MaintenanceWarehouseBean> personSet = new TreeSet<>((o1, o2) -> {
-            if (o1.Qrcode.equals(o2.Qrcode))
+            if (TextUtils.isEmpty(o2.Qrcode))
             {
                 return 0;
             }else {
@@ -573,6 +553,18 @@ public class MaintainIntoWareHouseContentMessageActivity extends BaseContentMess
         return new ArrayList<>(personSet);
     }
 
+    public static ArrayList<MaintenanceWarehouseBean> removeEmptyQrcode(ArrayList<MaintenanceWarehouseBean> persons)
+    {
+        for (Iterator<MaintenanceWarehouseBean> ite =persons.iterator();ite.hasNext();)
+        {
+            MaintenanceWarehouseBean next = ite.next();
+            if (TextUtils.isEmpty(next.Qrcode))
+            {
+                ite.remove();
+            }
+        }
+        return persons;
+    }
     /**
      * 设置 最小子布局为空
      * param position
@@ -776,8 +768,15 @@ public class MaintainIntoWareHouseContentMessageActivity extends BaseContentMess
                      */
                     ifStateForOrderId();
                 }
-                ClearAssignMentSectionArrayList();
+                if (comTaskBeans.size()>0&&!TextUtils.isEmpty(comTaskBeans.get(0).getID())) {
+                    ArrayList<MaintenanceWarehouseBean> clone = (ArrayList<MaintenanceWarehouseBean>) comTaskBeans.clone();
+                    allComtaskBeans.addAll(clone);
+                    comTaskBeans.clear();
+                    comTaskBeans.addAll(removeEmptyQrcode(clone));
+                }
+
                 TopListViewInit();
+                ClearAssignMentSectionArrayList();
                 MaintainIntoWareHouseSectionAdapter.notifyDataSetChanged();
             }
 
@@ -1037,7 +1036,8 @@ public class MaintainIntoWareHouseContentMessageActivity extends BaseContentMess
                 ArrayList<MaintenanceWarehouseBean> loadingcarbean = App.getAppGson().fromJson(result, new TypeToken<List<MaintenanceWarehouseBean>>() {}.getType());
 
                 if (loadingcarbean.isEmpty()) {
-                    showButtomToast(getResources().getString(R.string.Qrcode_result));
+//                    showButtomToast(getResources().getString(R.string.Qrcode_result));
+                    CustomToast.showWarning();
                 }
 
                 //清空 二维码为空的
@@ -1071,7 +1071,8 @@ public class MaintainIntoWareHouseContentMessageActivity extends BaseContentMess
                 }.getType());
 
                 if (loadingcarbean.isEmpty()) {
-                    showButtomToast(getResources().getString(R.string.Qrcode_result));
+//                    showButtomToast(getResources().getString(R.string.Qrcode_result));
+                    CustomToast.showWarning();
                 }
 
                 //清空 二维码为空的
@@ -1136,6 +1137,14 @@ public class MaintainIntoWareHouseContentMessageActivity extends BaseContentMess
 //                return;
 //            }
 //        }
+        //把空的赋值给全部
+        if (allComtaskBeans.size()>0)
+        {
+            this.comTaskBeans.clear();
+            this.comTaskBeans.addAll(allComtaskBeans);
+        }else {
+            Log.e(TAG, "tvSubmitActionforList: allComtaskBeans.size :"+allComtaskBeans.size());
+        }
         int size = this.comTaskBeans.size();
         String[][] billtable = null;
         billtable = new String[size][21];
@@ -1160,7 +1169,7 @@ public class MaintainIntoWareHouseContentMessageActivity extends BaseContentMess
             billtable[i][15] = confirmationReceBean.measureUnit;
             billtable[i][16] = confirmationReceBean.number+"";
             billtable[i][17] = confirmationReceBean.sourceID;
-            billtable[i][18] = confirmationReceBean.preAllocationWarehouse;
+            billtable[i][18] = confirmationReceBean.preAllocationWarehouseID;
             billtable[i][19] = confirmationReceBean.stationCarCoding;
             billtable[i][20] = confirmationReceBean.moduleCoding;
         }
@@ -1171,7 +1180,7 @@ public class MaintainIntoWareHouseContentMessageActivity extends BaseContentMess
                 public void SuccessBack(String result) {
                     showButtomToast(result);
 
-                    if (!result.contains("失败")||!result.contains("对不起")) {
+                    if (!result.contains("失败")&&!result.contains("对不起")) {
                         onBackPressed();
                         sureDataRefresh("tvSubmitAction");
                     }
@@ -1188,7 +1197,7 @@ public class MaintainIntoWareHouseContentMessageActivity extends BaseContentMess
                 @Override
                 public void SuccessBack(String result) {
                     showButtomToast(result);
-                    if (!result.contains("失败")||!result.contains("对不起")) {
+                    if (!result.contains("失败")&&!result.contains("对不起")) {
                         onBackPressed();
                         sureDataRefresh("tvSubmitAction");
                     }

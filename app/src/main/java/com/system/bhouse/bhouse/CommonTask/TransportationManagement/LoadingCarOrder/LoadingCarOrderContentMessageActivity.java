@@ -15,9 +15,11 @@ import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.gson.reflect.TypeToken;
 import com.system.bhouse.Custom.ShowDeviceMessageCustomDialog;
@@ -41,6 +43,7 @@ import com.system.bhouse.bhouse.setup.utils.onMutiDataSetListener;
 import com.system.bhouse.ui.sectioned.SectionedRecyclerViewAdapter;
 import com.system.bhouse.utils.TenUtils.L;
 import com.system.bhouse.utils.TenUtils.T;
+import com.system.bhouse.utils.custom.CustomToast;
 
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.EActivity;
@@ -69,7 +72,7 @@ import rx.android.schedulers.AndroidSchedulers;
  */
 @EActivity(R.layout.activity_comtask_content_layout)
 @OptionsMenu(R.menu.menu_comtask)
-public class LoadingCarOrderContentMessageActivity extends WWBackActivity implements LoadingCarOrderContentItemSection.OnItemClickListener, GroupItem.onChildItemClickListener, onMutiDataSetListener {
+public class LoadingCarOrderContentMessageActivity extends WWBackActivity implements LoadingCarOrderContentItemSection.OnItemClickListener, GroupItem.onChildItemClickListener, onMutiDataSetListener, LoadingCarOrderContentItemSection.onCBItemClickListener {
 
     public static final String TAG = "comtaskcontentmessageactivity";
 
@@ -103,11 +106,13 @@ public class LoadingCarOrderContentMessageActivity extends WWBackActivity implem
     private Dialog bottomDialog;
     private String STATE_COMTASK = "state_comtask";
     private HashMap<String, String> headerProperties = new HashMap<>();
+    private CheckBox posBox;
 
     @AfterViews
     public void initComTaskActivity() {
         if (mStatus.isNewStatus()) {
             setActionBarMidlleTitle("新增装车订单");
+            initCheckBox();
         }
         else {
             setActionBarMidlleTitle("装车订单");
@@ -138,6 +143,7 @@ public class LoadingCarOrderContentMessageActivity extends WWBackActivity implem
         workflowSection.setTVIDContent(stringArray);
         new ItemTouchHelper(new ComTaskContentItemSectionItemTouchHelper(mRecyclerViewAdapter)).attachToRecyclerView(listView);
         workflowSection.setOnItemClickListener(this);
+        workflowSection.setmOnCBItemClickListener(this);
 
         mRecyclerViewAdapter.addSection(workflowSection);
         listView.setNestedScrollingEnabled(false);
@@ -147,6 +153,44 @@ public class LoadingCarOrderContentMessageActivity extends WWBackActivity implem
         testData();
 //        TopListViewInit(this.comTaskBeans);
         setScrollViewFirst();
+    }
+
+    //处理单选框方法
+    private void initCheckBox() {
+        //生产外包
+        posBox = findViewById(R.id.cb_produce_pos);
+        posBox.setVisibility(View.VISIBLE);
+        //取消外包
+        CheckBox nevBox = findViewById(R.id.cb_produce_nev);
+
+        posBox.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                if (!posBox.isChecked()) {
+                    for (LoadingCarBean bean :
+                            comTaskBeans) {
+                        if (bean.isIsProduce()) {
+                            bean.Is_OutPur = false;
+                        }
+                    }
+                }
+                else if (posBox.isChecked()) {
+                    for (LoadingCarBean bean :
+                            comTaskBeans) {
+                        if (bean.isIsProduce()) {
+                            bean.Is_OutPur = true;
+                        }
+                    }
+                }
+                ArrayList<LoadingCarBean> clone = (ArrayList<LoadingCarBean>) comTaskBeans.clone();
+                comTaskBeans.clear();
+                comTaskBeans.addAll(clone);
+                mRecyclerViewAdapter.notifyDataSetChanged();
+            }
+        });
+
+
     }
 
     @Override
@@ -272,7 +316,7 @@ public class LoadingCarOrderContentMessageActivity extends WWBackActivity implem
             }
             viewModels.add(viewModel);
             headerProperties.put(viewModel.key, viewModel.value);
-            headerProperties.put("containerID",this.comTaskBeans.get(0).getContainerID());
+            headerProperties.put("containerID", this.comTaskBeans.get(0).getContainerID());
 
             viewModel = new SortChildItem.ViewModel();
             viewModel.name = "业务日期";
@@ -550,11 +594,11 @@ public class LoadingCarOrderContentMessageActivity extends WWBackActivity implem
             String extraCoding = data.getStringExtra("coding");
             String extraBOMID = data.getStringExtra("BOMID");
             String title = data.getStringExtra("title");
-            if (extraCoding.contains("DZXQ")) {
+            if (extraCoding.contains("DZXQ") || extraCoding.contains("BHXQ")) {
                 getEntriesData(extra);
                 return;
             }
-            if (extrasName.contains("货柜")) {
+            if (extrasName != null && extrasName.contains("货柜")) {
                 for (LoadingCarBean receBean : comTaskBeans) {
                     receBean.containerID = extra;
                 }
@@ -646,6 +690,29 @@ public class LoadingCarOrderContentMessageActivity extends WWBackActivity implem
     @Override
     public void onMutiDateSet(String timeStr, String title, int position) {
         getDateRefresh(timeStr, position, title);
+    }
+
+    //checkbox 是否外包的点击回调
+    @Override
+    public void onItemClick(View view, int position) {
+        if (!comTaskBeans.get(position).isIsProduce())
+        {
+            CustomToast.showDefault("没有参与生产", Toast.LENGTH_SHORT);
+            return;
+        }
+        if (((CheckBox) view).isChecked()) {
+            comTaskBeans.get(position).Is_OutPur = true;
+        }
+        else {
+            comTaskBeans.get(position).Is_OutPur = false;
+        }
+        posBox.setChecked(true);
+        for (LoadingCarBean bean:comTaskBeans) {
+            if (!bean.Is_OutPur)
+            {
+                posBox.setChecked(false);
+            }
+        }
     }
 
     public static class KeyType {
@@ -807,12 +874,12 @@ public class LoadingCarOrderContentMessageActivity extends WWBackActivity implem
 //            }
 //        }
 
-        llCheck.setVisibility(mStatus.getBean().visCheckBtn?View.VISIBLE:View.GONE);
-        llModify.setVisibility(mStatus.getBean().visModifyBtn?View.VISIBLE:View.GONE);
-        llFanCheck.setVisibility(mStatus.getBean().visCheckFBtn?View.VISIBLE:View.GONE);
-        tvDelete.setVisibility(mStatus.getBean().visDeleteBtn?View.VISIBLE:View.GONE);
-        llQrcode.setVisibility(mStatus.getBean().visQRBtn?View.VISIBLE:View.GONE);
-        llSubmit.setVisibility(mStatus.getBean().visSubmitBtn?View.VISIBLE:View.GONE);
+        llCheck.setVisibility(mStatus.getBean().visCheckBtn ? View.VISIBLE : View.GONE);
+        llModify.setVisibility(mStatus.getBean().visModifyBtn ? View.VISIBLE : View.GONE);
+        llFanCheck.setVisibility(mStatus.getBean().visCheckFBtn ? View.VISIBLE : View.GONE);
+        tvDelete.setVisibility(mStatus.getBean().visDeleteBtn ? View.VISIBLE : View.GONE);
+        llQrcode.setVisibility(mStatus.getBean().visQRBtn ? View.VISIBLE : View.GONE);
+        llSubmit.setVisibility(mStatus.getBean().visSubmitBtn ? View.VISIBLE : View.GONE);
 
 
         Observable.create(subscriber -> {
@@ -855,11 +922,12 @@ public class LoadingCarOrderContentMessageActivity extends WWBackActivity implem
             if (mStatus.isModifyStatus()) {
                 setActionBarMidlleTitle("修改装车订单");
                 TopListViewInit();
-
+                initCheckBox();
                 workflowSection = new LoadingCarOrderContentItemSection(comTaskBeans, mStatus);
                 String[] stringArray = getResources().getStringArray(R.array.loadingcar_itemsection_order);
                 workflowSection.setTVIDContent(stringArray);
                 workflowSection.setOnItemClickListener(this);
+                workflowSection.setmOnCBItemClickListener(this);
                 mRecyclerViewAdapter.removeAllSections();
                 mRecyclerViewAdapter.addSection(workflowSection);
 
@@ -943,11 +1011,11 @@ public class LoadingCarOrderContentMessageActivity extends WWBackActivity implem
             T.showShort(this, "数据有误,不能提交");
             return;
         }
-        if (TextUtils.isEmpty(this.comTaskBeans.get(0).getCartrips())) {
+        if (TextUtils.isEmpty(this.headerProperties.get("cartripsNoQRcode"))) {
             T.showShort(this, "车次为空不能提交");
             return;
         }
-        if (TextUtils.isEmpty(this.comTaskBeans.get(0).getContainerID())) {
+        if (TextUtils.isEmpty(this.headerProperties.get("containerNameNoQRcode"))) {
             T.showShort(this, "货柜为空不能提交");
             return;
         }
@@ -962,7 +1030,7 @@ public class LoadingCarOrderContentMessageActivity extends WWBackActivity implem
         }
         int size = this.comTaskBeans.size();
         String[][] billtable = null;
-        billtable = new String[size][21];
+        billtable = new String[size][22];
         for (int i = 0; i < size; i++) {
             LoadingCarBean confirmationReceBean = comTaskBeans.get(i);
 
@@ -987,6 +1055,7 @@ public class LoadingCarOrderContentMessageActivity extends WWBackActivity implem
             billtable[i][18] = confirmationReceBean.sourceTableID;
             billtable[i][19] = confirmationReceBean.sourceType;
             billtable[i][20] = confirmationReceBean.isIsProduce() + "";
+            billtable[i][21] = confirmationReceBean.Is_OutPur+ "";
 
         }
         if (mStatus.isNewStatus()) {

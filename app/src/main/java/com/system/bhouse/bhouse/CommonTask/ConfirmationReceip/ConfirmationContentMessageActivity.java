@@ -38,6 +38,7 @@ import com.system.bhouse.bhouse.setup.utils.LabelNumPickerDialog;
 import com.system.bhouse.ui.sectioned.SectionedRecyclerViewAdapter;
 import com.system.bhouse.utils.TenUtils.L;
 import com.system.bhouse.utils.TenUtils.T;
+import com.system.bhouse.utils.custom.CustomToast;
 import com.zijunlin.Zxing.Demo.CaptureActivity;
 
 import org.androidannotations.annotations.AfterViews;
@@ -434,13 +435,14 @@ public class ConfirmationContentMessageActivity extends WWBackActivity implement
                 @Override
                 public void SuccessBack(String result) {
 
-//                    if (TextUtils.isEmpty(result)) {
-//                        T.showShort(ConfirmationContentMessageActivity.this, "请选择项目名称");
-//                    }
 
                     ArrayList<ConfirmationReceBean> ntomTaskBeans = App.getAppGson().fromJson(result, new TypeToken<List<ConfirmationReceBean>>() {
                     }.getType());
 
+                    if (ntomTaskBeans.size()==0)
+                    {
+                        CustomToast.showWarning();
+                    }
 
                     hashMaps=new ArrayList<>();
                     for (int i=0;i<ntomTaskBeans.size();i++) {
@@ -490,7 +492,7 @@ public class ConfirmationContentMessageActivity extends WWBackActivity implement
                     mRecyclerViewAdapter.notifyDataSetChanged();
 
 
-                    setChlidItemValue(extraPosition,"车次",ntomTaskBeans==null?"":idValue.get("cartrips"));
+                    setChlidItemValue(extraPosition,"车次",ntomTaskBeans.size()==0?"":idValue.get("cartrips"));
                     setChlidItemValue(extraPosition+1,"车牌号",idValue.get("licensePlate"));
 
                 }

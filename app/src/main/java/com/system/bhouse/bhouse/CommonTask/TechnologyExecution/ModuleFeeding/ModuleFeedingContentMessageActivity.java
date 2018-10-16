@@ -8,6 +8,7 @@ import android.os.PersistableBundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.EditText;
@@ -42,6 +43,7 @@ import com.system.bhouse.utils.ClickUtils;
 import com.system.bhouse.utils.TenUtils.L;
 import com.system.bhouse.utils.TenUtils.T;
 import com.system.bhouse.utils.ValueUtils;
+import com.system.bhouse.utils.custom.CustomToast;
 
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.EActivity;
@@ -417,7 +419,8 @@ public class ModuleFeedingContentMessageActivity extends BaseContentMessageActiv
 
                         if (loadingcarbean.isEmpty())
                         {
-                            T.showShort(ModuleFeedingContentMessageActivity.this,getResources().getString(R.string.Qrcode_result));
+//                            T.showShort(ModuleFeedingContentMessageActivity.this,getResources().getString(R.string.Qrcode_result));
+                            CustomToast.showWarning();
                         }
 
                         for (ModuleFeedingBean bean : loadingcarbean) {
@@ -932,7 +935,14 @@ public class ModuleFeedingContentMessageActivity extends BaseContentMessageActiv
                 ArrayList<ModuleFeedingBean> loadingcarbean = App.getAppGson().fromJson(result, new TypeToken<List<ModuleFeedingBean>>() {}.getType());
 
                 if (loadingcarbean.isEmpty()) {
-                    T.showShort(ModuleFeedingContentMessageActivity.this, getResources().getString(R.string.Qrcode_result));
+//                    T.showShort(ModuleFeedingContentMessageActivity.this, getResources().getString(R.string.Qrcode_result));
+//                    CustomToast.showWarning();
+                    CustomToast build = new CustomToast.CustomToastBuild()
+                            .setGravity(Gravity.CENTER_VERTICAL)
+                            .setText("数据为空")
+                            .build();
+                    build.buildShort();
+
                 }
 
                 //清空 二维码为空的
@@ -966,7 +976,8 @@ public class ModuleFeedingContentMessageActivity extends BaseContentMessageActiv
                 }.getType());
 
                 if (loadingcarbean.isEmpty()) {
-                    T.showShort(ModuleFeedingContentMessageActivity.this, getResources().getString(R.string.Qrcode_result));
+//                    T.showShort(ModuleFeedingContentMessageActivity.this, getResources().getString(R.string.Qrcode_result));
+                    CustomToast.showWarning();
                 }
 
                 //清空 二维码为空的

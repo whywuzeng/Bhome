@@ -42,6 +42,7 @@ import com.system.bhouse.utils.ClickUtils;
 import com.system.bhouse.utils.TenUtils.L;
 import com.system.bhouse.utils.TenUtils.T;
 import com.system.bhouse.utils.ValueUtils;
+import com.system.bhouse.utils.custom.CustomToast;
 import com.zijunlin.Zxing.Demo.CaptureActivity;
 
 import org.androidannotations.annotations.AfterViews;
@@ -438,7 +439,11 @@ public class StationCarDetachModuleContentMessageActivity extends BaseContentMes
                         }.getType());
 
                         if (!ValueUtils.IsFirstValueExist(loadingcarbean)) {
-                            showButtomToast(R.string.Qrcode_result);
+//                            showButtomToast(R.string.Qrcode_result);
+                            CustomToast.showWarning();
+                            comTaskBeans.clear();
+                            ClearAssignMentSectionArrayList();
+                            StationCarDetachModuleSectionAdapter.notifyDataSetChanged();
                             return;
                         }
 
@@ -473,7 +478,12 @@ public class StationCarDetachModuleContentMessageActivity extends BaseContentMes
                         }.getType());
 
                         if (!ValueUtils.IsFirstValueExist(loadingcarbean))
+                        {
+//                            showButtomToast(R.string.Qrcode_result);
+                            CustomToast.showWarning();
+                            getDateRefresh("",extraPosition,"台车");
                             return;
+                        }
                         for (StationCarDetachModuleBean bean : comTaskBeans) {
                             bean.setStationCarID(loadingcarbean.get(0).stationCarID);
                             bean.setStationCarCoding(loadingcarbean.get(0).stationCarCoding);
@@ -482,6 +492,11 @@ public class StationCarDetachModuleContentMessageActivity extends BaseContentMes
                         headerProperties.put("stationCarCoding",loadingcarbean.get(0).stationCarCoding);
                         headerProperties.put("stationCarID",loadingcarbean.get(0).stationCarID);
                         getDateRefresh(loadingcarbean.get(0).stationCarName,extraPosition,"台车");
+
+                        //清除下面模具连带数据
+                        comTaskBeans.clear();
+                        ClearAssignMentSectionArrayList();
+                        StationCarDetachModuleSectionAdapter.notifyDataSetChanged();
 
                     }
 
@@ -857,7 +872,7 @@ public class StationCarDetachModuleContentMessageActivity extends BaseContentMes
     @Override
     protected void tvQrcodeAction(TextView tvQrcode) {
 
-        if (headerProperties.get("stationCarID").isEmpty())
+        if (TextUtils.isEmpty(headerProperties.get("stationCarID")))
         {
             showButtomToast("请先选择台车");
             return;
@@ -887,7 +902,8 @@ public class StationCarDetachModuleContentMessageActivity extends BaseContentMes
                 ArrayList<StationCarDetachModuleBean> loadingcarbean = App.getAppGson().fromJson(result, new TypeToken<List<StationCarDetachModuleBean>>() {}.getType());
 
                 if (loadingcarbean.isEmpty()) {
-                    T.showShort(StationCarDetachModuleContentMessageActivity.this, getResources().getString(R.string.Qrcode_result));
+//                    T.showShort(StationCarDetachModuleContentMessageActivity.this, getResources().getString(R.string.Qrcode_result));
+                    CustomToast.showWarning();
                     return;
                 }
 
@@ -918,7 +934,7 @@ public class StationCarDetachModuleContentMessageActivity extends BaseContentMes
             public void ErrorBack(String error) {
 
             }
-        }, comTaskBeans.get(0).getStationCarID(), comTaskBeans.get(0).getModuleID());
+        }, headerProperties.get("stationCarID"),headerProperties.get("moduleID"));
 
         //"7efaf36e001d414b94326c0a04d47e29"
     }
@@ -942,6 +958,11 @@ public class StationCarDetachModuleContentMessageActivity extends BaseContentMes
     protected void tvSubmitActionforList(TextView tvSubmit) {
         if (!getComtaskSize()) {
             T.showShort(this, Const.Entry_is_empty);
+            return;
+        }
+        if (headerProperties.get("stationCarName").isEmpty())
+        {
+            T.showShort(this, "台车为空不能提交");
             return;
         }
         for (int i=0;i<comTaskBeans.size();i++) {

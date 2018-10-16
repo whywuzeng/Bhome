@@ -11,7 +11,6 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Rect;
-import android.graphics.Typeface;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -27,7 +26,6 @@ import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
@@ -140,26 +138,17 @@ public class GridLayoutFragment extends Fragment implements GvMainAdapter.ImageC
             }
         });
 
-        //toolbar button的点击的回调
-        toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
-            @Override
-            public boolean onMenuItemClick(MenuItem item) {
-                switch (item.getItemId()) {
-                    //二维码扫描管理  //组织架构的选择界面
-                    case R.id.action_capture:
-                        Intent intent1 = new Intent(getActivity(), InformationActivity.class);
-                        startActivity(intent1);
-                        break;
-
-                }
-
-                return false;
-            }
-        });
-
         appBar.addOnOffsetChangedListener(this);
 
         action_capture.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent1 = new Intent(getActivity(), InformationActivity.class);
+                startActivity(intent1);
+            }
+        });
+
+        action_capture_cl.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent1 = new Intent(getActivity(), InformationActivity.class);
@@ -296,12 +285,14 @@ public class GridLayoutFragment extends Fragment implements GvMainAdapter.ImageC
 
     @Bind(R.id.action_capture)
     ImageView action_capture;
+    @Bind(R.id.action_capture_cl)
+    ImageView action_capture_cl;
 
     @Bind(R.id.my_textureview)
     SceneTextureView my_textureview;
 
     /**
-     * AppBar 滑动回调
+     * AppBar 滑动回调  每次都调用 很很耗性能
      */
     @Override
     public void onOffsetChanged(AppBarLayout appBarLayout, int verticalOffset) {
@@ -460,8 +451,6 @@ public class GridLayoutFragment extends Fragment implements GvMainAdapter.ImageC
 
     private void initToolBarSrocll() {
         measureHeight();
-        Typeface typeFaceLight = Typeface.createFromAsset(getActivity().getAssets(),"fonts/SourceHanSansCN-ExtraLight.otf");
-        tv_content_jitang.setTypeface(typeFaceLight);
     }
 
 
@@ -579,19 +568,22 @@ public class GridLayoutFragment extends Fragment implements GvMainAdapter.ImageC
                                                  }
                                              });
 
-        workflowSection.setmOnItemClickListener((view,position) -> {
-            // 跳转到新闻详情
-            if (!TextUtils.isEmpty(workflowSection.getNewsListBeens().get(position).digest)) {
-                Intent intent = new Intent(getActivity(), CompanyNewsDetailActivity_.class);
-                intent.putExtra("postid", workflowSection.getNewsListBeens().get(position).postid);
-                intent.putExtra("imgsrc", workflowSection.getNewsListBeens().get(position).imgsrc);
-                if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP) {
-                    ActivityOptions options = ActivityOptions.makeSceneTransitionAnimation(getActivity(), view.findViewById(R.id.iv_news_summary_photo), "photos");
-                    getActivity().startActivity(intent, options.toBundle());
-                } else {
-                    //让新的Activity从一个小的范围扩大到全屏
-                    ActivityOptionsCompat options = ActivityOptionsCompat.makeScaleUpAnimation(view, view.getWidth()/* / 2*/, view.getHeight()/* / 2*/, 0, 0);
-                    ActivityCompat.startActivity(getActivity(), intent, options.toBundle());
+        workflowSection.setmOnItemClickListener(new NewsListSection.onItemClickListener() {
+            @Override
+            public void OnItemClick(View view, int position) {
+                // 跳转到新闻详情
+                if (!TextUtils.isEmpty(workflowSection.getNewsListBeens().get(position).digest)) {
+                    Intent intent = new Intent(getActivity(), CompanyNewsDetailActivity_.class);
+                    intent.putExtra("postid", workflowSection.getNewsListBeens().get(position).postid);
+                    intent.putExtra("imgsrc", workflowSection.getNewsListBeens().get(position).imgsrc);
+                    if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP) {
+                        ActivityOptions options = ActivityOptions.makeSceneTransitionAnimation(getActivity(), view.findViewById(R.id.iv_news_summary_photo), "photos");
+                        getActivity().startActivity(intent, options.toBundle());
+                    } else {
+                        //让新的Activity从一个小的范围扩大到全屏
+                        ActivityOptionsCompat options = ActivityOptionsCompat.makeScaleUpAnimation(view, view.getWidth()/* / 2*/, view.getHeight()/* / 2*/, 0, 0);
+                        ActivityCompat.startActivity(getActivity(), intent, options.toBundle());
+                    }
                 }
             }
         });

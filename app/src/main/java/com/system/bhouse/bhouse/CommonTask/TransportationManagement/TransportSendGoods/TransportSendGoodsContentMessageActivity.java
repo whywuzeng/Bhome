@@ -39,6 +39,7 @@ import com.system.bhouse.bhouse.setup.utils.LabelNumPickerDialog;
 import com.system.bhouse.ui.sectioned.SectionedRecyclerViewAdapter;
 import com.system.bhouse.utils.TenUtils.L;
 import com.system.bhouse.utils.TenUtils.T;
+import com.system.bhouse.utils.custom.CustomToast;
 import com.zijunlin.Zxing.Demo.CaptureActivity;
 
 import org.androidannotations.annotations.AfterViews;
@@ -484,7 +485,11 @@ public class TransportSendGoodsContentMessageActivity extends WWBackActivity imp
 
                     if (loadingcarbean.isEmpty())
                     {
-                        T.showShort(TransportSendGoodsContentMessageActivity.this,getResources().getString(R.string.Qrcode_result));
+//                        T.showShort(TransportSendGoodsContentMessageActivity.this,getResources().getString(R.string.Qrcode_result));
+                        CustomToast.showWarning();
+                        getDateRefresh("", extraPosition, "车次");
+                        comTaskBeans.clear();
+                        mRecyclerViewAdapter.notifyDataSetChanged();
                         return;
                     }
 
@@ -955,7 +960,7 @@ public class TransportSendGoodsContentMessageActivity extends WWBackActivity imp
             T.showShort(this, "数据有误,不能提交");
             return;
         }
-        if (TextUtils.isEmpty(this.comTaskBeans.get(0).getCartrips())) {
+        if (TextUtils.isEmpty(this.headerProperties.get("cartrips"))) {
             T.showShort(this, "车次为空不能提交");
             return;
         }

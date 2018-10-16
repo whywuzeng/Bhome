@@ -39,6 +39,7 @@ import com.system.bhouse.utils.ClickUtils;
 import com.system.bhouse.utils.TenUtils.L;
 import com.system.bhouse.utils.TenUtils.T;
 import com.system.bhouse.utils.ValueUtils;
+import com.system.bhouse.utils.custom.CustomToast;
 
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.EActivity;
@@ -410,7 +411,8 @@ public class ModuleAssignMentContentMessageActivity extends BaseContentMessageAc
 
                         if (loadingcarbean.isEmpty())
                         {
-                            T.showShort(ModuleAssignMentContentMessageActivity.this,getResources().getString(R.string.Qrcode_result));
+//                            T.showShort(ModuleAssignMentContentMessageActivity.this,getResources().getString(R.string.Qrcode_result));
+                            CustomToast.showWarning();
                         }
 
                         for (ModuleAssignmentBean bean : loadingcarbean) {
@@ -771,7 +773,8 @@ public class ModuleAssignMentContentMessageActivity extends BaseContentMessageAc
                 }.getType());
 
                 if (loadingcarbean.isEmpty()) {
-                    T.showShort(ModuleAssignMentContentMessageActivity.this, getResources().getString(R.string.Qrcode_result));
+//                    T.showShort(ModuleAssignMentContentMessageActivity.this, getResources().getString(R.string.Qrcode_result));
+                    CustomToast.showWarning();
                 }
 
                 for (ModuleAssignmentBean bean : loadingcarbean) {

@@ -3,23 +3,24 @@ package com.system.bhouse.utils;
 import android.app.Dialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
-import android.support.v4.app.DialogFragment;
 import android.view.Gravity;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 
 import com.system.bhouse.bhouse.R;
-import com.system.bhouse.bhouse.task.view.LoadingView;
+import com.system.bhouse.ui.loading.DYLoadingView;
+import com.system.bhouse.utils.dialog.BaseDialogFragment;
 
 /**
  * Created by Administrator on 2017-12-26.
  */
 
-public class LoadingViewUtils extends DialogFragment {
+public class LoadingViewUtils extends BaseDialogFragment {
 
     Dialog mDialog;
-    LoadingView loadingView;
+//    LoadingView loadingView;
+    DYLoadingView loadingView;
 
     public LoadingViewUtils() {
     }
@@ -39,7 +40,8 @@ public class LoadingViewUtils extends DialogFragment {
 
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
-        loadingView = new LoadingView(getActivity());
+//        loadingView = new LoadingView(getActivity());
+        loadingView =new DYLoadingView(getActivity());
         if (mDialog == null) {
             mDialog = new Dialog(getActivity(), R.style.cart_dialog);
             mDialog.setContentView(loadingView);
