@@ -1,7 +1,11 @@
 package com.system.bhouse.bhouse.phone.activity.adapter;
 
+import android.support.annotation.NonNull;
 import android.support.v7.widget.GridLayoutManager;
+import android.view.View;
+import android.widget.TextView;
 
+import com.system.bhouse.base.TimeLineItemTopBottomDecoration;
 import com.system.bhouse.bhouse.CommonTask.ProduceManagement.adapter.BaseMultiItemQuickAdapter;
 import com.system.bhouse.bhouse.CommonTask.ProduceManagement.adapter.entity.MultipleItem;
 import com.system.bhouse.bhouse.CommonTask.TransportationManagement.adapter.BaseQuickAdapter;
@@ -20,7 +24,7 @@ import java.util.List;
  * com.system.bhouse.bhouse.phone.activity.adapter
  */
 
-public class ScanMultipleItemQuickAdapter extends BaseMultiItemQuickAdapter<ScanSectionMultipleiItem,BaseViewHolder> implements BaseQuickAdapter.SpanSizeLookup {
+public class ScanMultipleItemQuickAdapter extends BaseMultiItemQuickAdapter<ScanSectionMultipleiItem,BaseViewHolder> implements BaseQuickAdapter.SpanSizeLookup,TimeLineItemTopBottomDecoration.GroupNameListener {
     /**
      * Same as QuickAdapter#QuickAdapter(Context,int) but with
      * some initialization data.
@@ -46,6 +50,7 @@ public class ScanMultipleItemQuickAdapter extends BaseMultiItemQuickAdapter<Scan
                 helper.setText(R.id.title,t.text);
                 helper.setText(R.id.content,t.projectname);
                 helper.setText(R.id.time,t.time);
+                helper.setText(R.id.name,t.name);
                 break;
                 default:
                 break;
@@ -56,4 +61,32 @@ public class ScanMultipleItemQuickAdapter extends BaseMultiItemQuickAdapter<Scan
     public int getSpanSize(GridLayoutManager gridLayoutManager, int position) {
         return mData.get(position).getSpanSize();
     }
+
+    private String tempTitle =null;
+    @Override
+    public String getGroupName(int pos) {
+        if (pos<getData().size()) {
+            final ScanSectionMultipleiItem item = getData().get(pos);
+            final ScanBean bean = (ScanBean) item.t;
+            tempTitle = bean.groupString;
+        }
+        return tempTitle;
+    }
+    private View mInflate;
+    @Override
+    public View getGroupView(int pos) {
+
+        if (pos<getData().size()) {
+            mInflate=getGroupView();
+        }
+        return mInflate;
+    }
+
+    @NonNull
+    private View getGroupView() {
+        final View inflate = mLayoutInflater.inflate(R.layout.produce_item_text_view, null, false);
+        ((TextView)inflate.findViewById(R.id.tv_qiye)).setText(tempTitle);
+        return inflate;
+    }
+
 }

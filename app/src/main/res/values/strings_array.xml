@@ -405,8 +405,8 @@
     <string-array name="dynamic_type">
         <item>布模</item>
         <item>投料</item>
-        <item>养护入库</item>
-        <item>养护出库</item>
+        <item>入库</item>
+        <item>出库</item>
         <item>脱模</item>
         <item>完工入库</item>
     </string-array>

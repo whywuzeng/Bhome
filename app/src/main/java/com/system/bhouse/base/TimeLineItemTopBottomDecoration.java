@@ -1,5 +1,6 @@
 package com.system.bhouse.base;
 
+import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
@@ -9,6 +10,7 @@ import android.support.v7.widget.RecyclerView;
 import android.text.TextPaint;
 import android.text.TextUtils;
 import android.view.View;
+import android.view.ViewGroup;
 
 import com.system.bhouse.utils.MeasureUtil;
 
@@ -25,8 +27,9 @@ public class TimeLineItemTopBottomDecoration extends RecyclerView.ItemDecoration
     private final TextPaint mTextPaint;
     private final int mLeftMargin;
 
-    interface GroupNameListener {
+   public interface GroupNameListener {
         String getGroupName(int pos);
+        View getGroupView(int pos);
     }
 
     public void setGroupNameListener(GroupNameListener groupNameListener) {
@@ -42,7 +45,7 @@ public class TimeLineItemTopBottomDecoration extends RecyclerView.ItemDecoration
 
     public String getGroupName(int pos) {
         if (groupNameListener != null) {
-            groupNameListener.getGroupName(pos);
+          return   groupNameListener.getGroupName(pos);
         }
         else {
             switch (pos) {
@@ -82,7 +85,6 @@ public class TimeLineItemTopBottomDecoration extends RecyclerView.ItemDecoration
                     return "错误组名";
             }
         }
-        return "错误组名";
     }
 
     /**
@@ -93,8 +95,8 @@ public class TimeLineItemTopBottomDecoration extends RecyclerView.ItemDecoration
             return true;
         }
         else {
-            String pregroupName = getGroupName(pos);
-            String currentGroupName = getGroupName(pos + 1);
+            String pregroupName = getGroupName(pos-1);
+            String currentGroupName = getGroupName(pos);
             return !TextUtils.equals(pregroupName, currentGroupName);
         }
     }
@@ -116,7 +118,7 @@ public class TimeLineItemTopBottomDecoration extends RecyclerView.ItemDecoration
         mTextPaint = new TextPaint();
         mTextPaint.setAntiAlias(true);
         mTextPaint.setTextSize(15);
-        mTextPaint.setColor(Color.WHITE);
+        mTextPaint.setColor(Color.BLACK);
         mTextPaint.setTextAlign(Paint.Align.LEFT);
 
     }
@@ -127,15 +129,22 @@ public class TimeLineItemTopBottomDecoration extends RecyclerView.ItemDecoration
         if (mSpace <= 0) {
             mSpace = MeasureUtil.dip2px(App.getContextApp(), 30);
         }
-        int childAdapterPosition = parent.getChildAdapterPosition(view);
+        int position = parent.getChildAdapterPosition(view);
+        final String groupName = getGroupName(position);
+        if (groupName==null)
+            return;
+
+        if (position == 0 || isFirstGroup(position)) {
+            outRect.top = mGroupHeight;
+        }
 
         LinearLayoutManager layoutManager = (LinearLayoutManager) parent.getLayoutManager();
         int itemCount = layoutManager.getItemCount();
 
-        if (childAdapterPosition == 0) {
+        if (position == 0) {
 //            outRect.top = mSpace;
         }
-        if (childAdapterPosition == itemCount - 1 || childAdapterPosition == itemCount - 2) {
+        if (position == itemCount - 1) {
             outRect.bottom = mSpace;
         }
     }
@@ -158,8 +167,14 @@ public class TimeLineItemTopBottomDecoration extends RecyclerView.ItemDecoration
             //比较 currentGroupName是否一样
             if (currentGroupName == null || TextUtils.equals(currentGroupName, preGroupName))
                 continue;
+
             int viewBottom = view.getBottom();
+            View groupView = groupNameListener.getGroupView(position);
+            if (groupView == null) return;
+
             float top = Math.max(mGroupHeight, view.getTop());//top 决定当前顶部第一个悬浮Group的位置
+
+
             if (position + 1 < itemCount) {
                 //获取下个GroupName
                 String nextGroupName = getGroupName(position + 1);
@@ -168,12 +183,25 @@ public class TimeLineItemTopBottomDecoration extends RecyclerView.ItemDecoration
                     top = viewBottom;
                 }
             }
-            //根据top绘制group
-            c.drawRect(left, top - mGroupHeight, right, top, mGroutPaint);
-            Paint.FontMetrics fm = mTextPaint.getFontMetrics();
-            //文字竖直居中显示
-            float baseLine = top - (mGroupHeight - (fm.bottom - fm.top)) / 2 - fm.bottom;
-            c.drawText(currentGroupName, left + mLeftMargin, baseLine, mTextPaint);
+
+            ViewGroup.LayoutParams layoutParams = new ViewGroup.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, mGroupHeight);
+            groupView.setLayoutParams(layoutParams);
+            groupView.setDrawingCacheEnabled(true);
+            groupView.measure(
+                    View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED),
+                    View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED));
+            //指定高度、宽度的groupView
+            groupView.layout(0, 0, right, mGroupHeight);
+            groupView.buildDrawingCache();
+            Bitmap bitmap = groupView.getDrawingCache();
+            c.drawBitmap(bitmap, left, top - mGroupHeight, null);
+
+//            //根据top绘制group
+//            c.drawRect(left, top - mGroupHeight, right, top, mGroutPaint);
+//            Paint.FontMetrics fm = mTextPaint.getFontMetrics();
+//            //文字竖直居中显示
+//            float baseLine = top - (mGroupHeight - (fm.bottom - fm.top)) / 2 - fm.bottom;
+//            c.drawText(currentGroupName, left + mLeftMargin, baseLine, mTextPaint);
         }
     }
 }

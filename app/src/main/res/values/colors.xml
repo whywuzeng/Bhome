@@ -193,13 +193,16 @@
     <!-- 分割线 -->
     <color name="divide_line">#D8DDE4</color>
 
+    <!--Edge 边线-->
+    <color name="black_edge">#1A000000</color>
+
     <!--主背景灰白很好-->
     <color name="divide">#F2F4F6</color>
 
     <color name="font_2">#222222</color>
     <color name="font_6">#666666</color>
     <color name="font_9">#999999</color>
-
+    <!--白色点击 背景颜色-->
     <color name="white_pressed">#ffd5d5d5</color>
 
     <color name="color_F6F6F6">#f6f6f6</color>

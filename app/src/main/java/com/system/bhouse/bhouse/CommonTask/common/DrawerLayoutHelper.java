@@ -170,7 +170,7 @@ public class DrawerLayoutHelper {
 //        if (mFilterModel != null && !TextUtils.isEmpty(mFilterModel.keyword)) {
 //            mFilterModel.keyword = "";
 //        }
-        etSearch.setText("");
+        etSearch.setText(mFilterModel.keyword);
         etSearch.setOnEditorActionListener((v, actionId, event) -> {
             if (actionId == EditorInfo.IME_ACTION_SEARCH) {
                 if (filterListener != null) {

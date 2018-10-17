@@ -98,7 +98,7 @@ public class App extends MultiDexApplication {
 
     //自己的信息
     public static UserObject sUserObject;
-
+    public static final SimpleDateFormat sFormatThisYearMonth =new SimpleDateFormat("yy-MM-dd");
     public static final SimpleDateFormat sFormatThisYearSlashSECOND = new SimpleDateFormat("yy/MM/dd HH:mm:ss");
     public static final SimpleDateFormat sFormatThisMonth = new SimpleDateFormat("MM-dd");
 

@@ -10,13 +10,10 @@ import android.os.Handler;
 import android.os.Message;
 import android.text.TextUtils;
 import android.util.Log;
-import android.widget.Toast;
 
 import com.system.bhouse.Custom.htextview.HTextView;
 import com.system.bhouse.Custom.htextview.HTextViewType;
-import com.system.bhouse.api.ApiWebService;
 import com.system.bhouse.base.App;
-import com.system.bhouse.base.BHBaseSubscriber;
 import com.system.bhouse.base.BaseActivity;
 import com.system.bhouse.base.database.AccountManager;
 import com.system.bhouse.base.database.DatabaseManager;
@@ -25,9 +22,6 @@ import com.system.bhouse.base.storage.BHPrefrences;
 import com.system.bhouse.bean.UserInfo;
 import com.system.bhouse.bhouse.setup.notification.MyNotificationActivity_;
 import com.system.bhouse.utils.AppManager;
-import com.system.bhouse.utils.ProgressUtils;
-import com.system.bhouse.utils.custom.CustomToast;
-import com.system.bhouse.utils.sharedpreferencesuser;
 import com.tencent.android.tpush.XGPushClickedResult;
 import com.tencent.android.tpush.XGPushManager;
 
@@ -124,44 +118,59 @@ public class WelcomActivity extends BaseActivity {
                                 public void run() {
                                     if (AccountManager.isSignIn()) {
                                         UserInfo userInfo = DatabaseManager.getInstance().getUserInfo();
-                                        Observable loginMsg = ApiWebService.getLoginMsg(userInfo.getUsername(), sharedpreferencesuser.getUserpassword(App.getContextApp()));
-                                        loginMsg.subscribe(new BHBaseSubscriber<String>() {
-                                            @Override
-                                            public void onStart() {
-                                                super.onStart();
-                                                ProgressUtils.ShowProgress(WelcomActivity.this);
-                                            }
+//                                        Observable loginMsg = ApiWebService.getLoginMsg(userInfo.getUsername(), sharedpreferencesuser.getUserpassword(App.getContextApp()));
+//                                        loginMsg.subscribe(new BHBaseSubscriber<String>() {
+//                                            @Override
+//                                            public void onStart() {
+//                                                super.onStart();
+//                                                ProgressUtils.ShowProgress(WelcomActivity.this);
+//                                            }
+//
+//                                            @Override
+//                                            public void onCompleted() {
+//                                                super.onCompleted();
+//                                                ProgressUtils.DisMissProgress();
+//                                            }
+//
+//                                            @Override
+//                                            public void onError(Throwable e) {
+//                                                super.onError(e);
+//                                                CustomToast.showDefault(errorMsg, Toast.LENGTH_SHORT);
+//                                                gotoWelcom();
+//                                                ProgressUtils.DisMissProgress();
+//                                            }
+//
+//                                            @Override
+//                                            public void onNext(String s) {
+//                                                super.onNext(s);
+//                                                UserInfo[] getIpInfoResponse = App.getAppGson().fromJson(s, UserInfo[].class);
+//                                                if (!(getIpInfoResponse == null) && (getIpInfoResponse.length > 0)) {
+//                                                    Intent intent = new Intent(WelcomActivity.this, MainActivity.class);
+//                                                    intent.putExtra(LoginActivity.USERLOGNDATA, userInfo);
+//                                                    startActivity(intent);
+//                                                    AppManager.getAppManager().finishActivity(WelcomActivity.this);
+//                                                }
+//                                                else {
+//                                                    gotoWelcom();
+//                                                }
+//                                            }
+//                                        });
 
-                                            @Override
-                                            public void onCompleted() {
-                                                super.onCompleted();
-                                                ProgressUtils.DisMissProgress();
-                                            }
+                                        Intent intent = new Intent(WelcomActivity.this, MainActivity.class);
+                                        intent.putExtra(LoginActivity.USERLOGNDATA, userInfo);
+                                        startActivity(intent);
+                                        AppManager.getAppManager().finishActivity(WelcomActivity.this);
 
-                                            @Override
-                                            public void onError(Throwable e) {
-                                                super.onError(e);
-                                                CustomToast.showDefault(errorMsg, Toast.LENGTH_SHORT);
-                                                gotoWelcom();
-                                                ProgressUtils.DisMissProgress();
-                                            }
-
-                                            @Override
-                                            public void onNext(String s) {
-                                                super.onNext(s);
-                                                UserInfo[] getIpInfoResponse = App.getAppGson().fromJson(s, UserInfo[].class);
-                                                if (!(getIpInfoResponse == null) && (getIpInfoResponse.length > 0)) {
-                                                    Intent intent = new Intent(WelcomActivity.this, MainActivity.class);
-                                                    intent.putExtra(LoginActivity.USERLOGNDATA, userInfo);
-                                                    startActivity(intent);
-                                                    AppManager.getAppManager().finishActivity(WelcomActivity.this);
-                                                }
-                                                else {
-                                                    gotoWelcom();
-                                                }
-                                            }
-                                        });
-
+//                                        final String userpassword = sharedpreferencesuser.getUserpassword(App.getContextApp());
+//                                        if (TextUtils.isEmpty(userpassword))
+//                                        {
+//                                            gotoWelcom();
+//                                        }else {
+//                                            Intent intent = new Intent(WelcomActivity.this, MainActivity.class);
+//                                            intent.putExtra(LoginActivity.USERLOGNDATA, userInfo);
+//                                            startActivity(intent);
+//                                            AppManager.getAppManager().finishActivity(WelcomActivity.this);
+//                                        }
                                     }
                                     else {
                                         gotoWelcom();

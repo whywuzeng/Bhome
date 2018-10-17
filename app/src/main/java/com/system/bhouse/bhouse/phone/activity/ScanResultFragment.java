@@ -12,12 +12,14 @@ import android.widget.TextView;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.system.bhouse.Common.Global;
+import com.system.bhouse.base.TimeLineItemTopBottomDecoration;
 import com.system.bhouse.bhouse.CommonTask.ProduceManagement.adapter.entity.MultipleItem;
 import com.system.bhouse.bhouse.R;
 import com.system.bhouse.bhouse.phone.activity.adapter.ScanMultipleItemQuickAdapter;
 import com.system.bhouse.bhouse.phone.activity.bean.ScanBean;
 import com.system.bhouse.bhouse.phone.activity.bean.ScanSectionMultipleiItem;
 import com.system.bhouse.bhouse.setup.WWCommon.SmartRefreshBaseFragment;
+import com.system.bhouse.utils.MeasureUtil;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -70,13 +72,37 @@ public class ScanResultFragment extends SmartRefreshBaseFragment {
     private void init() {
         initRefreshView();
         List<ScanSectionMultipleiItem> list = new ArrayList<>();
-        list.add(new ScanSectionMultipleiItem(true,sToday));
-        list.add(new ScanSectionMultipleiItem(new ScanBean("吴增","布模了构件201803-155451-11002","布模工序","18.32",""), MultipleItem.IMG,4));
+
+
+        list.add(new ScanSectionMultipleiItem(new ScanBean("吴增","布模了构件201803-155451-11002","布模工序","18.32","",sToday), MultipleItem.IMG,4));
+
+        list.add(new ScanSectionMultipleiItem(new ScanBean("杜俊","投料了构件201803-155451-11002","投料工序","18.32","",sToday), MultipleItem.IMG,4));
+
+        list.add(new ScanSectionMultipleiItem(new ScanBean("沈灵敏","投料了构件201803-155451-11002","投料工序","18.32","",sToday), MultipleItem.IMG,4));
+
+        list.add(new ScanSectionMultipleiItem(new ScanBean("小伙子","投料了构件201803-155451-11002","投料工序","18.32","",sToday), MultipleItem.IMG,4));
+
+
+        list.add(new ScanSectionMultipleiItem(new ScanBean("吴增","布模了构件201803-155451-11002","布模工序","18.32","",sYesterday), MultipleItem.IMG,4));
+
+        list.add(new ScanSectionMultipleiItem(new ScanBean("杜俊","投料了构件201803-155451-11002","投料工序","18.32","",sYesterday), MultipleItem.IMG,4));
+
+        list.add(new ScanSectionMultipleiItem(new ScanBean("沈灵敏","投料了构件201803-155451-11002","投料工序","18.32","",sYesterday), MultipleItem.IMG,4));
+
+        list.add(new ScanSectionMultipleiItem(new ScanBean("小伙子","投料了构件201803-155451-11002","投料工序","18.32","",sYesterday), MultipleItem.IMG,4));
+        list.add(new ScanSectionMultipleiItem(new ScanBean("小伙子","投料了构件201803-155451-11002","投料工序","18.32","",sYesterday), MultipleItem.IMG,4));
+        list.add(new ScanSectionMultipleiItem(new ScanBean("小伙子","投料了构件201803-155451-11002","投料工序","18.32","",sYesterday), MultipleItem.IMG,4));
+        list.add(new ScanSectionMultipleiItem(new ScanBean("小伙子","投料了构件201803-155451-11002","投料工序","18.32","",sYesterday), MultipleItem.IMG,4));
+        list.add(new ScanSectionMultipleiItem(new ScanBean("小伙子","投料了构件201803-155451-11002","投料工序","18.32","",sYesterday), MultipleItem.IMG,4));
 
         final ScanMultipleItemQuickAdapter adapter = new ScanMultipleItemQuickAdapter(list);
         final GridLayoutManager gridLayoutManager = new GridLayoutManager(getActivity(), 4);
         listView.setLayoutManager(gridLayoutManager);
         listView.setAdapter(adapter);
+        final TimeLineItemTopBottomDecoration decoration = new TimeLineItemTopBottomDecoration();
+        decoration.setmGroupHeight(MeasureUtil.dip2px(getActivity(),41));
+        decoration.setGroupNameListener(adapter);
+        listView.addItemDecoration(decoration);
     }
 
 
