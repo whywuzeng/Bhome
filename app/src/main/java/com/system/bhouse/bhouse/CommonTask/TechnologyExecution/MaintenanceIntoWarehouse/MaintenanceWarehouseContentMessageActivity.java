@@ -694,14 +694,12 @@ public class MaintenanceWarehouseContentMessageActivity extends BaseContentMessa
         ApiWebService.Get_Production_order_yhy_In_byidr_Json_poidprid_QR_Code(this, new ApiWebService.SuccessCall() {
             @Override
             public void SuccessBack(String result) {
-                ArrayList<MaintenanceWarehouseBean> tomTaskBeans = App.getAppGson().fromJson(result, new TypeToken<List<MaintenanceWarehouseBean>>() {
-                }.getType());
+                ArrayList<MaintenanceWarehouseBean> tomTaskBeans = App.getAppGson().fromJson(result, new TypeToken<List<MaintenanceWarehouseBean>>() {}.getType());
                 //为空就创建一个新的空对象
                 if (tomTaskBeans.isEmpty()) {
                     //为头recycleView 设置空数据
                     comTaskBeans.add(new MaintenanceWarehouseBean());
-                }
-                else {
+                }else {
                     comTaskBeans.addAll(tomTaskBeans);
                     /**
                      * 进行判断 mStatus 状态  判断状态是否一致  不一致进行订单状态变更
