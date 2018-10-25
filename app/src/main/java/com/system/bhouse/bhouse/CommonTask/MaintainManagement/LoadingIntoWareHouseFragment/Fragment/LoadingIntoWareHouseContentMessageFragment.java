@@ -59,8 +59,6 @@ import java.util.TreeSet;
 
 import butterknife.Bind;
 import de.greenrobot.event.EventBus;
-import rx.Observable;
-import rx.Subscriber;
 
 /**
  * Created by Administrator on 2018-03-05.
@@ -208,8 +206,15 @@ public class LoadingIntoWareHouseContentMessageFragment extends BaseContentMessa
             @Override
             public void onClick(View v) {
                 ((LoadingIntoWareHouseContentActivity)_mActivity).onBackPressedSupport();
+                sureDataRefresh("tvFanCheckAction");
             }
         });
+    }
+
+    @Override
+    public boolean onBackPressedSupport() {
+        sureDataRefresh("tvFanCheckAction");
+        return super.onBackPressedSupport();
     }
 
     //对用户可见时回调
@@ -545,28 +550,29 @@ public class LoadingIntoWareHouseContentMessageFragment extends BaseContentMessa
         switch (item.getItemId()) {
             case R.id.action_operat_status:
 
-                Observable<Object> objectObservable = Observable.create(subscriber -> {
-                    show1(mStatus);
-                    setTvQrcodeContext("装车订单拉取", View.VISIBLE);
-                    setTvQrAddContext("货柜调拨", true);
-                });
-                Observable observableMobileKey = ApiWebService.Get_KeyTimestr(App.MobileKey);
-                observableMobileKey.concatWith(objectObservable).subscribe(new Subscriber() {
-                    @Override
-                    public void onCompleted() {
+                show1(mStatus);
+                setTvQrcodeContext("装车订单拉取", View.VISIBLE);
+                setTvQrAddContext("货柜调拨", true);
 
-                    }
-
-                    @Override
-                    public void onError(Throwable e) {
-
-                    }
-
-                    @Override
-                    public void onNext(Object o) {
-                        App.KeyTimestring = o.toString();
-                    }
-                });
+//                Observable<Object> objectObservable = Observable.create(subscriber -> {
+//                });
+//                Observable observableMobileKey = ApiWebService.Get_KeyTimestr(App.MobileKey);
+//                observableMobileKey.concatWith(objectObservable).subscribe(new Subscriber() {
+//                    @Override
+//                    public void onCompleted() {
+//
+//                    }
+//
+//                    @Override
+//                    public void onError(Throwable e) {
+//
+//                    }
+//
+//                    @Override
+//                    public void onNext(Object o) {
+//                        App.KeyTimestring = o.toString();
+//                    }
+//                });
 
                 return true;
             default:
@@ -1163,7 +1169,6 @@ public class LoadingIntoWareHouseContentMessageFragment extends BaseContentMessa
 
                     if (!result.contains("失败")) {
                         _mActivity.onBackPressed();
-                        sureDataRefresh("tvSubmitAction");
                     }
                 }
 
@@ -1181,7 +1186,6 @@ public class LoadingIntoWareHouseContentMessageFragment extends BaseContentMessa
 
                     if (!result.contains("失败")) {
                         _mActivity.onBackPressed();
-                        sureDataRefresh("tvModifyAction");
                     }
                 }
 
@@ -1202,7 +1206,7 @@ public class LoadingIntoWareHouseContentMessageFragment extends BaseContentMessa
                 showButtomToast(result);
                 //就是在原界面刷新
                 testData();
-                sureDataRefresh("tvCheckAction");
+//                sureDataRefresh("tvCheckAction");
             }
 
             @Override
@@ -1221,7 +1225,7 @@ public class LoadingIntoWareHouseContentMessageFragment extends BaseContentMessa
                 showButtomToast(result);
                 //就是在原界面刷新
                 testData();
-                sureDataRefresh("tvFanCheckAction");
+//                sureDataRefresh("tvFanCheckAction");
             }
 
             @Override
@@ -1238,7 +1242,6 @@ public class LoadingIntoWareHouseContentMessageFragment extends BaseContentMessa
             public void SuccessBack(String result) {
                 T.showShort(_mActivity, result);
                 _mActivity.onBackPressed();
-                sureDataRefresh("tvDeleteAction");
             }
 
             @Override

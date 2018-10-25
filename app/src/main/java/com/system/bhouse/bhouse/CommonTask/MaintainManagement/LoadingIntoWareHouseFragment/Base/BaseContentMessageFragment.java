@@ -10,6 +10,9 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.system.bhouse.api.ApiWebService;
+import com.system.bhouse.base.App;
+import com.system.bhouse.base.BHBaseSubscriber;
 import com.system.bhouse.base.StatusBean;
 import com.system.bhouse.bhouse.CommonTask.BaseTaskFragment.BaseContentMessageActivity;
 import com.system.bhouse.bhouse.R;
@@ -18,6 +21,7 @@ import com.system.bhouse.utils.TenUtils.L;
 import java.util.concurrent.TimeUnit;
 
 import rx.Observable;
+import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;
 
 /**
@@ -59,12 +63,37 @@ public abstract class BaseContentMessageFragment extends BaseBackFragment {
         tvQrcode = (TextView)contentView.findViewById(R.id.tv_qrcode);
         tvQrcodeAdd = (TextView)contentView.findViewById(R.id.tv_qrcode_add);
 
+        Observable observableMobileKey = ApiWebService.Get_KeyTimestr(App.MobileKey);
+
+        Subscriber subscriberMobileKey= new BHBaseSubscriber<Object>() {
+            @Override
+            public void onCompleted() {
+                super.onCompleted();
+            }
+
+            @Override
+            public void onError(Throwable e) {
+                super.onError(e);
+            }
+
+            @Override
+            public void onNext(Object o) {
+                super.onNext(o);
+                App.KeyTimestring = o.toString();
+            }
+        };
+
         tvQrcodeAdd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (mSetOnAddItemClickListener!=null)
                 {
-                    mSetOnAddItemClickListener.onAddItemClick(v);
+                    observableMobileKey.concatWith(Observable.create(new Observable.OnSubscribe<Object>() {
+                        @Override
+                        public void call(Subscriber<? super Object> subscriber) {
+                            mSetOnAddItemClickListener.onAddItemClick(v);
+                        }
+                    })).subscribe(subscriberMobileKey);
                 }
                 bottomDialog.dismiss();
             }
@@ -80,9 +109,15 @@ public abstract class BaseContentMessageFragment extends BaseBackFragment {
             tvQrcode.setOnClickListener(v ->{subscriber.onNext(v);
             });
         }).debounce(350, TimeUnit.MILLISECONDS).observeOn(AndroidSchedulers.mainThread()).subscribe(V -> {
-            L.e("double click");
-            bottomDialog.dismiss();
-            tvQrcodeAction(tvQrcode);
+
+            observableMobileKey.concatWith(Observable.create(new Observable.OnSubscribe<Object>() {
+                @Override
+                public void call(Subscriber<? super Object> subscriber) {
+                    bottomDialog.dismiss();
+                    tvQrcodeAction(tvQrcode);
+                }
+            })).subscribe(subscriberMobileKey);
+
         });
 
 
@@ -90,9 +125,13 @@ public abstract class BaseContentMessageFragment extends BaseBackFragment {
             tvDelete.setOnClickListener(v ->{subscriber.onNext(v);
             });
         }).debounce(350, TimeUnit.MILLISECONDS).observeOn(AndroidSchedulers.mainThread()).subscribe(V -> {
-            L.e("double click");
-            bottomDialog.dismiss();
-            tvDeleteAction(tvDelete);
+            observableMobileKey.concatWith(Observable.create(new Observable.OnSubscribe<Object>() {
+                @Override
+                public void call(Subscriber<? super Object> subscriber) {
+                    bottomDialog.dismiss();
+                    tvDeleteAction(tvDelete);
+                }
+            })).subscribe(subscriberMobileKey);
         });
 
 
@@ -100,23 +139,38 @@ public abstract class BaseContentMessageFragment extends BaseBackFragment {
             tvFanCheck.setOnClickListener(v ->{subscriber.onNext(v);
             });
         }).debounce(350, TimeUnit.MILLISECONDS).observeOn(AndroidSchedulers.mainThread()).subscribe(V -> {
-            L.e("double click");
-            bottomDialog.dismiss();
-            tvFanCheckAction(tvFanCheck);
+            observableMobileKey.concatWith(Observable.create(new Observable.OnSubscribe<Object>() {
+                @Override
+                public void call(Subscriber<? super Object> subscriber) {
+                    bottomDialog.dismiss();
+                    tvFanCheckAction(tvFanCheck);
+                }
+            })).subscribe(subscriberMobileKey);
         });
 
 
         tvModify.setOnClickListener(v -> {
-            tvModifyAction(tvModify);
+            observableMobileKey.concatWith(Observable.create(new Observable.OnSubscribe<Object>() {
+                @Override
+                public void call(Subscriber<? super Object> subscriber) {
+                    bottomDialog.dismiss();
+                    tvModifyAction(tvModify);
+                }
+            })).subscribe(subscriberMobileKey);
         });
 
         Observable.create(subscriber -> {
             tvSubmit.setOnClickListener(v ->{subscriber.onNext(v);
             });
         }).debounce(350, TimeUnit.MILLISECONDS).observeOn(AndroidSchedulers.mainThread()).subscribe(V -> {
-            L.e("double click");
-            bottomDialog.dismiss();
-            tvSubmitActionforList(tvSubmit);
+            observableMobileKey.concatWith(Observable.create(new Observable.OnSubscribe<Object>() {
+                @Override
+                public void call(Subscriber<? super Object> subscriber) {
+                    L.e("double click");
+                    bottomDialog.dismiss();
+                    tvSubmitActionforList(tvSubmit);
+                }
+            })).subscribe(subscriberMobileKey);
         });
 
 
@@ -124,9 +178,14 @@ public abstract class BaseContentMessageFragment extends BaseBackFragment {
             tvCheck.setOnClickListener(v ->{subscriber.onNext(v);
             });
         }).debounce(350, TimeUnit.MILLISECONDS).observeOn(AndroidSchedulers.mainThread()).subscribe(V -> {
-            L.e("double click");
-            bottomDialog.dismiss();
-            tvCheckAction(tvCheck);
+            observableMobileKey.concatWith(Observable.create(new Observable.OnSubscribe<Object>() {
+                @Override
+                public void call(Subscriber<? super Object> subscriber) {
+                    L.e("double click");
+                    bottomDialog.dismiss();
+                    tvCheckAction(tvCheck);
+                }
+            })).subscribe(subscriberMobileKey);
         });
 
 

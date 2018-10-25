@@ -336,6 +336,7 @@ public abstract class BaseCommonListFragment<T extends LoadingAdapter,B> extends
             //重新加载所有
             mUpdateAll = true;
             initUrlAndLoadData();
+            openAutoRefrsh();
         }
         else if (object.toString().contains("刷新")) {
 

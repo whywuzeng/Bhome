@@ -67,6 +67,31 @@ public abstract class RefreshBaseFragment extends WWBaseFragment implements Swip
         swipeRefreshLayout.setOnRefreshListener(this);
         swipeRefreshLayout.setColorSchemeResources(R.color.green);
     }
+    protected boolean isOpenAutoRefrsh = false;
+    protected final boolean openAutoRefrsh(){
+        if (swipeRefreshLayout!=null) {
+            swipeRefreshLayout.post(new Runnable() {
+                @Override
+                public void run() {
+                    swipeRefreshLayout.setRefreshing(true);
+                    isOpenAutoRefrsh=true;
+                }
+            });
+        }
+        return isOpenAutoRefrsh;
+    }
+
+    protected  final void closeAutoRefrsh(){
+        if (swipeRefreshLayout!=null&&isOpenAutoRefrsh) {
+            swipeRefreshLayout.post(new Runnable() {
+                @Override
+                public void run() {
+                    swipeRefreshLayout.setRefreshing(false);
+                    isOpenAutoRefrsh=false;
+                }
+            });
+        }
+    }
 
     protected final void disableRefreshing() {
         if (swipeRefreshLayout != null) {

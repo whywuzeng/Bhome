@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -51,6 +52,8 @@ import butterknife.ButterKnife;
 
 public class ProduceActivity extends WWBackActivity implements BaseQuickAdapter.OnItemChildClickListener{
 
+    private static final String TAG = "ProduceActivity";
+    
     @Bind(R.id.recycler_view)
     RecyclerView recyclerView;
 
@@ -221,5 +224,41 @@ public class ProduceActivity extends WWBackActivity implements BaseQuickAdapter.
     private void action_organize() {
         Intent intent2=new Intent(this,InformationActivity.class);
         this.startActivityForResult(intent2,RESULT_LOCAL);
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        Log.e(TAG, "onStart: " );
+    }
+
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+        Log.e(TAG, "onRestart: " );
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        Log.e(TAG, "onResume: " );
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        Log.e(TAG, "onPause: " );
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        Log.e(TAG, "onStop: " );
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        Log.e(TAG, "onDestroy: " );
     }
 }

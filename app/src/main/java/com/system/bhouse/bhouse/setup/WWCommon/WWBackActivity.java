@@ -72,7 +72,25 @@ public class WWBackActivity extends WWBaseActivity {
                 }
             });
         }
+    }
 
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        if (listener!=null) {
+            listener.onBackPressedListener();
+        }
+    }
+
+    public void setOnBackPressedListener(setOnBackPressedListener listener) {
+        this.listener = listener;
+    }
+
+    private setOnBackPressedListener listener;
+
+
+    public interface setOnBackPressedListener{
+        void onBackPressedListener();
     }
 
 

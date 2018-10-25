@@ -148,6 +148,13 @@ public class LoadingCarOrderContentMessageActivity extends BaseContentMessageAct
 
         testData();
         setScrollViewFirst();
+
+        setOnBackPressedListener(new setOnBackPressedListener() {
+            @Override
+            public void onBackPressedListener() {
+                sureDataRefresh("tvDeleteAction");
+            }
+        });
     }
 
     //处理单选框方法
@@ -184,7 +191,6 @@ public class LoadingCarOrderContentMessageActivity extends BaseContentMessageAct
                 mRecyclerViewAdapter.notifyDataSetChanged();
             }
         });
-
 
     }
 
@@ -736,7 +742,7 @@ public class LoadingCarOrderContentMessageActivity extends BaseContentMessageAct
             public void SuccessBack(String result) {
                 ArrayList<LoadingCarBean> tomTaskBeans = App.getAppGson().fromJson(result, new TypeToken<List<LoadingCarBean>>() {
                 }.getType());
-                    comTaskBeans.addAll(tomTaskBeans);
+                comTaskBeans.addAll(tomTaskBeans);
                 mRecyclerViewAdapter.notifyDataSetChanged();
                 ifStateForOrderId();
                 TopListViewInit();
@@ -780,6 +786,8 @@ public class LoadingCarOrderContentMessageActivity extends BaseContentMessageAct
             return;
         }
     }
+
+
 
 
     @Override

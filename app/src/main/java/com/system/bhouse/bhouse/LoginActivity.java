@@ -39,7 +39,7 @@ import com.system.bhouse.base.database.UserProfile;
 import com.system.bhouse.base.storage.BHPrefrences;
 import com.system.bhouse.bean.UserInfo;
 import com.system.bhouse.bhouse.phone.view.WaveView;
-import com.system.bhouse.bhouse.setup.WWCommon.WWBaseActivity;
+import com.system.bhouse.bhouse.setup.WWCommon.WWCheckActivity;
 import com.system.bhouse.bhouse.setup.notification.MyNotificationActivity_;
 import com.system.bhouse.utils.AppManager;
 import com.system.bhouse.utils.DeviceMessageUtils;
@@ -69,7 +69,7 @@ import rx.Subscriber;
  * Created by Administrator on 2016/3/9.
  * 登录的activity
  */
-public class LoginActivity extends WWBaseActivity {
+public class LoginActivity extends WWCheckActivity {
     @Bind(R.id.usernumber)
     EditText usernumber;
     @Bind(R.id.password_btn)
@@ -145,11 +145,8 @@ public class LoginActivity extends WWBaseActivity {
         ((EditText) usernumber).setSelection(usernumber.getText().length());
         ((EditText) passwordBtn).setSelection(passwordBtn.getText().length());
 
-         deviceCpuID = DeviceMessageUtils.getDeviceCpuID(this);
-         deviceId = DeviceMessageUtils.getDeviceId(this);
-         ip = DeviceMessageUtils.getIp(this);
-         DiskID="userdata";
-         memInfoIype = DeviceMessageUtils.getMemInfoIype(this,"MemTotal");
+        checkPhoneReadState();
+
          deviceToken = new String[]{""};
         XGPushManager.registerPush(this, new XGIOperateCallback() {
             @Override
@@ -175,6 +172,13 @@ public class LoginActivity extends WWBaseActivity {
 //        initCustomNotification(getApplicationContext());
     }
 
+    private void getPhoneDevice() {
+        deviceCpuID = DeviceMessageUtils.getDeviceCpuID(this);
+        deviceId = DeviceMessageUtils.getDeviceId(this);
+        ip = DeviceMessageUtils.getIp(this);
+        DiskID="userdata";
+        memInfoIype = DeviceMessageUtils.getMemInfoIype(this,"MemTotal");
+    }
 
 
     private void initCustomNotification(Context context) {
@@ -540,7 +544,7 @@ public class LoginActivity extends WWBaseActivity {
     }
 
     public String getPhoneInfo(Context context) {
-
+        getPhoneDevice();
         deviceToken[0]= XGPushConfig.getToken(this);
 
         StringBuilder sb = new StringBuilder();

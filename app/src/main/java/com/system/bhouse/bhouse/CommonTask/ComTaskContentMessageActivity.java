@@ -124,6 +124,14 @@ public class ComTaskContentMessageActivity extends BaseContentMessageActivity im
             setActionBarMidlleTitle("吊装需求");
         }
         setScrollViewFirst();
+
+
+        setOnBackPressedListener(new setOnBackPressedListener() {
+            @Override
+            public void onBackPressedListener() {
+                sureDataRefresh("tvDeleteAction");
+            }
+        });
     }
 
     /**

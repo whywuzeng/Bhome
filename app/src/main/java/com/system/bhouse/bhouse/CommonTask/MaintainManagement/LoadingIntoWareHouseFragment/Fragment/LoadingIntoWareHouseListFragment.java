@@ -102,6 +102,7 @@ public class LoadingIntoWareHouseListFragment extends BaseCommonListFragment<Loa
                     if (isRefreshing()) {
                         setRefreshing(false);
                     }
+                    closeAutoRefrsh();
                 }
 
                 @Override
@@ -115,6 +116,7 @@ public class LoadingIntoWareHouseListFragment extends BaseCommonListFragment<Loa
                     if (isRefreshing()) {
                         setRefreshing(false);
                     }
+                    closeAutoRefrsh();
                 }
             }, TextUtils.isEmpty(mLabel) ? 50 : Integer.valueOf(mLabel),TextUtils.isEmpty(mStatus) ? ContentTitle[1] : mStatus, TextUtils.isEmpty(mKeyword) ? "" : mKeyword);
 
