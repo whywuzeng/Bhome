@@ -112,6 +112,7 @@ public  class DateTimePickerDialog2  implements CustomDatePickerAlertDialog.AntD
 ////                showTimePickerDialog(year, month, day);
 //            }
 //        });
+        
         dialog.setPositiveButton("确定", this);
         dialog.setNegativeButton("取消", null);
         dialog.setTitle("请设置日期时间");

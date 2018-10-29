@@ -61,8 +61,8 @@ public class LoadingApkProgress {
     }
 
     public void cancel(){
-        if (alertDialog.isShowing()) {
-            alertDialog.cancel();
-        }
+//        if (alertDialog.isShowing()) {
+//        }
+        alertDialog.cancel();
     }
 }

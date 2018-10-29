@@ -64,7 +64,7 @@ public class CustomDatePickerAlertDialog {
      */
     public CustomDatePickerAlertDialog(Context context, int year, int monthOfYear, int dayOfMonth,int hour, int minute) {
         this.context = context;
-        AlertDialog.Builder builder = new AlertDialog.Builder(context);
+        AlertDialog.Builder builder = new AlertDialog.Builder(context,R.style.datedialog);
         dialog = builder.create();
 
         initDate(year, monthOfYear, dayOfMonth,hour,minute);

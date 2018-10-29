@@ -111,6 +111,12 @@
         <item name="android:windowBackground">@android:color/transparent</item>
         <item name="android:windowNoTitle">true</item>
         <item name="android:windowIsFloating">true</item>
+        <!--对话框半透明-->
+        <item name="android:windowIsTranslucent">false</item>
+        <!--无边框-->
+        <item name="android:windowFrame">@null</item>
+        <!--模糊-->
+        <item name="android:backgroundDimEnabled">true</item>
     </style>
 
     <style name="fade">

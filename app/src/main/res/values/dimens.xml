@@ -9,7 +9,7 @@
     <dimen name="common_lage_text_size">19sp</dimen>
 
     <!-- 主页 -->
-    <dimen name="fragment_home_gallery_height">238px</dimen>
+    <dimen name="fragment_home_gallery_height">119dp</dimen>
 
     <!-- 促销1样式高度 -->
 

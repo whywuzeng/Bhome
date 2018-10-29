@@ -4,7 +4,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Build;
-import android.support.v4.content.FileProvider;
+
+import com.system.bhouse.utils.IntentUtils;
 
 import java.io.File;
 
@@ -20,6 +21,11 @@ public class InstallApkUtils {
 
     /**
      * 打开apk启动安装，并在安装完成后自动打开
+     *
+     * activity.getFilesDir() --- /data/user/0/com.system.bhouse.bhouse/files
+     * activity.getCacheDir() --- /data/user/0/com.system.bhouse.bhouse/cache/HttpCache
+     *  Environment.getExternalStorageDirectory()   ----/storage/emulated/0
+     *
      */
     public static void installApk(String savePath, Context mContext) {
         File apkfile = new File(savePath);
@@ -30,11 +36,7 @@ public class InstallApkUtils {
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);//安装完成后自动打开
         //判读版本是否在7.0以上
         if (Build.VERSION.SDK_INT >= 24) {
-            //AndroidManifest provider authorities
-            Uri apkUri = FileProvider.getUriForFile(mContext, "com.bhome.fileprovider", apkfile);
-            //Granting Temporary Permissions to a URI
-            intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);//对目标应用临时授权该Uri所代表的文件
-            intent.setDataAndType(apkUri, "application/vnd.android.package-archive");
+            intent=IntentUtils.getApk7FileIntent(apkfile,mContext);
         } else {
 //            intent.setDataAndType(Uri.parse("file://" + apkfile.toString()),
 //                    "application/vnd.android.package-archive");// File.toString()会返回路径信息

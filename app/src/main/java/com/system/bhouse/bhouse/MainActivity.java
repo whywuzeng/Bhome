@@ -53,6 +53,7 @@ import com.system.bhouse.utils.LogUtil;
 import com.system.bhouse.utils.MeasureUtil;
 import com.system.bhouse.utils.TenUtils.AndroidWorkaroundUtils;
 import com.system.bhouse.utils.apk.InstallApkUtils;
+import com.system.bhouse.utils.apk.NotificationSetting;
 import com.system.bhouse.utils.sharedpreferencesuser;
 import com.tencent.android.tpush.XGPushShowedResult;
 import com.zijunlin.Zxing.Demo.CaptureActivity;
@@ -270,7 +271,7 @@ public class MainActivity extends BaseActivity implements  TopMiddleMenu.OnMenuI
             isNotify=true;
             houseKeeperIv.setBackgroundResource(R.drawable.bg_reddot_myselfhuise);
         }
-
+        NotificationSetting.checkNotificationSetting(this);
     }
 
 
@@ -382,12 +383,13 @@ public class MainActivity extends BaseActivity implements  TopMiddleMenu.OnMenuI
                 DownloadService.launch(MainActivity.this, apk_urlxia, "apk", new DownServiceStartListener() {
                     @Override
                     public void onServiceStart() {
-                        AppManager.getAppManager().AppExit(MainActivity.this);
+
                     }
 
                     @Override
                     public void onServiceEnd(File mFile) {
                         InstallApkUtils.installApk(mFile.getPath(),MainActivity.this);
+                        AppManager.getAppManager().AppExit(MainActivity.this);
                     }
 
                     @Override

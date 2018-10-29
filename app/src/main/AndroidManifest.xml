@@ -19,7 +19,6 @@
            >
         </activity>
         <activity
-            android:screenOrientation="portrait"
             android:theme="@style/Theme.Translucent"
             android:name="com.system.bhouse.bhouse.WelcomActivity">
             <intent-filter>
@@ -356,12 +355,15 @@
 
         <!-- B6:0A:5A:28:58:C4:E0:4B:74:2E:51:B3:8E:9E:C0:DC:6B:5C:28:11;com.system.bhouse.bhouse -->
 
-        <!--<provider-->
-            <!--android:name="android.support.v4.content.FileProvider"-->
-            <!--android:authorities="com.bhome.fileprovider"-->
-            <!--android:exported="false"-->
-            <!--android:grantUriPermissions="true">-->
-        <!--</provider>-->
+        <provider
+            android:name="android.support.v4.content.FileProvider"
+            android:authorities="com.system.bhouse.bhouse.fileprovider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/file_paths"/>
+        </provider>
 
 
         <service android:name="com.system.bhouse.bhouse.Service.MessageService">
@@ -409,6 +411,8 @@
     <uses-permission android:name="android.permission.CHANGE_CONFIGURATION"></uses-permission>
     <uses-permission android:name="android.permission.VIBRATE"/>
     <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW"/>
+    <!--允许未知来源应用-->
+    <uses-permission android:name="android.permission.REQUEST_INSTALL_PACKAGES" />
 
     <!--华为的文档很好找，华为桌面加角标-->
     <uses-permission android:name="com.huawei.android.launcher.permission.CHANGE_BADGE"/>

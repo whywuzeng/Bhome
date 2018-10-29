@@ -4,6 +4,7 @@ import android.app.Application;
 import android.app.Notification;
 import android.app.PendingIntent;
 import android.content.Intent;
+import android.os.Build;
 import android.support.v4.app.NotificationCompat;
 
 import com.system.bhouse.bhouse.R;
@@ -69,10 +70,14 @@ public class NotificationUtils {
         }else if(type!=null&&(type.contains("jpeg")||type.contains("png"))){
             intent = IntentUtils.startImageFile(file,type);
         }else if(type!=null&&type.contains("apk")){
-            intent = IntentUtils.getApkFileIntent(file);
+            if (Build.VERSION.SDK_INT<24) {
+                intent = IntentUtils.getApkFileIntent(file);
+            }else {
+                intent = IntentUtils.getApk7FileIntent(file,application);
+            }
         }
 
-        //点击安装apk 这要改成
+        //点击安装apk 这要改成  file:///storage/emulated/0/DCIM/bhouseDownoad/1540795217514.apk
 
         PendingIntent pendingIntent = PendingIntent.getActivity(application, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
 

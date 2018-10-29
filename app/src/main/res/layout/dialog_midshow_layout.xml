@@ -15,7 +15,9 @@
 
         <TextView
             android:id="@+id/title"
-            style="@style/TextTitleBule"
+            android:background="@color/material_blue_60"
+            android:textColor="@color/white"
+            android:textSize="16sp"
             android:layout_width="fill_parent"
             android:layout_height="40.0dip"
             android:gravity="center"
@@ -120,7 +122,8 @@
 
                 <Button
                     android:id="@+id/download"
-                    style="@style/textLitteTitle"
+                    android:textColor="@color/c_666666"
+                    android:textSize="14sp"
                     android:layout_width="0dip"
                     android:background="@drawable/selector_nostroke_common_radius_v8"
                     android:layout_height="wrap_content"
@@ -145,7 +148,8 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:background="@drawable/selector_nostroke_common_radius_v8"
-                    style="@style/textLitteTitle"
+                    android:textColor="@color/c_666666"
+                    android:textSize="14sp"
                     android:text="删除" />
 
                 <View
@@ -159,7 +163,8 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:background="@drawable/selector_nostroke_common_radius_v8"
-                    style="@style/textLitteTitle"
+                    android:textSize="14sp"
+                    android:textColor="#ffc000"
                     android:text="认证" />
 
             </LinearLayout>
