@@ -21,6 +21,7 @@ import android.animation.AnimatorListenerAdapter;
 import android.animation.ObjectAnimator;
 import android.animation.PropertyValuesHolder;
 import android.animation.ValueAnimator;
+import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.res.Resources;
@@ -60,6 +61,7 @@ import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
 
 @CoordinatorLayout.DefaultBehavior(FloatingToolbar.Behavior.class)
+@SuppressWarnings("ResourceType")
 public class FloatingToolbar extends LinearLayoutCompat implements View.OnClickListener,
         View.OnLongClickListener {
 
@@ -185,9 +187,10 @@ public class FloatingToolbar extends LinearLayoutCompat implements View.OnClickL
         addView(view);
     }
 
+    @SuppressLint("RestrictedApi")
     public void setMenu(@MenuRes int menuRes) {
         removeAllViews();
-        Menu menu = new MenuBuilder(getContext());
+         Menu menu = new MenuBuilder(getContext());
         new SupportMenuInflater(getContext()).inflate(menuRes, menu);
         setMenu(menu);
     }
@@ -325,6 +328,7 @@ public class FloatingToolbar extends LinearLayoutCompat implements View.OnClickL
         }
     }
 
+    @SuppressLint("RestrictedApi")
     private void addMenuItems() {
 
         if (mMenu == null) {

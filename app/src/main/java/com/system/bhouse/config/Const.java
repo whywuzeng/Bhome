@@ -22,6 +22,9 @@ public class Const {
 
     public final static String Undone_STATUS="未完成";
 
+    //返回数据为空
+    public final static String RESULTEMPTY="[]";
+
     /**
      * toplistView 常量
      */
@@ -35,4 +38,9 @@ public class Const {
     public static final String Entry_is_empty = "分录为空,不能提交";
 
     public static final String[] SimpleDataString={"yyyy","MM","dd","HH","mm","ss"};
+
+    /**
+     * 分支标识
+     */
+    public static final String DevMessage ="dev分支";
 }
