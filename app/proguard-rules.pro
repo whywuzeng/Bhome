@@ -24,3 +24,4 @@
     public static *** w(...);
     public static *** wtf(...);
 }
+-ignorewarnings
