@@ -2,6 +2,7 @@ package com.system.bhouse.bhouse.CommonTask.ProduceManagement;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -260,5 +261,31 @@ public class ProduceActivity extends WWBackActivity implements BaseQuickAdapter.
     protected void onDestroy() {
         super.onDestroy();
         Log.e(TAG, "onDestroy: " );
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        Log.e(TAG, "onSaveInstanceState: ");
+    }
+
+    @Override
+    protected void onRestoreInstanceState(Bundle savedInstanceState) {
+        super.onRestoreInstanceState(savedInstanceState);
+        Log.e(TAG, "onRestoreInstanceState: ");
+    }
+
+    @Override
+    public void onConfigurationChanged(Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+
+        updateTextView("onConfigurationChanged\n");
+        updateTextView("newConfig:" + newConfig.toString());
+        Log.e(TAG, "onConfigurationChanged: " );
+    }
+
+    private void updateTextView(String str){
+//        text.append(str);
+//        textView.setText(text.toString());
     }
 }
