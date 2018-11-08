@@ -1,7 +1,9 @@
 package com.system.bhouse.bhouse.CommonTask;
 
 import android.content.Intent;
+import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 
 import com.system.bhouse.bhouse.CommonTask.ReplenishmentRequire.ReplenishmentRequireActivity_;
 import com.system.bhouse.bhouse.CommonTask.ReturnRequire.ReturnRequireActivity_;
@@ -14,6 +16,12 @@ import org.androidannotations.annotations.OnActivityResult;
 import org.androidannotations.annotations.OptionsItem;
 import org.androidannotations.annotations.OptionsMenu;
 import org.androidannotations.annotations.ViewById;
+
+import rx.Observable;
+import rx.Subscriber;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.functions.Action1;
+import rx.schedulers.Schedulers;
 
 /**
  * Created by Administrator on 2018-02-28.
@@ -30,11 +38,37 @@ public class SiteActivity extends WWTimeLineActivity {
 
     @ViewById(R.id.my_recycle_view)
     RecyclerView my_recycle_view;
+    
+    private static final String TAG = "SiteActivity";
 
     @AfterViews
     void initSiteFragment() {
         setActionBarMidlleTitle("工地管理");
         initTimeLineActivity(my_recycle_view,R.array.site_labels);
+//        testRxJava();
+    }
+
+    private void testRxJava() {
+        Observable.create(new Observable.OnSubscribe<String>() {
+            @Override
+            public void call(Subscriber<? super String> subscriber) {
+                int i = 0;
+                while (i < 1000000000) {
+                    i++;
+                }
+                subscriber.onNext(String.valueOf(i));
+                subscriber.onCompleted();
+            }
+        }).compose(this.<String>bindToLifecycle())
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Action1<String>() {
+                    @Override
+                    public void call(String s) {
+                        showButtomToast(s);
+                    }
+                });
+
     }
 
 
@@ -74,4 +108,39 @@ public class SiteActivity extends WWTimeLineActivity {
 
     }
 
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        Log.e(TAG, "onCreate: ");
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        Log.e(TAG, "onStart: " );
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        Log.e(TAG, "onResume: " );
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        Log.e(TAG, "onPause: " );
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        Log.e(TAG, "onStop: " );
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        Log.e(TAG, "onDestroy: " );
+    }
 }

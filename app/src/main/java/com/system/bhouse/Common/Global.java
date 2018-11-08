@@ -17,6 +17,7 @@ import java.util.ArrayList;
 public class Global {
 
     private static SimpleDateFormat DayFormatTime = new SimpleDateFormat("yyyy-MM-dd");
+    public static final SimpleDateFormat mDateFormat = new SimpleDateFormat("yyyy-MM-dd EEE");
 
 
     public static String dayFromTime(long time) {

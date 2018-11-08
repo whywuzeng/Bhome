@@ -22,7 +22,7 @@
         android:layout_height="wrap_content"/>
 
     <ImageView
-        android:id="@+id/action_capture"
+        android:id="@+id/action_capture_cl"
         android:layout_width="25dp"
         android:layout_height="25dp"
         android:layout_alignParentRight="true"

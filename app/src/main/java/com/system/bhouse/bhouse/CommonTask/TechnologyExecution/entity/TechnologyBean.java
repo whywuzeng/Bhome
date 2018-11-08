@@ -1,5 +1,8 @@
 package com.system.bhouse.bhouse.CommonTask.TechnologyExecution.entity;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import com.google.gson.annotations.SerializedName;
 
 /**
@@ -10,7 +13,7 @@ import com.google.gson.annotations.SerializedName;
  * com.system.bhouse.bhouse.CommonTask.TechnologyExecution.entity
  */
 
-public class TechnologyBean {
+public class TechnologyBean implements Parcelable {
 
     /**
      * 人员定额 : 2.0
@@ -210,4 +213,69 @@ public class TechnologyBean {
     public void setMeasureUnit(String measureUnit) {
         this.measureUnit = measureUnit;
     }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeDouble(this.personStandard);
+        dest.writeString(this.beizhu);
+        dest.writeString(this.workOrderID);
+        dest.writeString(this.workOrderName);
+        dest.writeString(this.workOrderStatus);
+        dest.writeString(this.workOrderNumber);
+        dest.writeString(this.workOrdersubDirectoryID);
+        dest.writeInt(this.workOrderSequence);
+        dest.writeString(this.workRouteID);
+        dest.writeString(this.startTime);
+        dest.writeString(this.componentQrcode);
+        dest.writeString(this.materialName);
+        dest.writeString(this.materialCoding);
+        dest.writeString(this.endTime);
+        dest.writeDouble(this.useTimeStandard);
+        dest.writeString(this.specification);
+        dest.writeString(this.measureUnit);
+        dest.writeByte(this.isRelateForm ? (byte) 1 : (byte) 0);
+        dest.writeByte(this.isHang ? (byte) 1 : (byte) 0);
+    }
+
+    public TechnologyBean() {
+    }
+
+    protected TechnologyBean(Parcel in) {
+        this.personStandard = in.readDouble();
+        this.beizhu = in.readString();
+        this.workOrderID = in.readString();
+        this.workOrderName = in.readString();
+        this.workOrderStatus = in.readString();
+        this.workOrderNumber = in.readString();
+        this.workOrdersubDirectoryID = in.readString();
+        this.workOrderSequence = in.readInt();
+        this.workRouteID = in.readString();
+        this.startTime = in.readString();
+        this.componentQrcode = in.readString();
+        this.materialName = in.readString();
+        this.materialCoding = in.readString();
+        this.endTime = in.readString();
+        this.useTimeStandard = in.readDouble();
+        this.specification = in.readString();
+        this.measureUnit = in.readString();
+        this.isRelateForm = in.readByte() != 0;
+        this.isHang = in.readByte() != 0;
+    }
+
+    public static final Parcelable.Creator<TechnologyBean> CREATOR = new Parcelable.Creator<TechnologyBean>() {
+        @Override
+        public TechnologyBean createFromParcel(Parcel source) {
+            return new TechnologyBean(source);
+        }
+
+        @Override
+        public TechnologyBean[] newArray(int size) {
+            return new TechnologyBean[size];
+        }
+    };
 }

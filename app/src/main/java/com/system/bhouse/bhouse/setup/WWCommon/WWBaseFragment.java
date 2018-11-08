@@ -6,7 +6,9 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.NestedScrollView;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -29,6 +31,8 @@ import org.json.JSONObject;
 
 import java.lang.reflect.Field;
 
+import butterknife.ButterKnife;
+
 /**
  * Created by Administrator on 2017-10-31.
  */
@@ -42,8 +46,11 @@ public class WWBaseFragment extends Fragment implements FootUpdate.LoadMore, Glo
     private View contentView;
     private Context context;
     private ViewGroup container;
+    protected View notDataView;
+    protected View errorView;
 
     private ProgressDialog mProgressDialog;
+    private SingleToast mSingleToast;
 
     protected void showProgressBar(boolean show) {
         showProgressBar(show, "");
@@ -78,6 +85,20 @@ public class WWBaseFragment extends Fragment implements FootUpdate.LoadMore, Glo
     {
         View listViewFooter = inflater.inflate(R.layout.divide_bottom_15, recyclerView, false);
         adapter.addFooterView(listViewFooter);
+    }
+
+    protected void recycleViewAddEmptySection(RecyclerView mRecyclerView)
+    {
+        notDataView = getActivity().getLayoutInflater().inflate(R.layout.taskcomon_empty_view, (ViewGroup) mRecyclerView.getParent(), false);
+        errorView = getActivity().getLayoutInflater().inflate(R.layout.taskcommon_error_view,(ViewGroup)mRecyclerView.getParent(), false);
+    }
+
+    protected void setErrorViewContext(String errorMsg)
+    {
+        if (errorView!=null){
+            TextView viewById = (TextView) errorView.findViewById(R.id.tv_msg_context);
+            viewById.setText(errorMsg);
+        }
     }
 
     protected ActionBar getActionBar() {
@@ -158,11 +179,12 @@ public class WWBaseFragment extends Fragment implements FootUpdate.LoadMore, Glo
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         KLog.e("onCreateView");
-        this.inflater=inflater;
-        this.container=container;
+        this.inflater = inflater;
+        this.container = container;
         onCreateView(savedInstanceState);
-        if(contentView==null)
-            return super.onCreateView(inflater,container,savedInstanceState);
+        if (contentView == null) {
+            return super.onCreateView(inflater, container, savedInstanceState);
+        }
         return contentView;
     }
 
@@ -189,6 +211,7 @@ public class WWBaseFragment extends Fragment implements FootUpdate.LoadMore, Glo
     {
         super.onDestroyView();
         KLog.e("onDestroyView");
+        ButterKnife.unbind(this);
         contentView=null;
         container=null;
         inflater=null;
@@ -228,16 +251,25 @@ public class WWBaseFragment extends Fragment implements FootUpdate.LoadMore, Glo
 
     }
 
-
-
-
-
     //初始化 fragment入口
     protected void onCreateView(Bundle savedInstanceState)
     {
 
     }
 
+    //添加滑动响应
+    protected void setScrollViewFirst() {
+
+        NestedScrollView mNestedScrollView = (NestedScrollView) findViewById(R.id.nested_view);
+        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mNestedScrollView.setScrollY(0);
+            }
+        });
+    }
 
     public Context getApplicationContext()
     {
@@ -248,6 +280,7 @@ public class WWBaseFragment extends Fragment implements FootUpdate.LoadMore, Glo
     public void setContentView(int layoutResID)
     {
         setContentView((ViewGroup)inflater.inflate(layoutResID,container,false));
+        ButterKnife.bind(this, contentView);
     }
 
     public void setContentView(View view)
@@ -268,8 +301,6 @@ public class WWBaseFragment extends Fragment implements FootUpdate.LoadMore, Glo
         }
         return null;
     }
-
-
 
     protected void showDialog(String title, String msg, DialogInterface.OnClickListener clickOk) {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
@@ -305,13 +336,9 @@ public class WWBaseFragment extends Fragment implements FootUpdate.LoadMore, Glo
         }
     }
 
-
-
     public void showErrorMsg(int code, JSONObject json) {
             showButtomToast(R.string.connect_service_fail);
     }
-
-    SingleToast mSingleToast;
 
     public void showButtomToast(String msg) {
         if (!isResumed() || mSingleToast == null) {
@@ -342,8 +369,6 @@ public class WWBaseFragment extends Fragment implements FootUpdate.LoadMore, Glo
 
         mSingleToast.showButtomToast(messageId);
     }
-
-
 
     protected void showDialogLoading() {
         if (getActivity() instanceof WWBaseActivity) {

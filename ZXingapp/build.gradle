@@ -35,7 +35,7 @@ publish {
     userOrg = 'bhome'
     groupId = 'com.zijunlin.Zxing.Demo'
     artifactId = 'ZXingDemo'
-    publishVersion = '1.0.3'
+    publishVersion = '1.0.4'
     desc = 'Oh hi, this is a nice description for a project, right?'
     website = 'http://www.bhome.com.cn'
     licences = ['Apache-2.0']

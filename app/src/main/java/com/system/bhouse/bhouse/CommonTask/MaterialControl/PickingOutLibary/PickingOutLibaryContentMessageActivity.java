@@ -23,6 +23,7 @@ import com.google.gson.reflect.TypeToken;
 import com.system.bhouse.Custom.ShowDeviceMessageCustomDialog;
 import com.system.bhouse.api.ApiWebService;
 import com.system.bhouse.base.App;
+import com.system.bhouse.base.BHBaseSubscriber;
 import com.system.bhouse.base.StatusBean;
 import com.system.bhouse.base.SubmitStatusBeanImpl;
 import com.system.bhouse.bhouse.CommonTask.MaterialControl.entity.PickingOutBean;
@@ -40,6 +41,7 @@ import com.system.bhouse.ui.sectioned.SectionedRecyclerViewAdapter;
 import com.system.bhouse.utils.TenUtils.L;
 import com.system.bhouse.utils.TenUtils.T;
 import com.system.bhouse.utils.ValueUtils;
+import com.system.bhouse.utils.custom.CustomToast;
 import com.zijunlin.Zxing.Demo.CaptureActivity;
 
 import org.androidannotations.annotations.AfterViews;
@@ -396,7 +398,10 @@ public class PickingOutLibaryContentMessageActivity extends WWBackActivity imple
 
                     if (loadingcarbean.isEmpty())
                     {
-                        T.showShort(PickingOutLibaryContentMessageActivity.this,getResources().getString(R.string.Qrcode_result));
+                        CustomToast.showWarning();
+                        comTaskBeans.clear();
+                        mRecyclerViewAdapter.notifyDataSetChanged();
+                        return;
                     }
 
                     for (PickingOutBean bean : loadingcarbean) {
@@ -418,7 +423,6 @@ public class PickingOutLibaryContentMessageActivity extends WWBackActivity imple
                     ArrayList<PickingOutBean> clone =(ArrayList<PickingOutBean>)comTaskBeans.clone();
                     comTaskBeans.clear();
                     comTaskBeans.addAll(removeDupliById(clone));
-
                     mRecyclerViewAdapter.notifyDataSetChanged();
                 }
 
@@ -437,7 +441,15 @@ public class PickingOutLibaryContentMessageActivity extends WWBackActivity imple
                     }.getType());
 
                     if (!ValueUtils.IsFirstValueExist(loadingcarbean))
-                       return;
+                    {
+                        comTaskBeans.get(extraPosition).setWareHouseID("");
+                        comTaskBeans.get(extraPosition).setWareHouseName("");
+                        ArrayList<PickingOutBean> clone = (ArrayList<PickingOutBean>)comTaskBeans.clone();
+                        comTaskBeans.clear();
+                        comTaskBeans.addAll(clone);
+                        mRecyclerViewAdapter.notifyDataSetChanged();
+                        return;
+                    }
                     comTaskBeans.get(extraPosition).setWareHouseID(loadingcarbean.get(0).wareHouseID);
                     comTaskBeans.get(extraPosition).setWareHouseName(loadingcarbean.get(0).wareHouseName);
 
@@ -745,14 +757,35 @@ public class PickingOutLibaryContentMessageActivity extends WWBackActivity imple
         llQrcode.setVisibility(mStatus.getBean().visQRBtn?View.VISIBLE:View.GONE);
         llSubmit.setVisibility(mStatus.getBean().visSubmitBtn?View.VISIBLE:View.GONE);
 
+        Observable observableMobileKey = ApiWebService.Get_KeyTimestr(App.MobileKey);
+
         Observable.create(subscriber -> {
             tvQrcode.setOnClickListener(v -> {
                 subscriber.onNext(v);
             });
         }).debounce(350, TimeUnit.MILLISECONDS).observeOn(AndroidSchedulers.mainThread()).subscribe(V -> {
-            L.e("double click");
-            bottomDialog.dismiss();
-            tvQrcodeAction();
+
+            observableMobileKey.concatWith(Observable.create(subscriber -> {
+                L.e("double click");
+                bottomDialog.dismiss();
+                tvQrcodeAction();
+            })).subscribe(new BHBaseSubscriber<Object>() {
+                @Override
+                public void onCompleted() {
+                    super.onCompleted();
+                }
+
+                @Override
+                public void onError(Throwable e) {
+                    super.onError(e);
+                }
+
+                @Override
+                public void onNext(Object o) {
+                    super.onNext(o);
+                    App.KeyTimestring = o.toString();
+                }
+            });
         });
 
         Observable.create(subscriber -> {
@@ -760,9 +793,28 @@ public class PickingOutLibaryContentMessageActivity extends WWBackActivity imple
                 subscriber.onNext(v);
             });
         }).debounce(350, TimeUnit.MILLISECONDS).observeOn(AndroidSchedulers.mainThread()).subscribe(V -> {
-            L.e("double click");
-            bottomDialog.dismiss();
-            tvDeleteAction();
+
+            observableMobileKey.concatWith(Observable.create(subscriber -> {
+                L.e("double click");
+                bottomDialog.dismiss();
+                tvDeleteAction();
+            })).subscribe(new BHBaseSubscriber<Object>() {
+                @Override
+                public void onCompleted() {
+                    super.onCompleted();
+                }
+
+                @Override
+                public void onError(Throwable e) {
+                    super.onError(e);
+                }
+
+                @Override
+                public void onNext(Object o) {
+                    super.onNext(o);
+                    App.KeyTimestring = o.toString();
+                }
+            });
         });
 
         Observable.create(subscriber -> {
@@ -770,9 +822,28 @@ public class PickingOutLibaryContentMessageActivity extends WWBackActivity imple
                 subscriber.onNext(v);
             });
         }).debounce(350, TimeUnit.MILLISECONDS).observeOn(AndroidSchedulers.mainThread()).subscribe(V -> {
-            L.e("double click");
-            bottomDialog.dismiss();
-            tvFanCheckAction();
+
+            observableMobileKey.concatWith(Observable.create(subscriber -> {
+                L.e("double click");
+                bottomDialog.dismiss();
+                tvFanCheckAction();
+            })).subscribe(new BHBaseSubscriber<Object>() {
+                @Override
+                public void onCompleted() {
+                    super.onCompleted();
+                }
+
+                @Override
+                public void onError(Throwable e) {
+                    super.onError(e);
+                }
+
+                @Override
+                public void onNext(Object o) {
+                    super.onNext(o);
+                    App.KeyTimestring = o.toString();
+                }
+            });
         });
 
         Observable.create(subscriber -> {
@@ -780,9 +851,28 @@ public class PickingOutLibaryContentMessageActivity extends WWBackActivity imple
                 subscriber.onNext(v);
             });
         }).debounce(350, TimeUnit.MILLISECONDS).observeOn(AndroidSchedulers.mainThread()).subscribe(V -> {
-            L.e("double click");
-            bottomDialog.dismiss();
-            tvModifyAction();
+
+            observableMobileKey.concatWith(Observable.create(subscriber -> {
+                L.e("double click");
+                bottomDialog.dismiss();
+                tvModifyAction();
+            })).subscribe(new BHBaseSubscriber<Object>() {
+                @Override
+                public void onCompleted() {
+                    super.onCompleted();
+                }
+
+                @Override
+                public void onError(Throwable e) {
+                    super.onError(e);
+                }
+
+                @Override
+                public void onNext(Object o) {
+                    super.onNext(o);
+                    App.KeyTimestring = o.toString();
+                }
+            });
         });
 
         Observable.create(subscriber -> {
@@ -790,14 +880,33 @@ public class PickingOutLibaryContentMessageActivity extends WWBackActivity imple
                 subscriber.onNext(v);
             });
         }).debounce(350, TimeUnit.MILLISECONDS).observeOn(AndroidSchedulers.mainThread()).subscribe(V -> {
-            L.e("double click");
-            bottomDialog.dismiss();
-            if (mStatus.isNewStatus()) {
-                tvSubmitActionforList();
-            }
-            else if (mStatus.isModifyStatus()) {
-                tvSubmitActionforList();
-            }
+
+            observableMobileKey.concatWith(Observable.create(subscriber -> {
+                L.e("double click");
+                bottomDialog.dismiss();
+                if (mStatus.isNewStatus()) {
+                    tvSubmitActionforList();
+                }
+                else if (mStatus.isModifyStatus()) {
+                    tvSubmitActionforList();
+                }
+            })).subscribe(new BHBaseSubscriber<Object>() {
+                @Override
+                public void onCompleted() {
+                    super.onCompleted();
+                }
+
+                @Override
+                public void onError(Throwable e) {
+                    super.onError(e);
+                }
+
+                @Override
+                public void onNext(Object o) {
+                    super.onNext(o);
+                    App.KeyTimestring = o.toString();
+                }
+            });
         });
 
         Observable.create(subscriber -> {
@@ -805,9 +914,29 @@ public class PickingOutLibaryContentMessageActivity extends WWBackActivity imple
                 subscriber.onNext(v);
             });
         }).debounce(350, TimeUnit.MILLISECONDS).observeOn(AndroidSchedulers.mainThread()).subscribe(V -> {
-            L.e("double click");
-            bottomDialog.dismiss();
-            tvCheckAction();
+
+
+            observableMobileKey.concatWith(Observable.create(subscriber -> {
+                L.e("double click");
+                bottomDialog.dismiss();
+                tvCheckAction();
+            })).subscribe(new BHBaseSubscriber<Object>() {
+                @Override
+                public void onCompleted() {
+                    super.onCompleted();
+                }
+
+                @Override
+                public void onError(Throwable e) {
+                    super.onError(e);
+                }
+
+                @Override
+                public void onNext(Object o) {
+                    super.onNext(o);
+                    App.KeyTimestring = o.toString();
+                }
+            });
         });
 
         ViewGroup.LayoutParams layoutParams = contentView.getLayoutParams();

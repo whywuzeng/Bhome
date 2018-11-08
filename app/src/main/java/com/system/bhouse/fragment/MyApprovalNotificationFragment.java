@@ -1,12 +1,17 @@
 package com.system.bhouse.fragment;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.support.annotation.NonNull;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.zhouwei.library.CustomPopWindow;
@@ -20,6 +25,8 @@ import com.system.bhouse.bhouse.CommonTask.TransportationManagement.Transportati
 import com.system.bhouse.bhouse.CommonTask.TransportationManagement.adapter.BaseQuickAdapter;
 import com.system.bhouse.bhouse.CommonTask.adapter.animator.ScaleItemAnimator;
 import com.system.bhouse.bhouse.R;
+import com.system.bhouse.bhouse.phone.activity.InformationActivity;
+import com.system.bhouse.bhouse.setup.MyselfActivity;
 import com.system.bhouse.bhouse.setup.WWCommon.WWBaseFragment;
 import com.system.bhouse.bhouse.setup.notification.MyApprovalProcessed;
 import com.system.bhouse.bhouse.setup.notification.adapter.MyDividerItemDecoration;
@@ -28,6 +35,7 @@ import com.system.bhouse.bhouse.setup.notification.bean.NotificationSectionBean;
 import com.system.bhouse.bhouse.setup.notification.bean.XGNotification;
 import com.system.bhouse.bhouse.setup.notification.bean.XGNotificationSectionEntity;
 import com.system.bhouse.bhouse.setup.notification.receiver.NotificationService;
+import com.system.bhouse.utils.MeasureBarHeightUtils;
 
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.EFragment;
@@ -61,6 +69,15 @@ public class MyApprovalNotificationFragment extends WWBaseFragment implements On
      SmartRefreshLayout layout_smartrefresh;
     private CustomPopWindow mPopWindow;
     private View notDataView;
+
+    @ViewById(R.id.toolbar)
+    Toolbar mToolbar;
+
+    @ViewById(R.id.action_capture)
+    ImageView actionCapture;
+
+    @ViewById(R.id.tv_toolbar_title_mid)
+      TextView tvToolbarTitleMid;
 
     @AfterViews
     public void initCreate() {
@@ -138,7 +155,53 @@ public class MyApprovalNotificationFragment extends WWBaseFragment implements On
                 }
             }
         });
+        initView();
     }
+
+    private void initView() {
+        mToolbar.setTitleTextColor(Color.WHITE);
+
+        ((AppCompatActivity)getActivity()).setSupportActionBar(mToolbar);
+
+        mToolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+//                mDrawerLayout.openDrawer(Gravity.LEFT);
+                Intent intent = new Intent(getActivity(), MyselfActivity.class);
+                getActivity().startActivity(intent);
+
+            }
+        });
+
+        //toolbar button的点击的回调
+        mToolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+                switch (item.getItemId()) {
+                    //二维码扫描管理  //组织架构的选择界面
+                    case R.id.action_capture:
+                        Intent intent1 = new Intent(getActivity(), InformationActivity.class);
+                        startActivity(intent1);
+                        break;
+                }
+                return false;
+            }
+        });
+
+        actionCapture.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent1 = new Intent(getActivity(), InformationActivity.class);
+                startActivity(intent1);
+            }
+        });
+
+        tvToolbarTitleMid.setText("审批");
+
+        MeasureBarHeightUtils.setHeight(mToolbar,getActivity());
+    }
+
     //加载数据
     private void getNotifications(String id) {
         // 计算总数据条数

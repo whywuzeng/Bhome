@@ -10,12 +10,15 @@ import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import com.google.gson.reflect.TypeToken;
 import com.system.bhouse.Custom.ShowDeviceMessageCustomDialog;
 import com.system.bhouse.api.ApiWebService;
 import com.system.bhouse.base.App;
+import com.system.bhouse.base.CheckStatusBeanImpl;
 import com.system.bhouse.base.StatusBean;
+import com.system.bhouse.base.SubmitStatusBeanImpl;
 import com.system.bhouse.bean.BProBOM;
 import com.system.bhouse.bean.ComTaskBean;
 import com.system.bhouse.bhouse.CommonTask.BaseTaskFragment.BaseContentMessageActivity;
@@ -30,8 +33,10 @@ import com.system.bhouse.bhouse.CommonTask.common.CommonPickerActivity_;
 import com.system.bhouse.bhouse.CommonTask.utils.ComTaskContentItemSectionItemTouchHelper;
 import com.system.bhouse.bhouse.R;
 import com.system.bhouse.bhouse.setup.utils.LabelNumPickerDialog;
+import com.system.bhouse.config.Const;
 import com.system.bhouse.utils.TenUtils.L;
 import com.system.bhouse.utils.TenUtils.T;
+import com.system.bhouse.utils.ValueUtils;
 
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.EActivity;
@@ -46,8 +51,6 @@ import java.util.HashMap;
 import java.util.List;
 
 import de.greenrobot.event.EventBus;
-import rx.Observable;
-import rx.Subscriber;
 
 /**
  * Created by Administrator on 2018-03-05.
@@ -66,6 +69,8 @@ public class ComTaskContentMessageActivity extends BaseContentMessageActivity im
     RecyclerView listView;
     @ViewById
     RecyclerView topListView;
+    @ViewById
+    TextView tv_title_live_layout;
 
     @Extra
     String HId;
@@ -96,6 +101,7 @@ public class ComTaskContentMessageActivity extends BaseContentMessageActivity im
     @AfterViews
     public void initComTaskActivity(){
 
+        tv_title_live_layout.setText("吊装需求分录");
         mRecyclerViewAdapter=new MyTaskContentAdapter();
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
 
@@ -108,10 +114,8 @@ public class ComTaskContentMessageActivity extends BaseContentMessageActivity im
         mRecyclerViewAdapter.addSection(workflowSection);
 
         listView.setAdapter(mRecyclerViewAdapter);
-        mRecyclerViewAdapter.notifyDataSetChanged();
         listView.setNestedScrollingEnabled(false);
         testData();
-        TopListViewInit(this.comTaskBeans);
 
         if (mStatusBean.isNewStatus())
         {
@@ -120,6 +124,14 @@ public class ComTaskContentMessageActivity extends BaseContentMessageActivity im
             setActionBarMidlleTitle("吊装需求");
         }
         setScrollViewFirst();
+
+
+        setOnBackPressedListener(new setOnBackPressedListener() {
+            @Override
+            public void onBackPressedListener() {
+                sureDataRefresh("tvDeleteAction");
+            }
+        });
     }
 
     /**
@@ -127,6 +139,11 @@ public class ComTaskContentMessageActivity extends BaseContentMessageActivity im
      * param comTaskBeans
      */
     private void TopListViewInit(ArrayList<ComTaskBean> comTaskBeans) {
+
+        //workflowSection 要刷新 workflowsection
+        mRecyclerViewAdapter.removeAllSections();
+        mRecyclerViewAdapter.addSection(workflowSection);
+        mRecyclerViewAdapter.notifyDataSetChanged();
 
         ComTaskBean comTaskBean=new ComTaskBean();
         ComTaskBean comTaskBean1 = null;
@@ -643,14 +660,16 @@ public class ComTaskContentMessageActivity extends BaseContentMessageActivity im
      */
     //        [{"ID":"9dc7b4b3882048f5bccea193ccdf6fc3","订单编号":"DZXQ-7-201801-0001","项目名称":"麓谷一期项目","栋":"1","层":"2","需求日期":"2018/1/18 16:54:38","描述":"测试单据","状态":"审核","录入人":"管理员","录入时间":"2018/1/18 16:55:03"}]
     private void testData() {
-
+        comTaskBeans.clear();
         ApiWebService.Get_Hois_ReqView_Json(this, new ApiWebService.SuccessCall() {
             @Override
             public void SuccessBack(String result) {
                 ArrayList<ComTaskBean> tomTaskBeans = App.getAppGson().fromJson(result, new TypeToken<List<ComTaskBean>>() {
                 }.getType());
                 comTaskBeans.addAll(tomTaskBeans);
+
                 mRecyclerViewAdapter.notifyDataSetChanged();
+                ifStateForOrderId();
                 TopListViewInit(tomTaskBeans);
             }
 
@@ -660,6 +679,36 @@ public class ComTaskContentMessageActivity extends BaseContentMessageActivity im
             }
         },HId, App.GSMID, App.Property, App.IsSub);
         //上个result id 值   1ea66b7bb9674a18a8794bd943c212bb
+    }
+
+    /*
+   请求有数据返回  才去判断是否状态相同
+    */
+    private void ifStateForOrderId() {
+        if (!ValueUtils.IsFirstValueExist(comTaskBeans))
+        {
+            return;
+        }
+        //提交  请求有数据 就是保存状态
+        if (comTaskBeans.get(0).getStatus().equals(Const.SUBMIT_STATUS)) {
+            /**
+             * 请求有数据,就是
+             */
+            //保存状态
+            SubmitStatusBeanImpl submitStatusBean = new SubmitStatusBeanImpl();
+            submitStatusBean.setVisCheckBtn(true).setVisDeleteBtn(true);
+            mStatusBean.setBean(submitStatusBean);
+            mStatusBean.setLookStatus(true);
+            return;
+        }else if (comTaskBeans.get(0).getStatus().equals(Const.CHECK_STATUS))
+        {
+            //审核状态
+            CheckStatusBeanImpl checkStatusBean = new CheckStatusBeanImpl();
+            checkStatusBean.setVisCheckFBtn(true).setVisQRBtn(true);
+            mStatusBean.setBean(checkStatusBean);
+            mStatusBean.setLookStatus(true);
+            return;
+        }
     }
 
     @Override
@@ -731,7 +780,7 @@ public class ComTaskContentMessageActivity extends BaseContentMessageActivity im
     }
 
 
-    protected void tvQrcodeAction() {
+    protected void tvQrcodeAction(TextView tvQrcode) {
         ApiWebService.Get_Hois_Req_QR_Code_Create(this, new ApiWebService.SuccessCall() {
             @Override
             public void SuccessBack(String result) {
@@ -752,7 +801,7 @@ public class ComTaskContentMessageActivity extends BaseContentMessageActivity im
         super.onPause();
     }
 
-    protected void tvSubmitAction(){
+    protected void tvSubmitActionforList(TextView tvSubmit){
         if (TextUtils.isEmpty(idValue.get("projectName"))) {
             T.showShort(this, "项目为空不能提交");
             return;
@@ -827,6 +876,7 @@ public class ComTaskContentMessageActivity extends BaseContentMessageActivity im
                 T.showShort(ComTaskContentMessageActivity.this,result);
                 onBackPressed();
                 sureDataRefresh("tvSubmitAction");
+//                testData();
             }
 
             @Override
@@ -836,14 +886,14 @@ public class ComTaskContentMessageActivity extends BaseContentMessageActivity im
         },billtable, App.GSMID, App.Property, App.IsSub, App.MobileKey, App.KeyTimestring, App.USER_INFO);
     }
 
-    protected void tvCheckAction(){
+    protected void tvCheckAction(TextView tvCheck){
 
         ApiWebService.Get_Hois_Req_sh(this, new ApiWebService.SuccessCall() {
             @Override
             public void SuccessBack(String result) {
                 T.showShort(ComTaskContentMessageActivity.this,result);
-                onBackPressed();
-                sureDataRefresh("tvCheckAction");
+//                sureDataRefresh("tvCheckAction");
+                testData();
             }
 
             @Override
@@ -853,13 +903,14 @@ public class ComTaskContentMessageActivity extends BaseContentMessageActivity im
         },idValue.get("ID"), App.USER_INFO, App.GSMID, App.Property, App.IsSub, App.MobileKey, App.KeyTimestring, App.USER_INFO);
     }
 
-    protected void tvFanCheckAction(){
+    protected void tvFanCheckAction(TextView tvFanCheck){
         ApiWebService.Get_Hois_Req_shf(this, new ApiWebService.SuccessCall() {
             @Override
             public void SuccessBack(String result) {
                 T.showShort(ComTaskContentMessageActivity.this,result);
-                onBackPressed();
-                sureDataRefresh("tvFanCheckAction");
+//                onBackPressed();
+//                sureDataRefresh("tvFanCheckAction");
+                testData();
             }
 
             @Override
@@ -870,11 +921,11 @@ public class ComTaskContentMessageActivity extends BaseContentMessageActivity im
     }
 
     @Override
-    protected void tvModifyCheckAction() {
+    protected void tvModifyAction(TextView tvModify) {
 
     }
 
-    protected void tvDeleteAction(){
+    protected void tvDeleteAction(TextView tvDelete){
         ApiWebService.Get_Hois_Req_Del(this, new ApiWebService.SuccessCall() {
             @Override
             public void SuccessBack(String result) {
@@ -898,26 +949,26 @@ public class ComTaskContentMessageActivity extends BaseContentMessageActivity im
 
     @OptionsItem
     protected final void action_operat_status(){
-        Observable<Object> objectObservable = Observable.create(subscriber -> {
+//        Observable<Object> objectObservable = Observable.create(subscriber -> {
             show1(mStatusBean);
-        });
-        Observable observableMobileKey = ApiWebService.Get_KeyTimestr(App.MobileKey);
-        observableMobileKey.concatWith(objectObservable).subscribe(new Subscriber() {
-            @Override
-            public void onCompleted() {
-
-            }
-
-            @Override
-            public void onError(Throwable e) {
-
-            }
-
-            @Override
-            public void onNext(Object o) {
-               App.KeyTimestring= o.toString();
-            }
-        });
+//        });
+//        Observable observableMobileKey = ApiWebService.Get_KeyTimestr(App.MobileKey);
+//        observableMobileKey.concatWith(objectObservable).subscribe(new Subscriber() {
+//            @Override
+//            public void onCompleted() {
+//
+//            }
+//
+//            @Override
+//            public void onError(Throwable e) {
+//
+//            }
+//
+//            @Override
+//            public void onNext(Object o) {
+//               App.KeyTimestring= o.toString();
+//            }
+//        });
     }
 
 }

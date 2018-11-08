@@ -10,19 +10,8 @@
 
     <include layout="@layout/toolbar"/>
 
-    <android.support.design.widget.TabLayout
-        android:id="@+id/tabLayout"
-        app:tabBackground="@color/white"
-        app:tabSelectedTextColor="@color/greed_11B57C"
-        app:tabTextColor="@color/black_333333"
-        app:tabTextAppearance="@style/TabLayout_tabText"
-        app:tabGravity="fill"
-        app:tabMode="fixed"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
-
-    <com.system.bhouse.bhouse.task.view.NoHorizontalScrollViewPager
-        android:id="@+id/viewPager"
+    <android.support.v7.widget.ContentFrameLayout
+        android:id="@+id/content_contarner_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 

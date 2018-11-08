@@ -15,7 +15,9 @@
 
         <TextView
             android:id="@+id/title"
-            style="@style/TextTitleBule"
+            android:background="@color/material_blue_60"
+            android:textColor="@color/white"
+            android:textSize="16sp"
             android:layout_width="fill_parent"
             android:layout_height="40.0dip"
             android:gravity="center"
@@ -117,14 +119,16 @@
                 android:paddingRight="2dip"
                 android:paddingTop="0dip">
 
+
                 <Button
-                    android:id="@+id/cancel"
+                    android:id="@+id/download"
+                    android:textColor="@color/c_666666"
+                    android:textSize="14sp"
                     android:layout_width="0dip"
+                    android:background="@drawable/selector_nostroke_common_radius_v8"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:background="@drawable/selector_nostroke_common_radius_v8"
-                    style="@style/textLitteTitle"
-                    android:text="认证" />
+                    android:text="取消" />
 
 
                 <Button
@@ -144,7 +148,8 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:background="@drawable/selector_nostroke_common_radius_v8"
-                    style="@style/textLitteTitle"
+                    android:textColor="@color/c_666666"
+                    android:textSize="14sp"
                     android:text="删除" />
 
                 <View
@@ -153,13 +158,15 @@
                     android:layout_height="match_parent"/>
 
                 <Button
-                    android:id="@+id/download"
-                    style="@style/textLitteTitle"
+                    android:id="@+id/cancel"
                     android:layout_width="0dip"
-                    android:background="@drawable/selector_nostroke_common_radius_v8"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="取消" />
+                    android:background="@drawable/selector_nostroke_common_radius_v8"
+                    android:textSize="14sp"
+                    android:textColor="#ffc000"
+                    android:text="认证" />
+
             </LinearLayout>
 
         </LinearLayout>

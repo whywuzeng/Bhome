@@ -1,0 +1,35 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="50dp"
+    android:orientation="horizontal">
+
+    <!--android:background="@color/material_blue_50"-->
+    <ImageView
+        android:id="@+id/iv_scan"
+        android:layout_width="25dp"
+        android:layout_height="25dp"
+        android:layout_alignParentLeft="true"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="20dp"
+        android:src="@drawable/ic_menu_ok_white" />
+
+    <TextView
+        android:layout_centerInParent="true"
+        android:layout_gravity="center"
+        android:id="@+id/tv_toolbar_title_mid"
+        android:textSize="18sp"
+        android:text="@string/zhinengzhizao"
+        android:textColor="@color/white"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+
+    <ImageView
+        android:id="@+id/action_capture"
+        android:layout_width="25dp"
+        android:layout_height="25dp"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:layout_marginRight="20dp"
+        android:src="@drawable/organization_menu" />
+
+</RelativeLayout>

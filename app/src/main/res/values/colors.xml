@@ -130,9 +130,11 @@
     <color name="material_black80">#cc000000</color>
     <color name="material_black95">#f2000000</color>
     <color name="material_blue_50">#23B7D7</color>
+    <color name="material_blue_60">#12B7F5</color>
     <color name="material_blue_100">#afefff</color>
     <color name="material_blue_200">#afbfff</color>
     <color name="material_blue_300">#91a7ff</color>
+    <color name="material_blue_350">#23B7D7</color>
     <color name="material_blue_400">#738ffe</color>
     <color name="material_blue_500">#5677fc</color>
     <color name="material_blue_a700">#4d69ff</color>
@@ -150,7 +152,9 @@
     <color name="material_grey_50" tools:override="true">#fafafa</color>
     <color name="material_grey_600" tools:override="true">#757575</color>
     <color name="material_grey_700">#616161</color>
+    <color name="material_grey_750" tools:override="true">#8a8a8a</color>
     <color name="material_grey_800" tools:override="true">#424242</color>
+    <color name="material_grey_850" tools:override="true">#707070</color>
     <color name="material_grey_900" tools:override="true">#212121</color>
     <color name="material_indigo_a400">#3d5afe</color>
     <color name="material_purple_700">#7b1fa2</color>
@@ -189,13 +193,16 @@
     <!-- 分割线 -->
     <color name="divide_line">#D8DDE4</color>
 
+    <!--Edge 边线-->
+    <color name="black_edge">#1A000000</color>
+
     <!--主背景灰白很好-->
     <color name="divide">#F2F4F6</color>
 
     <color name="font_2">#222222</color>
     <color name="font_6">#666666</color>
     <color name="font_9">#999999</color>
-
+    <!--白色点击 背景颜色-->
     <color name="white_pressed">#ffd5d5d5</color>
 
     <color name="color_F6F6F6">#f6f6f6</color>
@@ -247,6 +254,10 @@
     <color name="red_FD1543">#FD1543</color>
     <color name="grey_A9ACAF">#A9ACAF</color>
     <color name="grey_E8ECF1">#E8ECF1</color>
+    <color name="deepgrey_97AADA">#97AADA</color>
+    <color name="grey_DAA520">#DAA520</color>
+    <color name="red_62B436">#62B436</color>
+    <color name="c_666666">#666666</color>
 
 </resources>
 

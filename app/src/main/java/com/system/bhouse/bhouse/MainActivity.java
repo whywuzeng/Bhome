@@ -1,42 +1,29 @@
 package com.system.bhouse.bhouse;
 
-import android.annotation.TargetApi;
-import android.app.Activity;
 import android.content.ComponentName;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.ServiceConnection;
-import android.graphics.Color;
-import android.graphics.Typeface;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.IBinder;
 import android.provider.Settings;
-import android.support.design.widget.AppBarLayout;
-import android.support.design.widget.CoordinatorLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBarDrawerToggle;
-import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.ViewTreeObserver;
-import android.view.Window;
-import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.readystatesoftware.systembartint.SystemBarTintManager;
 import com.socks.library.KLog;
-import com.system.bhouse.Custom.AppBarStateChangeListener;
 import com.system.bhouse.Custom.ShowDeviceMessageCustomDialog;
 import com.system.bhouse.api.ApiServiceUtils;
 import com.system.bhouse.api.ApiWebService;
@@ -50,10 +37,10 @@ import com.system.bhouse.bhouse.CompanyNews.NewsListFragment;
 import com.system.bhouse.bhouse.Service.DownloadService;
 import com.system.bhouse.bhouse.Service.GridLayoutFragment;
 import com.system.bhouse.bhouse.Service.MessageService;
-import com.system.bhouse.bhouse.phone.activity.InformationActivity;
+import com.system.bhouse.bhouse.Service.listener.DownServiceStartListener;
+import com.system.bhouse.bhouse.phone.activity.ScanResultActivity;
 import com.system.bhouse.bhouse.setup.AboutWeFragment;
 import com.system.bhouse.bhouse.setup.AboutWeFragment_;
-import com.system.bhouse.bhouse.setup.MyselfActivity;
 import com.system.bhouse.bhouse.setup.notification.bean.XGNotification;
 import com.system.bhouse.bhouse.task.adpter.base.SaveFragmentPagerAdapter;
 import com.system.bhouse.bhouse.task.view.TopMiddleMenu;
@@ -64,6 +51,9 @@ import com.system.bhouse.ui.IndexViewPager;
 import com.system.bhouse.utils.AppManager;
 import com.system.bhouse.utils.LogUtil;
 import com.system.bhouse.utils.MeasureUtil;
+import com.system.bhouse.utils.TenUtils.AndroidWorkaroundUtils;
+import com.system.bhouse.utils.apk.InstallApkUtils;
+import com.system.bhouse.utils.apk.NotificationSetting;
 import com.system.bhouse.utils.sharedpreferencesuser;
 import com.tencent.android.tpush.XGPushShowedResult;
 import com.zijunlin.Zxing.Demo.CaptureActivity;
@@ -84,7 +74,7 @@ import okhttp3.ResponseBody;
 import rx.Observer;
 
 
-public class MainActivity extends BaseActivity implements  TopMiddleMenu.OnMenuItemClickListener,AppBarLayout.OnOffsetChangedListener {
+public class MainActivity extends BaseActivity implements  TopMiddleMenu.OnMenuItemClickListener {
 
     private ServiceConnection connection;
     private static String Tag = "Bind";
@@ -113,14 +103,7 @@ public class MainActivity extends BaseActivity implements  TopMiddleMenu.OnMenuI
     public myadapter myadapter;
     private String version;
     private ActionBarDrawerToggle actionBarDrawerToggle;
-    /**
-     * toolbar 是否测量宽度了
-     */
-    private boolean hasMeasured;
-    /**
-     * toolbar 测量的高度
-     */
-    private int height;
+
 
     public View getparent() {
         return parent;
@@ -176,57 +159,14 @@ public class MainActivity extends BaseActivity implements  TopMiddleMenu.OnMenuI
     ImageView houseKeeperItemFlag;
     @Bind(R.id.my_lehu_item_flag)
     ImageView myLehuItemFlag;
-    @Bind(R.id.tv_toolbar_title_mid)
-    TextView tv_toolbar_title_mid;
+
+//    @Bind(R.id.tv_toolbar_title_mid)
+//    TextView tv_toolbar_title_mid;
 
     FragmentManager mFragmentManager;
-    private Toolbar toolbar;
 
     @Bind(R.id.mSatelliteMenuLeftTop)
     TopMiddleMenu mSatelliteMenuLeftTop;
-
-    /**
-     * toolbar滑动
-     */
-    @Bind(R.id.app_bar)
-    public AppBarLayout appBar;
-    /**
-     * 大布局背景，遮罩层
-     */
-    @Bind(R.id.bg_content)
-    public View bgContent;
-    /**
-     * 展开状态下toolbar显示的内容
-     */
-    @Bind(R.id.include_toolbar_open)
-    public View toolbarOpen;
-    /**
-     * 展开状态下toolbar的遮罩层
-     */
-    @Bind(R.id.bg_toolbar_open)
-    public View bgToolbarOpen;
-    /**
-     * 收缩状态下toolbar显示的内容
-     */
-    @Bind(R.id.include_toolbar_close)
-    public View toolbarClose;
-    /**
-     * 收缩状态下toolbar的遮罩层
-     */
-    @Bind(R.id.bg_toolbar_close)
-    public View bgToolbarClose;
-
-    /**
-     * 鸡汤字
-     */
-    @Bind(R.id.tv_content_jitang)
-    TextView tv_content_jitang;
-
-    /**
-     * coordinatorlayout
-     */
-    @Bind(R.id.coordinatorlayout)
-    CoordinatorLayout coordinatorlayout;
 
 
 
@@ -263,7 +203,6 @@ public class MainActivity extends BaseActivity implements  TopMiddleMenu.OnMenuI
         //没开就不要关
         if(connection!=null)
         unbindService(connection);
-        appBar.removeOnOffsetChangedListener(this);
     }
 
     @Override
@@ -275,6 +214,11 @@ public class MainActivity extends BaseActivity implements  TopMiddleMenu.OnMenuI
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        getWindow().getDecorView().setSystemUiVisibility(
+                View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN | View.SYSTEM_UI_FLAG_VISIBLE);
+        if (AndroidWorkaroundUtils.checkDeviceHasNavigationBar(this)) {
+            AndroidWorkaroundUtils.assistActivity(findViewById(android.R.id.content));
+        }
         gridLayoutFragment = new GridLayoutFragment();
         Log.e(TAG, "MainActivity onCreate: " );
         ButterKnife.bind(this);
@@ -288,18 +232,19 @@ public class MainActivity extends BaseActivity implements  TopMiddleMenu.OnMenuI
         {
             UserInfo mInfo = (UserInfo)intent.getParcelableExtra(LoginActivity.USERLOGNDATA);
                 //静态保存
-                App.USER_INFO = mInfo.getUsername();
-                App.MID = mInfo.getMid();
-                App.GSMID= mInfo.getGsmid();
-                App.MobileKey = mInfo.MobileKey;
-                App.Filenum = mInfo.Filenum;
-                App.Filesize = mInfo.getFilesizeX();
-                App.Mancompany = mInfo.getManCompany();
+//                App.USER_INFO = mInfo.getUsername();
+//                App.MID = mInfo.getMid();
+//                App.GSMID= mInfo.getGsmid();
+//                App.MobileKey = mInfo.MobileKey;
+//                App.Filenum = mInfo.Filenum;
+//                App.Filesize = mInfo.getFilesizeX();
+//                App.Mancompany = mInfo.getManCompany();
+//                App.menname=mInfo.getMenname();
+//                App.mpname=mInfo.mpname;
         }
         //更换存储的域名
         ApiWebService.setUserMaindomain();
 
-        initialize();
         fragments.add(gridLayoutFragment);
         //弟二个 界面   Has_doneFragment 或者 scheduleFragment
         fragments.add(newsListFragment);
@@ -326,20 +271,7 @@ public class MainActivity extends BaseActivity implements  TopMiddleMenu.OnMenuI
             isNotify=true;
             houseKeeperIv.setBackgroundResource(R.drawable.bg_reddot_myselfhuise);
         }
-
-        setHeight(toolbar);
-        appBar.addOnOffsetChangedListener(this);
-        //初始化 toolbar滑动
-        initToolBarSrocll();
-    }
-
-    private void initToolBarSrocll() {
-        measureHeight();
-        //设置字体 tvtv_content_jitang 不支持中文
-//        Typeface typeface = Typeface.create("sans-serif-thin", Typeface.NORMAL);
-//        tv_content_jitang.setTypeface(typeface);fonts/SourceHanSansCN-ExtraLight.otf
-        Typeface typeFaceLight = Typeface.createFromAsset(getAssets(),"fonts/SourceHanSansCN-ExtraLight.otf");
-        tv_content_jitang.setTypeface(typeFaceLight);
+        NotificationSetting.checkNotificationSetting(this);
     }
 
 
@@ -446,10 +378,26 @@ public class MainActivity extends BaseActivity implements  TopMiddleMenu.OnMenuI
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 dialog.dismiss();
-                //启动apk下载
-                DownloadService.launch(MainActivity.this, apk_urlxia, "apk");
+//                "https://www.yunzhijia.com/home/download/yzj_10.0.11_release.apk"
+                //启动apk下载  apk_urlxia
+                DownloadService.launch(MainActivity.this, apk_urlxia, "apk", new DownServiceStartListener() {
+                    @Override
+                    public void onServiceStart() {
 
-                AppManager.getAppManager().AppExit(MainActivity.this);
+                    }
+
+                    @Override
+                    public void onServiceEnd(File mFile) {
+                        InstallApkUtils.installApk(mFile.getPath(),MainActivity.this);
+                        AppManager.getAppManager().AppExit(MainActivity.this);
+                    }
+
+                    @Override
+                    public void onServiceError() {
+                        AppManager.getAppManager().AppExit(MainActivity.this);
+                    }
+                });
+
             }
         });
 
@@ -489,8 +437,7 @@ public class MainActivity extends BaseActivity implements  TopMiddleMenu.OnMenuI
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_main, menu);
-        return true;
+        return super.onCreateOptionsMenu(menu);
     }
 
     //翻页的条件回调
@@ -600,7 +547,7 @@ public class MainActivity extends BaseActivity implements  TopMiddleMenu.OnMenuI
                 firstPageItem.setSelected(true);
                 contentPager.setCurrentItem(First);
                 //这里设置内容
-                tv_toolbar_title_mid.setText(firstPageTv.getText());
+//                tv_toolbar_title_mid.setText(firstPageTv.getText());
                 firstPageItemFlag.setVisibility(View.GONE);
                 firstPageItemFlag.setSelected(true);
 
@@ -631,7 +578,7 @@ public class MainActivity extends BaseActivity implements  TopMiddleMenu.OnMenuI
                 classicTv.setSelected(true);
                 classicItem.setSelected(true);
                 contentPager.setCurrentItem(Second);
-                tv_toolbar_title_mid.setText(classicTv.getText());
+//                tv_toolbar_title_mid.setText(classicTv.getText());
                 firstPageItemFlag.setSelected(false);
                 classicItemFlag.setSelected(true);
                 classicItemFlag.setVisibility(View.GONE);
@@ -661,7 +608,7 @@ public class MainActivity extends BaseActivity implements  TopMiddleMenu.OnMenuI
                 shoppingCarTv.setSelected(true);
                 shoppingCarItem.setSelected(true);
                 contentPager.setCurrentItem(Third);
-                tv_toolbar_title_mid.setText(shoppingCarTv.getText());
+//                tv_toolbar_title_mid.setText(shoppingCarTv.getText());
                 firstPageItemFlag.setSelected(false);
                 classicItemFlag.setSelected(false);
                 shoppingCarItemFlag.setSelected(true);
@@ -692,7 +639,9 @@ public class MainActivity extends BaseActivity implements  TopMiddleMenu.OnMenuI
                 houseKeeperTv.setSelected(true);
                 houseKeeperItem.setSelected(true);
                 contentPager.setCurrentItem(Fourth);
-                tv_toolbar_title_mid.setText(houseKeeperTv.getText());
+
+//                tv_toolbar_title_mid.setText(houseKeeperTv.getText());
+
                 firstPageItemFlag.setSelected(false);
                 classicItemFlag.setSelected(false);
                 shoppingCarItemFlag.setSelected(false);
@@ -725,7 +674,9 @@ public class MainActivity extends BaseActivity implements  TopMiddleMenu.OnMenuI
                 myLehuItem.setSelected(true);
 //                contentPager.setCurrentItem(Fifth);
                 contentPager.setCurrentItem(Third);
-                tv_toolbar_title_mid.setText(myLehuTv.getText());
+
+//                tv_toolbar_title_mid.setText(myLehuTv.getText());
+
                 firstPageItemFlag.setSelected(false);
                 classicItemFlag.setSelected(false);
                 shoppingCarItemFlag.setSelected(false);
@@ -758,42 +709,6 @@ public class MainActivity extends BaseActivity implements  TopMiddleMenu.OnMenuI
         super.onResume();
     }
 
-    private void initialize() {
-        toolbar = (Toolbar) findViewById(R.id.toolbar);
-
-        toolbar.setTitle("");
-        toolbar.setTitleTextColor(Color.WHITE);
-
-        setSupportActionBar(toolbar);
-
-        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-//                mDrawerLayout.openDrawer(Gravity.LEFT);
-                Intent intent = new Intent(MainActivity.this, MyselfActivity.class);
-                MainActivity.this.startActivity(intent);
-
-            }
-        });
-
-        //toolbar button的点击的回调
-        toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
-            @Override
-            public boolean onMenuItemClick(MenuItem item) {
-                switch (item.getItemId()) {
-                    //二维码扫描管理  //组织架构的选择界面
-                    case R.id.action_capture:
-                        Intent intent1 = new Intent(MainActivity.this, InformationActivity.class);
-                        startActivity(intent1);
-                        break;
-
-                }
-
-                return false;
-            }
-        });
-    }
 
     public static final int REQUST_QRCODE = 10008;
 
@@ -810,273 +725,17 @@ public class MainActivity extends BaseActivity implements  TopMiddleMenu.OnMenuI
                 break;
             case 1:
 //                TaskAddActivity_.intent(this).start();
+                final Intent intent1 = new Intent(this, ScanResultActivity.class);
+                startActivity(intent1);
                 break;
         }
     }
 
-//    private void setAppBarListener() {
-//        appBar.addOnOffsetChangedListener((appBarLayout, verticalOffset) -> {
-//            if (verticalOffset == 0) {
-//                CollapsingToolbarLayouSta
-//                if (state != CollapsingToolbarLayoutState.EXPANDED) {
-//                    state = CollapsingToolbarLayoutState.EXPANDED;//修改为展开状态
-//                    bindingView.titleTv.setVisibility(View.GONE);
-//                    bindingView.toolbar.setNavigationIcon(R.drawable.nav_icon_white_return);
-//                    getWindow().getDecorView().setSystemUiVisibility(
-//                            View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN | View.SYSTEM_UI_FLAG_VISIBLE);
-//                }
-//            } else if (Math.abs(verticalOffset) >= appBarLayout.getTotalScrollRange()) {
-//                bindingView.titleTv.setVisibility(View.VISIBLE);
-//                bindingView.toolbar.setNavigationIcon(R.drawable.nav_icon_return);
-//                state = CollapsingToolbarLayoutState.COLLAPSED;//修改为折叠状态
-//                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-//                    getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN | View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
-//                }
-//            } else {
-//                if (Math.abs(verticalOffset) > height) {
-//                    bindingView.titleTv.setVisibility(View.VISIBLE);
-//                    float scale =  1- height / (float) Math.abs(verticalOffset);
-//                    if (state != CollapsingToolbarLayoutState.INTERNEDIATE) {
-//                        if (state == CollapsingToolbarLayoutState.COLLAPSED && scale < 0.55) {//由折叠变为展开
-//                            bindingView.toolbar.setNavigationIcon(R.drawable.nav_icon_white_return);
-//                            getWindow().getDecorView().setSystemUiVisibility(
-//                                    View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN | View.SYSTEM_UI_FLAG_VISIBLE);
-//                        } else {
-//                            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-//                                getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN | View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
-//                            }
-//                        }
-//
-//                        state = CollapsingToolbarLayoutState.INTERNEDIATE;
-//                    }
-//                    float alpha = (255 * scale);
-//                    bindingView.titleTv.setTextColor(Color.argb((int) alpha, 53,55,58));
-//
-//                    bindingView.toolbar.setNavigationIcon(R.drawable.nav_icon_return);
-//                } else {
-//                    bindingView.titleTv.setVisibility(View.GONE);
-//                    bindingView.toolbar.setNavigationIcon(R.drawable.nav_icon_white_return);
-//                }
-//            }
-//        });
-//    }
 
-    //获取标题栏高度
-    private void measureHeight() {
-        ViewTreeObserver vto = coordinatorlayout.getViewTreeObserver();
-
-        vto.addOnPreDrawListener(new ViewTreeObserver.OnPreDrawListener() {
-            public boolean onPreDraw() {
-                if (hasMeasured == false) {
-
-                    height = toolbar.getMeasuredHeight();
-                    hasMeasured = true;
-
-                }
-                return true;
-            }
-        });
-    }
-
-    class MainAppBarStateChangeListener extends AppBarStateChangeListener{
-
-        @Override
-        public void onStateChanged(AppBarLayout appBarLayout, State state, int verticalOffset) {
-            //垂直方向偏移量
-            int offset = Math.abs(verticalOffset);
-            //最大偏移距离
-            int scrollRange = appBarLayout.getTotalScrollRange();
-            if (offset <= scrollRange / 2) {//当滑动没超过一半，展开状态下toolbar显示内容，根据收缩位置，改变透明值
-                toolbarOpen.setVisibility(View.VISIBLE);
-                toolbarClose.setVisibility(View.GONE);
-                //根据偏移百分比 计算透明值
-                float scale2 = (float) offset / (scrollRange /2);
-                int alpha2 = (int) (255 * scale2);
-//            bgToolbarOpen.setBackgroundColor(Color.argb(alpha2, 35, 183, 215));
-                Log.e(TAG, "alpha2: "+alpha2);
-                if (offset<123) {
-                    bgToolbarOpen.setBackgroundColor(Color.argb(alpha2, 255, 255, 255)); //35,183,215
-                }else if (offset>305)
-                {
-                    bgToolbarOpen.setBackgroundColor(Color.argb(alpha2, 255, 255, 255));
-                }
-
-            } else {//当滑动超过一半，收缩状态下toolbar显示内容，根据收缩位置，改变透明值
-                toolbarClose.setVisibility(View.VISIBLE);
-                toolbarOpen.setVisibility(View.GONE);
-                float scale3 = (float) (scrollRange  - offset) / (scrollRange/2);
-//            float scale3 = (float) offset / scrollRange;
-                int alpha3 = (int) (255 * scale3);
-                Log.e(TAG, "alpha3: "+alpha3);
-//            bgToolbarClose.setBackgroundColor(Color.argb(alpha3, 35, 183, 215));//变到0 alpha3
-
-                if (offset>305) {
-                    bgToolbarClose.setBackgroundColor(Color.argb(alpha3, 255, 255, 255)); //35,183,215
-                }else if (offset<123)
-                {
-                    bgToolbarClose.setBackgroundColor(Color.argb(alpha3, 255, 255, 255));
-                }
-            }
-            //根据偏移百分比计算扫一扫布局的透明度值
-            float scale = (float) offset / scrollRange;
-            int alpha = (int) (255 * scale);
-
-            Log.e(TAG, "onOffsetChanged: "+offset);
-            if (offset>305) {
-                bgContent.setBackgroundColor(Color.argb(alpha, 255, 255, 255)); //35,183,215
-            }else if (offset<260)
-            {
-                bgContent.setBackgroundColor(Color.argb(0, 255, 255, 255));
-            }
-        }
-    }
-
-    /**
-     * AppBar 滑动回调
-     */
     @Override
-    public void onOffsetChanged(AppBarLayout appBarLayout, int verticalOffset) {
-        //垂直方向偏移量
-        int offset = Math.abs(verticalOffset);
-        //最大偏移距离
-        int scrollRange = appBarLayout.getTotalScrollRange();
-        if (offset <= scrollRange / 2) {//当滑动没超过一半，展开状态下toolbar显示内容，根据收缩位置，改变透明值
-            toolbarOpen.setVisibility(View.VISIBLE);
-            toolbarClose.setVisibility(View.GONE);
-            //根据偏移百分比 计算透明值
-            float scale2 = (float) offset / (scrollRange /2);
-            int alpha2 = (int) (255 * scale2);
-            bgToolbarOpen.setBackgroundColor(Color.argb(alpha2, 35, 183, 215));
-            Log.e(TAG, "alpha2: "+alpha2);
-//            if (offset<123) {
-//                bgToolbarOpen.setBackgroundColor(Color.argb(alpha2, 255, 255, 255)); //35,183,215
-//            }else if (offset>305)
-//            {
-//                bgToolbarOpen.setBackgroundColor(Color.argb(alpha2, 255, 255, 255));
-//            }
-
-        } else {//当滑动超过一半，收缩状态下toolbar显示内容，根据收缩位置，改变透明值
-            toolbarClose.setVisibility(View.VISIBLE);
-            toolbarOpen.setVisibility(View.GONE);
-            float scale3 = (float) (scrollRange  - offset) / (scrollRange/2);
-//            float scale3 = (float) offset / scrollRange;
-            int alpha3 = (int) (255 * scale3);
-            Log.e(TAG, "alpha3: "+alpha3);
-            bgToolbarClose.setBackgroundColor(Color.argb(alpha3, 35, 183, 215));//变到0 alpha3
-
-//            if (offset>305) {
-//                bgToolbarClose.setBackgroundColor(Color.argb(alpha3, 255, 255, 255)); //35,183,215
-//            }else if (offset<123)
-//            {
-//                bgToolbarClose.setBackgroundColor(Color.argb(alpha3, 255, 255, 255));
-//            }
-        }
-        //根据偏移百分比计算扫一扫布局的透明度值
-        float scale = (float) offset / scrollRange;
-        int alpha = (int) (255 * scale);
-
-        Log.e(TAG, "onOffsetChanged: "+offset);
-        bgContent.setBackgroundColor(Color.argb(alpha, 255, 255, 255));
-//        if (offset>305) {
-//            bgContent.setBackgroundColor(Color.argb(alpha, 255, 255, 255)); //35,183,215
-//        }else if (offset<260)
-//        {
-//            bgContent.setBackgroundColor(Color.argb(0, 255, 255, 255));
-//        }
-        AppBarStateChangeListener.State state=AppBarStateChangeListener.State.IDLE;
-        if (verticalOffset == 0) {
-            if (state != AppBarStateChangeListener.State.EXPANDED) {
-                state = AppBarStateChangeListener.State.EXPANDED;//修改为展开状态
-
-//                bindingView.titleTv.setVisibility(View.GONE);
-//                bindingView.toolbar.setNavigationIcon(R.drawable.nav_icon_white_return);
-
-                getWindow().getDecorView().setSystemUiVisibility(
-                        View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN | View.SYSTEM_UI_FLAG_VISIBLE);
-            }
-        } else if (Math.abs(verticalOffset) >= appBarLayout.getTotalScrollRange()) {
-
-//            bindingView.titleTv.setVisibility(View.VISIBLE);
-//            bindingView.toolbar.setNavigationIcon(R.drawable.nav_icon_return);
-
-            state = AppBarStateChangeListener.State.COLLAPSED;//修改为折叠状态
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN | View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
-            }
-            setStatusBarColor(this,R.color.material_blue_50);
-
-        } else {
-            if (Math.abs(verticalOffset) > height) {
-
-//                bindingView.titleTv.setVisibility(View.VISIBLE);
-                float scaleLight =  1- height / (float) Math.abs(verticalOffset);
-                if (state != AppBarStateChangeListener.State.IDLE) {
-
-                    if (state == AppBarStateChangeListener.State.COLLAPSED && scaleLight < 0.55) {//由折叠变为展开
-//                        bindingView.toolbar.setNavigationIcon(R.drawable.nav_icon_white_return);
-                        getWindow().getDecorView().setSystemUiVisibility(
-                                View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN | View.SYSTEM_UI_FLAG_VISIBLE);
-                    } else {
-                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                            getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN | View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
-                        }
-                        setStatusBarColor(this,R.color.material_blue_50);
-                    }
-
-                    state = AppBarStateChangeListener.State.IDLE;
-                }
-                float alphalight = (255 * scaleLight);
-
-//                bindingView.titleTv.setTextColor(Color.argb((int) alpha, 53,55,58));
-//
-//                bindingView.toolbar.setNavigationIcon(R.drawable.nav_icon_return);
-            } else {
-
-//                bindingView.titleTv.setVisibility(View.GONE);
-//                bindingView.toolbar.setNavigationIcon(R.drawable.nav_icon_white_return);
-
-            }
-        }
+    protected void onPause() {
+        super.onPause();
     }
-
-    /**
-     * 修改状态栏颜色，支持4.4以上版本
-     * @param activity
-     * @param colorId
-     */
-    public static void setStatusBarColor(Activity activity, int colorId) {
-
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            Window window = activity.getWindow();
-//      window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
-            window.setStatusBarColor(activity.getResources().getColor(colorId));
-        } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-            //使用SystemBarTint库使4.4版本状态栏变色，需要先将状态栏设置为透明
-            transparencyBar(activity);
-            SystemBarTintManager tintManager = new SystemBarTintManager(activity);
-            tintManager.setStatusBarTintEnabled(true);
-            tintManager.setStatusBarTintResource(colorId);
-        }
-    }
-
-    @TargetApi(19)
-    public static void transparencyBar(Activity activity){
-        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            Window window = activity.getWindow();
-            window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
-            window.getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
-                    | View.SYSTEM_UI_FLAG_LAYOUT_STABLE);
-            window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
-            window.setStatusBarColor(Color.TRANSPARENT);
-
-        } else
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-            Window window =activity.getWindow();
-            window.setFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS,
-                    WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
-        }
-    }
-
 
 
     class myadapter extends SaveFragmentPagerAdapter {

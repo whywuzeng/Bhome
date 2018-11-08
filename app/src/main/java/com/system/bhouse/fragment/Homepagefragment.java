@@ -16,7 +16,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.system.bhouse.bhouse.R;
-import com.system.bhouse.bhouse.SaleAnalysisActivity;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -57,8 +56,6 @@ public class Homepagefragment extends Fragment {
                     case 4:
                         break;
                     case 5:
-                        intent=new Intent(Homepagefragment.this.getActivity(),SaleAnalysisActivity.class);
-                        startActivity(intent);
                         break;
                     default:
                         Toast.makeText(Homepagefragment.this.getActivity(),"errro",0).show();

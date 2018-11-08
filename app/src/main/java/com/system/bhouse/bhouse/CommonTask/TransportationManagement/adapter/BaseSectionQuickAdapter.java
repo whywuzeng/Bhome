@@ -28,7 +28,6 @@ public abstract class BaseSectionQuickAdapter<T extends SectionEntity, K extends
     public BaseSectionQuickAdapter(int layoutResId, int sectionHeadResId, List<T> data) {
         super(layoutResId, data);
         this.mSectionHeadResId = sectionHeadResId;
-
     }
 
     @Override
@@ -64,9 +63,9 @@ public abstract class BaseSectionQuickAdapter<T extends SectionEntity, K extends
 
     protected abstract void convertHead(K helper, T item);
 
-    private ArrayList<T> copyBProBOMs= new ArrayList<>();
+    private List<T> copyBProBOMs= new ArrayList<>();
 
-    public void setFriends(ArrayList<T> data) {
+    public void setFriends(List<T> data) {
         //复制数据
         this.copyBProBOMs.addAll(data);
         mData = data;
@@ -152,6 +151,7 @@ public abstract class BaseSectionQuickAdapter<T extends SectionEntity, K extends
     private FilterRefreshListener mRefreshListener;
 
     public interface FilterRefreshListener<T>{
+        //是否包含 prefixString
         public String getIsFilter(String prefixString, T value);
         public void onAdapterRefresh();
     }

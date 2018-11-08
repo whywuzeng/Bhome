@@ -11,21 +11,20 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.helper.ItemTouchHelper;
 import android.text.TextUtils;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.EditText;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.google.gson.reflect.TypeToken;
 import com.system.bhouse.Custom.ShowDeviceMessageCustomDialog;
 import com.system.bhouse.api.ApiWebService;
 import com.system.bhouse.base.App;
+import com.system.bhouse.base.CheckStatusBeanImpl;
 import com.system.bhouse.base.StatusBean;
 import com.system.bhouse.base.SubmitStatusBeanImpl;
 import com.system.bhouse.bean.TransportSendGoodsBean;
+import com.system.bhouse.bhouse.CommonTask.BaseTaskFragment.BaseContentMessageActivity;
 import com.system.bhouse.bhouse.CommonTask.adapter.TreeWidget.TreeRecyclerAdapter;
 import com.system.bhouse.bhouse.CommonTask.adapter.TreeWidget.base.ViewHolder;
 import com.system.bhouse.bhouse.CommonTask.adapter.TreeWidget.item.GroupItem;
@@ -34,11 +33,13 @@ import com.system.bhouse.bhouse.CommonTask.adapter.TreeWidget.item.TreeItem;
 import com.system.bhouse.bhouse.CommonTask.common.CommonDateTimePickerFragment;
 import com.system.bhouse.bhouse.CommonTask.utils.ComTaskContentItemSectionItemTouchHelper;
 import com.system.bhouse.bhouse.R;
-import com.system.bhouse.bhouse.setup.WWCommon.WWBackActivity;
 import com.system.bhouse.bhouse.setup.utils.LabelNumPickerDialog;
+import com.system.bhouse.config.Const;
 import com.system.bhouse.ui.sectioned.SectionedRecyclerViewAdapter;
 import com.system.bhouse.utils.TenUtils.L;
 import com.system.bhouse.utils.TenUtils.T;
+import com.system.bhouse.utils.ValueUtils;
+import com.system.bhouse.utils.custom.CustomToast;
 import com.zijunlin.Zxing.Demo.CaptureActivity;
 
 import org.androidannotations.annotations.AfterViews;
@@ -52,12 +53,8 @@ import org.androidannotations.annotations.ViewById;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.concurrent.TimeUnit;
 
 import de.greenrobot.event.EventBus;
-import rx.Observable;
-import rx.Subscriber;
-import rx.android.schedulers.AndroidSchedulers;
 
 /**
  * Created by Administrator on 2018-03-05.
@@ -68,7 +65,7 @@ import rx.android.schedulers.AndroidSchedulers;
  */
 @EActivity(R.layout.activity_comtask_content_layout)
 @OptionsMenu(R.menu.menu_comtask)
-public class TransportSendGoodsContentMessageActivity extends WWBackActivity implements TransportSendGoodsContentItemSection.OnItemClickListener, GroupItem.onChildItemClickListener, LabelNumPickerDialog.OnDateSetListener {
+public class TransportSendGoodsContentMessageActivity extends BaseContentMessageActivity implements TransportSendGoodsContentItemSection.OnItemClickListener, GroupItem.onChildItemClickListener, LabelNumPickerDialog.OnDateSetListener {
 
     public static final String TAG = "comtaskcontentmessageactivity";
 
@@ -144,6 +141,13 @@ public class TransportSendGoodsContentMessageActivity extends WWBackActivity imp
         testData();
 //        TopListViewInit(this.comTaskBeans);
         setScrollViewFirst();
+
+        setOnBackPressedListener(new setOnBackPressedListener() {
+            @Override
+            public void onBackPressedListener() {
+                sureDataRefresh("tvDeleteAction");
+            }
+        });
     }
 
     @Override
@@ -183,9 +187,20 @@ public class TransportSendGoodsContentMessageActivity extends WWBackActivity imp
      * param comTaskBeans
      */
     private void TopListViewInit() {
+
+        mRecyclerViewAdapter.removeAllSections();
+        mRecyclerViewAdapter.addSection(workflowSection);
+        mRecyclerViewAdapter.notifyDataSetChanged();
+
         TransportSendGoodsBean comTaskBean1 = null;
 
-        comTaskBean1 = this.comTaskBeans.get(0);
+        if (ValueUtils.IsFirstValueExist(comTaskBeans)) {
+            comTaskBean1 = this.comTaskBeans.get(0);
+        }else {
+            comTaskBean1=new TransportSendGoodsBean();
+            comTaskBean1.setDisableDelete(true);
+            this.comTaskBeans.add(comTaskBean1);
+        }
 
         if (!TextUtils.isEmpty(receiptHnumber)) {
             comTaskBean1.hNumbe = receiptHnumber;
@@ -260,7 +275,7 @@ public class TransportSendGoodsContentMessageActivity extends WWBackActivity imp
                 viewModel.isClick = true;
             }
             viewModels.add(viewModel);
-
+            headerProperties.put(viewModel.key,viewModel.value);
 
             viewModel = new SortChildItem.ViewModel();
             viewModel.name = "车牌号";
@@ -484,7 +499,11 @@ public class TransportSendGoodsContentMessageActivity extends WWBackActivity imp
 
                     if (loadingcarbean.isEmpty())
                     {
-                        T.showShort(TransportSendGoodsContentMessageActivity.this,getResources().getString(R.string.Qrcode_result));
+//                        T.showShort(TransportSendGoodsContentMessageActivity.this,getResources().getString(R.string.Qrcode_result));
+                        CustomToast.showWarning();
+                        getDateRefresh("", extraPosition, "车次");
+                        comTaskBeans.clear();
+                        mRecyclerViewAdapter.notifyDataSetChanged();
                         return;
                     }
 
@@ -670,19 +689,19 @@ public class TransportSendGoodsContentMessageActivity extends WWBackActivity imp
      * 请求数据
      */
     private void testData() {
-
+        comTaskBeans.clear();
         ApiWebService.Get_Sale_Order_CarView_Json(this, new ApiWebService.SuccessCall() {
             @Override
             public void SuccessBack(String result) {
-                ArrayList<TransportSendGoodsBean> tomTaskBeans = App.getAppGson().fromJson(result, new TypeToken<List<TransportSendGoodsBean>>() {
-                }.getType());
-                if (tomTaskBeans.isEmpty()) {
-                    comTaskBeans.add(new TransportSendGoodsBean());
-                }
-                else {
-                    comTaskBeans.addAll(tomTaskBeans);
-                }
+                ArrayList<TransportSendGoodsBean> tomTaskBeans = App.getAppGson().fromJson(result, new TypeToken<List<TransportSendGoodsBean>>() {}.getType());
+//                if (tomTaskBeans.isEmpty()) {
+//                    comTaskBeans.add(new TransportSendGoodsBean());
+//                }
+//                else {
+//                }
+                comTaskBeans.addAll(tomTaskBeans);
                 mRecyclerViewAdapter.notifyDataSetChanged();
+                ifStateForOrderId();
                 TopListViewInit();
             }
 
@@ -693,6 +712,38 @@ public class TransportSendGoodsContentMessageActivity extends WWBackActivity imp
         }, HId);
         //上个result id 值
     }
+
+    /*
+   请求有数据返回  才去判断是否状态相同
+    */
+    private void ifStateForOrderId() {
+        if (!ValueUtils.IsFirstValueExist(comTaskBeans))
+        {
+            return;
+        }
+
+        //提交  请求有数据 就是保存状态
+        if (comTaskBeans.get(0).getStatus().equals(Const.SUBMIT_STATUS)) {
+            /**
+             * 请求有数据,就是
+             */
+            //保存状态
+            SubmitStatusBeanImpl submitStatusBean = new SubmitStatusBeanImpl();
+            submitStatusBean.setVisCheckBtn(true).setVisDeleteBtn(true).setVisModifyBtn(true);
+            mStatus.setBean(submitStatusBean);
+            mStatus.setLookStatus(true);
+            return;
+        }else if (comTaskBeans.get(0).getStatus().equals(Const.CHECK_STATUS))
+        {
+            //审核状态
+            CheckStatusBeanImpl checkStatusBean = new CheckStatusBeanImpl();
+            checkStatusBean.setVisCheckFBtn(true);
+            mStatus.setBean(checkStatusBean);
+            mStatus.setLookStatus(true);
+            return;
+        }
+    }
+
 
     @Override
     public void onItemClick(View view, View textView, int position) {
@@ -780,159 +831,9 @@ public class TransportSendGoodsContentMessageActivity extends WWBackActivity imp
         }
     }
 
-    /**
-     * show1 展示 dialog
-     */
-    private void show1() {
-        bottomDialog = new Dialog(this, R.style.BottomDialog);
-        View contentView = LayoutInflater.from(this).inflate(R.layout.confirmation_dialog_content_normal, null);
-        bottomDialog.setContentView(contentView);
-        LinearLayout llModify = (LinearLayout) contentView.findViewById(R.id.ll_modify);
-        LinearLayout llSubmit = (LinearLayout) contentView.findViewById(R.id.ll_submit);
-        LinearLayout llCheck = (LinearLayout) contentView.findViewById(R.id.ll_check);
-        LinearLayout llFanCheck = (LinearLayout) contentView.findViewById(R.id.ll_fanCheck);
-        LinearLayout llQrcode = (LinearLayout) contentView.findViewById(R.id.ll_qrcode);
-
-        TextView tvModify = (TextView) contentView.findViewById(R.id.tv_modify);
-        TextView tvSubmit = (TextView) contentView.findViewById(R.id.tv_submit);
-        TextView tvCheck = (TextView) contentView.findViewById(R.id.tv_check);
-        TextView tvFanCheck = (TextView) contentView.findViewById(R.id.tv_fanCheck);
-        TextView tvDelete = (TextView) contentView.findViewById(R.id.tv_delete);
-        TextView tvQrcode = (TextView) contentView.findViewById(R.id.tv_qrcode);
-        tvQrcode.setText("吊装需求拉取");
-
-//        if (mStatus.isNewStatus()) {
-//            llCheck.setVisibility(View.GONE);
-//            llModify.setVisibility(View.GONE);
-//            llFanCheck.setVisibility(View.GONE);
-//            tvDelete.setVisibility(View.GONE);
-//            llQrcode.setVisibility(View.GONE);
-//        }
-//        else if (mStatus.isModifyStatus()) {
-//            llCheck.setVisibility(View.GONE);
-//            llModify.setVisibility(View.GONE);
-//            llFanCheck.setVisibility(View.GONE);
-//            tvDelete.setVisibility(View.GONE);
-//            llQrcode.setVisibility(View.GONE);
-//            llSubmit.setVisibility(View.VISIBLE);
-//        }
-//        else if (mStatus.isLookStatus()) {
-//            llQrcode.setVisibility(View.GONE);
-//            llSubmit.setVisibility(View.GONE);
-//            if (!TextUtils.isEmpty(comTaskBeans.get(0).status)&&comTaskBeans.get(0).status.equals("审核")){
-//                llModify.setVisibility(View.GONE);
-//            }
-//        }
-
-
-        llCheck.setVisibility(mStatus.getBean().visCheckBtn?View.VISIBLE:View.GONE);
-        llModify.setVisibility(mStatus.getBean().visModifyBtn?View.VISIBLE:View.GONE);
-        llFanCheck.setVisibility(mStatus.getBean().visCheckFBtn?View.VISIBLE:View.GONE);
-        tvDelete.setVisibility(mStatus.getBean().visDeleteBtn?View.VISIBLE:View.GONE);
-        llQrcode.setVisibility(mStatus.getBean().visQRBtn?View.VISIBLE:View.GONE);
-        llSubmit.setVisibility(mStatus.getBean().visSubmitBtn?View.VISIBLE:View.GONE);
-
-        Observable.create(subscriber -> {
-            tvQrcode.setOnClickListener(v -> {
-                subscriber.onNext(v);
-            });
-        }).debounce(350, TimeUnit.MILLISECONDS).observeOn(AndroidSchedulers.mainThread()).subscribe(V -> {
-            L.e("double click");
-            bottomDialog.dismiss();
-            tvQrcodeAction();
-        });
-
-        Observable.create(subscriber -> {
-            tvDelete.setOnClickListener(v -> {
-                subscriber.onNext(v);
-            });
-        }).debounce(350, TimeUnit.MILLISECONDS).observeOn(AndroidSchedulers.mainThread()).subscribe(V -> {
-            L.e("double click");
-            bottomDialog.dismiss();
-            tvDeleteAction();
-        });
-
-        Observable.create(subscriber -> {
-            tvFanCheck.setOnClickListener(v -> {
-                subscriber.onNext(v);
-            });
-        }).debounce(350, TimeUnit.MILLISECONDS).observeOn(AndroidSchedulers.mainThread()).subscribe(V -> {
-            L.e("double click");
-            bottomDialog.dismiss();
-            tvFanCheckAction();
-        });
-
-        tvModify.setOnClickListener(v -> {
-            mStatus.setBean(new SubmitStatusBeanImpl().setVisSubmitBtn(true));
-            mStatus.setLookStatus(true);
-            mStatus.setModifyStatus(true);
-            if (mStatus.isModifyStatus()) {
-                setActionBarMidlleTitle("修改运输发货");
-                TopListViewInit();
-
-                workflowSection = new TransportSendGoodsContentItemSection(comTaskBeans, mStatus);
-                String[] stringArray = getResources().getStringArray(R.array.Transportsendgoods_itemsection_order);
-                workflowSection.setTVIDContent(stringArray);
-                workflowSection.setOnItemClickListener(this);
-                mRecyclerViewAdapter.removeAllSections();
-                mRecyclerViewAdapter.addSection(workflowSection);
-
-                mRecyclerViewAdapter.notifyDataSetChanged();
-                bottomDialog.dismiss();
-            }
-        });
-
-        Observable.create(subscriber -> {
-            tvSubmit.setOnClickListener(v -> {
-                subscriber.onNext(v);
-            });
-        }).debounce(350, TimeUnit.MILLISECONDS).observeOn(AndroidSchedulers.mainThread()).subscribe(V -> {
-            L.e("double click");
-            bottomDialog.dismiss();
-            if (mStatus.isNewStatus()) {
-                tvSubmitActionforList();
-            }
-            else if (mStatus.isModifyStatus()) {
-                tvSubmitActionforList();
-            }
-        });
-
-        Observable.create(subscriber -> {
-            tvCheck.setOnClickListener(v -> {
-                subscriber.onNext(v);
-            });
-        }).debounce(350, TimeUnit.MILLISECONDS).observeOn(AndroidSchedulers.mainThread()).subscribe(V -> {
-            L.e("double click");
-            bottomDialog.dismiss();
-            tvCheckAction();
-        });
-
-        ViewGroup.LayoutParams layoutParams = contentView.getLayoutParams();
-        layoutParams.width = getResources().getDisplayMetrics().widthPixels;
-        contentView.setLayoutParams(layoutParams);
-        bottomDialog.getWindow().setGravity(Gravity.BOTTOM);
-        bottomDialog.setCanceledOnTouchOutside(true);
-        bottomDialog.getWindow().setWindowAnimations(R.style.BottomDialog_Animation);
-        bottomDialog.show();
-    }
-
     //吊装需求拉取 点击事件
-    private void tvQrcodeAction() {
-//        ApiWebService.Get_Sale_Order_Hois_Req_listJson(this, new ApiWebService.SuccessCall() {
-//            @Override
-//            public void SuccessBack(String result) {
-//
-//                ArrayList<BProBOM> bProBOMs = App.getAppGson().fromJson(result, new TypeToken<List<BProBOM>>() {
-//                }.getType());
-//
-//                CommonPickerActivity_.intent(ComponentReturnsContentMessageActivity.this).title("吊装需求拉取").bProBOMs(bProBOMs).Position(0).startForResult(RESULT_SORTITEM_SELECTPROJECT);
-//            }
-//
-//            @Override
-//            public void ErrorBack(String error) {
-//
-//            }
-//        },9999,"");
+    @Override
+    protected void tvQrcodeAction(TextView tvQrcode) {
     }
 
     @Override
@@ -950,12 +851,12 @@ public class TransportSendGoodsContentMessageActivity extends WWBackActivity imp
     }
 
 
-    private void tvSubmitActionforList() {
+    protected  void tvSubmitActionforList(TextView tvSubmit){
         if (!getComtaskSize()) {
             T.showShort(this, "数据有误,不能提交");
             return;
         }
-        if (TextUtils.isEmpty(this.comTaskBeans.get(0).getCartrips())) {
+        if (TextUtils.isEmpty(this.headerProperties.get("cartrips"))) {
             T.showShort(this, "车次为空不能提交");
             return;
         }
@@ -1015,8 +916,7 @@ public class TransportSendGoodsContentMessageActivity extends WWBackActivity imp
                 public void SuccessBack(String result) {
                     T.showShort(TransportSendGoodsContentMessageActivity.this, result);
                     if (!result.contains("失败")) {
-                        onBackPressed();
-                        sureDataRefresh("tvSubmitAction");
+                     testData();
                     }
                 }
 
@@ -1028,14 +928,15 @@ public class TransportSendGoodsContentMessageActivity extends WWBackActivity imp
         }
     }
 
-    private void tvCheckAction() {
+    protected void tvCheckAction(TextView tvCheck){
 
         ApiWebService.Get_Sale_Order_Car_sh(this, new ApiWebService.SuccessCall() {
             @Override
             public void SuccessBack(String result) {
                 T.showShort(TransportSendGoodsContentMessageActivity.this, result);
-                onBackPressed();
-                sureDataRefresh("tvCheckAction");
+//                onBackPressed();
+//                sureDataRefresh("tvCheckAction");
+                testData();
             }
 
             @Override
@@ -1045,13 +946,35 @@ public class TransportSendGoodsContentMessageActivity extends WWBackActivity imp
         }, comTaskBeans.get(0).getID(), App.USER_INFO);
     }
 
-    private void tvFanCheckAction() {
+    protected void tvModifyAction(TextView tvModify)
+    {
+        mStatus.setBean(new SubmitStatusBeanImpl().setVisSubmitBtn(true));
+        mStatus.setLookStatus(true);
+        mStatus.setModifyStatus(true);
+        if (mStatus.isModifyStatus()) {
+            setActionBarMidlleTitle("修改运输发货");
+            TopListViewInit();
+
+            workflowSection = new TransportSendGoodsContentItemSection(comTaskBeans, mStatus);
+            String[] stringArray = getResources().getStringArray(R.array.Transportsendgoods_itemsection_order);
+            workflowSection.setTVIDContent(stringArray);
+            workflowSection.setOnItemClickListener(this);
+            mRecyclerViewAdapter.removeAllSections();
+            mRecyclerViewAdapter.addSection(workflowSection);
+
+            mRecyclerViewAdapter.notifyDataSetChanged();
+            bottomDialog.dismiss();
+        }
+    }
+
+    protected void tvFanCheckAction(TextView tvFanCheck){
         ApiWebService.Get_Sale_Order_Car_shf(this, new ApiWebService.SuccessCall() {
             @Override
             public void SuccessBack(String result) {
                 T.showShort(TransportSendGoodsContentMessageActivity.this, result);
-                onBackPressed();
-                sureDataRefresh("tvFanCheckAction");
+//                onBackPressed();
+//                sureDataRefresh("tvFanCheckAction");
+                testData();
             }
 
             @Override
@@ -1061,7 +984,7 @@ public class TransportSendGoodsContentMessageActivity extends WWBackActivity imp
         }, comTaskBeans.get(0).getID(), App.USER_INFO);
     }
 
-    private void tvDeleteAction() {
+    protected void tvDeleteAction(TextView tvDelete){
         ApiWebService.Get_Sale_Order_Car_Del(this, new ApiWebService.SuccessCall() {
             @Override
             public void SuccessBack(String result) {
@@ -1088,46 +1011,28 @@ public class TransportSendGoodsContentMessageActivity extends WWBackActivity imp
         public String count;
     }
 
-    private boolean isVisBottom(RecyclerView recyclerView) {
-        LinearLayoutManager layoutManager = (LinearLayoutManager) recyclerView.getLayoutManager();
-        //屏幕中最后一个可见子项的position
-        int lastVisibleItemPosition = layoutManager.findLastVisibleItemPosition();
-        //当前屏幕所看到的子项个数
-        int visibleItemCount = layoutManager.getChildCount();
-        //当前RecyclerView的所有子项个数
-        int totalItemCount = layoutManager.getItemCount();
-        //RecyclerView的滑动状态
-        int state = recyclerView.getScrollState();
-        if (visibleItemCount > 0 && lastVisibleItemPosition == totalItemCount - 1 && state == recyclerView.SCROLL_STATE_IDLE) {
-            return true;
-        }
-        else {
-            return false;
-        }
-    }
-
     @OptionsItem
     protected final void action_operat_status() {
-        Observable<Object> objectObservable = Observable.create(subscriber -> {
-            show1();
-        });
-        Observable observableMobileKey = ApiWebService.Get_KeyTimestr(App.MobileKey);
-        observableMobileKey.concatWith(objectObservable).subscribe(new Subscriber() {
-            @Override
-            public void onCompleted() {
-
-            }
-
-            @Override
-            public void onError(Throwable e) {
-
-            }
-
-            @Override
-            public void onNext(Object o) {
-                App.KeyTimestring = o.toString();
-            }
-        });
+        show1(mStatus);
+//        Observable<Object> objectObservable = Observable.create(subscriber -> {
+//        });
+//        Observable observableMobileKey = ApiWebService.Get_KeyTimestr(App.MobileKey);
+//        observableMobileKey.concatWith(objectObservable).subscribe(new Subscriber() {
+//            @Override
+//            public void onCompleted() {
+//
+//            }
+//
+//            @Override
+//            public void onError(Throwable e) {
+//
+//            }
+//
+//            @Override
+//            public void onNext(Object o) {
+//                App.KeyTimestring = o.toString();
+//            }
+//        });
     }
 
 }

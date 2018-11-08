@@ -30,7 +30,7 @@ public class SortChildItem extends TreeItem<SortChildItem.ViewModel> {
     public void onBindViewHolder(ViewHolder viewHolder) {
         viewHolder.setText(R.id.tv_task_done1,getData().name);
         viewHolder.setText(R.id.tv_task_done,getData().value);
-        if ((getData().name.equals("车次")&&!getData().key.endsWith(NoQRcode))||(getData().name.equals("货柜")&&!getData().key.endsWith(NoQRcode)))
+        if ((getData().name.equals("车次")&&!getData().key.endsWith(NoQRcode))||(getData().name.equals("货柜")&&!getData().key.endsWith(NoQRcode))||getData().isQrcodeBtn)
         viewHolder.setImageResource(R.id.iv_right_arrow,R.drawable.ic_eqcode_grey);
         viewHolder.setVisible(R.id.iv_right_arrow,getData().isClick);
         viewHolder.setEnable(R.id.main_layout_ll,getData().isClick);
@@ -41,6 +41,7 @@ public class SortChildItem extends TreeItem<SortChildItem.ViewModel> {
       public  String name;
       public  String value;
       public  boolean isClick=false;
+      public  boolean isQrcodeBtn=false;
       public  String key;
     }
 

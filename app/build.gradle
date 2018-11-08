@@ -1,9 +1,9 @@
 apply plugin: 'com.android.application'
-//apply plugin: 'android-apt'
+apply plugin: 'org.greenrobot.greendao'
 
 android {
-    compileSdkVersion 25
-    buildToolsVersion '26.0.2'
+    compileSdkVersion rootProject.ext.android["compileSdkVersion"]
+    buildToolsVersion rootProject.ext.android["buildToolsVersion"]
 
     aaptOptions {
         cruncherEnabled = false
@@ -14,7 +14,6 @@ android {
         dexInProcess true
         preDexLibraries false
         javaMaxHeapSize "2g"//越大越好
-        incremental true
         jumboMode = true
         threadCount = 8
     }
@@ -30,16 +29,16 @@ android {
         }
         prod {
             // The actual minSdkVersion for the application.
-            minSdkVersion 16
+            minSdkVersion rootProject.ext.android["minSdkVersion"]
         }
     }
 
         defaultConfig {
             applicationId "com.system.bhouse.bhouse"
-            minSdkVersion 16
-            targetSdkVersion 25
-            versionCode 4
-            versionName "1.03"
+            minSdkVersion rootProject.ext.android["minSdkVersion"]
+            targetSdkVersion rootProject.ext.android["targetSdkVersion"]
+            versionCode rootProject.ext.android["versionCode"]
+            versionName rootProject.ext.android["versionName"]
             multiDexEnabled true
             javaCompileOptions {
                 annotationProcessorOptions {
@@ -48,7 +47,7 @@ android {
             }
             ndk {
                 //根据需要 自行选择添加的对应cpu类型的.so库。
-                abiFilters 'armeabi', 'armeabi-v7a', 'arm64-v8a'
+                abiFilters 'armeabi', 'armeabi-v7a', 'arm64-v8a','x86'
                 // 还可以添加 'x86', 'x86_64', 'mips', 'mips64'
             }
             manifestPlaceholders = [
@@ -113,19 +112,18 @@ dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
     testCompile 'junit:junit:4.12'
     implementation 'com.jakewharton:butterknife:7.0.1'
-    implementation 'com.android.support:design:26.0.0-alpha1'
-    implementation 'com.android.support:appcompat-v7:26.0.0-alpha1'
-    implementation 'com.android.support:cardview-v7:26.0.0-alpha1'
+    implementation "com.android.support:design:$rootProject.v4Version"
+    implementation "com.android.support:appcompat-v7:$rootProject.v4Version"
+    implementation "com.android.support:cardview-v7:$rootProject.v4Version"
     implementation 'com.android.support:support-dynamic-animation:25.4.0'
     implementation 'org.apache.httpcomponents:httpcore:4.4.2'
     implementation files('libs/ksoap2-android-assembly-3.0.0-RC.4-jar-with-dependencies.jar')
-    implementation 'io.reactivex:rxandroid:1.1.0'
-    implementation 'io.reactivex:rxjava:1.1.0'
+    implementation 'io.reactivex:rxandroid:1.2.0'
+    implementation 'io.reactivex:rxjava:1.2.0'
     implementation 'com.squareup.retrofit2:retrofit:2.0.0-beta4'
     implementation 'com.squareup.retrofit2:converter-gson:2.0.0-beta4'
     implementation 'com.squareup.retrofit2:adapter-rxjava:2.0.0-beta4'
     implementation 'com.squareup.okhttp3:okhttp:3.1.2'
-    implementation 'com.zhy:autolayout:1.4.3'
     implementation 'com.github.zhaokaiqiang.klog:library:1.3.0'
     implementation 'com.lijunguan:imageseletor:1.0.1'
     implementation('org.apache.commons:commons-io:1.3.2') {
@@ -159,13 +157,13 @@ dependencies {
     implementation 'com.tencent.wup:wup:1.0.0.E-release'
     //mid包
     implementation 'com.tencent.mid:mid:4.0.6-release'
-    def AAVersion = '4.1.0'
+    def AAVersion = '4.3.1'
     annotationProcessor "org.androidannotations:androidannotations:$AAVersion"
     implementation "org.androidannotations:androidannotations-api:$AAVersion"
     //    annotationProcessor
-    implementation 'com.zijunlin.Zxing.Demo:ZXingDemo:1.0.3'
-    //产品标签
-    implementation 'me.gujun.android.taggroup:library:1.4@aar'
+//    implementation 'com.zijunlin.Zxing.Demo:ZXingDemo:1.0.3'
+//    //产品标签
+//    implementation 'me.gujun.android.taggroup:library:1.4@aar'
     // popdialogwindow
     implementation 'com.github.pinguo-zhouwei:CustomPopwindow:2.1.1'
     //处理19状态栏
@@ -174,7 +172,24 @@ dependencies {
     //内存泄漏
     //    debugImplementation 'com.squareup.leakcanary:leakcanary-android:1.3'
     //    releaseImplementation 'com.squareup.leakcanary:leakcanary-android-no-op:1.3'
-//    implementation project(':ZXingapp')
+  implementation project(':ZXingapp')
+    //数据库
+    //数据库依赖
+    implementation 'org.greenrobot:greendao:3.2.2'
+    //rxjava生命周期
+    implementation 'com.trello:rxlifecycle:1.0'
+    implementation 'com.trello:rxlifecycle-components:1.0'
+    //
+    implementation 'com.facebook.stetho:stetho:1.5.0'
+
+    //动态权限
+    //动态权限处理
+    implementation("com.github.hotchemi:permissionsdispatcher:3.1.0") {
+        // if you don't use android.app.Fragment you can exclude support for them
+        exclude module: "support-v13"
+    }
+    annotationProcessor "com.github.hotchemi:permissionsdispatcher-processor:3.1.0"
+
 }
 
 

@@ -55,6 +55,8 @@ public class CaptureActivity extends Activity implements Callback
 	public static final int LongLongTime=60000000;
 	private String tipContent;
 	private ToastUtil mToastUtil;
+	//传入标志
+	private String Gototag;
 
 	/** Called when the activity is first created. */
 	@Override
@@ -67,7 +69,8 @@ public class CaptureActivity extends Activity implements Callback
 		viewfinderView = (ViewfinderView) findViewById(R.id.viewfinder_view);
 				captureLightBtn= (Button) findViewById(R.id.capture_light_btn);
 		 positionExtra = getIntent().getIntExtra("position",-1);
-		 tipContent=getIntent().getStringExtra(TipContentTag);
+		Gototag = getIntent().getStringExtra("tag");
+		tipContent=getIntent().getStringExtra(TipContentTag);
 		 if (TextUtils.isEmpty(tipContent))
 		 {
 		 	tipContent="如扫码时间过慢,请重试";
@@ -289,6 +292,7 @@ public class CaptureActivity extends Activity implements Callback
 					ByteArrayOutputStream baos = new ByteArrayOutputStream();
 					barcode.compress(Bitmap.CompressFormat.PNG, 100, baos);
 					byte[] bitmapByte = baos.toByteArray();
+					bundle.putString("tag",Gototag);
 					bundle.putByteArray("bitmap", bitmapByte);
 					bundle.putString("result", obj.getText());
 					bundle.putInt("position",positionExtra);

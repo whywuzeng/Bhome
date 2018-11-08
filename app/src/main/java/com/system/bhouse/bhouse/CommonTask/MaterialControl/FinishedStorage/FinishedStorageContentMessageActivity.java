@@ -23,6 +23,7 @@ import com.google.gson.reflect.TypeToken;
 import com.system.bhouse.Custom.ShowDeviceMessageCustomDialog;
 import com.system.bhouse.api.ApiWebService;
 import com.system.bhouse.base.App;
+import com.system.bhouse.base.BHBaseSubscriber;
 import com.system.bhouse.base.StatusBean;
 import com.system.bhouse.base.SubmitStatusBeanImpl;
 import com.system.bhouse.bhouse.CommonTask.MaterialControl.entity.FinishedStorageBean;
@@ -40,6 +41,7 @@ import com.system.bhouse.ui.sectioned.SectionedRecyclerViewAdapter;
 import com.system.bhouse.utils.TenUtils.L;
 import com.system.bhouse.utils.TenUtils.T;
 import com.system.bhouse.utils.ValueUtils;
+import com.system.bhouse.utils.custom.CustomToast;
 import com.zijunlin.Zxing.Demo.CaptureActivity;
 
 import org.androidannotations.annotations.AfterViews;
@@ -59,7 +61,6 @@ import java.util.concurrent.TimeUnit;
 
 import de.greenrobot.event.EventBus;
 import rx.Observable;
-import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;
 
 /**
@@ -394,7 +395,11 @@ public class FinishedStorageContentMessageActivity extends WWBackActivity implem
 
                         if (loadingcarbean.isEmpty())
                         {
-                            T.showShort(FinishedStorageContentMessageActivity.this,getResources().getString(R.string.Qrcode_result));
+//                            T.showShort(FinishedStorageContentMessageActivity.this,getResources().getString(R.string.Qrcode_result));
+                            CustomToast.showWarning();
+                            comTaskBeans.clear();
+                            mRecyclerViewAdapter.notifyDataSetChanged();
+                            return;
                         }
 
                         for (FinishedStorageBean bean : loadingcarbean) {
@@ -434,8 +439,15 @@ public class FinishedStorageContentMessageActivity extends WWBackActivity implem
                         ArrayList<FinishedStorageBean> loadingcarbean = App.getAppGson().fromJson(result, new TypeToken<List<FinishedStorageBean>>() {
                         }.getType());
 
-                        if (!ValueUtils.IsFirstValueExist(loadingcarbean))
+                        if (!ValueUtils.IsFirstValueExist(loadingcarbean)) {
+                            comTaskBeans.get(extraPosition).setWareHouseID("");
+                            comTaskBeans.get(extraPosition).setWareHouseName("");
+                            ArrayList<FinishedStorageBean> clone = (ArrayList<FinishedStorageBean>)comTaskBeans.clone();
+                            comTaskBeans.clear();
+                            comTaskBeans.addAll(clone);
+                            mRecyclerViewAdapter.notifyDataSetChanged();
                             return;
+                        }
                         comTaskBeans.get(extraPosition).setWareHouseID(loadingcarbean.get(0).wareHouseID);
                         comTaskBeans.get(extraPosition).setWareHouseName(loadingcarbean.get(0).wareHouseName);
 
@@ -743,34 +755,94 @@ public class FinishedStorageContentMessageActivity extends WWBackActivity implem
         llQrcode.setVisibility(mStatus.getBean().visQRBtn?View.VISIBLE:View.GONE);
         llSubmit.setVisibility(mStatus.getBean().visSubmitBtn?View.VISIBLE:View.GONE);
 
+        Observable observableMobileKey = ApiWebService.Get_KeyTimestr(App.MobileKey);
+
         Observable.create(subscriber -> {
             tvQrcode.setOnClickListener(v -> {
                 subscriber.onNext(v);
             });
         }).debounce(350, TimeUnit.MILLISECONDS).observeOn(AndroidSchedulers.mainThread()).subscribe(V -> {
-            L.e("double click");
-            bottomDialog.dismiss();
-            tvQrcodeAction();
-        });
+//            observableMobileKey.concatWith
+                    observableMobileKey.concatWith(Observable.create(subscriber -> {
+                        L.e("double click");
+                        bottomDialog.dismiss();
+                        tvQrcodeAction();
+                    })).subscribe(new BHBaseSubscriber<Object>() {
+                        @Override
+                        public void onCompleted() {
+                            super.onCompleted();
+                        }
 
-        Observable.create(subscriber -> {
+                        @Override
+                        public void onError(Throwable e) {
+                            super.onError(e);
+                        }
+
+                        @Override
+                        public void onNext(Object o) {
+                            super.onNext(o);
+                            App.KeyTimestring = o.toString();
+                        }
+                    });
+                });
+
+       Observable.create(subscriber -> {
             tvDelete.setOnClickListener(v -> {
                 subscriber.onNext(v);
             });
         }).debounce(350, TimeUnit.MILLISECONDS).observeOn(AndroidSchedulers.mainThread()).subscribe(V -> {
-            L.e("double click");
-            bottomDialog.dismiss();
-            tvDeleteAction();
+
+            observableMobileKey.concatWith(Observable.create(subscriber -> {
+                L.e("double click");
+                bottomDialog.dismiss();
+                tvDeleteAction();
+            })).subscribe(new BHBaseSubscriber<Object>() {
+                @Override
+                public void onCompleted() {
+                    super.onCompleted();
+                }
+
+                @Override
+                public void onError(Throwable e) {
+                    super.onError(e);
+                }
+
+                @Override
+                public void onNext(Object o) {
+                    super.onNext(o);
+                    App.KeyTimestring = o.toString();
+                }
+            });
+
         });
 
-        Observable.create(subscriber -> {
+       Observable.create(subscriber -> {
             tvFanCheck.setOnClickListener(v -> {
                 subscriber.onNext(v);
             });
         }).debounce(350, TimeUnit.MILLISECONDS).observeOn(AndroidSchedulers.mainThread()).subscribe(V -> {
-            L.e("double click");
-            bottomDialog.dismiss();
-            tvFanCheckAction();
+
+            observableMobileKey.concatWith(Observable.create(subscriber -> {
+                L.e("double click");
+                bottomDialog.dismiss();
+                tvFanCheckAction();
+            })).subscribe(new BHBaseSubscriber<Object>() {
+                @Override
+                public void onCompleted() {
+                    super.onCompleted();
+                }
+
+                @Override
+                public void onError(Throwable e) {
+                    super.onError(e);
+                }
+
+                @Override
+                public void onNext(Object o) {
+                    super.onNext(o);
+                    App.KeyTimestring = o.toString();
+                }
+            });
         });
 
         Observable.create(subscriber -> {
@@ -778,9 +850,28 @@ public class FinishedStorageContentMessageActivity extends WWBackActivity implem
                 subscriber.onNext(v);
             });
         }).debounce(350, TimeUnit.MILLISECONDS).observeOn(AndroidSchedulers.mainThread()).subscribe(V -> {
-            L.e("double click");
-            bottomDialog.dismiss();
-            tvModifyAction();
+
+            observableMobileKey.concatWith(Observable.create(subscriber -> {
+                L.e("double click");
+                bottomDialog.dismiss();
+                tvModifyAction();
+            })).subscribe(new BHBaseSubscriber<Object>() {
+                @Override
+                public void onCompleted() {
+                    super.onCompleted();
+                }
+
+                @Override
+                public void onError(Throwable e) {
+                    super.onError(e);
+                }
+
+                @Override
+                public void onNext(Object o) {
+                    super.onNext(o);
+                    App.KeyTimestring = o.toString();
+                }
+            });
         });
 
         Observable.create(subscriber -> {
@@ -788,14 +879,33 @@ public class FinishedStorageContentMessageActivity extends WWBackActivity implem
                 subscriber.onNext(v);
             });
         }).debounce(350, TimeUnit.MILLISECONDS).observeOn(AndroidSchedulers.mainThread()).subscribe(V -> {
-            L.e("double click");
-            bottomDialog.dismiss();
-            if (mStatus.isNewStatus()) {
-                tvSubmitActionforList();
-            }
-            else if (mStatus.isModifyStatus()) {
-                tvSubmitActionforList();
-            }
+
+            observableMobileKey.concatWith(Observable.create(subscriber -> {
+                L.e("double click");
+                bottomDialog.dismiss();
+                if (mStatus.isNewStatus()) {
+                    tvSubmitActionforList();
+                }
+                else if (mStatus.isModifyStatus()) {
+                    tvSubmitActionforList();
+                }
+            })).subscribe(new BHBaseSubscriber<Object>() {
+                @Override
+                public void onCompleted() {
+                    super.onCompleted();
+                }
+
+                @Override
+                public void onError(Throwable e) {
+                    super.onError(e);
+                }
+
+                @Override
+                public void onNext(Object o) {
+                    super.onNext(o);
+                    App.KeyTimestring = o.toString();
+                }
+            });
         });
 
         Observable.create(subscriber -> {
@@ -803,9 +913,28 @@ public class FinishedStorageContentMessageActivity extends WWBackActivity implem
                 subscriber.onNext(v);
             });
         }).debounce(350, TimeUnit.MILLISECONDS).observeOn(AndroidSchedulers.mainThread()).subscribe(V -> {
-            L.e("double click");
-            bottomDialog.dismiss();
-            tvCheckAction();
+
+            observableMobileKey.concatWith(Observable.create(subscriber -> {
+                L.e("double click");
+                bottomDialog.dismiss();
+                tvCheckAction();
+            })).subscribe(new BHBaseSubscriber<Object>() {
+                @Override
+                public void onCompleted() {
+                    super.onCompleted();
+                }
+
+                @Override
+                public void onError(Throwable e) {
+                    super.onError(e);
+                }
+
+                @Override
+                public void onNext(Object o) {
+                    super.onNext(o);
+                    App.KeyTimestring = o.toString();
+                }
+            });
         });
 
         ViewGroup.LayoutParams layoutParams = contentView.getLayoutParams();
@@ -1014,26 +1143,26 @@ public class FinishedStorageContentMessageActivity extends WWBackActivity implem
 
     @OptionsItem
     protected final void action_operat_status() {
+        show1();
         Observable<Object> objectObservable = Observable.create(subscriber -> {
-            show1();
         });
-        Observable observableMobileKey = ApiWebService.Get_KeyTimestr(App.MobileKey);
-        observableMobileKey.concatWith(objectObservable).subscribe(new Subscriber() {
-            @Override
-            public void onCompleted() {
-
-            }
-
-            @Override
-            public void onError(Throwable e) {
-
-            }
-
-            @Override
-            public void onNext(Object o) {
-                App.KeyTimestring = o.toString();
-            }
-        });
+//        Observable observableMobileKey = ApiWebService.Get_KeyTimestr(App.MobileKey);
+//        observableMobileKey.concatWith(objectObservable).subscribe(new Subscriber() {
+//            @Override
+//            public void onCompleted() {
+//
+//            }
+//
+//            @Override
+//            public void onError(Throwable e) {
+//
+//            }
+//
+//            @Override
+//            public void onNext(Object o) {
+//                App.KeyTimestring = o.toString();
+//            }
+//        });
     }
 
 }

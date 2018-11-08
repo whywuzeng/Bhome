@@ -68,11 +68,29 @@ public class WWBackActivity extends WWBaseActivity {
             toolbar_com.setNavigationOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    finish();
+                    onBackPressed();
                 }
             });
         }
+    }
 
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        if (listener!=null) {
+            listener.onBackPressedListener();
+        }
+    }
+
+    public void setOnBackPressedListener(setOnBackPressedListener listener) {
+        this.listener = listener;
+    }
+
+    private setOnBackPressedListener listener;
+
+
+    public interface setOnBackPressedListener{
+        void onBackPressedListener();
     }
 
 

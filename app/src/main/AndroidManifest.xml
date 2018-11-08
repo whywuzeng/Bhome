@@ -12,14 +12,14 @@
         android:theme="@style/AppTheme.Base">
         <activity
             android:screenOrientation="portrait"
+            android:hardwareAccelerated="true"
             android:name=".MainActivity"
             android:theme="@style/MainAppTheme.Base"
             android:launchMode="singleTask"
            >
         </activity>
         <activity
-            android:screenOrientation="portrait"
-            android:theme="@style/MainAppTheme.Base"
+            android:theme="@style/Theme.Translucent"
             android:name="com.system.bhouse.bhouse.WelcomActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
@@ -52,31 +52,8 @@
 
         <activity
             android:screenOrientation="portrait"
-            android:name="com.system.bhouse.bhouse.SaleAnalysisActivity">
-        </activity>
-        <activity
-            android:screenOrientation="portrait"
             android:name="com.system.bhouse.bhouse.OrderInputActivity"></activity>
 
-        <activity
-            android:name="com.system.bhouse.bhouse.DingdanActivity"
-            android:screenOrientation="portrait">
-        </activity>
-
-
-        <activity
-            android:name="com.system.bhouse.bhouse.DrawerLayoutActivity"
-            android:screenOrientation="portrait">
-        </activity>
-
-        <activity
-            android:name="com.system.bhouse.bhouse.ConameActivity"
-            android:screenOrientation="portrait"></activity>
-
-        <activity
-            android:name="com.system.bhouse.bhouse.DingdanManage.DingdanManageActivity"
-            android:screenOrientation="portrait">
-        </activity>
 
         <activity
             android:theme="@style/Anim_fade"
@@ -111,7 +88,6 @@
 
         <activity android:name="com.system.bhouse.bhouse.ImageSelect.PhotoViewActivity"
                   android:screenOrientation="portrait"></activity>
-
 
         <activity android:name="com.system.bhouse.bhouse.DingdanManage.OneSimpleActivity"
                   android:theme="@style/Anim_fade"
@@ -317,6 +293,51 @@
             >
 
         </activity>
+        <activity android:name=".CommonTask.TechnologyExecution.ModuleAssignMent.ModuleAssignMentContentMessageActivity_"
+            android:screenOrientation="portrait"
+            />
+        <activity android:name="com.system.bhouse.bhouse.CommonTask.TechnologyExecution.PeopleAssignment.PeopleAssignmentContentMessageActivity_"
+                  android:screenOrientation="portrait"/>
+        <activity android:name=".CommonTask.TechnologyExecution.StationCarAssignMent.StationCarAssignMentContentMessageActivity_"
+                  android:screenOrientation="portrait"/>
+        <activity android:name=".CommonTask.TechnologyExecution.ModuleFeeding.ModuleFeedingContentMessageActivity_"
+                  android:screenOrientation="portrait"/>
+
+        <activity android:name=".CommonTask.TechnologyExecution.MaintenanceIntoWarehouse.MaintenanceWarehouseContentMessageActivity_"
+                  android:screenOrientation="portrait"/>
+        <activity android:name=".CommonTask.TechnologyExecution.MaintenanceOutWarehouse.MaintenanceOutWarehouseContentMessageActivity_"
+                  android:screenOrientation="portrait"/>
+        <activity android:name=".CommonTask.TechnologyExecution.ComponentTakeOff.ComponentTakeOffContentMessageActivity_"
+                  android:screenOrientation="portrait"/>
+        <activity android:name="com.system.bhouse.bhouse.CommonTask.TechnologyExecution.ComponentIntoWareHouse.ComponentIntoWareHouseContentMessageActivity_"
+                  android:screenOrientation="portrait"/>
+        <activity android:name="com.system.bhouse.bhouse.CommonTask.MaintainManagement.MaintainIntoWareHouse.MaintainIntoWareHouseActivity"
+                  android:screenOrientation="portrait"/>
+        <activity android:name="com.system.bhouse.bhouse.CommonTask.MaintainManagement.MaintainIntoWareHouse.MaintainIntoWareHouseContentMessageActivity_"
+                  android:screenOrientation="portrait"/>
+        <activity android:name="com.system.bhouse.bhouse.CommonTask.MaintainManagement.MaintainOutWareHouse.MaintainOutWareHouseActivity"
+                  android:screenOrientation="portrait"/>
+
+        <activity android:name="com.system.bhouse.bhouse.CommonTask.MaintainManagement.MaintainOutWareHouse.MaintainOutWareHouseContentMessageActivity_"
+                  android:screenOrientation="portrait"/>
+        <activity android:name="com.system.bhouse.bhouse.CommonTask.MaintainManagement.StationCarDetachModule.StationCarDetachModuleActivity"
+                  android:screenOrientation="portrait"/>
+        <activity android:name="com.system.bhouse.bhouse.CommonTask.MaintainManagement.StationCarDetachModule.StationCarDetachModuleContentMessageActivity_"
+                  android:screenOrientation="portrait"/>
+        <activity android:name="com.system.bhouse.bhouse.CommonTask.MaintainManagement.LoadingIntoWareHouseFragment.Fragment.LoadingIntoWareHouseActivity"
+            android:screenOrientation="portrait"
+            />
+        <!--<activity android:name="com.system.bhouse.bhouse.CommonTask.MaintainManagement.LoadingIntoWareHouse.LoadingIntoWareHouseContentMessageActivity_"-->
+                  <!--android:screenOrientation="portrait"/>-->
+        <activity android:name=".CommonTask.MaintainManagement.LoadingIntoWareHouseFragment.Fragment.LoadingIntoWareHouseContentActivity"
+            android:screenOrientation="portrait"
+            />
+        <activity android:name=".phone.activity.ScanResultActivity"
+            android:screenOrientation="portrait"
+            />
+
+        <!--<activity android:name="com.system.bhouse.bhouse.CommonTask.MaintainManagement.LoadingIntoWareHouseFragment.Fragment.LoadingIntoWareHouseContentMessageActivity_"-->
+                  <!--android:screenOrientation="portrait"/>-->
 
         <meta-data
             android:name="design_width"
@@ -333,6 +354,17 @@
         <!--  //key:开发者申请的Key-->
 
         <!-- B6:0A:5A:28:58:C4:E0:4B:74:2E:51:B3:8E:9E:C0:DC:6B:5C:28:11;com.system.bhouse.bhouse -->
+
+        <provider
+            android:name="android.support.v4.content.FileProvider"
+            android:authorities="com.system.bhouse.bhouse.fileprovider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/file_paths"/>
+        </provider>
+
 
         <service android:name="com.system.bhouse.bhouse.Service.MessageService">
         </service>
@@ -379,6 +411,8 @@
     <uses-permission android:name="android.permission.CHANGE_CONFIGURATION"></uses-permission>
     <uses-permission android:name="android.permission.VIBRATE"/>
     <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW"/>
+    <!--允许未知来源应用-->
+    <uses-permission android:name="android.permission.REQUEST_INSTALL_PACKAGES" />
 
     <!--华为的文档很好找，华为桌面加角标-->
     <uses-permission android:name="com.huawei.android.launcher.permission.CHANGE_BADGE"/>

@@ -3,12 +3,14 @@ package com.system.bhouse.base;
 import android.app.Activity;
 import android.app.Service;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Build;
 import android.os.Environment;
 import android.os.Vibrator;
+import android.preference.PreferenceManager;
 import android.provider.Settings;
 import android.support.multidex.MultiDexApplication;
 import android.util.Log;
@@ -18,9 +20,12 @@ import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.facebook.stetho.Stetho;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.socks.library.KLog;
+import com.system.bhouse.base.database.DatabaseManager;
+import com.system.bhouse.base.storage.BHAppStartTimeFlag;
 import com.system.bhouse.bhouse.BuildConfig;
 import com.system.bhouse.bhouse.R;
 import com.system.bhouse.bhouse.phone.common.ConfigConsts;
@@ -31,7 +36,6 @@ import com.system.bhouse.bhouse.setup.utils.FileUtil;
 import com.system.bhouse.bhouse.task.bean.UserObject;
 import com.system.bhouse.db.DBHelper;
 import com.tencent.android.tpush.XGPushConfig;
-import com.zhy.autolayout.config.AutoLayoutConifg;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -42,6 +46,7 @@ import java.util.GregorianCalendar;
  * Created by Administrator on 2016-4-5.
  */
 public class App extends MultiDexApplication {
+    private static final String TAG = "App";
     private static Context mApp;
 
     private static SQLiteDatabase db;
@@ -93,7 +98,7 @@ public class App extends MultiDexApplication {
 
     //自己的信息
     public static UserObject sUserObject;
-
+    public static final SimpleDateFormat sFormatThisYearMonth =new SimpleDateFormat("yy-MM-dd");
     public static final SimpleDateFormat sFormatThisYearSlashSECOND = new SimpleDateFormat("yy/MM/dd HH:mm:ss");
     public static final SimpleDateFormat sFormatThisMonth = new SimpleDateFormat("MM-dd");
 
@@ -110,24 +115,32 @@ public class App extends MultiDexApplication {
         return mApp;
     }
 
+    @Override
+    protected void attachBaseContext(Context base) {
+        super.attachBaseContext(base);
+        SharedPreferences defaultSharedPreferences = PreferenceManager.getDefaultSharedPreferences(base);
+        defaultSharedPreferences.edit().putLong(BHAppStartTimeFlag.TIME_FLAG.name(),System.currentTimeMillis()).apply();
+        Log.e(TAG, "attachBaseContext: time:"+ System.currentTimeMillis());
+    }
 
     @Override
     public void onCreate() {
         super.onCreate();
         //初始化LeakCanary
 //        LeakCanary.install(this);
-        mApp = this;
+        mApp=this;
         KLog.init(BuildConfig.DEBUG);
-        AutoLayoutConifg.getInstance().useDeviceSize();
         dbHelper = DBHelper.getInstance(this);
         db = dbHelper.getWritableDatabase();
         XGPushConfig.enableDebug(this,true);
         XGPushConfig.getToken(this);
-
+        initStetho();
 //        locationService = new LocationService(getApplicationContext());
         mVibrator = (Vibrator) getApplicationContext().getSystemService(Service.VIBRATOR_SERVICE);
 //        SDKInitializer.initialize(getApplicationContext());
 //        T.isShow=false;
+        //数据库
+        DatabaseManager.getInstance().init(this);
 
         sEmojiNormal = getResources().getDimensionPixelSize(R.dimen.emoji_normal);
         sEmojiMonkey = getResources().getDimensionPixelSize(R.dimen.emoji_monkey);
@@ -162,6 +175,14 @@ public class App extends MultiDexApplication {
         NotificationService instance = NotificationService.getInstance(App.getContextApp());
         ColumCount=instance.findColumCount("1");
         return ColumCount;
+    }
+
+    private void initStetho() {
+        Stetho.initialize(
+                Stetho.newInitializerBuilder(this)
+                        .enableDumpapp(Stetho.defaultDumperPluginsProvider(this))
+                        .enableWebKitInspector(Stetho.defaultInspectorModulesProvider(this))
+                        .build());
     }
 
 
@@ -398,5 +419,11 @@ public class App extends MultiDexApplication {
     public static String menname="";
     //职位
     public static String mpname="";
+    //信鸽Id
+    public static String XinggeId;
+    //Is_Pro_User 项目用户
+    public static boolean Is_Pro_User;
+    //Pro_Userstring  项目集
+    public static String Pro_Userstring;
 
 }

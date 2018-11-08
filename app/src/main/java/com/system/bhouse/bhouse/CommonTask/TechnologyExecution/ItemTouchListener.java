@@ -1,6 +1,7 @@
 package com.system.bhouse.bhouse.CommonTask.TechnologyExecution;
 
 import com.system.bhouse.bhouse.CommonTask.TechnologyExecution.entity.RelatedDetailBean;
+import com.system.bhouse.bhouse.CommonTask.TechnologyExecution.entity.TechnologyBean;
 
 import java.util.ArrayList;
 
@@ -13,5 +14,5 @@ import java.util.ArrayList;
  */
 
 public interface ItemTouchListener {
-    void sendRelatedDetail(ArrayList<RelatedDetailBean> bean);
+    void sendRelatedDetail(String componentQr, String orderId, TechnologyBean bean);
 }

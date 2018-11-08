@@ -12,11 +12,13 @@ import android.os.Message;
 
 import com.socks.library.KLog;
 import com.system.bhouse.api.ApiServiceUtils;
-import com.system.bhouse.base.DownloadInfo;
 import com.system.bhouse.api.OnProgressResponseListener;
+import com.system.bhouse.base.DownloadInfo;
+import com.system.bhouse.bhouse.Service.listener.DownServiceStartListener;
 import com.system.bhouse.utils.FileUtils;
 import com.system.bhouse.utils.NotificationUtils;
 import com.system.bhouse.utils.PicUtils;
+import com.system.bhouse.utils.apk.LoadingApkProgress;
 
 import java.io.File;
 import java.util.HashMap;
@@ -46,12 +48,15 @@ public class DownloadService extends IntentService {
     private static final OnProgressResponseListener mListener = new OnProgressResponseListener() {
         @Override
         public void onResponseProgress(long bytesRead, long contentLength, boolean done) {
-            KLog.d(Thread.currentThread().toString() + " " + bytesRead + "/" + contentLength + " done=" + done);
+            KLog.d(Thread.currentThread().toString() + " onResponseProgress " + bytesRead + "/" + contentLength + " done=" + done);
             mDownloadInfo.mProcess = (int) (bytesRead * 100 / contentLength);
         }
     };
+    private static LoadingApkProgress loadingApkProgress;
 
-    private long mDelayedTime = 1000;
+    private static DownServiceStartListener downServiceStartListener;
+
+    private long mDelayedTime = 500;
 
     private Map<String, DownloadInfo> mMap = new HashMap<>();
 
@@ -85,10 +90,15 @@ public class DownloadService extends IntentService {
                             downloadInfo.fileName,
                             downloadInfo.mState
                     );
+                    mNotificationManager.notify(notifyId, notification);
+                    loadingApkProgress.beginDialog();
                     break;
                 case MSG_LOADING:
                     notification = NotificationUtils.showProcessNotification
                             (getApplication(), downloadInfo.fileName, downloadInfo.mProcess);
+                    mNotificationManager.notify(notifyId, notification);
+                    KLog.e("downloadInfo.mProcess:=="+downloadInfo.mProcess);
+                    loadingApkProgress.setProgressBar(downloadInfo.mProcess);
                     break;
                 case MSG_COMPLETE:
                     notification = NotificationUtils.showIntentNotification(
@@ -98,24 +108,31 @@ public class DownloadService extends IntentService {
                             downloadInfo.fileName,
                             downloadInfo.mState
                     );
-
+                    mHandlerThread.quit();//出现异常
+                    mNotificationManager.notify(notifyId, notification);
+                    //自动打开apk安装启动
+                    downServiceStartListener.onServiceEnd(downloadInfo.mFile);
+                    loadingApkProgress.cancel();
                     break;
                 default:
                     notification = NotificationUtils.showNotification(
                             getApplication(),
-                            "错误",
+                            downloadInfo.fileName,
                             "无法处理接受的消息"
                     );
+                    mHandlerThread.quit();//出现异常
+                    mNotificationManager.notify(notifyId, notification);
+                    downServiceStartListener.onServiceError();
                     break;
             }
-            mNotificationManager.notify(notifyId, notification);
+
         }
     }
 
     private Runnable mRunnable = new Runnable() {
         @Override
         public void run() {
-            KLog.d(Thread.currentThread().toString() + " mProcess=" + mDownloadInfo.mProcess);
+            KLog.d(Thread.currentThread().toString() + "////mProcess=" + mDownloadInfo.mProcess);
             Message message = mNotifyHandler.obtainMessage();
             message.what = MSG_LOADING;
             message.obj = mDownloadInfo;
@@ -129,10 +146,12 @@ public class DownloadService extends IntentService {
         KLog.d(TAG);
     }
 
-    public static void launch(Activity activity, String url, String type) {
+    public static void launch(Activity activity, String url, String type, DownServiceStartListener listener) {
         Intent intent = new Intent(activity, DownloadService.class);
         intent.putExtra(KEYURL, url);
         intent.putExtra(KEYTYPE, type);
+        downServiceStartListener =listener;
+        loadingApkProgress=new LoadingApkProgress(activity);
         activity.startService(intent);
     }
 
@@ -147,7 +166,7 @@ public class DownloadService extends IntentService {
         int mWorkId = url.hashCode();
         //根据参数 构造对象
         DownloadInfo mDownloadInfo = new DownloadInfo(filename, type, mWorkId, url, DownloadInfo.StateStart);
-        KLog.d(mWorkId + " " + Thread.currentThread().toString());
+        KLog.d(mWorkId + "判断线程 onStartCommand" + Thread.currentThread().toString());
         //根据url的hashcode 放入
         mMap.put(url, mDownloadInfo);
         sendNotifyMessage(mDownloadInfo);
@@ -161,15 +180,33 @@ public class DownloadService extends IntentService {
         mNotifyHandler.sendMessage(message);
     }
 
+    private void sendFileNotifyMessage(File file, DownloadInfo mDownloadInfo) {
+        mDownloadInfo.mFile = file;
+        mDownloadInfo.mState = "下载完成";
+        Message message = mNotifyHandler.obtainMessage();
+        message.what = MSG_COMPLETE;
+        message.obj = mDownloadInfo;
+        mNotifyHandler.sendMessage(message);
+    }
+
+    private void sendErrorNotifyMessage(DownloadInfo downloadInfo)
+    {
+        Message message = mNotifyHandler.obtainMessage();
+        message.what=3;
+        message.obj=downloadInfo;
+        mNotifyHandler.sendMessage(message);
+    }
+
     @Override
     protected void onHandleIntent(Intent intent) {
         //处理队列中的消息 顺序调用 处理完一个再处理下一个
         //这里是线程阻塞方法 刚好可以好判断当前任务
         //从map中取出构造的好的 对象 开始任务
         String url = intent.getStringExtra(KEYURL);
-        KLog.d(url.hashCode() + " " + Thread.currentThread().toString());
+        KLog.d(url.hashCode() + "判断线程 onHandleIntent" + Thread.currentThread().toString());
         mDownloadInfo = mMap.get(url);
         actionDownload(url, mDownloadInfo, mListener);
+        downServiceStartListener.onServiceStart();
     }
 
     @Override
@@ -226,11 +263,14 @@ public class DownloadService extends IntentService {
                     @Override
                     public void onCompleted() {
                         KLog.d();
+
                     }
 
                     @Override
                     public void onError(Throwable e) {
                         KLog.d(e.toString());
+                        mNotifyHandler.removeCallbacks(mRunnable);
+                        sendErrorNotifyMessage(DownloadInfo);
                     }
 
                     @Override
@@ -245,15 +285,6 @@ public class DownloadService extends IntentService {
 
     }
 
-    private void sendFileNotifyMessage(File file, DownloadInfo mDownloadInfo) {
-        mDownloadInfo.mFile = file;
-        mDownloadInfo.mState = "下载完成";
-        Message message = mNotifyHandler.obtainMessage();
-        message.what = MSG_COMPLETE;
-        message.obj = mDownloadInfo;
-        mNotifyHandler.sendMessage(message);
-    }
-
     @Override
     public void onStart(Intent intent, int startId) {
         KLog.d(TAG);
@@ -264,11 +295,9 @@ public class DownloadService extends IntentService {
     public void onDestroy() {
         super.onDestroy();
         KLog.d(TAG + " " + Thread.currentThread().toString());
-//        mListener = null;
 //        mDownloadInfo = null;
-        mHandlerThread.quit();//结束轮询
+//        mHandlerThread.quit();//结束轮询
 //        HuaBanApplication.getRefwatcher(this).watch(this);
-
     }
 
 }

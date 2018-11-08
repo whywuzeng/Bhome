@@ -3,15 +3,14 @@ package com.system.bhouse.bhouse.CommonTask.TechnologyExecution;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -20,14 +19,18 @@ import android.widget.TextView;
 import com.google.gson.reflect.TypeToken;
 import com.system.bhouse.Custom.OnSpinerItemClick;
 import com.system.bhouse.Custom.SpinnerDialog;
+import com.system.bhouse.Custom.TagGroup.TagGroup;
 import com.system.bhouse.api.ApiWebService;
 import com.system.bhouse.base.App;
+import com.system.bhouse.bhouse.CommonTask.MaintainManagement.LoadingIntoWareHouseFragment.Base.BaseBackFragment;
+import com.system.bhouse.bhouse.CommonTask.MaintainManagement.LoadingIntoWareHouseFragment.Fragment.LoadingIntoWareHouseContentActivity;
+import com.system.bhouse.bhouse.CommonTask.TechnologyExecution.BaseFragment.RecycleViewAdapterManager;
 import com.system.bhouse.bhouse.CommonTask.TechnologyExecution.BaseFragment.SwipeItemLayout;
 import com.system.bhouse.bhouse.CommonTask.TechnologyExecution.entity.Orderbean;
-import com.system.bhouse.bhouse.CommonTask.TechnologyExecution.entity.RelatedDetailBean;
 import com.system.bhouse.bhouse.CommonTask.TechnologyExecution.entity.TechnologyBean;
 import com.system.bhouse.bhouse.CommonTask.TechnologyExecution.selectploy.DisablePloy;
 import com.system.bhouse.bhouse.CommonTask.TechnologyExecution.selectploy.DisableRecallPloy;
+import com.system.bhouse.bhouse.CommonTask.TechnologyExecution.selectploy.NoAssociationPloy;
 import com.system.bhouse.bhouse.CommonTask.TechnologyExecution.selectploy.SelectPloy;
 import com.system.bhouse.bhouse.CommonTask.TechnologyExecution.selectploy.TechnologSelectColorBg;
 import com.system.bhouse.bhouse.CommonTask.TechnologyExecution.selectploy.UnSelectLineDotBg;
@@ -36,10 +39,8 @@ import com.system.bhouse.bhouse.CommonTask.TransportationManagement.adapter.Base
 import com.system.bhouse.bhouse.CommonTask.TransportationManagement.adapter.BaseViewHolder;
 import com.system.bhouse.bhouse.CommonTask.Widget.TimeLineItemTopBottomDecoration;
 import com.system.bhouse.bhouse.R;
-import com.system.bhouse.bhouse.setup.WWCommon.WWBaseFragment;
 import com.system.bhouse.utils.ClickUtils;
-import com.system.bhouse.utils.TenUtils.TimeConstants;
-import com.system.bhouse.utils.TenUtils.TimeUtils;
+import com.system.bhouse.utils.blankutils.TimeUtils;
 import com.system.bhouse.utils.ValueUtils;
 import com.zijunlin.Zxing.Demo.CaptureActivity;
 
@@ -56,7 +57,6 @@ import java.util.List;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import me.gujun.android.taggroup.TagGroup;
 
 /**
  * Created by Administrator on 2018-07-16.
@@ -66,7 +66,7 @@ import me.gujun.android.taggroup.TagGroup;
  * com.system.bhouse.bhouse.CommonTask.TechnologyExecution
  */
 
-public class TechnologyExecutionFragment extends WWBaseFragment implements BaseQuickAdapter.OnItemClickListener,BaseQuickAdapter.OnItemChildClickListener{
+public class TechnologyExecutionFragment extends BaseBackFragment implements BaseQuickAdapter.OnItemClickListener,BaseQuickAdapter.OnItemChildClickListener{
 
     private static final int RESULT_LOCAL = 2;
 
@@ -75,12 +75,6 @@ public class TechnologyExecutionFragment extends WWBaseFragment implements BaseQ
     public static final String ORDER_ID = "order_id";
 
     public static final int RESULT_COMPONENT = 2 << 2;
-
-    //二维码构件码
-    public String resultQrcomponent = null;
-
-    //订单ID
-    public String Order_Id = null;
 
     @Bind(R.id.my_recycle_view)
     RecyclerView my_recycle_view;
@@ -102,8 +96,6 @@ public class TechnologyExecutionFragment extends WWBaseFragment implements BaseQ
     @Bind(R.id.orderid_qrcode)
     Button orderidBtn;
 
-    //订单编号集合
-    ArrayList<Orderbean> items=new ArrayList<>();
 
     //data工序数组
     protected String[] stringArray;
@@ -112,21 +104,84 @@ public class TechnologyExecutionFragment extends WWBaseFragment implements BaseQ
     protected List<String> data=new ArrayList<>();
 
     protected BaseQuickAdapter<TechnologyBean, MyBaseViewHolder> adapter;
+    private RecycleViewAdapterManager recycleViewAdapterManager;
+
+
+    //二维码构件码
+    public String resultQrcomponent = null;
+
+    //订单ID
+    public String Order_Id = null;
+
+    public static final String ARG_RESULTQRCOMPONENT = "arg_resultQrComponent";
+
+    public static final String ARG_ORDER_ID = "arg_order_id";
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Bundle arguments = getArguments();
-        if (arguments!=null) {
-            String title = arguments.getString("title");
+        if (arguments != null) {
+            this.Order_Id = arguments.getString(ARG_ORDER_ID);
+            this.resultQrcomponent = arguments.getString(ARG_RESULTQRCOMPONENT);
         }
     }
 
-    @Nullable
     @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.technology_layout_fragment, container, false);
-        ButterKnife.bind(this,rootView);
+    protected void onCreateView(Bundle savedInstanceState) {
+        super.onCreateView(savedInstanceState);
+        setContentView(R.layout.technology_layout_fragment);
+    }
+
+    /**
+     * newInstance
+     * @return
+     * @param order_Id
+     * @param resultQrcomponent
+     */
+    public static TechnologyExecutionFragment newInstance(String order_Id, String resultQrcomponent) {
+        
+        Bundle args = new Bundle();
+        args.putString(ARG_ORDER_ID,order_Id);
+        args.putString(ARG_RESULTQRCOMPONENT,resultQrcomponent);
+        TechnologyExecutionFragment fragment = new TechnologyExecutionFragment();
+        fragment.setArguments(args);
+        return fragment;
+    }
+
+    /**
+     * toolbar 回退  Activity root界面Fragment
+     * @param toolbar
+     */
+    @Override
+    protected void initToolbarNav(Toolbar toolbar) {
+        toolbar.setNavigationIcon(R.drawable.ic_keyboard_arrow_left);
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ((LoadingIntoWareHouseContentActivity)_mActivity).onBackPressedSupport();
+            }
+        });
+    }
+
+    //对用户可见时回调
+    @Override
+    public void onSupportVisible() {
+        super.onSupportVisible();
+        if (!TextUtils.isEmpty(resultQrcomponent)&&!TextUtils.isEmpty(Order_Id)) {
+            AskForBackgroud();
+        }
+    }
+
+    //对用户不可见时回调
+    @Override
+    public void onSupportInvisible() {
+        super.onSupportInvisible();
+    }
+
+    @Override
+    public void onLazyInitView(Bundle savedInstanceState) {
+        super.onLazyInitView(savedInstanceState);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity());
         my_recycle_view.setLayoutManager(linearLayoutManager);
 
@@ -143,16 +198,49 @@ public class TechnologyExecutionFragment extends WWBaseFragment implements BaseQ
                 helper.setText(R.id.tv_sub_title, App.Mancompany);
                 SwipeItemLayout layout = (SwipeItemLayout) helper.getView(R.id.swipe_layout);
                 TextView Rightview = (TextView) helper.getView(R.id.right_menu);
-                helper.setVisible(R.id.rightDetail_menu,item.isRelateForm);
+                //关联明细
+                helper.setGone(R.id.rightDetail_menu,item.isRelateForm);
                 TagGroup tagGroup = (TagGroup) helper.getView(R.id.tag_group);
                 TagGroup tagGroup1 = (TagGroup) helper.getView(R.id.tag_group1);
-                tagGroup.setTags("耗时:"+TimeUtils.getTimeSpan(item.getStartTime(),item.getEndTime(), new SimpleDateFormat("yyyy-MM-dd HH:mm:ss"), TimeConstants.SEC));
-                tagGroup1.setTags(getContextMessage(item.isHang));
+                TagGroup groupRed= (TagGroup) helper.getView(R.id.tag_group_beauty_inverse);
+                if (TextUtils.isEmpty(item.getStartTime())||TextUtils.isEmpty(item.getEndTime()))
+                {
+                    tagGroup.setVisibility(View.GONE);
+                }else {
+                    tagGroup.setVisibility(View.VISIBLE);
+                    String simpleDataString = TimeUtils.getSimpleDataString(item.getStartTime());
+                    SimpleDateFormat simpleDateFormat = new SimpleDateFormat(simpleDataString);
+
+                    String simpleDataEndString = TimeUtils.getSimpleDataString(item.getEndTime());
+                    SimpleDateFormat simpleDateEndFormat = new SimpleDateFormat(simpleDataEndString);
+
+                    tagGroup.setTags(String.format("耗时:%s", TimeUtils.getFitTimeSpanTwoFormat(item.getStartTime(), item.getEndTime(), simpleDateFormat,simpleDateEndFormat,3)));
+                }
+                getContextMessage(item.isHang,tagGroup1,groupRed);
+
+
+                if (item.getWorkOrderStatus().equals("执行中")) {
+                    SelectColorBg(helper.itemView);
+                    SelectLineDotBg(helper.itemView);
+                }else if(item.getWorkOrderStatus().equals("未开始"))
+                {
+                    UnSelectColorBg(helper.itemView);
+                    UnSelectLineDotBg(helper.itemView);
+                }else if (item.getWorkOrderStatus().equals("已完成"))
+                {
+                    DisableBg(helper.itemView);
+                    SelectLineDotBg(helper.itemView);
+                }
+
+                if (!item.isRelateForm){
+                    //关联明细策略
+                    NoAssociationBg(helper.itemView);
+                }
 
                 helper.addOnClickListener(R.id.rightremove_menu);
                 helper.addOnClickListener(R.id.rightDetail_menu);
                 helper.addOnClickListener(R.id.right_menu);
-                //
+
                 layout.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -161,6 +249,11 @@ public class TechnologyExecutionFragment extends WWBaseFragment implements BaseQ
                             layout.close();
                         }else {
                             layout.open();
+                            if (recycleViewAdapterManager !=null)
+                            {
+
+                                recycleViewAdapterManager.setItemMultiViewClose(helper.getAdapterPosition());
+                            }
                         }
                     }
                 });
@@ -173,47 +266,50 @@ public class TechnologyExecutionFragment extends WWBaseFragment implements BaseQ
 //                }
             }
         };
-        my_recycle_view.setAdapter(adapter);
+//        my_recycle_view.setAdapter(adapter);
+        adapter.bindToRecyclerView(my_recycle_view);
+
+        recycleViewAdapterManager = new RecycleViewAdapterManager(adapter,linearLayoutManager);
         adapter.setOnItemClickListener(this);
         adapter.setOnItemChildClickListener(this);
         orderidBtn.setClickable(false);
-        //初始化 肯定到时空的
+        //初始化 肯定到是空的
         adapter.setEmptyView(notDataView);
-
-        return rootView;
     }
 
-    @OnClick(R.id.component_qrcode)
+    @OnClick(R.id.ll_component_qrcode)
     public void componentClick() {
         Intent intent = new Intent(getActivity(), CaptureActivity.class);
         startActivityForResult(intent, RESULT_COMPONENT);
     }
 
-    @OnClick(R.id.orderid_qrcode)
+    @OnClick(R.id.ll_orderid_qrcode)
     public void orderIdClick() {
         if (!ClickUtils.isFastDoubleClick()) {
             //弹出选择对话框
+            if (spinnerDialog==null||TextUtils.isEmpty(tv_component_content.getText()))
+            {
+                return;
+            }
             spinnerDialog.showSpinerDialog();
         }
     }
 
     //初始化 spinnerDialog
-    private void showSpinnerDialog() {
+    private void showSpinnerDialog(ArrayList<Orderbean> items) {
         orderidBtn.setClickable(true);
         //这个数据  是由 扫码二维码得到的数据.
+            spinnerDialog = new SpinnerDialog<Orderbean>(getActivity(), items, getActivity().getResources().getString(R.string.lookup_order_id));
+            spinnerDialog.bindOnSpinerListener(new OnSpinerItemClick<Orderbean>() {
 
-        spinnerDialog = new SpinnerDialog<Orderbean>(getActivity(), items, getActivity().getResources().getString(R.string.lookup_order_id));
-        spinnerDialog.bindOnSpinerListener(new OnSpinerItemClick<Orderbean>() {
-
-            @Override
-            public void onClick(Orderbean item, int position) {
-                tv_orderid_content.setText(item.oriderNumber);
-                Order_Id=item.oriderid;
-                //重新请求工序
-                AskForBackgroud();
-            }
-        });
-
+                @Override
+                public void onClick(Orderbean item, int position) {
+                    tv_orderid_content.setText(item.oriderNumber);
+                    Order_Id = item.oriderid;
+                    //重新请求工序
+                    AskForBackgroud();
+                }
+            });
     }
 
     /**
@@ -224,7 +320,7 @@ public class TechnologyExecutionFragment extends WWBaseFragment implements BaseQ
      */
     @Override
     public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
-        if (ClickUtils.isFastDoubleClickTime(1000))
+        if (ClickUtils.isFastDoubleClick())
         {
             return;
         }
@@ -261,8 +357,14 @@ public class TechnologyExecutionFragment extends WWBaseFragment implements BaseQ
 
                 for (int i = 0; i < TechnologyBeans.size(); i++) {
                     TechnologyBean technologyBean = TechnologyBeans.get(i);
-                    if (technologyBean.getWorkOrderStatus().equals("执行中")) {
-                        initRecycleViewBg(adapter, technologyBean.getWorkOrderSequence() - 1);
+                    /**
+                     * 选中上一个 执行工序
+                     * 延时执行  无关联策略
+                     */
+                    if (!technologyBean.isRelateForm) {
+                        //看不见的就获取不到
+                        View firstcurrentView = adapter.getViewByPosition(my_recycle_view, technologyBean.getWorkOrderSequence() - 1, R.id.rl_content_layout);
+                        NoAssociationBg(firstcurrentView);
                     }
                 }
             }
@@ -279,12 +381,13 @@ public class TechnologyExecutionFragment extends WWBaseFragment implements BaseQ
         }
     }
 
+
     /**
      * 请求工序接口
      */
     private void AskForBackgroud() {
 
-        ApiWebService.Get_Pro_Working_Main_poid_Json(App.getContextApp(), new ApiWebService.SuccessCall() {
+        ApiWebService.Get_Pro_Working_Main_poid_Json(getActivity(), new ApiWebService.SuccessCall() {
             @Override
             public void SuccessBack(String result) {
                 TechnologyBeans = App.getAppGson().fromJson(result, new TypeToken<List<TechnologyBean>>() {
@@ -293,20 +396,12 @@ public class TechnologyExecutionFragment extends WWBaseFragment implements BaseQ
                 if (ValueUtils.IsFirstValueExist(TechnologyBeans)) {
                     adapter.setNewData(TechnologyBeans);
 
-                    Technologyhandler.postDelayed(new Runnable() {
-                        @Override
-                        public void run() {
-                            Technologyhandler.sendEmptyMessage(1);
-                        }
-                    }, 500);
-
+//                    Technologyhandler.sendEmptyMessageDelayed(1,300);
                 }
                 else {
                     adapter.setEmptyView(notDataView);
                 }
-
             }
-
             @Override
             public void ErrorBack(String error) {
 
@@ -317,47 +412,22 @@ public class TechnologyExecutionFragment extends WWBaseFragment implements BaseQ
     //点击响应
     protected void IntentToFragment(int position, View view) {
 
-        //        ShowShort(position + "");
-//
-//        TextView textView = (TextView) view.findViewById(R.id.tv_title);
-//
-//        if (!TextUtils.isEmpty(textView.getText()))
-//        {  //调用接口方法 回调给Activity
-//            if (mTechnologyActivityListenter!=null)
-//            {
-//                mTechnologyActivityListenter.OnFragmentItemClick(textView.getText().toString());
-//            }
-//        }
-//        switch (position) {
-//            case 0:
-//
-//                break;
-//            case 1:
-//
-//                break;
-//            case 2:
-//
-//                break;
-//            case 3:
-//
-//                break;
-//            case 4:
-//
-//                break;
-//            case 5:
-//
-//                break;
-//            case 6:
-//
-//                break;
-//        }
     }
 
-    private String getContextMessage(boolean isHang) {
-        if (isHang) {
+    private String getContextMessage(boolean isHang, TagGroup tagGroup1,TagGroup tagRed) {
+        if (isHang){
+            tagGroup1.setVisibility(View.GONE);
+            tagRed.setTags("挂起");
+            tagRed.setVisibility(View.VISIBLE);
             return "挂起";
+//            TagView childAt = tagGroup1.getChildAt(0);
+//            style="@style/TagGroup.Beauty_Red.Inverse"
+
         }
         else {
+            tagGroup1.setTags("正常");
+            tagGroup1.setVisibility(View.VISIBLE);
+            tagRed.setVisibility(View.GONE);
             return "正常";
         }
     }
@@ -389,33 +459,11 @@ public class TechnologyExecutionFragment extends WWBaseFragment implements BaseQ
 //        }
     }
 
-    private void initRecycleViewBg(BaseQuickAdapter adapter, int position) {
-        View currentView = adapter.getViewByPosition(my_recycle_view, position, R.id.rl_content_layout);
-        SelectColorBg(currentView);
 
-        View firstcurrentView = adapter.getViewByPosition(my_recycle_view, position-1, R.id.rl_content_layout);
-        DisableRecall(firstcurrentView);
-
-        currentView.setTag(Color.rgb(51, 138, 185));
-        int itemCount = adapter.getItemCount();
-        for (int i = 0; i < itemCount; i++) {
-            if (i > position) {
-                View byPosition = adapter.getViewByPosition(my_recycle_view, i, R.id.rl_content_layout);
-                UnSelectColorBg(byPosition);
-            }
-            else if (i < position-1) {
-                View byPosition = adapter.getViewByPosition(my_recycle_view, i, R.id.rl_content_layout);
-                DisableBg(byPosition);
-            }
-            if (i <= position) {
-                View byPosition = adapter.getViewByPosition(my_recycle_view, i, R.id.rlTimeline);
-                SelectLineDotBg(byPosition);
-            }
-            else {
-                View byPosition = adapter.getViewByPosition(my_recycle_view, i, R.id.rlTimeline);
-                UnSelectLineDotBg(byPosition);
-            }
-        }
+    protected void NoAssociationBg(View view)
+    {
+        NoAssociationPloy noAssociationPloy= new TechnologSelectColorBg();
+        noAssociationPloy.NoAssociationBg(view);
     }
 
     protected void DisableRecall(View view){
@@ -458,20 +506,32 @@ public class TechnologyExecutionFragment extends WWBaseFragment implements BaseQ
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        switch (requestCode) {
-            case RESULT_COMPONENT:
-                QrCodeComponent(resultCode, data);
-                break;
-        }
+        QrCodeComponent(resultCode, data);
+//        switch (requestCode) {
+//            case RESULT_COMPONENT:
+//                QrCodeComponent(resultCode, data);
+//                break;
+//        }
+        //原数据置空
+        tv_orderid_content.setText("");
+        adapter.setEmptyView(notDataView);
     }
 
     private void QrCodeComponent(int resultCode, Intent data) {
-        if (resultCode == Activity.RESULT_OK) {
+        //订单编号集合
+        ArrayList<Orderbean> items=new ArrayList<>();
+        if (resultCode == 0||resultCode == Activity.RESULT_OK) {
+            //返回data ==null
+            if (data==null)
+            {
+                return;
+            }
             Bundle bundle = data.getBundleExtra("bundle");
             String resultQr = bundle.getString("result");
-            int extraPosition = bundle.getInt("position");
+//              String resultQr="DZXQ-7-201806-0009.1002.1084.0100.003.1";
+//            int extraPosition = bundle.getInt("position");
 
-            ApiWebService.Get_Pro_Working_Main_poid_byprid_QR_Code_Json(getActivity(), new ApiWebService.SuccessCall() {
+            ApiWebService.Get_Pro_Working_Main_poid_byprid_QR_Code_Json(_mActivity, new ApiWebService.SuccessCall() {
                 @Override
                 public void SuccessBack(String result) {
                     //[{"订单ID":"08776473ea6a4c0ea7a3291d4aa0d359","订单编号":"SCDD-7-201807-0008"}]
@@ -490,13 +550,14 @@ public class TechnologyExecutionFragment extends WWBaseFragment implements BaseQ
                             orderbean.oriderNumber=orderNumber;
                             items.add(orderbean);
                         }
-                        showSpinnerDialog();
+                        showSpinnerDialog(items);
                     } catch (JSONException e) {
                         e.printStackTrace();
                     } finally {
                         if (!TextUtils.isEmpty(orderID) && !TextUtils.isEmpty(orderNumber)) {
                             resultQrcomponent = resultQr;
-                            Order_Id = orderID;
+                            //先给resultQrcomponent赋值
+                            // Order_Id = orderID;
 
                             //显示textview数值
                             tv_component_content.setText(resultQr);
@@ -510,7 +571,7 @@ public class TechnologyExecutionFragment extends WWBaseFragment implements BaseQ
                 public void ErrorBack(String error) {
 
                 }
-            }, resultQr);
+            },resultQr); //resultQr
         }
     }
 
@@ -524,8 +585,6 @@ public class TechnologyExecutionFragment extends WWBaseFragment implements BaseQ
                     @Override
                     public void SuccessBack(String result) {
                         showButtomToast(result);
-                        AskForBackgroud();
-
                     }
 
                     @Override
@@ -552,8 +611,6 @@ public class TechnologyExecutionFragment extends WWBaseFragment implements BaseQ
                     @Override
                     public void SuccessBack(String result) {
                         showButtomToast(result);
-                        if (result.contains("成功"))
-                        AskForBackgroud();
                     }
 
                     @Override
@@ -570,24 +627,17 @@ public class TechnologyExecutionFragment extends WWBaseFragment implements BaseQ
         });
     }
 
+    /**
+     * 关联明细
+     * @param position
+     */
     private void Detail(int position){
-        ApiWebService.Get_Pro_Working_Item_r_poid_Json(getActivity(), new ApiWebService.SuccessCall() {
-            @Override
-            public void SuccessBack(String result) {
-                ArrayList<RelatedDetailBean> beans= App.getAppGson().fromJson(result, new TypeToken<List<RelatedDetailBean>>() {
-                }.getType());
-
-                if (mTechnologyActivityListenter!=null)
-                {
-                    mTechnologyActivityListenter.OnFragmentItemClick(beans);
-                }
-            }
-
-            @Override
-            public void ErrorBack(String error) {
-
-            }
-        },TechnologyBeans.get(position).workOrdersubDirectoryID);
+        //点击传递fragment 数据
+//        if (mTechnologyActivityListenter!=null)
+//        {
+//            mTechnologyActivityListenter.OnFragmentItemClick(resultQrcomponent,Order_Id,TechnologyBeans.get(position));
+//        }
+        start(Test1Fragment.newInstance(resultQrcomponent,Order_Id,TechnologyBeans.get(position)));
     }
 
     @Override
@@ -602,6 +652,6 @@ public class TechnologyExecutionFragment extends WWBaseFragment implements BaseQ
     private TechnologyActivityListenter mTechnologyActivityListenter;
 
     interface TechnologyActivityListenter {
-        public void OnFragmentItemClick(ArrayList<RelatedDetailBean> title);
+         void OnFragmentItemClick(String componentQr, String OrderId, TechnologyBean title);
     }
 }

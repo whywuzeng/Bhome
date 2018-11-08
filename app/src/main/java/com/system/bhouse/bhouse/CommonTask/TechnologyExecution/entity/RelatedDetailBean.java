@@ -25,6 +25,18 @@ public class RelatedDetailBean {
     @SerializedName("源单ID")
     private String soutceID;
 
+    public String getDatabaseTableName() {
+        return databaseTableName;
+    }
+
+    public void setDatabaseTableName(String databaseTableName) {
+        this.databaseTableName = databaseTableName;
+    }
+
+    @SerializedName("单据表单")
+    public String  databaseTableName;
+
+
     public String getDocumentName() {
         return documentName;
     }

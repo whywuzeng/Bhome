@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:clickable="true"
+    android:orientation="vertical"
+    android:padding="20.0dip" >
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:background="@drawable/bg_layout_radius_normal"
+        android:orientation="vertical" >
+
+        <TextView
+            android:id="@+id/title"
+            style="@style/TextTitleBule"
+            android:layout_width="fill_parent"
+            android:layout_height="40.0dip"
+            android:gravity="center"
+            android:text="@string/title_alert"
+            android:visibility="visible" />
+
+        <View
+            android:background="@color/common_color_line_blue"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"/>
+
+        <LinearLayout
+            android:id="@+id/content"
+            android:layout_width="fill_parent"
+            android:orientation="vertical"
+            android:minHeight="100.0dip"
+            android:layout_height="wrap_content"
+            android:background="#1111"
+            android:gravity="center">
+
+            <ProgressBar android:id="@+id/progress"
+                         style="?android:attr/progressBarStyleHorizontal"
+                         android:layout_width="match_parent"
+                         android:layout_height="5dp"
+                         android:layout_marginBottom="10dp"
+                         android:indeterminate="false"
+                         android:layout_marginLeft="8dp"
+                         android:layout_marginRight="8dp"
+                         android:max="100"
+                         android:progress="0"
+                         android:progressDrawable="@drawable/progress_shape"
+                         android:gravity="center"
+                         android:layout_marginTop="10dp"/>
+
+            <TextView
+                android:id="@+id/tv_progress_text"
+                android:text="@string/progress_text"
+                android:textSize="17sp"
+                android:textColor="@color/color_3BBD79"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+
+        </LinearLayout>
+
+
+    </LinearLayout>
+
+</FrameLayout>

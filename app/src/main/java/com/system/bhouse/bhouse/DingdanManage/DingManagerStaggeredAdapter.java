@@ -12,8 +12,6 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.system.bhouse.bhouse.R;
-import com.zhy.autolayout.utils.AutoUtils;
-
 import java.util.List;
 
 /**
@@ -134,7 +132,6 @@ public class DingManagerStaggeredAdapter extends RecyclerView.Adapter<DingManage
 
             public MyViewHolder(View view) {
                 super(view);
-                AutoUtils.autoSize(view);
                 tv = (TextView) view.findViewById(R.id.id_num);
                 fram = (FrameLayout) view.findViewById(R.id.saleanalysis_fram);
                 iv = (ImageView) view.findViewById(R.id.image_sale_item);

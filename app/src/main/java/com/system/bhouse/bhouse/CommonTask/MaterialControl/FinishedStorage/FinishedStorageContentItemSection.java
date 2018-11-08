@@ -104,11 +104,14 @@ public class FinishedStorageContentItemSection extends Section {
                     holder1.ivprojectname.setVisibility(View.INVISIBLE);
                     holder1.ivsubBeizhu.setVisibility(View.INVISIBLE);
                 }
+                holder1.ll_bottom_5_iv_right_arrow.setImageResource(R.drawable.ic_qrcode);
+                holder1.ll_bottom_5_iv_right_arrow.setVisibility(View.VISIBLE);
             }
             else if (statusBean.isLookStatus()) {
                 holder1.imgDeleteItem.setVisibility(View.INVISIBLE);
                 holder1.ivprojectname.setVisibility(View.INVISIBLE);
                 holder1.ivsubBeizhu.setVisibility(View.INVISIBLE);
+                holder1.ll_bottom_5_iv_right_arrow.setVisibility(View.INVISIBLE);
             }
 
             Observable.create(subscriber -> {
@@ -372,6 +375,9 @@ public class FinishedStorageContentItemSection extends Section {
 
         @Bind(R.id.ll_projectName)
          LinearLayout ll_projectName;
+
+        @Bind(R.id.ll_bottom_5_iv_right_arrow)
+        ImageView ll_bottom_5_iv_right_arrow;
 
         //6-21新增的id
         @Bind(R.id.ll_top1_deleteIv)

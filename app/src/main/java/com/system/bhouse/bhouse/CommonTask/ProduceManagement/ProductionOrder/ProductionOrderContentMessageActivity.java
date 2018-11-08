@@ -23,6 +23,7 @@ import com.google.gson.reflect.TypeToken;
 import com.system.bhouse.Custom.ShowDeviceMessageCustomDialog;
 import com.system.bhouse.api.ApiWebService;
 import com.system.bhouse.base.App;
+import com.system.bhouse.base.BHBaseSubscriber;
 import com.system.bhouse.base.StatusBean;
 import com.system.bhouse.bhouse.CommonTask.ProduceManagement.entity.productionOrderBean;
 import com.system.bhouse.bhouse.CommonTask.adapter.TreeWidget.TreeRecyclerAdapter;
@@ -39,6 +40,7 @@ import com.system.bhouse.ui.sectioned.SectionedRecyclerViewAdapter;
 import com.system.bhouse.utils.TenUtils.L;
 import com.system.bhouse.utils.TenUtils.T;
 import com.system.bhouse.utils.ValueUtils;
+import com.system.bhouse.utils.custom.CustomToast;
 
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.EActivity;
@@ -73,6 +75,7 @@ import rx.android.schedulers.AndroidSchedulers;
 public class ProductionOrderContentMessageActivity extends WWBackActivity implements ProductionOrderContentItemSection.OnItemClickListener, GroupItem.onChildItemClickListener, onMutiDataSetListener {
 
     public static final String TAG = "comtaskcontentmessageactivity";
+    private static final String MIDDLE_TITLE = "生产订单";
 
     @ViewById
     RecyclerView listView;
@@ -107,12 +110,12 @@ public class ProductionOrderContentMessageActivity extends WWBackActivity implem
     @AfterViews
     public void initComTaskActivity() {
         if (mStatus.isNewStatus()) {
-            setActionBarMidlleTitle("新增构件退货");
+            setActionBarMidlleTitle("新增" + MIDDLE_TITLE);
         }
         else {
-            setActionBarMidlleTitle("生产订单");
+            setActionBarMidlleTitle(MIDDLE_TITLE);
         }
-        tv_title_live_layout.setText("构件退货分录");
+        tv_title_live_layout.setText(MIDDLE_TITLE + "分录");
 
         mRecyclerViewAdapter = new MyTaskContentAdapter();
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
@@ -401,7 +404,8 @@ public class ProductionOrderContentMessageActivity extends WWBackActivity implem
 
                     if (loadingcarbean.isEmpty())
                     {
-                        T.showShort(ProductionOrderContentMessageActivity.this,getResources().getString(R.string.Qrcode_result));
+//                        T.showShort(ProductionOrderContentMessageActivity.this,getResources().getString(R.string.Qrcode_result));
+                        CustomToast.showWarning();
                     }
 
                     for (productionOrderBean bean : loadingcarbean) {
@@ -736,9 +740,9 @@ public class ProductionOrderContentMessageActivity extends WWBackActivity implem
         TextView tvDelete = (TextView) contentView.findViewById(R.id.tv_delete);
         TextView tvQrcode = (TextView) contentView.findViewById(R.id.tv_qrcode);
 
-        tvQrcode.setText("生产订单-备料完成");
-        tvModify.setText("生产订单-开始备料");
-        tvSubmit.setText("生产订单-取消备料");
+        tvQrcode.setText(MIDDLE_TITLE + "-备料完成");
+        tvModify.setText(MIDDLE_TITLE + "-开始备料");
+        tvSubmit.setText(MIDDLE_TITLE + "-取消备料");
 
         /**
          * 这里{按键会变化View.GONE}
@@ -772,14 +776,34 @@ public class ProductionOrderContentMessageActivity extends WWBackActivity implem
         llQrcode.setVisibility(mStatus.getBean().visQRBtn?View.VISIBLE:View.GONE);
         llSubmit.setVisibility(mStatus.getBean().visSubmitBtn?View.VISIBLE:View.GONE);
 
+        Observable observableMobileKey = ApiWebService.Get_KeyTimestr(App.MobileKey);
+
         Observable.create(subscriber -> {
             tvQrcode.setOnClickListener(v -> {
                 subscriber.onNext(v);
             });
         }).debounce(350, TimeUnit.MILLISECONDS).observeOn(AndroidSchedulers.mainThread()).subscribe(V -> {
-            L.e("double click");
-            bottomDialog.dismiss();
-            tvQrcodeAction();
+            observableMobileKey.concatWith(Observable.create(subscriber -> {
+                L.e("double click");
+                bottomDialog.dismiss();
+                tvQrcodeAction();
+            })).subscribe(new BHBaseSubscriber<Object>() {
+                @Override
+                public void onCompleted() {
+                    super.onCompleted();
+                }
+
+                @Override
+                public void onError(Throwable e) {
+                    super.onError(e);
+                }
+
+                @Override
+                public void onNext(Object o) {
+                    super.onNext(o);
+                    App.KeyTimestring = o.toString();
+                }
+            });
         });
 
         Observable.create(subscriber -> {
@@ -787,9 +811,27 @@ public class ProductionOrderContentMessageActivity extends WWBackActivity implem
                 subscriber.onNext(v);
             });
         }).debounce(350, TimeUnit.MILLISECONDS).observeOn(AndroidSchedulers.mainThread()).subscribe(V -> {
-            L.e("double click");
-            bottomDialog.dismiss();
-            tvDeleteAction();
+            observableMobileKey.concatWith(Observable.create(subscriber -> {
+                L.e("double click");
+                bottomDialog.dismiss();
+                tvDeleteAction();
+            })).subscribe(new BHBaseSubscriber<Object>() {
+                @Override
+                public void onCompleted() {
+                    super.onCompleted();
+                }
+
+                @Override
+                public void onError(Throwable e) {
+                    super.onError(e);
+                }
+
+                @Override
+                public void onNext(Object o) {
+                    super.onNext(o);
+                    App.KeyTimestring = o.toString();
+                }
+            });
         });
 
         Observable.create(subscriber -> {
@@ -797,9 +839,27 @@ public class ProductionOrderContentMessageActivity extends WWBackActivity implem
                 subscriber.onNext(v);
             });
         }).debounce(350, TimeUnit.MILLISECONDS).observeOn(AndroidSchedulers.mainThread()).subscribe(V -> {
-            L.e("double click");
-            bottomDialog.dismiss();
-            tvFanCheckAction();
+            observableMobileKey.concatWith(Observable.create(subscriber -> {
+                L.e("double click");
+                bottomDialog.dismiss();
+                tvFanCheckAction();
+            })).subscribe(new BHBaseSubscriber<Object>() {
+                @Override
+                public void onCompleted() {
+                    super.onCompleted();
+                }
+
+                @Override
+                public void onError(Throwable e) {
+                    super.onError(e);
+                }
+
+                @Override
+                public void onNext(Object o) {
+                    super.onNext(o);
+                    App.KeyTimestring = o.toString();
+                }
+            });
         });
 
         Observable.create(subscriber -> {
@@ -807,9 +867,27 @@ public class ProductionOrderContentMessageActivity extends WWBackActivity implem
                 subscriber.onNext(v);
             });
         }).debounce(350, TimeUnit.MILLISECONDS).observeOn(AndroidSchedulers.mainThread()).subscribe(V -> {
-            L.e("double click");
-            bottomDialog.dismiss();
-            tvModifyAction();
+            observableMobileKey.concatWith(Observable.create(subscriber -> {
+                L.e("double click");
+                bottomDialog.dismiss();
+                tvModifyAction();
+            })).subscribe(new BHBaseSubscriber<Object>() {
+                @Override
+                public void onCompleted() {
+                    super.onCompleted();
+                }
+
+                @Override
+                public void onError(Throwable e) {
+                    super.onError(e);
+                }
+
+                @Override
+                public void onNext(Object o) {
+                    super.onNext(o);
+                    App.KeyTimestring = o.toString();
+                }
+            });
         });
 
 //        tvModify.setOnClickListener(v -> {
@@ -837,15 +915,34 @@ public class ProductionOrderContentMessageActivity extends WWBackActivity implem
                 subscriber.onNext(v);
             });
         }).debounce(350, TimeUnit.MILLISECONDS).observeOn(AndroidSchedulers.mainThread()).subscribe(V -> {
-            L.e("double click");
-            bottomDialog.dismiss();
-            tvSubmitACtion();
-            if (mStatus.isNewStatus()) {
+
+            observableMobileKey.concatWith(Observable.create(subscriber -> {
+                L.e("double click");
+                bottomDialog.dismiss();
+                tvSubmitACtion();
+                if (mStatus.isNewStatus()) {
 //                tvSubmitActionforList();
-            }
-            else if (mStatus.isModifyStatus()) {
+                }
+                else if (mStatus.isModifyStatus()) {
 //                tvSubmitActionforList();
-            }
+                }
+            })).subscribe(new BHBaseSubscriber<Object>() {
+                @Override
+                public void onCompleted() {
+                    super.onCompleted();
+                }
+
+                @Override
+                public void onError(Throwable e) {
+                    super.onError(e);
+                }
+
+                @Override
+                public void onNext(Object o) {
+                    super.onNext(o);
+                    App.KeyTimestring = o.toString();
+                }
+            });
         });
 
         Observable.create(subscriber -> {
@@ -853,9 +950,27 @@ public class ProductionOrderContentMessageActivity extends WWBackActivity implem
                 subscriber.onNext(v);
             });
         }).debounce(350, TimeUnit.MILLISECONDS).observeOn(AndroidSchedulers.mainThread()).subscribe(V -> {
-            L.e("double click");
-            bottomDialog.dismiss();
-            tvCheckAction();
+            observableMobileKey.concatWith(Observable.create(subscriber -> {
+                L.e("double click");
+                bottomDialog.dismiss();
+                tvCheckAction();
+            })).subscribe(new BHBaseSubscriber<Object>() {
+                @Override
+                public void onCompleted() {
+                    super.onCompleted();
+                }
+
+                @Override
+                public void onError(Throwable e) {
+                    super.onError(e);
+                }
+
+                @Override
+                public void onNext(Object o) {
+                    super.onNext(o);
+                    App.KeyTimestring = o.toString();
+                }
+            });
         });
 
         ViewGroup.LayoutParams layoutParams = contentView.getLayoutParams();

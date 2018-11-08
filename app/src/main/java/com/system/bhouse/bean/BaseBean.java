@@ -16,6 +16,16 @@ import com.system.bhouse.utils.TenUtils.DataFormatUtils;
 
 public class BaseBean {
 
+    public int getListenerContext() {
+        return ListenerContext;
+    }
+
+    public void setListenerContext(int listenerContext) {
+        ListenerContext = listenerContext;
+    }
+
+    public int ListenerContext;
+
     public boolean isDisableDelete() {
         return disableDelete;
     }

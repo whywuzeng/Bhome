@@ -38,7 +38,7 @@ public class CloudRight extends Actor {
         if (!isInit) {
             Log.d("weather", "cloud init");
             initPositionX = width * 0.758F;
-            initPositionY = height * 0.69F;
+            initPositionY = height * 0.35F;
             frame = BitmapFactory.decodeResource(context.getResources(), R.drawable.fine_day_cloud1);
             box.set(0, 0, frame.getWidth(), frame.getHeight());
             matrix.reset();
@@ -49,7 +49,7 @@ public class CloudRight extends Actor {
             return;
         }
         //移动
-        matrix.postTranslate(0.5F, 0);
+        matrix.postTranslate(0.05F, 0);
         //边界处理
         matrix.mapRect(targetBox, box);
         if (targetBox.left > width) {

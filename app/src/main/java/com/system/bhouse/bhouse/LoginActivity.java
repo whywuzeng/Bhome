@@ -25,24 +25,33 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.gson.Gson;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 import com.socks.library.KLog;
 import com.system.bhouse.Custom.ShowDeviceMessageCustomDialog;
 import com.system.bhouse.api.ApiWebService;
 import com.system.bhouse.base.App;
+import com.system.bhouse.base.BHBaseSubscriber;
+import com.system.bhouse.base.database.AccountManager;
+import com.system.bhouse.base.database.DatabaseManager;
+import com.system.bhouse.base.database.UserProfile;
+import com.system.bhouse.base.storage.BHPrefrences;
 import com.system.bhouse.bean.UserInfo;
 import com.system.bhouse.bhouse.phone.view.WaveView;
+import com.system.bhouse.bhouse.setup.WWCommon.WWCheckActivity;
 import com.system.bhouse.bhouse.setup.notification.MyNotificationActivity_;
 import com.system.bhouse.utils.AppManager;
 import com.system.bhouse.utils.DeviceMessageUtils;
 import com.system.bhouse.utils.ProgressUtils;
 import com.system.bhouse.utils.TenUtils.L;
 import com.system.bhouse.utils.TenUtils.T;
+import com.system.bhouse.utils.custom.CustomToast;
 import com.system.bhouse.utils.sharedpreferencesuser;
 import com.tencent.android.tpush.XGCustomPushNotificationBuilder;
 import com.tencent.android.tpush.XGIOperateCallback;
 import com.tencent.android.tpush.XGPushConfig;
 import com.tencent.android.tpush.XGPushManager;
-import com.zhy.autolayout.AutoLayoutActivity;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -60,7 +69,7 @@ import rx.Subscriber;
  * Created by Administrator on 2016/3/9.
  * 登录的activity
  */
-public class LoginActivity extends AutoLayoutActivity {
+public class LoginActivity extends WWCheckActivity {
     @Bind(R.id.usernumber)
     EditText usernumber;
     @Bind(R.id.password_btn)
@@ -136,11 +145,8 @@ public class LoginActivity extends AutoLayoutActivity {
         ((EditText) usernumber).setSelection(usernumber.getText().length());
         ((EditText) passwordBtn).setSelection(passwordBtn.getText().length());
 
-         deviceCpuID = DeviceMessageUtils.getDeviceCpuID(this);
-         deviceId = DeviceMessageUtils.getDeviceId(this);
-         ip = DeviceMessageUtils.getIp(this);
-         DiskID="userdata";
-         memInfoIype = DeviceMessageUtils.getMemInfoIype(this,"MemTotal");
+        checkPhoneReadState();
+
          deviceToken = new String[]{""};
         XGPushManager.registerPush(this, new XGIOperateCallback() {
             @Override
@@ -165,6 +171,15 @@ public class LoginActivity extends AutoLayoutActivity {
 
 //        initCustomNotification(getApplicationContext());
     }
+
+    private void getPhoneDevice() {
+        deviceCpuID = DeviceMessageUtils.getDeviceCpuID(this);
+        deviceId = DeviceMessageUtils.getDeviceId(this);
+        ip = DeviceMessageUtils.getIp(this);
+        DiskID="userdata";
+        memInfoIype = DeviceMessageUtils.getMemInfoIype(this,"MemTotal");
+    }
+
 
     private void initCustomNotification(Context context) {
         XGCustomPushNotificationBuilder build = new XGCustomPushNotificationBuilder();
@@ -287,8 +302,12 @@ public class LoginActivity extends AutoLayoutActivity {
         ApiWebService.Getlogin_reg_Json(this, new ApiWebService.SuccessCall() {
             @Override
             public void SuccessBack(String result) {
-                L.e(result);
-                T.showLong(LoginActivity.this,result);
+//                [{"loing_regdr":"您已经提交注册信息，请不要重复提交！"}]
+                JsonArray parse = (JsonArray) new JsonParser().parse(result);
+                JsonObject parseObject = (JsonObject) parse.get(0);
+                String loing_regdr = parseObject.get("loing_regdr").getAsString();
+
+                T.showLong(LoginActivity.this,loing_regdr);
             }
 
             @Override
@@ -318,25 +337,29 @@ public class LoginActivity extends AutoLayoutActivity {
 
         Observable loginMsg = ApiWebService.getLoginMsg(usernumber1, password);
 
-        loginMsg.subscribe(new Subscriber<String>() {
+        loginMsg.subscribe(new BHBaseSubscriber<String>() {
 
             @Override
             public void onStart() {
+                super.onStart();
                 ProgressUtils.getInstance().ShowProgress(LoginActivity.this);
             }
 
             @Override
             public void onCompleted() {
-
+                super.onCompleted();
             }
 
             @Override
             public void onError(Throwable e) {
+                super.onError(e);
+                CustomToast.showDefault(errorMsg, Toast.LENGTH_SHORT);
                 ProgressUtils.getInstance().DisMissProgress();
             }
 
             @Override
             public void onNext(String result) {
+                super.onNext(result);
                 Gson gson = new Gson();
                 UserInfo[] getIpInfoResponse = gson.fromJson(result, UserInfo[].class);
                 if (!(getIpInfoResponse == null)  && (getIpInfoResponse.length > 0)) {
@@ -352,13 +375,22 @@ public class LoginActivity extends AutoLayoutActivity {
                         App.Filenum = userInfo.Filenum;
                         App.Filesize = userInfo.getFilesizeX();
                         App.Mancompany = userInfo.getManCompany();
+                        App.Fatherid=userInfo.getFatherid();
 
                         App.usertype = userInfo.getUsertype();
                         App.Property = userInfo.getProperty();
                         App.IsSub = userInfo.isIsSub();
                         App.menname = userInfo.getMenname();
                         App.mpname = userInfo.mpname;
+                        App.XinggeId=userInfo.XingeAppID;
+                        App.Is_Pro_User=userInfo.Is_Pro_User;
+                        App.Pro_Userstring=userInfo.Pro_Userstring;
+                        BHPrefrences.setAppProfileId(userInfo.XingeAppID);
                     }
+
+                    final UserProfile profile = new UserProfile(Long.valueOf(getIpInfoResponse[0].XingeAppID), userInfo.getUsername(), userInfo.getMid(),userInfo.getGsmid(), userInfo.MobileKey, userInfo.Filenum, userInfo.getFilesizeX(), userInfo.getManCompany(), userInfo.getProperty(),userInfo.getFatherid(),userInfo.isIsSub(),userInfo.Is_Pro_User,userInfo.Pro_Userstring, userInfo.getMenname(), userInfo.mpname, userInfo.getUsertype());
+                    DatabaseManager.getInstance().getDao().insertOrReplace(profile);
+
                     Observable regokJson = ApiWebService.Getlogin_regok_Json(deviceCpuID, deviceToken[0], ip, DiskID, memInfoIype);
                     regokJson.subscribe(new Subscriber<String>() {
                         @Override
@@ -392,9 +424,10 @@ public class LoginActivity extends AutoLayoutActivity {
                                     if (stu_name.equals("否")) {
                                         T.showShort(LoginActivity.this, "当前设备不兼容");
                                         //handle跳转至
-//                                        Message obtain = Message.obtain();
-//                                        obtain.what = Integer.valueOf(1);
-//                                        handler.sendMessage(obtain);
+                                        Message obtain = Message.obtain();
+                                        obtain.what = Integer.valueOf(1);
+                                        handler.sendMessage(obtain);
+                                        AccountManager.setSignState(true);
                                     }
                                     else if (stu_name.equals("是")&&isLogin){
                                         //handle跳转至
@@ -402,6 +435,8 @@ public class LoginActivity extends AutoLayoutActivity {
                                         obtain.what = Integer.valueOf(1);
                                         handler.sendMessage(obtain);
 
+                                        //已经注册并登录成功了
+                                        AccountManager.setSignState(true);
                                     }
                                 }
                             } catch (JSONException e) {
@@ -417,232 +452,6 @@ public class LoginActivity extends AutoLayoutActivity {
 
             }
         });
-
-
-//        loginMsg.concatWith(regokJson).subscribe(ApiWebService.getMutiCallback(this, new ApiWebService.ObjectSuccessCall() {
-//            @Override
-//            public void SuccessBack(Object result) {
-//
-//                try {
-//                    JSONArray jsonArray = new JSONArray(result.toString());
-//                    for (int i = 0; i < jsonArray.length(); i++) {
-//                        //循环遍历，依次取出JSONObject对象
-//                        //用getInt和getString方法取出对应键值  [{"loing_regokdr":"否"}]
-//                        JSONObject jsonObject = jsonArray.getJSONObject(i);
-//                        if (jsonObject.has("stu_no")) {
-//                            int stu_no = jsonObject.getInt("stu_no");
-//                        }
-//                        if (jsonObject.has("stu_sex")) {
-//                            String stu_sex = jsonObject.getString("stu_sex");
-//                        }
-//                        String stu_name = "";
-//                        if (jsonObject.has("loing_regokdr")) {
-//                            stu_name = jsonObject.getString("loing_regokdr");
-//                        }
-//                        if (stu_name.equals("否")) {
-//                            T.showShort(LoginActivity.this, "当前设备不兼容");
-//                            //handle跳转至
-////                                        Message obtain = Message.obtain();
-////                                        obtain.what = Integer.valueOf(1);
-////                                        handler.sendMessage(obtain);
-//                        }
-//                        else if (stu_name.equals("是")&&isLogin){
-//                            //handle跳转至
-//                            Message obtain = Message.obtain();
-//                            obtain.what = Integer.valueOf(1);
-//                            handler.sendMessage(obtain);
-//
-//                        }
-//                    }
-//                } catch (JSONException e) {
-//                    e.printStackTrace();
-//                }
-//
-//                try {
-//                    JSONArray jsonArray = new JSONArray(result.toString());
-//                    for (int i = 0; i < jsonArray.length(); i++) {
-//
-//                        JSONObject jsonObject = jsonArray.getJSONObject(i);
-//                        if (jsonObject.has("username")) {
-//
-//                            Gson gson = new Gson();
-//                            UserInfo[] getIpInfoResponse = gson.fromJson(result.toString(), UserInfo[].class);
-//                            if (!(getIpInfoResponse == null) && !TextUtils.isEmpty(getIpInfoResponse.toString()) && !(getIpInfoResponse.length == 0)) {
-//                                isLogin = true;
-//
-//                                for (int j = 0; j < getIpInfoResponse.length; j++) { //就只有一个
-//                                    //静态保存
-//                                    userInfo = getIpInfoResponse[j];
-//                                    App.USER_INFO = userInfo.getUsername();
-//                                    App.MID = userInfo.getMid();
-//                                    App.GSMID = userInfo.getGsmid();
-//                                    App.MobileKey = userInfo.MobileKey;
-//                                    App.Filenum = userInfo.Filenum;
-//                                    App.Filesize = userInfo.getFilesizeX();
-//                                    App.Mancompany = userInfo.getManCompany();
-//
-//                                    App.usertype = userInfo.getUsertype();
-//                                    App.Property = userInfo.getProperty();
-//                                    App.IsSub = userInfo.isIsSub();
-//                                    App.menname = userInfo.getMenname();
-//                                    App.mpname = userInfo.mpname;
-//                                }
-//                            }
-//                            else {
-//
-//                                Toast.makeText(LoginActivity.this, R.string.passworderror, Toast.LENGTH_SHORT).show();
-//                            }
-//                        }
-//                    }
-//                    if (jsonArray.length()<=0)
-//                    {
-//                        Toast.makeText(LoginActivity.this, R.string.passworderror, Toast.LENGTH_SHORT).show();
-//                    }
-//                } catch (JSONException e) {
-//                    e.printStackTrace();
-//                }
-//            }
-//
-//            @Override
-//            public void ErrorBack(Object error) {
-//
-//            }
-//        }));
-
-//        ApiWebService.getLoginMsg(this, new ApiWebService.SuccessCall() {
-//            @Override
-//            public void SuccessBack(String result) {
-//                Gson gson=new Gson();
-//                UserInfo[] getIpInfoResponse = gson.fromJson(result, UserInfo[].class);
-//                if (!(getIpInfoResponse == null) && !TextUtils.isEmpty(getIpInfoResponse.toString()) && !(getIpInfoResponse.length == 0)) {
-//
-//                    for (int i = 0; i < getIpInfoResponse.length; i++) { //就只有一个
-//                        //静态保存
-//                        userInfo = getIpInfoResponse[i];
-//                        App.USER_INFO = userInfo.getUsername();
-//                        App.MID = userInfo.getMid();
-//                        App.GSMID= userInfo.getGsmid();
-//                        App.MobileKey = userInfo.MobileKey;
-//                        App.Filenum = userInfo.Filenum;
-//                        App.Filesize = userInfo.getFilesizeX();
-//                        App.Mancompany = userInfo.getManCompany();
-//
-//                        App.usertype=userInfo.getUsertype();
-//                        App.Property=userInfo.getProperty();
-//                        App.IsSub=userInfo.isIsSub();
-//                        App.menname=userInfo.getMenname();
-//                        App.mpname=userInfo.mpname;
-//                    }
-//
-//                    ApiWebService.Getlogin_regok_Json(LoginActivity.this, new ApiWebService.SuccessCall() {
-//                        @Override
-//                        public void SuccessBack(String result) {
-//                            L.e(result);
-//                            try {
-//                                JSONArray jsonArray = new JSONArray(result);
-//                                for (int i = 0; i< jsonArray.length(); i++) {
-//                                    //循环遍历，依次取出JSONObject对象
-//                                    //用getInt和getString方法取出对应键值  [{"loing_regokdr":"否"}]
-//                                    JSONObject jsonObject = jsonArray.getJSONObject(i);
-//                                    if(jsonObject.has("stu_no")) {
-//                                        int stu_no = jsonObject.getInt("stu_no");
-//                                    }
-//                                    if (jsonObject.has("stu_sex")) {
-//                                        String stu_sex = jsonObject.getString("stu_sex");
-//                                    }
-//                                    String stu_name="";
-//                                    if (jsonObject.has("loing_regokdr")) {
-//                                         stu_name = jsonObject.getString("loing_regokdr");
-//                                    }
-//                                    if (stu_name.equals("否"))
-//                                    {
-//                                        T.showShort(LoginActivity.this,"当前设备不兼容");
-//                                        //handle跳转至
-////                                        Message obtain = Message.obtain();
-////                                        obtain.what = Integer.valueOf(1);
-////                                        handler.sendMessage(obtain);
-//                                    }else{
-//                                        //handle跳转至
-//                                        Message obtain = Message.obtain();
-//                                        obtain.what = Integer.valueOf(1);
-//                                        handler.sendMessage(obtain);
-//
-//                                    }
-//                                }
-//                            } catch (JSONException e) {
-//                                e.printStackTrace();
-//                            }
-//
-//                        }
-//
-//                        @Override
-//                        public void ErrorBack(String error) {
-//                            L.e(error);
-//                        }
-//                    },deviceCpuID,deviceToken[0],ip,DiskID,memInfoIype);
-//
-//                }
-//                else {
-//                    Toast.makeText(LoginActivity.this, R.string.passworderror, Toast.LENGTH_SHORT).show();
-//                }
-//            }
-//
-//            @Override
-//            public void ErrorBack(String error) {
-//                    T.showShort(LoginActivity.this,error);
-//            }
-//        },usernumber1, password);
-
-//        //访问网络  登陆接口数据接收
-//        ProgressUtils.ShowProgress(this);
-//        ApiServiceUtils.getInstence().getloginIp(usernumber1, password).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe(new Subscriber<UserInfo[]>() {
-//            @Override
-//            public void onCompleted() {
-//            }
-//
-//            @Override
-//            public void onError(Throwable e) {
-//                ProgressUtils.DisMissProgress();
-//                /**
-//                 * 测试
-//                 */
-////                Intent intent = new Intent(LoginActivity.this, MainActivity.class);
-////                startActivity(intent);
-////                Toast.makeText(LoginActivity.this, e.toString(), 0).show();
-//                T.showShort
-//                        (LoginActivity.this, e.toString());
-//                e.printStackTrace();
-//                e.toString();
-//            }
-//
-//            @Override
-//            public void onNext(final UserInfo[] getIpInfoResponse) {
-//                if (!(getIpInfoResponse == null) && !TextUtils.isEmpty(getIpInfoResponse.toString()) && !(getIpInfoResponse.length == 0)) {
-//                    Log.i("TGA", getIpInfoResponse[0].toString() + "--------------------");
-//                    UserInfo userInfo = null;
-//                    for (int i = 0; i < getIpInfoResponse.length; i++) {
-//                        //静态保存
-//                        userInfo = new UserInfo();
-//                        userInfo = getIpInfoResponse[i];
-//                        App.USER_INFO = userInfo.getUsername();
-//                        App.MID = userInfo.getMid();
-//                        App.MobileKey = userInfo.MobileKey;
-//                        App.Filenum = userInfo.Filenum;
-//                        App.Filesize = userInfo.Filesize;
-//                        App.Mancompany = userInfo.getManCompany();
-//                    }
-//                    //handle跳转
-//                    Message obtain = Message.obtain();
-//                    obtain.what = Integer.valueOf(1);
-//                    handler.sendMessage(obtain);
-//                }
-//                else {
-//                    ProgressUtils.DisMissProgress();
-//                    Toast.makeText(LoginActivity.this, R.string.passworderror, Toast.LENGTH_SHORT).show();
-//                }
-//
-//            }
-//        });
 
     }
 
@@ -735,7 +544,7 @@ public class LoginActivity extends AutoLayoutActivity {
     }
 
     public String getPhoneInfo(Context context) {
-
+        getPhoneDevice();
         deviceToken[0]= XGPushConfig.getToken(this);
 
         StringBuilder sb = new StringBuilder();

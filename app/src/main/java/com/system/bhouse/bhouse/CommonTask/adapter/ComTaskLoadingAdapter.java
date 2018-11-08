@@ -10,6 +10,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.system.bhouse.base.App;
 import com.system.bhouse.bean.LoadedRequire;
 import com.system.bhouse.bhouse.CommonTask.Widget.LoadingAdapter;
 import com.system.bhouse.bhouse.R;
@@ -24,7 +25,6 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 
 import static com.system.bhouse.base.App.sFormatThisMonth;
-import static com.system.bhouse.base.App.sFormatThisYearSlashSECOND;
 
 /**
  * Created by Administrator on 2018-03-19.
@@ -74,7 +74,7 @@ public class ComTaskLoadingAdapter extends LoadingAdapter<LoadedRequire> {
             String format = "";
             if (!TextUtils.isEmpty(entryTime)) {
                 try {
-                    parse = sFormatThisYearSlashSECOND.parse(entryTime);
+                    parse = App.sFormatThisYearMonth.parse(entryTime);
                     format = sFormatThisMonth.format(parse);
                 } catch (ParseException e) {
                     e.printStackTrace();

@@ -5,20 +5,26 @@ import android.content.DialogInterface;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.os.PersistableBundle;
+import android.support.annotation.Nullable;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AlertDialog;
-import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ListView;
 import android.widget.PopupWindow;
 import android.widget.TextView;
 
 import com.system.bhouse.base.Global.StartActivity;
+import com.system.bhouse.base.rxlife.RxSubscriptionManager;
 import com.system.bhouse.bhouse.R;
 import com.system.bhouse.bhouse.setup.SingleToast;
 import com.system.bhouse.bhouse.setup.program.FootUpdate;
 import com.system.bhouse.bhouse.setup.utils.DialogUtil;
+import com.trello.rxlifecycle.components.support.RxAppCompatActivity;
 
 import java.util.concurrent.TimeUnit;
 
@@ -32,7 +38,8 @@ import rx.schedulers.Schedulers;
  * Created by Administrator on 2017-10-30.
  */
 
-public class WWBaseActivity extends AppCompatActivity implements StartActivity {
+public class WWBaseActivity extends RxAppCompatActivity implements StartActivity {
+    private  final String TAG = "WWBaseActivity";
     protected LayoutInflater mInflater;
     protected FootUpdate mFootUpdate = new FootUpdate();
     protected View.OnClickListener mOnClickUser = new View.OnClickListener() {
@@ -50,6 +57,52 @@ public class WWBaseActivity extends AppCompatActivity implements StartActivity {
     private ProgressDialog mProgressDialog;
 
     protected int REFRESH_DATA=0x4564654;
+    protected View notDataView;
+    protected View errorView;
+
+    public boolean isResumed=false;
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        Log.e(TAG, "onStart: isResumed: "+String.valueOf(isResumed) );
+    }
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState, @Nullable PersistableBundle persistentState) {
+        super.onCreate(savedInstanceState, persistentState);
+        Log.e(TAG, "onCreate: isResumed: "+String.valueOf(isResumed) );
+    }
+
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if (!isResumed)
+        {
+            isResumed=!isResumed;
+        }
+        Log.e(TAG, "onResume: isResumed: "+String.valueOf(isResumed) );
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        if (isResumed)
+        {
+            isResumed=!isResumed;
+        }
+
+        Log.e(TAG, "onPause: isResumed: "+String.valueOf(isResumed) );
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        Log.e(TAG, "onStop: isResumed: "+String.valueOf(isResumed) );
+    }
+
+
 
     protected void listViewAddFootSection(ListView listView) {
         View listViewFooter = getLayoutInflater().inflate(R.layout.divide_bottom_15, listView, false);
@@ -59,6 +112,20 @@ public class WWBaseActivity extends AppCompatActivity implements StartActivity {
     protected void listViewAddHeaderSection(ListView listView) {
         View listViewHeader = getLayoutInflater().inflate(R.layout.divide_top_15, listView, false);
         listView.addHeaderView(listViewHeader, null, false);
+    }
+
+    protected void recycleViewAddEmptySection(RecyclerView mRecyclerView)
+    {
+        notDataView = getLayoutInflater().inflate(R.layout.taskcomon_empty_view, (ViewGroup) mRecyclerView.getParent(), false);
+        errorView = getLayoutInflater().inflate(R.layout.taskcommon_error_view,(ViewGroup)mRecyclerView.getParent(), false);
+    }
+
+    protected void setErrorViewContext(String errorMsg)
+    {
+        if (errorView!=null){
+            TextView viewById = (TextView) errorView.findViewById(R.id.tv_msg_context);
+            viewById.setText(errorMsg);
+        }
     }
 
     /**
@@ -81,7 +148,6 @@ public class WWBaseActivity extends AppCompatActivity implements StartActivity {
             mProgressDialog.hide();
         }
     }
-
 
     protected void showProgressBar(boolean show, int message) {
         String s = getString(message);
@@ -110,6 +176,8 @@ public class WWBaseActivity extends AppCompatActivity implements StartActivity {
     {
 
     }
+
+
 
     //模拟等待
     protected final void exampleLoadingFinishe(final String msg)
@@ -168,10 +236,7 @@ public class WWBaseActivity extends AppCompatActivity implements StartActivity {
 //        Toolbar viewById = (Toolbar) findViewById(R.id.toolbar_com);
         TextView mTextView = (TextView)findViewById(R.id.toolbar_menu_title);
         if (mTextView!=null) {
-//            setSupportActionBar(viewById);
-//            getSupportActionBar().setTitle(title);
             mTextView.setText(title);
-
         }
     }
 
@@ -202,18 +267,6 @@ public class WWBaseActivity extends AppCompatActivity implements StartActivity {
 //                showMiddleToast(msg);
 //            }
 //        }
-//    }
-
-//    public ImageLoadTool getImageLoad() {
-//        return imageLoadTool;
-//    }
-
-//    protected boolean isLoadingFirstPage(String tag) {
-//        return networkImpl.isLoadingFirstPage(tag);
-//    }
-//
-//    protected boolean isLoadingLastPage(String tag) {
-//        return networkImpl.isLoadingLastPage(tag);
 //    }
 
     @Override
@@ -249,88 +302,17 @@ public class WWBaseActivity extends AppCompatActivity implements StartActivity {
         }
 
 //        GlobalSetting.getInstance().removeMessageNoNotify();
+        RxSubscriptionManager.getInstanse().stopAllSubscription();
 
         super.onDestroy();
     }
 
-//    protected void initSetting() {
-//        networkImpl.initSetting();
-//    }
-//
-//    @Override
-//    public void parseJson(int code, JSONObject respanse, String tag, int pos, Object data) throws JSONException {
-//    }
-//
-//    protected void getNextPageNetwork(String url, final String tag) {
-//        networkImpl.getNextPageNetwork(url, tag);
-//    }
-//
-//    protected void postNetwork(RequestData request, String tag) {
-//        postNetwork(request.url, request.params, tag);
-//    }
-//
-//    protected void postNetwork(RequestData request, String tag, Object data) {
-//        postNetwork(request.url, request.params, tag, -1, data);
-//    }
-//
-//    protected void postNetwork(String url, String tag) {
-//        postNetwork(url, new RequestParams(), tag);
-//    }
-//
-//    protected void postNetwork(String url, RequestParams params, final String tag) {
-//        networkImpl.loadData(url, params, tag, -1, null, NetworkImpl.Request.Post);
-//    }
-//
-//    protected void postNetwork(String url, RequestParams params, final String tag, int dataPos, Object data) {
-//        networkImpl.loadData(url, params, tag, dataPos, data, NetworkImpl.Request.Post);
-//    }
-//
-//    @Override
-//    public void getNetwork(String url, final String tag) {
-//        networkImpl.loadData(url, null, tag, -1, null, NetworkImpl.Request.Get);
-//    }
-//
-//    protected void getNetwork(String url, final String tag, int dataPos, Object data) {
-//        networkImpl.loadData(url, null, tag, dataPos, data, NetworkImpl.Request.Get);
-//    }
-//
-//    protected void putNetwork(String url, RequestParams params, final String tag) {
-//        networkImpl.loadData(url, params, tag, -1, null, NetworkImpl.Request.Put);
-//    }
-//
-//    protected void putNetwork(String url, RequestParams params, String tag, int pos, Object object) {
-//        networkImpl.loadData(url, params, tag, pos, object, NetworkImpl.Request.Put);
-//    }
-//
-//    protected void putNetwork(String url, final String tag, int dataPos, Object data) {
-//        networkImpl.loadData(url, null, tag, dataPos, data, NetworkImpl.Request.Put);
-//    }
-//
-//    protected void deleteNetwork(String url, final String tag) {
-//        networkImpl.loadData(url, null, tag, -1, null, NetworkImpl.Request.Delete);
-//    }
-//
-//    protected void deleteNetwork(String url, RequestParams params, final String tag) {
-//        networkImpl.loadData(url, params, tag, -1, null, NetworkImpl.Request.Delete);
-//    }
-//
-//    protected void deleteNetwork(String url, final String tag, Object id) {
-//        networkImpl.loadData(url, null, tag, -1, id, NetworkImpl.Request.Delete);
-//    }
-//
-//    protected void deleteNetwork(String url, final String tag, int dataPos, Object id) {
-//        networkImpl.loadData(url, null, tag, dataPos, id, NetworkImpl.Request.Delete);
-//    }
 
     protected void showDialog(String title, String msg, DialogInterface.OnClickListener clickOk) {
         showDialog(title, msg, clickOk, null);
     }
 
 
-//    protected void showListDialog() {
-//        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-//        AlertDialog dialog = builder.setItems()
-//    }
 
     protected void showDialog(String title, String msg, DialogInterface.OnClickListener clickOk,
                               DialogInterface.OnClickListener clickCancel) {
@@ -387,22 +369,6 @@ public class WWBaseActivity extends AppCompatActivity implements StartActivity {
         mSingleToast.showButtomToast(messageId);
     }
 
-//    protected void iconfromNetwork(ImageView view, String url) {
-//        imageLoadTool.loadImage(view, Global.makeSmallUrl(view, url));
-//    }
-//
-//    protected void iconfromNetwork(ImageView view, String url, SimpleImageLoadingListener animate) {
-//        imageLoadTool.loadImage(view, Global.makeSmallUrl(view, url), animate);
-//    }
-//
-//    protected void imagefromNetwork(ImageView view, String url) {
-//        imageLoadTool.loadImageFromUrl(view, url);
-//    }
-
-//    protected void imagefromNetwork(ImageView view, String url, DisplayImageOptions options) {
-//        url = Global.translateStaticIcon(url);
-//        imageLoadTool.loadImageFromUrl(view, url, options);
-//    }
 
     public void initDialogLoading() {
         if (mDialogProgressPopWindow == null) {

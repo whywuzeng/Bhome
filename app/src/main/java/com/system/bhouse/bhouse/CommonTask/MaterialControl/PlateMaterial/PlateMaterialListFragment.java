@@ -6,6 +6,7 @@ import android.os.Handler;
 import android.os.Message;
 import android.text.TextUtils;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -73,8 +74,7 @@ public class PlateMaterialListFragment extends BaseCommonListFragment<PlateMater
     private Drawable drawablePositiveGou;
 
     @AfterViews
-    public void initConfirmation()
-    {
+    public void initConfirmation() {
         initRefreshLayout();
         mAdapter = new PlateMaterialLoadingAdapter(mData);
         baseCommoninitView(mAdapter);
@@ -83,6 +83,9 @@ public class PlateMaterialListFragment extends BaseCommonListFragment<PlateMater
         mAdapter.setmOnItemClickListener(this);
         setStatusContent(ContentTitle);
         TvDealWith = (TextView) rootView.findViewById(R.id.tv_finish_dealwith);
+        ImageView arrowRight = rootView.findViewById(R.id.tv_arrow_right);
+        arrowRight.setVisibility(View.GONE);
+        TvDealWith.setCompoundDrawablesWithIntrinsicBounds(getResources().getDrawable(R.drawable.ic_positive_gou), null, null, null);
         LinearLayout tasklistHead = (LinearLayout) rootView.findViewById(R.id.head_tasklist);
         tasklistHead.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -104,11 +107,11 @@ public class PlateMaterialListFragment extends BaseCommonListFragment<PlateMater
         {
             drawableGouSeleted.setBounds(0,0,drawableGouSeleted.getIntrinsicWidth(),drawableGouSeleted.getIntrinsicHeight());
             TvDealWith.setCompoundDrawables(drawableGouSeleted,null,null,null);
+            mStatus=ContentTitle[2];
         }else{
             //审核状态
             drawablePositiveGou.setBounds(0,0,drawablePositiveGou.getIntrinsicWidth(),drawablePositiveGou.getIntrinsicHeight());
             TvDealWith.setCompoundDrawables(drawablePositiveGou,null,null,null);
-            mStatus=ContentTitle[2];
         }
         isDealWith=!isDealWith;
     }

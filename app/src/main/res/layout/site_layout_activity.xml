@@ -3,8 +3,8 @@
               xmlns:tools="http://schemas.android.com/tools"
               android:layout_width="match_parent"
               android:orientation="vertical"
+              android:background="@color/material_white95"
               tools:context=".CommonTask.SiteActivity"
-              android:paddingBottom="10dp"
               android:layout_height="match_parent">
 
     <include layout="@layout/toolbar"/>
@@ -13,6 +13,7 @@
     <android.support.v7.widget.RecyclerView
         android:id="@+id/my_recycle_view"
         android:layout_width="match_parent"
+        android:overScrollMode="never"
         android:scrollbars="horizontal"
         android:layout_height="wrap_content">
     </android.support.v7.widget.RecyclerView>

@@ -3,11 +3,12 @@ package com.system.bhouse.Custom.View.SceneSurface;
 import android.content.Context;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
+import android.graphics.Rect;
 import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
 import android.util.Log;
-import android.view.SurfaceHolder;
+import android.view.Surface;
 
 import com.system.bhouse.bhouse.R;
 
@@ -18,14 +19,17 @@ import com.system.bhouse.bhouse.R;
 public class RenderThread extends Thread {
 
     private Context context;
-    private SurfaceHolder surfaceHolder;
+    private Surface surfaceHolder;
     private RenderHandler renderHandler;
     private Scene scene;
+    private Rect mSurfaceRect;
 
-    public RenderThread(SurfaceHolder surfaceHolder, Context context) {
+
+    public RenderThread(Surface  surfaceHolder, Context context) {
         this.context = context;
         this.surfaceHolder = surfaceHolder;
         scene = new Scene(context);
+        mSurfaceRect=new Rect();
         //add scene/actor
         scene.setBg(BitmapFactory.decodeResource(context.getResources(), R.drawable.bg0_fine_day));
 //        scene.add(new BirdUp(context));
@@ -68,11 +72,19 @@ public class RenderThread extends Thread {
 
 
     private void draw() {
-        Canvas canvas = surfaceHolder.lockCanvas();
+
+        Canvas canvas = surfaceHolder.lockCanvas(mSurfaceRect);
         if (canvas != null) {
+//            canvas.drawColor(Color.TRANSPARENT, PorterDuff.Mode.CLEAR);
             scene.draw(canvas);
             surfaceHolder.unlockCanvasAndPost(canvas);
         }
+    }
+
+    public void updateSize(int width, int height) {
+        scene.setWidth(width);
+        scene.setHeight(height);
+        mSurfaceRect.set(0, 0, width, height);
     }
 
 

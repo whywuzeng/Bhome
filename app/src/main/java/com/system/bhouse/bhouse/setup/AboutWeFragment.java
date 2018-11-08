@@ -4,12 +4,16 @@ import android.app.Activity;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.v7.app.AlertDialog;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewTreeObserver;
 import android.widget.ImageView;
@@ -20,9 +24,12 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.readystatesoftware.viewbadger.BadgeView;
 import com.system.bhouse.Custom.ShowDeviceMessageCustomDialog;
+import com.system.bhouse.Custom.TagGroup.TagGroup;
 import com.system.bhouse.base.App;
 import com.system.bhouse.base.Global;
+import com.system.bhouse.base.database.AccountManager;
 import com.system.bhouse.bean.EventBean.EventOrganization;
+import com.system.bhouse.bhouse.CommonTask.common.CustomDatePicker.CustomDatePickerAlertDialog;
 import com.system.bhouse.bhouse.LoginActivity;
 import com.system.bhouse.bhouse.R;
 import com.system.bhouse.bhouse.Service.MessageService;
@@ -32,8 +39,11 @@ import com.system.bhouse.bhouse.setup.notification.MyNotificationActivity_;
 import com.system.bhouse.bhouse.setup.notification.bean.XGNotification;
 import com.system.bhouse.bhouse.setup.utils.CameraPhotoUtil;
 import com.system.bhouse.bhouse.setup.utils.FileUtil;
+import com.system.bhouse.utils.MeasureBarHeightUtils;
 import com.system.bhouse.utils.TenUtils.T;
 import com.system.bhouse.utils.ViewUtil;
+import com.system.bhouse.utils.blankutils.LogUtils;
+import com.system.bhouse.utils.blankutils.ToastUtils;
 import com.system.bhouse.utils.sharedpreferencesuser;
 import com.tencent.android.tpush.XGPushShowedResult;
 
@@ -42,9 +52,10 @@ import org.androidannotations.annotations.EFragment;
 import org.androidannotations.annotations.OnActivityResult;
 import org.androidannotations.annotations.ViewById;
 
+import java.util.Calendar;
+
 import de.greenrobot.event.EventBus;
 import de.hdodenhof.circleimageview.CircleImageView;
-import me.gujun.android.taggroup.TagGroup;
 
 /**
  * Created by Administrator on 2018-03-19.
@@ -103,6 +114,15 @@ public class AboutWeFragment extends WWBaseFragment {
     TagGroup tag_group;
     @ViewById(R.id.tag_group1)
     TagGroup tag_group1;
+
+    @ViewById(R.id.toolbar)
+    Toolbar mToolbar;
+
+    @ViewById(R.id.action_capture)
+    ImageView actionCapture;
+
+    @ViewById(R.id.tv_toolbar_title_mid)
+    TextView tvToolbarTitleMid;
 
     @AfterViews
     public void initAboutWeFrag() {
@@ -183,7 +203,88 @@ public class AboutWeFragment extends WWBaseFragment {
             }
         });
 
+        initView();
+//      initDataPickerDialog();
     }
+
+
+
+    /**
+     * 展示时间选择器=
+     * <p>
+     */
+    private void initDataPickerDialog() {
+        Calendar calendar = Calendar.getInstance();
+        int year = calendar.get(Calendar.YEAR);
+        int month = calendar.get(Calendar.MONTH);
+        int day = calendar.get(Calendar.DAY_OF_MONTH);
+        int hour = calendar.get(Calendar.HOUR_OF_DAY);
+        int minute = calendar.get(Calendar.MINUTE);
+
+        CustomDatePickerAlertDialog dialog = new CustomDatePickerAlertDialog(getActivity(), year, month, day,hour,minute);
+        dialog.setPositiveButton("确定", new CustomDatePickerAlertDialog.AntDatePickerDialogClickListener() {
+            @Override
+            public void onClick(View view, int year, int month, int day,int hour,int minute) {
+                LogUtils.e("你设置的日期是：", year + "/" + month + "/" + day);
+                ToastUtils.showShort("你设置的日期是%s：", year + "/" + month + "/" + day);
+//                showTimePickerDialog(year, month, day);
+            }
+        });
+        dialog.setNegativeButton("取消", null);
+//        dialog.setSkipButton("跳过", new CustomDatePickerAlertDialog.AntDatePickerDialogClickListener() {
+//            @Override
+//            public void onClick(View view, int selectedYear, int selectedMonth, int selectedDay,int selectedHour,int selectedMinute) {
+//
+//            }
+//        });
+        dialog.setTitle("请设置时间——年月日");
+        dialog.setCancelable(false);
+        dialog.show();
+    }
+
+    private void initView() {
+        mToolbar.setTitleTextColor(Color.WHITE);
+
+        ((AppCompatActivity)getActivity()).setSupportActionBar(mToolbar);
+
+        mToolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+//                mDrawerLayout.openDrawer(Gravity.LEFT);
+                Intent intent = new Intent(getActivity(), MyselfActivity.class);
+                getActivity().startActivity(intent);
+
+            }
+        });
+
+        //toolbar button的点击的回调
+        mToolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+                switch (item.getItemId()) {
+                    //二维码扫描管理  //组织架构的选择界面
+                    case R.id.action_capture:
+                        Intent intent1 = new Intent(getActivity(), InformationActivity.class);
+                        startActivity(intent1);
+                        break;
+                }
+                return false;
+            }
+        });
+
+        actionCapture.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent1 = new Intent(getActivity(), InformationActivity.class);
+                startActivity(intent1);
+            }
+        });
+
+        tvToolbarTitleMid.setText("我的");
+        MeasureBarHeightUtils.setHeight(mToolbar,getActivity());
+    }
+
 
     private void ShowLogoutDialog() {
         ShowDeviceMessageCustomDialog.Builder builder = new ShowDeviceMessageCustomDialog.Builder(getActivity());
@@ -192,7 +293,7 @@ public class AboutWeFragment extends WWBaseFragment {
                 dialog.dismiss();
                 //点击触发认证事件
                 //登录信息置空
-                App.USER_INFO="";
+                AccountManager.Logout();
                 //跳转界面app
                 Intent intent = new Intent(getActivity(), LoginActivity.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);

@@ -14,7 +14,7 @@
             <TextView
                 android:id="@+id/tv_finish_dealwith"
                 android:layout_marginLeft="15dp"
-                android:drawableLeft="@drawable/ic_positive_gou"
+                android:drawableLeft="@drawable/ic_dealwith"
                 android:drawablePadding="10dp"
                 android:layout_centerVertical="true"
                 android:text="查看已处理"
@@ -24,6 +24,7 @@
                 android:layout_height="wrap_content"/>
 
             <ImageView
+                android:id="@+id/tv_arrow_right"
                 android:src="@drawable/ic_keyboard_arrow_right"
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"

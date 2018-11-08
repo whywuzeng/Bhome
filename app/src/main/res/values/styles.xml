@@ -42,10 +42,6 @@
         <item name="android:actionBarSize">@dimen/actionBarSize</item>
         <item name="backgroundColor">@color/common_color_parentlayout_bg</item>
 
-        <item name="android:windowTranslucentStatus">false</item>
-        <item name="android:windowTranslucentNavigation">true</item>
-        <!--Android 5.x开始需要把颜色设置透明，否则导航栏会呈现系统默认的浅灰色-->
-        <item name="android:statusBarColor" tools:targetApi="lollipop">@android:color/transparent</item>
     </style>
 
 <style name="AppTheme.Base" parent="AppTheme">
@@ -60,6 +56,13 @@
     <!--<item name="android:textColorPrimary">@color/qmui_config_color_white </item>-->
     <!-- 配置app自己的theme -->
 </style>
+
+    <!--解决白屏显示问题-->
+    <style name="Theme.Translucent" parent="MainAppTheme.Base">
+        <item name="android:windowFullscreen">true</item>
+        <item name="android:windowIsTranslucent">true</item>
+        <item name="android:windowDisablePreview">true</item>
+    </style>
 
     <style name="text_18_ffffff">
         <item name="android:textSize">18.0dip</item>
@@ -95,11 +98,23 @@
         <item name="android:textColor">#ff666666</item>
     </style>
 
+
     <style name="Dialog" parent="android:style/Theme.Dialog">
-        <item name="android:background">#00000000</item>
-        <item name="android:windowBackground">@android:color/transparent</item>
         <item name="android:windowNoTitle">true</item>
         <item name="android:windowIsFloating">true</item>
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:background">#00000000</item>
+    </style>
+
+    <style name="datedialog">
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowIsFloating">true</item>
+        <!--模糊-->
+        <item name="android:backgroundDimEnabled">true</item>
+        <!--无边框-->
+        <item name="android:windowFrame">@null</item>
+        <!--对话框半透明-->
+        <item name="android:windowIsTranslucent">false</item>
     </style>
 
     <style name="fade">
@@ -108,7 +123,6 @@
         <item name="android:activityCloseEnterAnimation">@anim/in_from_left</item>
         <item name="android:activityCloseExitAnimation">@anim/out_to_right</item>
 
-        <!-- 配置app自己的theme -->
     </style>
      <!--车次管理   -->
     <style name="to_from_dialog" parent="@android:style/Theme.Dialog">
@@ -266,13 +280,17 @@
     </style>
 
     <!--灰色框  白色底-->
-
+    <!--粉色框 圆的 -->
     <style name="GreyBoxButton">
         <item name="android:background"> @drawable/selector_layout_common_radius_v8</item>
     </style>
-
+  <!--粉色框 方的 -->
     <style name="GreyBoxButtonfang">
         <item name="android:background"> @drawable/selector_layout_common_radius_v8_fang</item>
+    </style>
+    <!--没有框 只有背景点击效果-->
+    <style name="GreyBoxButtonNofang">
+        <item name="android:background"> @drawable/selector_layout_common_radius_v8_nofang</item>
     </style>
 
     <style name="GreySimpleButtonfang">
@@ -430,4 +448,63 @@
     <style name="SleepLayoutStyle">
         <item name="android:fitsSystemWindows">true</item>
     </style>
+
+    <!--tagGroup的样式 集成-->
+    <style name="TagGroup">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="atg_isAppendMode">false</item>
+        <item name="atg_inputHint">@string/add_tag</item>
+        <item name="atg_borderColor">#49C120</item>
+        <item name="atg_textColor">#49C120</item>
+        <item name="atg_backgroundColor">#FFFFFF</item>
+        <item name="atg_dashBorderColor">#AAAAAA</item>
+        <item name="atg_inputHintColor">#80000000</item>
+        <item name="atg_inputTextColor">#DE000000</item>
+        <item name="atg_checkedBorderColor">#49C120</item>
+        <item name="atg_checkedTextColor">#FFFFFF</item>
+        <item name="atg_checkedMarkerColor">#FFFFFF</item>
+        <item name="atg_checkedBackgroundColor">#49C120</item>
+        <item name="atg_pressedBackgroundColor">#EDEDED</item>
+        <item name="atg_borderStrokeWidth">0.5dp</item>
+        <item name="atg_textSize">13sp</item>
+        <item name="atg_horizontalSpacing">8dp</item>
+        <item name="atg_verticalSpacing">4dp</item>
+        <item name="atg_horizontalPadding">12dp</item>
+        <item name="atg_verticalPadding">3dp</item>
+    </style>
+    <style name="TagGroup.Beauty_Red" parent="TagGroup">
+        <item name="atg_borderColor">#FF3D7F</item>
+        <item name="atg_textColor">#FF3D7F</item>
+        <item name="atg_checkedBorderColor">#FF3D7F</item>
+        <item name="atg_checkedBackgroundColor">#FF3D7F</item>
+    </style>
+    <style name="TagGroup.Beauty_Red.Inverse" parent="TagGroup">
+        <item name="atg_borderColor">#FF3D7F</item>
+        <item name="atg_textColor">#FFFFFF</item>
+        <item name="atg_backgroundColor">#FF3D7F</item>
+        <item name="atg_inputHintColor">#80FFFFFF</item>
+        <item name="atg_inputTextColor">#DEFFFFFF</item>
+        <item name="atg_checkedBorderColor">#FF3D7F</item>
+        <item name="atg_checkedTextColor">#FF3D7F</item>
+        <item name="atg_checkedMarkerColor">#FF3D7F</item>
+        <item name="atg_checkedBackgroundColor">#FFFFFF</item>
+        <item name="atg_pressedBackgroundColor">#FF99B1</item>
+    </style>
+    <style name="TagGroup.Large" parent="TagGroup">
+        <item name="atg_borderStrokeWidth">0.7dp</item>
+        <item name="atg_textSize">15sp</item>
+        <item name="atg_horizontalSpacing">9dp</item>
+        <item name="atg_verticalSpacing">5dp</item>
+        <item name="atg_horizontalPadding">14dp</item>
+        <item name="atg_verticalPadding">4dp</item>
+    </style>
+    <style name="TagGroup.Small" parent="TagGroup">
+        <item name="atg_textSize">10sp</item>
+        <item name="atg_horizontalSpacing">6dp</item>
+        <item name="atg_verticalSpacing">3dp</item>
+        <item name="atg_horizontalPadding">8dp</item>
+        <item name="atg_verticalPadding">2dp</item>
+    </style>
+
 </resources>

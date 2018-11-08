@@ -14,12 +14,13 @@ import android.view.Window;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.TextView;
 
+import com.system.bhouse.base.database.DatabaseManager;
 import com.system.bhouse.bhouse.R;
 import com.system.bhouse.utils.AppManager;
 import com.system.bhouse.utils.LogUtil;
-import com.zhy.autolayout.AutoLayoutActivity;
+import com.trello.rxlifecycle.components.support.RxAppCompatActivity;
 
-public abstract class BaseActivity extends AutoLayoutActivity {
+public abstract class BaseActivity extends RxAppCompatActivity {
     protected final static String TAG = "BaseActivity";
     public Context mContext;
     private ToolbarHelper mToolbarHelper;
@@ -54,6 +55,12 @@ public abstract class BaseActivity extends AutoLayoutActivity {
                 }
             });
         }
+        //不是第一次进入
+            setAppData();
+    }
+
+    protected void setAppData(){
+        DatabaseManager.getInstance().setAppData();
     }
 
     protected  String getToolbarTitle()

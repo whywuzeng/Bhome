@@ -5,6 +5,7 @@ import android.app.Dialog;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 
+import com.system.bhouse.bhouse.CommonTask.common.CustomDatePicker.CustomDatePickerAlertDialog;
 import com.system.bhouse.bhouse.setup.utils.LabelNumPickerDialog;
 import com.system.bhouse.bhouse.setup.utils.onMutiDataSetListener;
 
@@ -16,7 +17,7 @@ import com.system.bhouse.bhouse.setup.utils.onMutiDataSetListener;
  * com.system.bhouse.bhouse.CommonTask.common
  */
 
-public class CommonDateTimePickerFragment extends DialogFragment implements DateTimePickerDialog.OnDateSetListener {
+public class CommonDateTimePickerFragment extends DialogFragment implements DateTimePickerDialog2.OnDateSetListener {
 
     private LabelNumPickerDialog.OnDateSetListener mCallBack;
     private onMutiDataSetListener listener;
@@ -44,10 +45,9 @@ public class CommonDateTimePickerFragment extends DialogFragment implements Date
             dateType = getArguments().getString(PARAM_TYPE);
             datePosition = getArguments().getInt(PARAM_POSITION);
         }
+        CustomDatePickerAlertDialog labelNumPickerDialog = DateTimePickerDialog2.getInstance().getCustomDialog(getActivity(), 0, this, dateString);
 
-        DateTimePickerDialog labelNumPickerDialog = new DateTimePickerDialog(getActivity(), 0, this, dateString);
-
-        return labelNumPickerDialog;
+        return labelNumPickerDialog.getDialogObj();
     }
 
 

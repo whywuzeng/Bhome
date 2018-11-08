@@ -8,6 +8,6 @@ package com.system.bhouse.bhouse.Annotation.ClassRun;
  * com.system.bhouse.bhouse.Annotation.ClassRun
  */
 
-public class ClassProcessor extends AbstractProcessor{
-
-}
+//public class ClassProcessor extends AbstractProcessor{
+//
+//}
