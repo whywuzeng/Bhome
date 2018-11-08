@@ -223,7 +223,7 @@
 
     <!--托盘配料 分录详情-->
     <string-array name="Plate_itemsection_order">
-        <item>构件二维码</item>
+        <item>产品二维码</item>
         <item>物料编码</item>
         <item>物料名称</item>
         <item>规格型号</item>
@@ -236,7 +236,7 @@
     <!--模具分配 分录详情-->
     <string-array name="module_itemsection_order">
         <item>物料编码</item>
-        <item>构件二维码</item>
+        <item>产品二维码</item>
         <item>物料名称</item>
         <item>规格型号</item>
         <item>单位</item>
@@ -257,7 +257,7 @@
     <!--台车分配 分录详情-->
     <string-array name="stationcar_itemsection_order">
         <item>物料编码</item>
-        <item>构件二维码</item>
+        <item>产品二维码</item>
         <item>物料名称</item>
         <item>规格型号</item>
         <item>单位</item>
@@ -271,7 +271,7 @@
 
     <!--模具投料 分录详情-->
     <string-array name="modulefeeding_itemsection_order">
-        <item>构件二维码</item>
+        <item>产品二维码</item>
         <item>物料编码</item>
         <item>物料名称</item>
         <item>规格型号</item>
@@ -286,7 +286,7 @@
         <item>模具名称</item>
         <item>养护开始时间</item>
         <item>养护结束时间</item>
-        <item>构件二维码</item>
+        <item>产品二维码</item>
         <item>构件编码</item>
         <item>构件名称</item>
         <item>规格型号</item>
@@ -299,7 +299,7 @@
         <item>模具名称</item>
         <item>养护开始时间</item>
         <item>养护结束时间</item>
-        <item>构件二维码</item>
+        <item>产品二维码</item>
         <item>构件编码</item>
         <item>构件名称</item>
         <item>规格型号</item>
@@ -312,7 +312,7 @@
         <item>模具名称</item>
         <item>养护开始时间</item>
         <item>养护结束时间</item>
-        <item>构件二维码</item>
+        <item>产品二维码</item>
         <item>构件编码</item>
         <item>构件名称</item>
         <item>规格型号</item>
@@ -323,7 +323,7 @@
     <!--构件入库 分录详情-->
     <string-array name="component_intoWareHouse_itemsection_order">
         <item>物料编码</item>
-        <item>二维码</item>
+        <item>产品二维码</item>
         <item>物料名称</item>
         <item>规格型号</item>
         <item>单位</item>

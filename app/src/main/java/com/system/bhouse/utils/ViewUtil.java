@@ -18,6 +18,8 @@ import android.view.View;
 import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 
+import com.system.bhouse.utils.TenUtils.DensityUtils;
+
 import java.lang.reflect.Field;
 
 /**
@@ -183,8 +185,9 @@ public class ViewUtil {
                             );
 
             double scaleBai = 4.0 / 14.0;
-            //字体的大小
-            int Textsize = (int) (0.285 * width);
+            //字体的大小 scale 2.0  Textsize 43
+            final float widthDp = DensityUtils.px2dp(mContext, width);
+            int Textsize = (int) (0.56 * widthDp);
 
             Canvas canvas = new Canvas(bitmap);
             // new antialised Paint

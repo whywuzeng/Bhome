@@ -35,6 +35,7 @@
 package com.system.bhouse.ui.twoway;
 
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.database.DataSetObserver;
 import android.os.Handler;
@@ -544,7 +545,6 @@ public abstract class TwoWayAdapterView<T extends Adapter> extends ViewGroup {
 		throw new UnsupportedOperationException("removeAllViews() is not supported in AdapterView");
 	}
 
-	@Override
 	protected void onLayout(boolean changed, int left, int top, int right, int bottom) {
 		mLayoutHeight = getHeight();
 		mLayoutWidth = getWidth();
@@ -737,6 +737,7 @@ public abstract class TwoWayAdapterView<T extends Adapter> extends ViewGroup {
 	 * we have an empty view, display it.  In all the other cases, make sure that the listview
 	 * is VISIBLE and that the empty view is GONE (if it's not null).
 	 */
+	@SuppressLint("WrongCall")
 	private void updateEmptyStatus(boolean empty) {
 		if (isInFilterMode()) {
 			empty = false;

@@ -18,7 +18,23 @@ android {
         threadCount = 8
     }
 
-    flavorDimensions "dev"
+    signingConfigs {
+        debug {
+            storeFile file('bhouse.jks')
+            storePassword "wuzeng"
+            keyAlias "bhouse"
+            keyPassword "wuzeng"
+        }
+        //签名打包
+        release {
+            storeFile file('bhouse.jks')
+            storePassword "wuzeng"
+            keyAlias "bhouse"
+            keyPassword "wuzeng"
+        }
+    }
+
+    flavorDimensions "channel"
     productFlavors {
         // Define separate dev and prod product flavors.
         dev {
@@ -27,7 +43,7 @@ android {
             // Android Lollipop without time consuming dex merging processes.
             minSdkVersion 19
         }
-        prod {
+        rele {
             // The actual minSdkVersion for the application.
             minSdkVersion rootProject.ext.android["minSdkVersion"]
         }
@@ -63,9 +79,15 @@ android {
 //    }
 
     buildTypes {
-        release {
+        debug {
+            minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
-
+            signingConfig signingConfigs.debug
+        }
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.release
         }
     }
 

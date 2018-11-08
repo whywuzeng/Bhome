@@ -89,5 +89,9 @@
     <dimen name="dp10">10dp</dimen>
     <dimen name="dp2">2dp</dimen>
     <dimen name="dp3">3dp</dimen>
+    <!--中型字体， 新建文件夹-->
+    <dimen name="project_action_icon_text">6dp</dimen>
+    <!--文件夹的宽度-->
+    <dimen name="folder_icon_width">36dp</dimen>
 
 </resources>

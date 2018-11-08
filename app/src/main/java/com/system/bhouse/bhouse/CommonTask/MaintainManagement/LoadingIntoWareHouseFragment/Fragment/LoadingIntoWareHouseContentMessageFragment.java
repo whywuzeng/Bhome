@@ -549,7 +549,8 @@ public class LoadingIntoWareHouseContentMessageFragment extends BaseContentMessa
         }
         switch (item.getItemId()) {
             case R.id.action_operat_status:
-
+                if (ClickUtils.isFastDoubleClick())
+                    return false;
                 show1(mStatus);
                 setTvQrcodeContext("装车订单拉取", View.VISIBLE);
                 setTvQrAddContext("货柜调拨", true);

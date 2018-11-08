@@ -196,6 +196,14 @@
         <item name="android:layout_width">match_parent</item>
     </style>
 
+    <!--垂直分割线 需要重新定义高度-->
+    <style name="DivideLineVer" parent="@android:style/TextAppearance.Medium">
+        <item name="android:layout_width">0.5dp</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:background">@color/divide_line</item>
+        <item name="android:layout_gravity">center_vertical</item>
+    </style>
+
     <!--分割线-->
     <style name="DivideLine" parent="@android:style/TextAppearance.Medium">
         <item name="android:layout_width">match_parent</item>
@@ -506,5 +514,6 @@
         <item name="atg_horizontalPadding">8dp</item>
         <item name="atg_verticalPadding">2dp</item>
     </style>
+
 
 </resources>

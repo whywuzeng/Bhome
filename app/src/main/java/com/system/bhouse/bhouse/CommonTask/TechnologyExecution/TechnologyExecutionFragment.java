@@ -39,6 +39,7 @@ import com.system.bhouse.bhouse.CommonTask.TransportationManagement.adapter.Base
 import com.system.bhouse.bhouse.CommonTask.TransportationManagement.adapter.BaseViewHolder;
 import com.system.bhouse.bhouse.CommonTask.Widget.TimeLineItemTopBottomDecoration;
 import com.system.bhouse.bhouse.R;
+import com.system.bhouse.config.Const;
 import com.system.bhouse.utils.ClickUtils;
 import com.system.bhouse.utils.blankutils.TimeUtils;
 import com.system.bhouse.utils.ValueUtils;
@@ -506,6 +507,9 @@ public class TechnologyExecutionFragment extends BaseBackFragment implements Bas
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        //回调时要置空数据
+        resultQrcomponent=null;
+        Order_Id=null;
         QrCodeComponent(resultCode, data);
 //        switch (requestCode) {
 //            case RESULT_COMPONENT:
@@ -514,7 +518,6 @@ public class TechnologyExecutionFragment extends BaseBackFragment implements Bas
 //        }
         //原数据置空
         tv_orderid_content.setText("");
-        adapter.setEmptyView(notDataView);
     }
 
     private void QrCodeComponent(int resultCode, Intent data) {
@@ -535,6 +538,15 @@ public class TechnologyExecutionFragment extends BaseBackFragment implements Bas
                 @Override
                 public void SuccessBack(String result) {
                     //[{"订单ID":"08776473ea6a4c0ea7a3291d4aa0d359","订单编号":"SCDD-7-201807-0008"}]
+                    if (TextUtils.isEmpty(result)||result.contains(Const.RESULTEMPTY))
+                    {
+                        if (TechnologyBeans!=null) {
+                            TechnologyBeans.clear();
+                        }
+                        adapter.setEmptyView(notDataView);
+                        tv_component_content.setText("");
+                        return;
+                    }
                     String orderID = null;
                     String orderNumber = null;
                     try {
@@ -563,6 +575,7 @@ public class TechnologyExecutionFragment extends BaseBackFragment implements Bas
                             tv_component_content.setText(resultQr);
                         }else{
                             tv_component_content.setText("");
+
                         }
                     }
                 }
