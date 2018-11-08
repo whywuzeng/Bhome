@@ -200,6 +200,7 @@
     <color name="divide">#F2F4F6</color>
 
     <color name="font_2">#222222</color>
+    <!--底部浅灰，看起来舒服,相当于标题-->
     <color name="font_6">#666666</color>
     <color name="font_9">#999999</color>
     <!--白色点击 背景颜色-->
@@ -259,6 +260,14 @@
     <color name="red_62B436">#62B436</color>
     <color name="c_666666">#666666</color>
 
+    <!--common 全局 color_bottom_bar 底部 超级浅灰色-->
+    <color name="color_bottom_bar">#F8F8F8</color>
+    <!--底部隔离出2dp，灰白色-->
+    <color name="divide_line_e2">#ffe2e2e2</color>
+    <color name="font_black">#000000</color>
+    <color name="font_green">#ff3bbd79</color>
+    <!--按钮不能用的color-->
+    <color name="font_black_content_disabled">#ffcacaca</color>
 </resources>
 
 

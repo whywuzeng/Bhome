@@ -51,6 +51,10 @@ public class LoadingCarBean extends BaseBean implements Parcelable {
      * 项目ID : a3296cf71c1d46b0963f9f45bfd58382  订单编号
      */
 
+    //需要文件夹
+    public String fileName="附件查询";
+    public boolean hasFile = true;
+
     public String ID;
     @SerializedName("二维码")
     public String Qrcode="";

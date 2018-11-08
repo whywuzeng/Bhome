@@ -373,6 +373,17 @@ public class LoadingCarOrderContentMessageActivity extends BaseContentMessageAct
             viewModels.add(viewModel);
             headerProperties.put(viewModel.key, viewModel.value);
 
+            viewModel = new SortChildItem.ViewModel();
+            viewModel.name = "附件";
+            viewModel.value = this.comTaskBeans.get(0).fileName;
+            viewModel.isFile=true;
+            viewModel.key = "adjunct";
+            if (mStatus.isNewStatus() || mStatus.isModifyStatus()) {
+                viewModel.isClick = true;
+            }
+            viewModels.add(viewModel);
+            headerProperties.put(viewModel.key, viewModel.value);
+
         }
         else if (data.key == 2 && data.type.equals("录入人信息")) {
 

@@ -61,6 +61,8 @@ public class WWBaseActivity extends RxAppCompatActivity implements StartActivity
     protected View errorView;
 
     public boolean isResumed=false;
+    private View listViewHeader;
+    private View listViewFooter;
 
     @Override
     protected void onStart() {
@@ -105,12 +107,12 @@ public class WWBaseActivity extends RxAppCompatActivity implements StartActivity
 
 
     protected void listViewAddFootSection(ListView listView) {
-        View listViewFooter = getLayoutInflater().inflate(R.layout.divide_bottom_15, listView, false);
+         listViewFooter = getLayoutInflater().inflate(R.layout.divide_bottom_15, listView, false);
         listView.addFooterView(listViewFooter, null, false);
     }
 
     protected void listViewAddHeaderSection(ListView listView) {
-        View listViewHeader = getLayoutInflater().inflate(R.layout.divide_top_15, listView, false);
+         listViewHeader = getLayoutInflater().inflate(R.layout.divide_top_15, listView, false);
         listView.addHeaderView(listViewHeader, null, false);
     }
 
