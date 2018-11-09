@@ -7,6 +7,7 @@ import android.text.Spannable;
 
 import org.xml.sax.XMLReader;
 
+import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
@@ -18,6 +19,9 @@ public class Global {
 
     private static SimpleDateFormat DayFormatTime = new SimpleDateFormat("yyyy-MM-dd");
     public static final SimpleDateFormat mDateFormat = new SimpleDateFormat("yyyy-MM-dd EEE");
+
+    //文件大小
+    public static DecimalFormat df = new DecimalFormat("#.00");
 
 
     public static String dayFromTime(long time) {
@@ -67,5 +71,20 @@ public class Global {
 //        return getCustomSpannable(color, s);
 //    }
 
+
+    /**
+     * 显示文件大小,保留两位
+     */
+    public static String HumanReadableFilesize(double size) {
+        String[] units = new String[]{"B", "KB", "MB", "GB", "TB", "PB"};
+        double mod = 1024.0;
+        int i = 0;
+        while (size >= mod) {
+            size /= mod;
+            i++;
+        }
+        //return Math.round(size) + units[i];
+        return df.format(size) + " " + units[i];
+    }
 
 }

@@ -22,7 +22,7 @@
             android:name="com.system.bhouse.bhouse.WelcomActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
-
+                <action android:name="com.system.bhouse.bhouse.WelcomActivity"/>
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
 
@@ -334,6 +334,7 @@
         <activity android:name=".phone.activity.ScanResultActivity"
             android:screenOrientation="portrait"
             />
+        <activity android:name="com.system.bhouse.Common.filewidget.ProjectAttachmentActivity"/>
 
         <!--<activity android:name="com.system.bhouse.bhouse.CommonTask.MaintainManagement.LoadingIntoWareHouseFragment.Fragment.LoadingIntoWareHouseContentMessageActivity_"-->
                   <!--android:screenOrientation="portrait"/>-->

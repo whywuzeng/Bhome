@@ -19,6 +19,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.gson.reflect.TypeToken;
+import com.system.bhouse.Common.filewidget.ProjectAttachmentActivity;
 import com.system.bhouse.Custom.ShowDeviceMessageCustomDialog;
 import com.system.bhouse.api.ApiWebService;
 import com.system.bhouse.base.App;
@@ -534,6 +535,10 @@ public class LoadingCarOrderContentMessageActivity extends BaseContentMessageAct
                     });
 
             builder.create().show();
+        }else if (data.name.equals("附件"))
+        {
+            final Intent intent = new Intent(this, ProjectAttachmentActivity.class);
+            startActivity(intent);
         }
     }
 
