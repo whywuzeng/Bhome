@@ -334,7 +334,11 @@
         <activity android:name=".phone.activity.ScanResultActivity"
             android:screenOrientation="portrait"
             />
-        <activity android:name="com.system.bhouse.Common.filewidget.ProjectAttachmentActivity"/>
+        <activity android:name="com.system.bhouse.Common.filewidget.ProjectAttachmentActivity"
+            android:theme="@style/MainAppTheme.Base"
+            >
+
+        </activity>
 
         <!--<activity android:name="com.system.bhouse.bhouse.CommonTask.MaintainManagement.LoadingIntoWareHouseFragment.Fragment.LoadingIntoWareHouseContentMessageActivity_"-->
                   <!--android:screenOrientation="portrait"/>-->
