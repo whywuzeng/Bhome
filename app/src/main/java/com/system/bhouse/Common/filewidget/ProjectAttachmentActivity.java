@@ -10,6 +10,7 @@ import android.support.annotation.NonNull;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.FrameLayout;
@@ -27,7 +28,6 @@ import com.system.bhouse.bhouse.R;
 import com.system.bhouse.bhouse.setup.WWCommon.SmartRefreshBaseActivity;
 import com.system.bhouse.bhouse.setup.utils.FileUtil;
 import com.system.bhouse.utils.TenUtils.GlideUtils;
-import com.system.bhouse.utils.blankutils.TimeConstants;
 import com.system.bhouse.utils.blankutils.TimeUtils;
 import com.system.bhouse.utils.blankutils.ToastUtils;
 
@@ -65,7 +65,7 @@ public class ProjectAttachmentActivity extends SmartRefreshBaseActivity implemen
     };
     private ArrayList<AttachmentHeadFooter> objectList;
     private static final int FILE_SELECT_CODE =0x231;
-    private View listHead;
+    private ViewGroup listHead;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -104,16 +104,17 @@ public class ProjectAttachmentActivity extends SmartRefreshBaseActivity implemen
         attachmentFileObject = new AttachmentFileObject();
         attachmentFileObject.fileType = "apk";
         attachmentFileObject.size = 2000212;
+        attachmentFileObject.created_at=1541727370000L;
         attachmentHeadFooter = new AttachmentHeadFooter(attachmentFileObject);
         objectList.add(attachmentHeadFooter);
 
 //        1:加载头部隔离带
         final ProjectAttachAdapter adapter = new ProjectAttachAdapter(R.layout.project_attachment_file_list_item, R.layout.divide_top_15, R.layout.divide_bottom_15, objectList);
-        listHead = getLayoutInflater().inflate(R.layout.upload_file_layout, mRecyclerView, false);
-        adapter.addHeaderView(listHead);
         final LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
         mRecyclerView.setLayoutManager(linearLayoutManager);
         mRecyclerView.setAdapter(adapter);
+        listHead = (ViewGroup) getLayoutInflater().inflate(R.layout.upload_file_layout, mRecyclerView, false);
+        adapter.addHeaderView(listHead);
 
     }
 
@@ -202,7 +203,7 @@ public class ProjectAttachmentActivity extends SmartRefreshBaseActivity implemen
             }
 
             helper.setText(R.id.comment,Global.HumanReadableFilesize(item.getSize()));
-            helper.setText(R.id.desc,String.format("发布于%s",TimeUtils.getStringByNow(item.created_at,TimeConstants.HOUR)));
+            helper.setText(R.id.desc,String.format("发布于%s",TimeUtils.getFriendlyTimeSpanByNow(item.created_at)));
             helper.setText(R.id.username,"wuzeg");
 
             //分享
@@ -300,6 +301,9 @@ public class ProjectAttachmentActivity extends SmartRefreshBaseActivity implemen
     }
 
     private void uploadFile(File selecteFile) {
-        
+        FileListHeadItem fileImte = new FileListHeadItem(this);
+        listHead.addView(fileImte);
+        FileListHeadItem.Param param = new FileListHeadItem.Param(selecteFile.getAbsolutePath(), selecteFile.getAbsolutePath(), selecteFile);
+        fileImte.setData(param);
     }
 }
