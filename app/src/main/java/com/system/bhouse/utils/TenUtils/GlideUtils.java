@@ -188,19 +188,7 @@ public class GlideUtils {
                 requestBuilder = request.override(overrideW, overrideH);
             }
         }
-        if (asGif != null && !asGif) {
-            if (requestBuilder != null && requestBuilder instanceof BitmapRequestBuilder) {
-                // bitmap格式的特殊处理图片质量
-                final BitmapRequestBuilder bitmapRequestBuilder = ((BitmapRequestBuilder) requestBuilder).format(format);
-                bitmapRequestBuilder.into(imageView);
-                return;
-            } else if (requestBuilder == null && request instanceof BitmapTypeRequest) {
-                // bitmap格式的特殊处理图片质量
-                final BitmapRequestBuilder bitmapRequestBuilder = ((BitmapTypeRequest) request).format(format);
-                bitmapRequestBuilder.into(imageView);
-                return;
-            }
-        }
+
         if (requestBuilder != null) {
             if (DEBUG) {
                 requestBuilder.listener(new RequestListener() {
@@ -219,6 +207,20 @@ public class GlideUtils {
             requestBuilder.into(imageView);
         } else {
             request.into(imageView);
+        }
+
+        if (asGif != null && !asGif) {
+            if (requestBuilder != null && requestBuilder instanceof BitmapRequestBuilder) {
+                // bitmap格式的特殊处理图片质量
+                final BitmapRequestBuilder bitmapRequestBuilder = ((BitmapRequestBuilder) requestBuilder).format(format);
+                bitmapRequestBuilder.into(imageView);
+                return;
+            } else if (requestBuilder == null && request instanceof BitmapTypeRequest) {
+                // bitmap格式的特殊处理图片质量
+                final BitmapRequestBuilder bitmapRequestBuilder = ((BitmapTypeRequest) request).format(format);
+                bitmapRequestBuilder.into(imageView);
+                return;
+            }
         }
     }
 

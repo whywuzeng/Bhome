@@ -41,7 +41,9 @@
         <item name="colorAccent">@color/material_green_A200</item>
         <item name="android:actionBarSize">@dimen/actionBarSize</item>
         <item name="backgroundColor">@color/common_color_parentlayout_bg</item>
-
+        <item name="android:windowActionModeOverlay">true</item>
+        <item name="actionModeStyle">@style/CustomActionMode</item>
+        <item name="android:windowActionBarOverlay">true</item>
     </style>
 
 <style name="AppTheme.Base" parent="AppTheme">
@@ -52,10 +54,18 @@
     <item name="colorAccent">@color/material_green_A200</item>
     <item name="android:actionBarSize">@dimen/actionBarSize</item>
     <item name="backgroundColor">@color/common_color_parentlayout_bg</item>
-
+    <item name="android:windowActionModeOverlay">true</item>
+    <item name="actionModeStyle">@style/CustomActionMode</item>
+    <item name="android:windowActionBarOverlay">true</item>
     <!--<item name="android:textColorPrimary">@color/qmui_config_color_white </item>-->
     <!-- 配置app自己的theme -->
 </style>
+
+    <!--设置自己的ActionMode-->
+    <style name="CustomActionMode" parent="@style/Widget.AppCompat.ActionMode">
+        <item name="background">@color/divide</item>
+        <item name="height">64dp</item>
+    </style>
 
     <!--解决白屏显示问题-->
     <style name="Theme.Translucent" parent="MainAppTheme.Base">

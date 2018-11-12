@@ -264,4 +264,6 @@
     <string name="org_toast">当前进入:%s</string>
     <string name="progress_text">当前进度:%d%s</string>
     <string name="action_cancel">取消</string>
+    <string name="action_all">全选</string>
+    <string name="action_inverse">反选</string>
 </resources>
