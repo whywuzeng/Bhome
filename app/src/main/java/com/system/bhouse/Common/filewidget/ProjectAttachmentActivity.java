@@ -107,7 +107,7 @@ public class ProjectAttachmentActivity extends SmartRefreshBaseActivity implemen
         attachmentFileObject = new AttachmentFileObject();
         attachmentFileObject.setName("IMG_1714.PNG");
         attachmentFileObject.fileType = "PNG";
-        attachmentFileObject.preview = "https://dn-coding-net-production-file.codehub.cn/64bbff38-0a72-49d1-a973-6ebaab659a30.PNG?imageView2/1/w/90/h/90&e=1541731184&token=goE9CtaiT5YaIP6ZQ1nAafd_C1Z_H2gVP8AwuC-5:qdOB-yDEnonaXuflQIhKTSml3zU=";//链接
+        attachmentFileObject.preview = "https://dn-coding-net-production-file.codehub.cn/64bbff38-0a72-49d1-a973-6ebaab659a30.PNG?imageView2/1/w/90/h/90&e=1542074193&token=goE9CtaiT5YaIP6ZQ1nAafd_C1Z_H2gVP8AwuC-5:Q_2BRMpvVhFHkFEk8E92ZfMTE34=";//链接
         attachmentFileObject.created_at = 1541727370000L;
         attachmentFileObject.size = 61164;
         attachmentHeadFooter = new AttachmentHeadFooter(attachmentFileObject);

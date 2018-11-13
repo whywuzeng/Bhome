@@ -44,6 +44,7 @@
         <item name="android:windowActionModeOverlay">true</item>
         <item name="actionModeStyle">@style/CustomActionMode</item>
         <item name="android:windowActionBarOverlay">true</item>
+        <item name="windowActionModeOverlay">true</item>
     </style>
 
 <style name="AppTheme.Base" parent="AppTheme">
@@ -57,6 +58,7 @@
     <item name="android:windowActionModeOverlay">true</item>
     <item name="actionModeStyle">@style/CustomActionMode</item>
     <item name="android:windowActionBarOverlay">true</item>
+    <item name="windowActionModeOverlay">true</item>
     <!--<item name="android:textColorPrimary">@color/qmui_config_color_white </item>-->
     <!-- 配置app自己的theme -->
 </style>
