@@ -12,7 +12,7 @@ import com.system.bhouse.bhouse.R;
  * <p>
  * com.system.bhouse.bhouse.setup.WWCommon
  */
-public abstract class SmartRefreshBaseActivity extends WWBaseActivity implements OnRefreshListener,OnLoadMoreListener {
+public abstract class SmartRefreshBaseActivity extends WWBackActivity implements OnRefreshListener,OnLoadMoreListener {
 
     private SmartRefreshLayout mSmartRefreshLayout;
 

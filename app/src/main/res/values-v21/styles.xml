@@ -63,7 +63,24 @@
         <item name="colorAccent">@color/material_green_A200</item>
         <item name="android:actionBarSize">@dimen/actionBarSize</item>
         <item name="backgroundColor">@color/common_color_parentlayout_bg</item>
+        <item name="android:windowActionModeOverlay">true</item>
+        <item name="windowActionModeOverlay">true</item>
+        <item name="android:actionModeCloseDrawable">@drawable/task_add_cab_back</item>
+        <item name="actionModeCloseDrawable">@drawable/task_add_cab_back</item>
+        <item name="actionModeCloseButtonStyle">@style/NoCloseButton</item>
+        <item name="actionModeStyle">@style/CustomActionMode</item>
+        <item name="actionModeBackground">@color/greed_11B57C</item>
+    </style>
 
+    <style name="NoCloseButton" parent="@android:style/Widget.ActionButton.CloseMode">
+        <item name="android:visibility">gone</item>
+    </style>
+
+    <!--设置自己的ActionMode-->
+    <style name="CustomActionMode" parent="@style/Widget.AppCompat.ActionMode">
+        <item name="background">@color/greed_11B57C</item>
+        <item name="closeItemLayout">@layout/task_add_cab_back</item>
+        <item name="height">64dp</item>
     </style>
 
     <!--解决白屏显示问题-->
