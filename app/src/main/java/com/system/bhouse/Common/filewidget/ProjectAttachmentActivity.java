@@ -26,12 +26,12 @@ import com.system.bhouse.Common.Global;
 import com.system.bhouse.Common.filewidget.databean.AttachmentFileObject;
 import com.system.bhouse.Common.filewidget.databean.AttachmentHeadFooter;
 import com.system.bhouse.bhouse.CommonTask.TechnologyExecution.ModuleAssignMent.HeaderAndFooterSectionQuickAdapter;
+import com.system.bhouse.bhouse.CommonTask.TransportationManagement.adapter.BaseQuickAdapter;
 import com.system.bhouse.bhouse.CommonTask.TransportationManagement.adapter.BaseViewHolder;
 import com.system.bhouse.bhouse.R;
 import com.system.bhouse.bhouse.setup.WWCommon.SmartRefreshBaseActivity;
 import com.system.bhouse.bhouse.setup.utils.FileUtil;
 import com.system.bhouse.utils.TenUtils.GlideUtils;
-import com.system.bhouse.utils.blankutils.TimeConstants;
 import com.system.bhouse.utils.blankutils.TimeUtils;
 import com.system.bhouse.utils.blankutils.ToastUtils;
 
@@ -51,7 +51,7 @@ import butterknife.OnClick;
  * <p>
  * com.system.bhouse.Common.filewidget
  */
-public class ProjectAttachmentActivity extends SmartRefreshBaseActivity implements View.OnClickListener {
+public class ProjectAttachmentActivity extends SmartRefreshBaseActivity implements View.OnClickListener,BaseQuickAdapter.OnItemChildClickListener {
 
 
     @Bind(R.id.listView)
@@ -68,22 +68,27 @@ public class ProjectAttachmentActivity extends SmartRefreshBaseActivity implemen
     protected CompoundButton.OnCheckedChangeListener onCheckedChangeListener = new CompoundButton.OnCheckedChangeListener() {
         @Override
         public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-            final AttachmentHeadFooter item = objectList.get((Integer) buttonView.getTag());
-            item.t.isSelected = true;
+            final AttachmentFileObject item = ((AttachmentFileObject) buttonView.getTag());
+            item.isSelected = true;
         }
     };
     private ArrayList<AttachmentHeadFooter> objectList;
     private static final int FILE_SELECT_CODE = 0x231;
     private View listHead;
     private ActionMode mActionMode;
+    private ProjectAttachAdapter adapter;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setTheme(R.style.MainAppTheme_Base);
         setContentView(R.layout.folder_main_refresh_listview);
         ButterKnife.bind(this);
         initProjectAttachmentActivity();
+        setActionBarMidlleTitle("附件");
+        //初始化 toolbar
+        ToolbarDispayHomeAsUp();
     }
 
     private void initProjectAttachmentActivity() {
@@ -119,7 +124,7 @@ public class ProjectAttachmentActivity extends SmartRefreshBaseActivity implemen
         objectList.add(attachmentHeadFooter);
 
 //        1:加载头部隔离带
-        final ProjectAttachAdapter adapter = new ProjectAttachAdapter(R.layout.project_attachment_file_list_item, R.layout.divide_top_15, R.layout.divide_bottom_15, objectList);
+          adapter = new ProjectAttachAdapter(R.layout.project_attachment_file_list_item, R.layout.divide_top_15, R.layout.divide_bottom_15, objectList);
         final LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
         mRecyclerView.setLayoutManager(linearLayoutManager);
         mRecyclerView.setAdapter(adapter);
@@ -197,6 +202,7 @@ public class ProjectAttachmentActivity extends SmartRefreshBaseActivity implemen
             mActionMode=null;
             filesActionsLayout.setVisibility(View.GONE);
             folderActionsLayout.setVisibility(View.VISIBLE);
+            setListEditMode(false);
         }
     };
 
@@ -206,6 +212,35 @@ public class ProjectAttachmentActivity extends SmartRefreshBaseActivity implemen
         }
 
         mActionMode = startSupportActionMode(startActionMode);
+        setListEditMode(true);
+    }
+
+    private void setListEditMode(boolean isEdit) {
+        this.isEditMode =isEdit;
+        adapter.notifyDataSetChanged();
+    }
+
+    //recycleview item里view的点击事件
+    @Override
+    public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
+        switch (view.getId()) {
+            case R.id.more:
+                onMoreAction(view);
+                break;
+
+            default:
+                break;
+        }
+    }
+
+    private void onMoreAction(View view) {
+        final AttachmentFileObject tag = (AttachmentFileObject) view.getTag();
+        if (tag.isDownload)
+        {
+            //点击listitem
+        }else{
+            //下载
+        }
     }
 
     class ProjectAttachAdapter extends HeaderAndFooterSectionQuickAdapter<AttachmentHeadFooter, BaseViewHolder> {
@@ -256,7 +291,7 @@ public class ProjectAttachmentActivity extends SmartRefreshBaseActivity implemen
             }
 
             helper.setText(R.id.comment,Global.HumanReadableFilesize(item.getSize()));
-            helper.setText(R.id.desc,String.format("发布于%s",TimeUtils.getStringByNow(item.created_at,TimeConstants.HOUR)));
+            helper.setText(R.id.desc,String.format("发布于%s",TimeUtils.getFriendlyTimeSpanByNow(item.created_at)));
             helper.setText(R.id.username,"wuzeg");
 
             //分享
@@ -267,8 +302,7 @@ public class ProjectAttachmentActivity extends SmartRefreshBaseActivity implemen
             }
 
             final CheckBox checkBox = (CheckBox) helper.getView(R.id.checkbox);
-            final int adapterPosition = helper.getAdapterPosition();
-            checkBox.setTag(adapterPosition);
+            checkBox.setTag(item);
             if (isEditMode)
             {
                 if (!item.isFolder)
@@ -300,7 +334,7 @@ public class ProjectAttachmentActivity extends SmartRefreshBaseActivity implemen
                 helper.setVisible(R.id.progress_layout,false);
             }
 
-            helper.setTag(R.id.more,adapterPosition);
+            helper.setTag(R.id.more,item);
             helper.addOnClickListener(R.id.more);
             helper.setText(R.id.downloadFlag,item.isDownload? "查看":"下载");
 
