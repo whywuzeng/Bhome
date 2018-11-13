@@ -13,7 +13,8 @@ android {
     dexOptions {
         dexInProcess true
         preDexLibraries false
-        javaMaxHeapSize "2g"//越大越好
+        maxProcessCount 6
+        javaMaxHeapSize "4g"//越大越好
         jumboMode = true
         threadCount = 8
     }

@@ -239,8 +239,10 @@ public class ProjectAttachmentActivity extends SmartRefreshBaseActivity implemen
         if (tag.isDownload)
         {
             //点击listitem
+
         }else{
             //下载
+
         }
     }
 

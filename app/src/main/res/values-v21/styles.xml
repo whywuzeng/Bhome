@@ -43,7 +43,11 @@
         <item name="colorAccent">@color/material_green_A200</item>
         <item name="android:actionBarSize">@dimen/actionBarSize</item>
         <item name="backgroundColor">@color/common_color_parentlayout_bg</item>
-
+        <item name="actionModeBackground">@color/divide</item>
+        <item name="android:actionModeBackground">@color/divide</item>
+        <item name="android:actionModeCloseDrawable">@drawable/task_add_cab_back</item>
+        <item name="actionModeCloseDrawable">@drawable/task_add_cab_back</item>
+        <item name="actionModeStyle">@style/CustomActionMode</item>
         <!--<item name="android:windowTranslucentStatus">false</item>-->
         <!--<item name="android:windowTranslucentNavigation">true</item>-->
         <!--&lt;!&ndash;Android 5.x开始需要把颜色设置透明，否则导航栏会呈现系统默认的浅灰色&ndash;&gt;-->
@@ -63,14 +67,14 @@
         <item name="colorAccent">@color/material_green_A200</item>
         <item name="android:actionBarSize">@dimen/actionBarSize</item>
         <item name="backgroundColor">@color/common_color_parentlayout_bg</item>
-        <item name="android:windowActionModeOverlay">true</item>
+        <item name="android:windowActionModeOverlay">false</item>
         <item name="windowActionModeOverlay">true</item>
-        <item name="android:actionModeCloseDrawable">@drawable/task_add_cab_back</item>
-        <item name="actionModeCloseDrawable">@drawable/task_add_cab_back</item>
-        <item name="actionModeCloseButtonStyle">@style/NoCloseButton</item>
-        <item name="actionModeStyle">@style/CustomActionMode</item>
-        <item name="actionModeBackground">@color/greed_11B57C</item>
     </style>
+
+
+    <!--<item name="actionModeCloseButtonStyle">@style/NoCloseButton</item>-->
+    <!--<item name="actionModeBackground">@color/greed_11B57C</item>-->
+    <!--<item name="android:actionModeBackground">@color/greed_11B57C</item>-->
 
     <style name="NoCloseButton" parent="@android:style/Widget.ActionButton.CloseMode">
         <item name="android:visibility">gone</item>
@@ -78,9 +82,9 @@
 
     <!--设置自己的ActionMode-->
     <style name="CustomActionMode" parent="@style/Widget.AppCompat.ActionMode">
-        <item name="background">@color/greed_11B57C</item>
+        <item name="background">@color/divide</item>
         <item name="closeItemLayout">@layout/task_add_cab_back</item>
-        <item name="height">64dp</item>
+        <item name="height">@dimen/actionBarSize</item>
     </style>
 
     <!--解决白屏显示问题-->

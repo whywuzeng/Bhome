@@ -46,6 +46,8 @@
         <item name="android:windowActionModeOverlay">true</item>
         <item name="actionModeStyle">@style/CustomActionMode</item>
         <item name="windowActionModeOverlay">true</item>
+        <item name="actionModeBackground">@color/greed_11B57C</item>
+        <item name="android:actionModeBackground">@color/greed_11B57C</item>
     </style>
 
     <!--<item name="android:windowActionBarOverlay">true</item>-->
