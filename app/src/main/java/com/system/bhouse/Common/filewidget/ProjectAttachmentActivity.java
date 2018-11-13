@@ -14,6 +14,7 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+ import android.view.ViewGroup;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.FrameLayout;
@@ -31,7 +32,6 @@ import com.system.bhouse.bhouse.R;
 import com.system.bhouse.bhouse.setup.WWCommon.SmartRefreshBaseActivity;
 import com.system.bhouse.bhouse.setup.utils.FileUtil;
 import com.system.bhouse.utils.TenUtils.GlideUtils;
-import com.system.bhouse.utils.blankutils.TimeConstants;
 import com.system.bhouse.utils.blankutils.TimeUtils;
 import com.system.bhouse.utils.blankutils.ToastUtils;
 
@@ -73,8 +73,8 @@ public class ProjectAttachmentActivity extends SmartRefreshBaseActivity implemen
         }
     };
     private ArrayList<AttachmentHeadFooter> objectList;
-    private static final int FILE_SELECT_CODE = 0x231;
-    private View listHead;
+    private static final int FILE_SELECT_CODE =0x231;
+    private ViewGroup listHead;
     private ActionMode mActionMode;
 
 
@@ -123,7 +123,7 @@ public class ProjectAttachmentActivity extends SmartRefreshBaseActivity implemen
         final LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
         mRecyclerView.setLayoutManager(linearLayoutManager);
         mRecyclerView.setAdapter(adapter);
-        listHead = getLayoutInflater().inflate(R.layout.upload_file_layout, mRecyclerView, false);
+        listHead = (ViewGroup) getLayoutInflater().inflate(R.layout.upload_file_layout, mRecyclerView, false);
         adapter.addHeaderView(listHead);
 
     }
@@ -256,7 +256,7 @@ public class ProjectAttachmentActivity extends SmartRefreshBaseActivity implemen
             }
 
             helper.setText(R.id.comment,Global.HumanReadableFilesize(item.getSize()));
-            helper.setText(R.id.desc,String.format("发布于%s",TimeUtils.getStringByNow(item.created_at,TimeConstants.HOUR)));
+            helper.setText(R.id.desc,String.format("发布于%s",TimeUtils.getFriendlyTimeSpanByNow(item.created_at)));
             helper.setText(R.id.username,"wuzeg");
 
             //分享
@@ -354,6 +354,9 @@ public class ProjectAttachmentActivity extends SmartRefreshBaseActivity implemen
     }
 
     private void uploadFile(File selecteFile) {
-        
+        FileListHeadItem fileImte = new FileListHeadItem(this);
+        listHead.addView(fileImte);
+        FileListHeadItem.Param param = new FileListHeadItem.Param(selecteFile.getAbsolutePath(), selecteFile.getAbsolutePath(), selecteFile);
+        fileImte.setData(param);
     }
 }
