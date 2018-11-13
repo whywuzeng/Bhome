@@ -60,7 +60,7 @@ public class DownloadInfo {
         @Override
         public String toString() {
             final StringBuffer sb = new StringBuffer("DownloadInfo{");
-            sb.append("fileName='").append(fileName).append('\'');
+            sb.append("file='").append(fileName).append('\'');
             sb.append(", mUrl='").append(mUrl).append('\'');
             sb.append(", mWorkId=").append(mWorkId);
             sb.append(", mMediaType='").append(mMediaType).append('\'');

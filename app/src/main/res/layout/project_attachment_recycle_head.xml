@@ -21,6 +21,7 @@
             android:layout_height="36dp"/>
 
         <TextView
+            android:id="@+id/tv_floder_name"
             tools:text="Midder text"
             android:singleLine="true"
             android:textSize="17sp"

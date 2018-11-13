@@ -32,6 +32,22 @@ public final class TimeUtils {
     }
 
     /**
+     * 获得 时间戳与当前时间戳的距离
+     * @return
+     */
+    public static String getDataByNowMillis(long beforeMill){
+        long spantime = getNowMills() - beforeMill;
+        //这个time 到现在多少分钟
+        long byNow = getTimeSpanByNow(beforeMill, TimeConstants.MIN);
+        if (byNow>60)
+        {
+            getTimeSpanByNow(beforeMill, TimeConstants.MSEC);
+        }
+        Date dateByNow = getDateByNow(getTimeSpanByNow(beforeMill, TimeConstants.MSEC), TimeConstants.MIN);
+        return date2String(dateByNow);
+    }
+
+    /**
      * Milliseconds to the formatted time string.
      * <p>The pattern is {@code yyyy-MM-dd HH:mm:ss}.</p>
      *

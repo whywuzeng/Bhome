@@ -1,7 +1,6 @@
 package com.system.bhouse.Common.filewidget;
 
 import android.app.Activity;
-import android.content.ActivityNotFoundException;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
@@ -162,7 +161,7 @@ public class ProjectAttachmentActivity extends SmartRefreshBaseActivity implemen
         //找到所有匹配的 ，activity，然后形成一个列表来显示.
         try {
             startActivityForResult(Intent.createChooser(intent, "请选择一个上传的文件"), FILE_SELECT_CODE);
-        } catch (ActivityNotFoundException ex) {
+        }catch (android.content.ActivityNotFoundException ex) {
             ToastUtils.showShort("请安装文件管理器");
         }
     }
@@ -228,91 +227,90 @@ public class ProjectAttachmentActivity extends SmartRefreshBaseActivity implemen
         @Override
         protected void convert(BaseViewHolder helper, AttachmentHeadFooter itemParent) {
             final AttachmentFileObject item = itemParent.t;
-            helper.setText(R.id.name, item.getName());
+            helper.setText(R.id.name,item.getName());
             final ImageView view = (ImageView) helper.getView(R.id.icon);
-            if (item.isFolder) {
-                helper.setImageResource(R.id.icon, R.drawable.ic_project_git_folder2);
-                helper.setVisible(R.id.icon, true);
-                helper.setBackgroundColor(R.id.icon, Color.TRANSPARENT);
-                helper.setVisible(R.id.icon_txt, false);
-                helper.setVisible(R.id.file_info_layout, false);
-                helper.setText(R.id.folder_name, item.getName());
-                helper.setVisible(R.id.folder_name, true);
-            }
-            else if (item.isImage()) {
-                GlideUtils.loadDefaultNoAnim(item.preview, view, false, DecodeFormat.PREFER_ARGB_8888, DiskCacheStrategy.ALL);
-                helper.setVisible(R.id.icon, true);
-                helper.setBackgroundRes(R.id.icon, R.drawable.shape_image_icon_bg);
-                helper.setVisible(R.id.icon_txt, false);
-                helper.setVisible(R.id.file_info_layout, true);
-                helper.setVisible(R.id.folder_name, false);
-            }
-            else {
-                GlideUtils.loadDefaultNoAnim(item.getIconResourceId(), view, false, DecodeFormat.PREFER_ARGB_8888, DiskCacheStrategy.ALL);
-                helper.setVisible(R.id.icon, true);
-                helper.setBackgroundRes(R.id.icon, android.R.color.transparent);
-                helper.setVisible(R.id.icon_txt, false);
-                helper.setVisible(R.id.file_info_layout, true);
-                helper.setVisible(R.id.folder_name, false);
+            if (item.isFolder)
+            {
+                helper.setImageResource(R.id.icon,R.drawable.ic_project_git_folder2);
+                helper.setVisible(R.id.icon,true);
+                helper.setBackgroundColor(R.id.icon,Color.TRANSPARENT);
+                helper.setVisible(R.id.icon_txt,false);
+                helper.setVisible(R.id.file_info_layout,false);
+                helper.setText(R.id.folder_name,item.getName());
+                helper.setVisible(R.id.folder_name,true);
+            }else if (item.isImage())
+            {
+                GlideUtils.loadDefaultNoAnim(item.preview,view,false,DecodeFormat.PREFER_ARGB_8888,DiskCacheStrategy.ALL);
+                helper.setVisible(R.id.icon,true);
+                helper.setBackgroundRes(R.id.icon,R.drawable.shape_image_icon_bg);
+                helper.setVisible(R.id.icon_txt,false);
+                helper.setVisible(R.id.file_info_layout,true);
+                helper.setVisible(R.id.folder_name,false);
+            }else {
+                GlideUtils.loadDefaultNoAnim("drawable://" + item.getIconResourceId(),view,false,DecodeFormat.PREFER_ARGB_8888,DiskCacheStrategy.ALL);
+                helper.setVisible(R.id.icon,true);
+                helper.setBackgroundRes(R.id.icon,android.R.color.transparent);
+                helper.setVisible(R.id.icon_txt,false);
+                helper.setVisible(R.id.file_info_layout,true);
+                helper.setVisible(R.id.folder_name,false);
             }
 
-            helper.setText(R.id.comment, Global.HumanReadableFilesize(item.getSize()));
-            helper.setText(R.id.desc, String.format("发布于%s", TimeUtils.getStringByNow(item.created_at, TimeConstants.HOUR)));
-            helper.setText(R.id.username, "wuzeg");
+            helper.setText(R.id.comment,Global.HumanReadableFilesize(item.getSize()));
+            helper.setText(R.id.desc,String.format("发布于%s",TimeUtils.getStringByNow(item.created_at,TimeConstants.HOUR)));
+            helper.setText(R.id.username,"wuzeg");
 
             //分享
             if (item.isShared()) {
-                helper.setVisible(R.id.shareMark, true);
-            }
-            else {
-                helper.setVisible(R.id.shareMark, false);
+                helper.setVisible(R.id.shareMark,true);
+            } else {
+                helper.setVisible(R.id.shareMark,false);
             }
 
             final CheckBox checkBox = (CheckBox) helper.getView(R.id.checkbox);
             final int adapterPosition = helper.getAdapterPosition();
             checkBox.setTag(adapterPosition);
-            if (isEditMode) {
-                if (!item.isFolder) {
+            if (isEditMode)
+            {
+                if (!item.isFolder)
+                {
                     checkBox.setVisibility(View.VISIBLE);
-                }
-                else {
+                }else {
                     checkBox.setVisibility(View.INVISIBLE);
                 }
-                if (item.isSelected) {
+                if (item.isSelected)
+                {
                     checkBox.setChecked(true);
-                }
-                else {
+                }else {
                     checkBox.setChecked(false);
                 }
 
-            }
-            else {
+            }else {
                 checkBox.setVisibility(View.GONE);
             }
 
             checkBox.setOnCheckedChangeListener(onCheckedChangeListener);
 
-            if (item.downloadId != 0L) {
+            if (item.downloadId!=0L)
+            {
 
-            }
-            else {
-                helper.setVisible(R.id.desc_layout, true);
-                helper.setVisible(R.id.comment, true);
-                helper.setVisible(R.id.more, true);
-                helper.setVisible(R.id.progress_layout, false);
+            }else {
+                helper.setVisible(R.id.desc_layout,true);
+                helper.setVisible(R.id.comment,true);
+                helper.setVisible(R.id.more,true);
+                helper.setVisible(R.id.progress_layout,false);
             }
 
-            helper.setTag(R.id.more, adapterPosition);
+            helper.setTag(R.id.more,adapterPosition);
             helper.addOnClickListener(R.id.more);
-            helper.setText(R.id.downloadFlag, item.isDownload ? "查看" : "下载");
+            helper.setText(R.id.downloadFlag,item.isDownload? "查看":"下载");
 
-            helper.setBackgroundRes(R.id.item_layout_root, item.isDownload ? R.drawable.list_item_selector_project_file : R.drawable.list_item_selector);
+            helper.setBackgroundRes(R.id.item_layout_root,item.isDownload?R.drawable.list_item_selector_project_file:R.drawable.list_item_selector);
 
-            if (item.isFolder) {
-                helper.setVisible(R.id.more, false);
-            }
-            else {
-                helper.setVisible(R.id.more, true);
+            if (item.isFolder)
+            {
+                helper.setVisible(R.id.more,false);
+            }else {
+                helper.setVisible(R.id.more,true);
             }
 
         }
@@ -321,14 +319,16 @@ public class ProjectAttachmentActivity extends SmartRefreshBaseActivity implemen
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (resultCode == Activity.RESULT_OK) {
-            switch (requestCode) {
+        if (resultCode== Activity.RESULT_OK)
+        {
+            switch (requestCode)
+            {
                 case FILE_SELECT_CODE:
                     fileSelect(data);
                     break;
 
-                default:
-                    break;
+                    default:
+                        break;
             }
         }
     }
@@ -338,11 +338,11 @@ public class ProjectAttachmentActivity extends SmartRefreshBaseActivity implemen
         final Uri filedata = data.getData();
         final String path = FileUtil.getPath(this, filedata);
         final File selecteFile = new File(path);
-        if (selecteFile != null && !selecteFile.exists()) {
+        if (selecteFile!=null&&!selecteFile.exists())
+        {
             //新文件
             uploadFile(selecteFile);
-        }
-        else {
+        }else {
             //重复文件
             showDialog(selecteFile.getName(), "是否覆盖同名文件", new DialogInterface.OnClickListener() {
                 @Override
@@ -354,6 +354,6 @@ public class ProjectAttachmentActivity extends SmartRefreshBaseActivity implemen
     }
 
     private void uploadFile(File selecteFile) {
-
+        
     }
 }
