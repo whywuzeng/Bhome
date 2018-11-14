@@ -117,6 +117,13 @@ public class Api {
      */
     public static final String SINA_PHOTO_HOST = "http://api.sina.cn/sinago/";
 
+
+    /**
+     * coding图片
+     */
+
+    public static final String COODING_PHOTO_HOST="https://dn-coding-net-production-file.codehub.cn/";
+
     // 精选列表
     public static final String SINA_PHOTO_CHOICE_ID = "hdpic_toutiao";
     // 趣图列表
@@ -160,6 +167,8 @@ public class Api {
                 return Api.SINA_PHOTO_HOST;
             case HostType.WEATHER_INFO:
                 return Api.WEATHER_HOST;
+                case HostType.COODING_INFO:
+                    return Api.COODING_PHOTO_HOST;
         }
         return "";
     }

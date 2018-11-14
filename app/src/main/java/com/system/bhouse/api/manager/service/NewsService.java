@@ -9,6 +9,7 @@ import java.util.List;
 import java.util.Map;
 
 import retrofit2.http.GET;
+import retrofit2.http.Headers;
 import retrofit2.http.Path;
 import retrofit2.http.Query;
 import rx.Observable;
@@ -101,4 +102,21 @@ public interface NewsService {
     Observable<WeatherInfo> getWeatherInfo(
             @Query("city") String city);
 
+
+
+//      请求下载https coding图片
+//
+//     0 = {HashMap$Node@15890} "Accept" -> "*/*"
+//            *       1 = {HashMap$Node@15891} "Referer" -> "https://coding.net"
+//            *      2 = {HashMap$Node@15892} "User-Agent" -> "coding_android/4.1 (26)"
+//     */
+
+    @Headers({
+            "Accept: */*",
+            "Referer:https://coding.net",
+            "User-Agent:coding_android/4.1 (26)",
+            "Cookie:sid.coding.net=[version: 0][name: sid][value: 83a16884-01ac-4dc6-a4b7-985bb3acc700][domain: .coding.net][path: /][expiry: Wed Nov 13 21:29:23 GMT+08:00 2019]"
+    })
+    @GET("64bbff38-0a72-49d1-a973-6ebaab659a30.PNG?attname=IMG_1714.PNG&e=1542167298&token=goE9CtaiT5YaIP6ZQ1nAafd_C1Z_H2gVP8AwuC-5:XovB8A1pVOrN18xBe_BIq0Qsybw=")
+    Observable<Object> getPicResrouce();
 }

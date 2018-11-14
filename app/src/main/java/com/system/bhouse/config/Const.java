@@ -43,4 +43,6 @@ public class Const {
      * 分支标识
      */
     public static final String DevMessage ="dev分支";
+
+    public static final String DOWN_LOAD_PATH ="download_path";
 }

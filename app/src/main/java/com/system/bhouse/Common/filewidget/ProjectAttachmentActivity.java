@@ -1,6 +1,7 @@
 package com.system.bhouse.Common.filewidget;
 
 import android.app.Activity;
+import android.app.DownloadManager;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
@@ -14,7 +15,7 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
- import android.view.ViewGroup;
+import android.view.ViewGroup;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.FrameLayout;
@@ -30,8 +31,8 @@ import com.system.bhouse.bhouse.CommonTask.TechnologyExecution.ModuleAssignMent.
 import com.system.bhouse.bhouse.CommonTask.TransportationManagement.adapter.BaseQuickAdapter;
 import com.system.bhouse.bhouse.CommonTask.TransportationManagement.adapter.BaseViewHolder;
 import com.system.bhouse.bhouse.R;
-import com.system.bhouse.bhouse.setup.WWCommon.SmartRefreshBaseActivity;
 import com.system.bhouse.bhouse.setup.utils.FileUtil;
+import com.system.bhouse.utils.FileUtils;
 import com.system.bhouse.utils.TenUtils.GlideUtils;
 import com.system.bhouse.utils.blankutils.TimeUtils;
 import com.system.bhouse.utils.blankutils.ToastUtils;
@@ -52,7 +53,7 @@ import butterknife.OnClick;
  * <p>
  * com.system.bhouse.Common.filewidget
  */
-public class ProjectAttachmentActivity extends SmartRefreshBaseActivity implements View.OnClickListener,BaseQuickAdapter.OnItemChildClickListener {
+public class ProjectAttachmentActivity extends BaseFileDownActivity implements View.OnClickListener,BaseQuickAdapter.OnItemChildClickListener, BaseQuickAdapter.OnItemClickListener {
 
 
     @Bind(R.id.listView)
@@ -90,6 +91,39 @@ public class ProjectAttachmentActivity extends SmartRefreshBaseActivity implemen
         setActionBarMidlleTitle("附件");
         //初始化 toolbar
         ToolbarDispayHomeAsUp();
+    }
+
+    @Override
+    protected void checkFileDownloadStatus() {
+        for (AttachmentHeadFooter object:objectList)
+        {
+            final AttachmentFileObject item = object.t;
+            if (null!=item&&!item.isFolder)
+            {
+                setDownLoadStatus(item);
+            }
+        }
+        adapter.notifyDataSetChanged();
+    }
+
+    private void setDownLoadStatus(AttachmentFileObject item) {
+        //这里要根据 下载文件名来获取 downloadID的 才能是一个  一个操作
+        final long downloadID = getDownloadID();
+        if (downloadID!=0L)
+        {
+            item.downloadId =downloadID;
+            updateFileDownloadStatus(item);
+            item.isDownload=false;
+        }else {
+            final File dir = new File(FileUtils.getDestinationInExternalPublicDir(FileUtils.DefaultDirsFileName).getAbsolutePath()+"2018win7OA兼容模式调整.flv");
+            if (dir.isFile()&&dir.exists())
+            {
+                item.isDownload =true;
+            }else {
+                item.downloadId = 0L;
+                item.isDownload =false;
+            }
+        }
     }
 
     private void initProjectAttachmentActivity() {
@@ -131,7 +165,8 @@ public class ProjectAttachmentActivity extends SmartRefreshBaseActivity implemen
         mRecyclerView.setAdapter(adapter);
         listHead = (ViewGroup) getLayoutInflater().inflate(R.layout.upload_file_layout, mRecyclerView, false);
         adapter.addHeaderView(listHead);
-
+        adapter.setOnItemChildClickListener(this);
+        adapter.setOnItemClickListener(this);
     }
 
     //smartlayout 加载更多
@@ -238,11 +273,63 @@ public class ProjectAttachmentActivity extends SmartRefreshBaseActivity implemen
         final AttachmentFileObject tag = (AttachmentFileObject) view.getTag();
         if (tag.isDownload)
         {
-            //点击listitem
-
+            //点击listitem 这里跟Item点击是一样的
+            onItemListListener(tag);
         }else{
+            // TODO: 2018-11-14 这里是 可以 继续研究 https cookie 传给cooding的服务器为什么不对 ，出现401请求错误
             //下载
+//           RetrofitManager.getInstance(HostType.COODING_INFO).getPicResrouce().subscribe(new Observer<Object>() {
+//               @Override
+//               public void onCompleted() {
+//
+//               }
+//
+//               @Override
+//               public void onError(Throwable e) {
+//
+//               }
+//
+//               @Override
+//               public void onNext(Object o) {
+//
+//               }
+//           });
+            actionDownloadSingle(tag);
 
+        }
+    }
+
+    private void onItemListListener(AttachmentFileObject item){
+        if (isEditMode)
+        {
+            if (!item.isFolder) {
+                item.isSelected = !item.isSelected;
+                adapter.notifyDataSetChanged();
+            }
+        }else {
+
+            if (item.isFolder)
+            {
+                //点的事Folder
+
+            }else {
+                if (item.isDownload)
+                {
+                    ToastUtils.showShort("点击是去:"+item.fileType);
+                }
+            }
+        }
+
+    }
+
+    @Override
+    public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
+        //item 点击事件
+        final AttachmentHeadFooter attachmentHeadFooter = objectList.get(position);
+        final AttachmentFileObject item = attachmentHeadFooter.t;
+        if (item!=null)
+        {
+            onItemListListener(item);
         }
     }
 
@@ -285,7 +372,7 @@ public class ProjectAttachmentActivity extends SmartRefreshBaseActivity implemen
                 helper.setVisible(R.id.file_info_layout,true);
                 helper.setVisible(R.id.folder_name,false);
             }else {
-                GlideUtils.loadDefaultNoAnim("drawable://" + item.getIconResourceId(),view,false,DecodeFormat.PREFER_ARGB_8888,DiskCacheStrategy.ALL);
+                GlideUtils.loadDefaultNoAnim(item.getIconResourceId(),view,false,DecodeFormat.PREFER_ARGB_8888,DiskCacheStrategy.ALL);
                 helper.setVisible(R.id.icon,true);
                 helper.setBackgroundRes(R.id.icon,android.R.color.transparent);
                 helper.setVisible(R.id.icon_txt,false);
@@ -329,7 +416,37 @@ public class ProjectAttachmentActivity extends SmartRefreshBaseActivity implemen
 
             if (item.downloadId!=0L)
             {
-
+                helper.setTag(R.id.cancel,item);
+                final int status = item.bytesAndStatus[2];
+                if (isDownloading(status))
+                {
+                    if (item.bytesAndStatus[1]<0)
+                    {
+                        helper.setProgress(R.id.progressBar,0);
+                    }else {
+                        helper.setProgress(R.id.progressBar,item.bytesAndStatus[0]*100/item.bytesAndStatus[1]);
+                    }
+                    item.isDownload =false;
+                    helper.setVisible(R.id.desc_layout,false);
+                    helper.setVisible(R.id.comment,false);
+                    helper.setVisible(R.id.more,false);
+                    helper.setVisible(R.id.progress_layout,true);
+                }else {
+                    if (status == DownloadManager.STATUS_FAILED)
+                    {
+                        item.isDownload =false;
+                    }else if (status == DownloadManager.STATUS_SUCCESSFUL){
+                        item.isDownload =true;
+                        //可以删掉 shareprefse 里面的文件。读取IO太大。就慢了
+                    }else {
+                        item.isDownload =false;
+                    }
+                    item.isDownload =false;
+                    helper.setVisible(R.id.desc_layout,true);
+                    helper.setVisible(R.id.comment,true);
+                    helper.setVisible(R.id.more,true);
+                    helper.setVisible(R.id.progress_layout,false);
+                }
             }else {
                 helper.setVisible(R.id.desc_layout,true);
                 helper.setVisible(R.id.comment,true);

@@ -26,8 +26,40 @@ import okhttp3.ResponseBody;
  */
 public class FileUtils {
 
-    private static final String DefaultDirsFileName = "bhouseDownoad";
+    /**
+     * 存储文件的路径
+     */
+    public static final String DefaultDirsFileName = "bhouseDownoad";
 
+    /**
+     * 是否第一次来设置下载 。告诉他下载路径
+     */
+
+    public final static String DOWNLOAD_SETTING = "download_setting";
+
+    /**
+     * 生成文件夹路径
+     * @param dirType
+     * @return
+     */
+    public static File getDestinationInExternalPublicDir(String dirType)
+    {
+        //获取的手机存储路径是/storage/emulated/0
+        final File file = Environment.getExternalStoragePublicDirectory(dirType);
+        if (file.exists())
+        {
+            if (!file.isDirectory())
+            {
+                throw new IllegalStateException(file.getAbsolutePath()+"already exist and not is a directory");
+            }
+        }else {
+            if (!file.mkdir())
+            {
+                throw new IllegalStateException("unable create Directory"+file.getAbsolutePath());
+            }
+        }
+        return file;
+    }
 
     @NonNull
     public static File getDirsFile() {

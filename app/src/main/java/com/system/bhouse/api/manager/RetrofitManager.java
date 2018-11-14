@@ -241,4 +241,8 @@ public class RetrofitManager {
         return mNewsService.getWeatherInfo(city).compose(new BaseSchedulerTransformer<WeatherInfo>());
     }
 
+    public Observable<Object> getPicResrouce(){
+        return mNewsService.getPicResrouce().compose(new BaseSchedulerTransformer<Object>());
+    }
+
 }
