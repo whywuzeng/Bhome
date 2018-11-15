@@ -18,7 +18,9 @@ public abstract class SmartRefreshBaseActivity extends WWBackActivity implements
 
     protected void initRefreshView(){
         mSmartRefreshLayout = (SmartRefreshLayout)findViewById(R.id.swipeRefreshLayout);
-        mSmartRefreshLayout.setOnRefreshListener(this);
+        if (mSmartRefreshLayout!=null) {
+            mSmartRefreshLayout.setOnRefreshListener(this);
+        }
     }
 
     protected final void stopRefresh() {

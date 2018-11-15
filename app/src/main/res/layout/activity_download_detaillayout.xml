@@ -1,0 +1,178 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:orientation="vertical"
+                xmlns:tools="http://schemas.android.com/tools"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+    <include
+        android:layout_alignParentTop="true"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        layout="@layout/toolbar"/>
+
+    <LinearLayout
+        android:id="@+id/main_layout"
+        android:orientation="vertical"
+        android:layout_centerInParent="true"
+        android:layout_width="match_parent"
+        android:gravity="center_horizontal"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:id="@+id/icon"
+            tools:src="@mipmap/mais"
+            android:layout_width="80dp"
+            android:layout_height="80dp"/>
+
+        <TextView
+            android:id="@+id/iconTxt"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:background="@color/font_black"
+            android:gravity="center"
+            android:text="apk"
+            android:textColor="@color/white"
+            android:textSize="30dp"
+            android:textStyle="bold"
+            android:visibility="gone"/>
+
+         <TextView
+             android:id="@+id/name"
+             tools:text="Medium Text"
+             android:textSize="@dimen/mediumSize"
+             android:textColor="@color/font_2"
+             android:gravity="center_horizontal"
+             android:layout_marginLeft="10dp"
+             android:layout_marginRight="10dp"
+             android:layout_marginBottom="5dp"
+             android:layout_marginTop="10dp"
+             android:singleLine="true"
+             android:layout_width="match_parent"
+             android:layout_height="wrap_content"/>
+
+        <TextView
+            android:id="@+id/content"
+            tools:text="Medium Text"
+            android:textSize="@dimen/smallSize"
+            android:layout_marginBottom="10dp"
+            android:gravity="center"
+            android:textColor="@color/font_9"
+            android:singleLine="true"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+
+        <RelativeLayout
+            android:id="@+id/rl_downlaod"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="40dp"
+            android:layout_marginRight="40dp"
+            >
+
+            <TextView
+                android:id="@+id/tv_download"
+                tools:text="下载中...(0.0KB/135KB)"
+                android:textSize="@dimen/smallSize"
+                android:layout_marginBottom="0dp"
+                android:gravity="center"
+                android:textColor="@color/font_9"
+                android:singleLine="true"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+
+            <LinearLayout
+                android:layout_below="@+id/tv_download"
+                android:layout_width="match_parent"
+                android:gravity="center"
+                android:layout_height="wrap_content">
+
+                <ProgressBar
+                    android:id="@+id/progressbar"
+                    style="@style/Base.Widget.AppCompat.ProgressBar.Horizontal"
+                    android:layout_gravity="center_vertical"
+                    android:layout_weight="1"
+                    android:progressDrawable="@drawable/progressbg"
+                    android:layout_width="match_parent"
+                    android:layout_height="4dp"/>
+
+                <ImageView
+                    android:id="@+id/iv_download_canceld"
+                    android:layout_marginLeft="5dp"
+                    android:src="@drawable/ic_progress_close"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+            </LinearLayout>
+
+        </RelativeLayout>
+
+        <TextView
+            android:id="@+id/btn_download"
+            android:background="@drawable/edit_send_blue300"
+            android:gravity="center"
+            android:padding="12dp"
+            android:text="下载原文件"
+            android:textColor="@color/white"
+            android:textSize="18sp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+        <TextView
+            android:id="@+id/btn_open"
+            android:background="@drawable/edit_send"
+            android:gravity="center"
+            android:padding="12dp"
+            android:text="用其他应用打开"
+            android:textColor="@color/material_blue_300"
+            android:textSize="18sp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:background="@color/file_downloaded"
+        android:visibility="gone">
+
+        <TextView
+            android:id="@+id/btnLeft"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:drawableTop="@drawable/ic_attachment_btn_delete"
+            android:gravity="center"
+            android:padding="5dp"
+            android:text="删除"
+            android:textColor="@color/attachment_btn_color"/>
+
+        <TextView
+            android:id="@+id/btnRight"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:drawableTop="@drawable/ic_attachment_btn_delete"
+            android:gravity="center"
+            android:padding="5dp"
+            android:text="保存"
+            android:textColor="@color/attachment_btn_color"/>
+    </LinearLayout>
+
+    <include
+        android:id="@+id/blankLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        layout="@layout/view_exception"/>
+
+    <include
+        android:id="@+id/layout_dynamic_history"
+        layout="@layout/layout_dynamic_history"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:layout_alignParentBottom="true"
+        android:visibility="visible"/>
+</RelativeLayout>

@@ -275,7 +275,6 @@ public class WWBaseActivity extends RxAppCompatActivity implements StartActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mSingleToast = new SingleToast(this);
-
 //        networkImpl = new NetworkImpl(this, this);
 
         mProgressDialog = new ProgressDialog(this);

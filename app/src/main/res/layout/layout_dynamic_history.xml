@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                                             xmlns:app="http://schemas.android.com/apk/res-auto"
+                                             xmlns:tools="http://schemas.android.com/tools"
+                                             android:id="@+id/layout_dynamic_history"
+                                             android:layout_width="match_parent"
+                                             android:layout_height="@dimen/bottom_layout_high"
+                                             android:background="@color/stand_bg"
+                                             tools:showIn="">
+
+    <include
+        layout="@layout/divideline_e2"
+        android:layout_height="wrap_content"
+        android:layout_width="0dp"
+        android:id="@+id/include2"
+        app:layout_constraintTop_toTopOf="parent"/>
+
+    <android.support.constraint.ConstraintLayout
+        android:layout_width="0dp"
+        android:background="@color/divide"
+        android:layout_height="0dp"
+        android:gravity="center_vertical"
+        android:paddingLeft="@dimen/padding_15"
+        android:paddingRight="@dimen/padding_15"
+        android:id="@+id/linearLayout2"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent">
+
+
+        <TextView
+            android:layout_width="85dp"
+            android:layout_height="match_parent"
+            android:drawableLeft="@drawable/project_file_button_dynamic"
+            android:drawablePadding="5dp"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toLeftOf="@+id/view2"
+            android:gravity="center"
+            android:text="文件动态"
+            android:id="@+id/textView2"/>
+
+
+        <View
+            android:layout_width="1dp"
+            android:layout_height="match_parent"
+            android:background="@color/divide_line"
+            android:id="@+id/view2"
+            app:layout_constraintLeft_toRightOf="@+id/textView2"
+            app:layout_constraintRight_toRightOf="@+id/textView3"/>
+
+
+        <TextView
+            android:layout_width="85dp"
+            android:layout_height="match_parent"
+            android:drawableLeft="@drawable/project_file_button_history"
+            android:drawablePadding="5dp"
+            android:gravity="center"
+            android:text="历史版本"
+            android:id="@+id/textView3"
+            app:layout_constraintLeft_toRightOf="@+id/view2"
+            app:layout_constraintRight_toRightOf="parent"
+            />
+
+
+    </android.support.constraint.ConstraintLayout>
+</android.support.constraint.ConstraintLayout>

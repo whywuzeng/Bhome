@@ -752,7 +752,9 @@ public class LoadingCarOrderContentMessageActivity extends BaseContentMessageAct
      * 请求数据
      */
     private void testData() {
-        comTaskBeans.clear();
+        if (comTaskBeans!=null) {
+            comTaskBeans.clear();
+        }
         ApiWebService.Get_Sale_OrderView_Json(this, new ApiWebService.SuccessCall() {
             @Override
             public void SuccessBack(String result) {

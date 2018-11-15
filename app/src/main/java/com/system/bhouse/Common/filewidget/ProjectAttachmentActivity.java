@@ -11,6 +11,7 @@ import android.support.annotation.NonNull;
 import android.support.v7.view.ActionMode;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -27,6 +28,7 @@ import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.system.bhouse.Common.Global;
 import com.system.bhouse.Common.filewidget.databean.AttachmentFileObject;
 import com.system.bhouse.Common.filewidget.databean.AttachmentHeadFooter;
+import com.system.bhouse.Common.filewidget.resoures.AttachmentsDownloadDetailActivity;
 import com.system.bhouse.bhouse.CommonTask.TechnologyExecution.ModuleAssignMent.HeaderAndFooterSectionQuickAdapter;
 import com.system.bhouse.bhouse.CommonTask.TransportationManagement.adapter.BaseQuickAdapter;
 import com.system.bhouse.bhouse.CommonTask.TransportationManagement.adapter.BaseViewHolder;
@@ -55,6 +57,7 @@ import butterknife.OnClick;
  */
 public class ProjectAttachmentActivity extends BaseFileDownActivity implements View.OnClickListener,BaseQuickAdapter.OnItemChildClickListener, BaseQuickAdapter.OnItemClickListener {
 
+    private static final String TAG = "Project";
 
     @Bind(R.id.listView)
     RecyclerView mRecyclerView;
@@ -115,7 +118,7 @@ public class ProjectAttachmentActivity extends BaseFileDownActivity implements V
             updateFileDownloadStatus(item);
             item.isDownload=false;
         }else {
-            final File dir = new File(FileUtils.getDestinationInExternalPublicDir(FileUtils.DefaultDirsFileName).getAbsolutePath()+"2018win7OA兼容模式调整.flv");
+            final File dir = new File(FileUtils.getDestinationInExternalPublicDir(FileUtils.DefaultDirsFileName).getAbsolutePath()+File.separator+"2018win7OA兼容模式调整.flv");
             if (dir.isFile()&&dir.exists())
             {
                 item.isDownload =true;
@@ -123,6 +126,7 @@ public class ProjectAttachmentActivity extends BaseFileDownActivity implements V
                 item.downloadId = 0L;
                 item.isDownload =false;
             }
+            Log.e(TAG, "setDownLoadStatus: 是否有文件"+dir.isFile()+":"+dir.exists() );
         }
     }
 
@@ -315,6 +319,10 @@ public class ProjectAttachmentActivity extends BaseFileDownActivity implements V
             }else {
                 if (item.isDownload)
                 {
+                    final Intent intent = new Intent(this, AttachmentsDownloadDetailActivity.class);
+                    intent.putExtra(AttachmentsDownloadDetailActivity.ARG_ATTACHFILEPATH,FileUtils.getDestinationInExternalPublicDir(FileUtils.DefaultDirsFileName).getAbsolutePath()+"2018win7OA兼容模式调整.flv");
+                    intent.putExtra(AttachmentsDownloadDetailActivity.ARG_ATTACHMENTOBJECT,item);
+                    startActivity(intent);
                     ToastUtils.showShort("点击是去:"+item.fileType);
                 }
             }
@@ -435,13 +443,17 @@ public class ProjectAttachmentActivity extends BaseFileDownActivity implements V
                     if (status == DownloadManager.STATUS_FAILED)
                     {
                         item.isDownload =false;
+                        ToastUtils.showShort("下载失败");
                     }else if (status == DownloadManager.STATUS_SUCCESSFUL){
                         item.isDownload =true;
-                        //可以删掉 shareprefse 里面的文件。读取IO太大。就慢了
+                        //可以删掉 shareprefse 里面的文件。读取IO太大。就慢了 删掉shareprefere 才能downloadid 为零
+                        susscesRemoveFile();
+                        ToastUtils.showShort("下载成功");
                     }else {
                         item.isDownload =false;
                     }
-                    item.isDownload =false;
+                    item.downloadId =0;
+
                     helper.setVisible(R.id.desc_layout,true);
                     helper.setVisible(R.id.comment,true);
                     helper.setVisible(R.id.more,true);

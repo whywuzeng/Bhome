@@ -339,6 +339,7 @@
             >
 
         </activity>
+        <activity android:name="com.system.bhouse.Common.filewidget.resoures.AttachmentsDownloadDetailActivity"/>
 
         <!--<activity android:name="com.system.bhouse.bhouse.CommonTask.MaintainManagement.LoadingIntoWareHouseFragment.Fragment.LoadingIntoWareHouseContentMessageActivity_"-->
                   <!--android:screenOrientation="portrait"/>-->

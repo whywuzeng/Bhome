@@ -198,10 +198,11 @@
 
     <!--主背景灰白很好-->
     <color name="divide">#F2F4F6</color>
-
+    <!--中型字体颜色-->
     <color name="font_2">#222222</color>
     <!--底部浅灰，看起来舒服,相当于标题-->
     <color name="font_6">#666666</color>
+    <!--小型字体，解释字-->
     <color name="font_9">#999999</color>
     <!--白色点击 背景颜色-->
     <color name="white_pressed">#ffd5d5d5</color>
@@ -270,6 +271,8 @@
     <color name="font_black_content_disabled">#ffcacaca</color>
     <!--文件下载完的浅灰色-->
     <color name="file_downloaded">#ffe9f5f0</color>
+    <!--白色背景，灰色字体-->
+    <color name="attachment_btn_color">#a5a5a5</color>
 </resources>
 
 

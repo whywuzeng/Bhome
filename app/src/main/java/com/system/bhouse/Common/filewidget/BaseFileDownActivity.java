@@ -120,6 +120,10 @@ public abstract class BaseFileDownActivity extends SmartRefreshBaseActivity {
         }
     }
 
+    protected void susscesRemoveFile(){
+        downListedit.putLong(FILENAME,0);
+    }
+
     private void download(AttachmentFileObject fileObject) {
         ArrayList<AttachmentFileObject> list =new ArrayList<>();
         list.add(fileObject);
@@ -161,7 +165,7 @@ public abstract class BaseFileDownActivity extends SmartRefreshBaseActivity {
         /**
          * Creates a content observer.
          *
-         * @param handler The handler to run {@link #onChange} on, or null if none.
+         *   The handler to run {@link #onChange} on, or null if none.
          */
         public DownloadChangeObsever() {
             super(myhandler);
