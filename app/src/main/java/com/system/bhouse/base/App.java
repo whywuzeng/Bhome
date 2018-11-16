@@ -9,6 +9,7 @@ import android.content.pm.PackageManager;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Build;
 import android.os.Environment;
+import android.os.StrictMode;
 import android.os.Vibrator;
 import android.preference.PreferenceManager;
 import android.provider.Settings;
@@ -37,6 +38,7 @@ import com.system.bhouse.bhouse.task.bean.UserObject;
 import com.system.bhouse.db.DBHelper;
 import com.tencent.android.tpush.XGPushConfig;
 
+import java.lang.reflect.Method;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.GregorianCalendar;
@@ -130,6 +132,8 @@ public class App extends MultiDexApplication {
 //        LeakCanary.install(this);
         mApp=this;
         KLog.init(BuildConfig.DEBUG);
+        fileUriExposure();
+
         dbHelper = DBHelper.getInstance(this);
         db = dbHelper.getWritableDatabase();
         XGPushConfig.enableDebug(this,true);
@@ -166,6 +170,20 @@ public class App extends MultiDexApplication {
             Global.errorLog(e);
         }
 
+    }
+    //使file //可以使用
+    private void fileUriExposure() {
+        /**
+         * 兼容7.0  8.0 file//用法
+         */
+        if(Build.VERSION.SDK_INT>=24){
+            try{
+                Method m = StrictMode.class.getMethod("disableDeathOnFileUriExposure");
+                m.invoke(null);
+            }catch(Exception e){
+                e.printStackTrace();
+            }
+        }
     }
 
     //有多少没有阅读的消息

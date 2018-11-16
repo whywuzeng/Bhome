@@ -28,13 +28,15 @@ import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.system.bhouse.Common.Global;
 import com.system.bhouse.Common.filewidget.databean.AttachmentFileObject;
 import com.system.bhouse.Common.filewidget.databean.AttachmentHeadFooter;
+import com.system.bhouse.Common.filewidget.resoures.AttachmentBaseDetailActivity;
+import com.system.bhouse.Common.filewidget.resoures.AttachmentTexTDetailActivity;
 import com.system.bhouse.Common.filewidget.resoures.AttachmentsDownloadDetailActivity;
+import com.system.bhouse.Common.filewidget.save.FileSaveHelp;
 import com.system.bhouse.bhouse.CommonTask.TechnologyExecution.ModuleAssignMent.HeaderAndFooterSectionQuickAdapter;
 import com.system.bhouse.bhouse.CommonTask.TransportationManagement.adapter.BaseQuickAdapter;
 import com.system.bhouse.bhouse.CommonTask.TransportationManagement.adapter.BaseViewHolder;
 import com.system.bhouse.bhouse.R;
 import com.system.bhouse.bhouse.setup.utils.FileUtil;
-import com.system.bhouse.utils.FileUtils;
 import com.system.bhouse.utils.TenUtils.GlideUtils;
 import com.system.bhouse.utils.blankutils.TimeUtils;
 import com.system.bhouse.utils.blankutils.ToastUtils;
@@ -111,14 +113,14 @@ public class ProjectAttachmentActivity extends BaseFileDownActivity implements V
 
     private void setDownLoadStatus(AttachmentFileObject item) {
         //这里要根据 下载文件名来获取 downloadID的 才能是一个  一个操作
-        final long downloadID = getDownloadID();
+        final long downloadID = getDownloadID(item);
         if (downloadID!=0L)
         {
             item.downloadId =downloadID;
             updateFileDownloadStatus(item);
             item.isDownload=false;
         }else {
-            final File dir = new File(FileUtils.getDestinationInExternalPublicDir(FileUtils.DefaultDirsFileName).getAbsolutePath()+File.separator+"2018win7OA兼容模式调整.flv");
+            final File dir = FileUtil.getDestinationInExternalPublicDir(FileSaveHelp.getSettingDownPath(this), item.getName());
             if (dir.isFile()&&dir.exists())
             {
                 item.isDownload =true;
@@ -150,15 +152,73 @@ public class ProjectAttachmentActivity extends BaseFileDownActivity implements V
         attachmentFileObject = new AttachmentFileObject();
         attachmentFileObject.setName("IMG_1714.PNG");
         attachmentFileObject.fileType = "PNG";
+        attachmentFileObject.file_id =Global.getUUID32();
         attachmentFileObject.preview = "https://dn-coding-net-production-file.codehub.cn/64bbff38-0a72-49d1-a973-6ebaab659a30.PNG?imageView2/1/w/90/h/90&e=1542074193&token=goE9CtaiT5YaIP6ZQ1nAafd_C1Z_H2gVP8AwuC-5:Q_2BRMpvVhFHkFEk8E92ZfMTE34=";//链接
         attachmentFileObject.created_at = 1541727370000L;
         attachmentFileObject.size = 61164;
+        attachmentFileObject.isDownload=true;
         attachmentHeadFooter = new AttachmentHeadFooter(attachmentFileObject);
         objectList.add(attachmentHeadFooter);
 
         attachmentFileObject = new AttachmentFileObject();
-        attachmentFileObject.fileType = "apk";
-        attachmentFileObject.size = 2000212;
+        attachmentFileObject.setName(FILENAMEDOWN);
+        attachmentFileObject.fileType = "flv";
+        attachmentFileObject.file_id =Global.getUUID32();
+        attachmentFileObject.created_at = 1541727370000L;
+        attachmentFileObject.size = 20002121;
+        attachmentFileObject.isDownload=true;
+        attachmentHeadFooter = new AttachmentHeadFooter(attachmentFileObject);
+        objectList.add(attachmentHeadFooter);
+
+
+        attachmentFileObject = new AttachmentFileObject();
+        attachmentFileObject.setName("OA首页配置备份.docx");
+        attachmentFileObject.fileType = "docx";
+        attachmentFileObject.file_id =Global.getUUID32();
+        attachmentFileObject.created_at = 1541727370000L;
+        attachmentFileObject.size = 20002121;
+        attachmentFileObject.isDownload=false;
+        attachmentHeadFooter = new AttachmentHeadFooter(attachmentFileObject);
+        objectList.add(attachmentHeadFooter);
+
+        attachmentFileObject = new AttachmentFileObject();
+        attachmentFileObject.setName("bg0_fine_day.jpg");
+        attachmentFileObject.fileType = "jpg";
+        attachmentFileObject.file_id =Global.getUUID32();
+        attachmentFileObject.created_at = 1541727370000L;
+        attachmentFileObject.size = 200121;
+        attachmentFileObject.isDownload=false;
+        attachmentHeadFooter = new AttachmentHeadFooter(attachmentFileObject);
+        objectList.add(attachmentHeadFooter);
+
+        attachmentFileObject = new AttachmentFileObject();
+        attachmentFileObject.setName("修改KK密码的地方.png");
+        attachmentFileObject.fileType = "png";
+        attachmentFileObject.file_id =Global.getUUID32();
+        attachmentFileObject.created_at = 1541727370000L;
+        attachmentFileObject.size = 200121;
+        attachmentFileObject.isDownload=false;
+        attachmentHeadFooter = new AttachmentHeadFooter(attachmentFileObject);
+        objectList.add(attachmentHeadFooter);
+
+        attachmentFileObject = new AttachmentFileObject();
+        attachmentFileObject.setName("数据文档 (3).txt");
+        attachmentFileObject.fileType = "txt";
+        attachmentFileObject.file_id =Global.getUUID32();
+        attachmentFileObject.created_at = 1541727370000L;
+        attachmentFileObject.size = 180121;
+        attachmentFileObject.isDownload=false;
+        attachmentHeadFooter = new AttachmentHeadFooter(attachmentFileObject);
+        objectList.add(attachmentHeadFooter);
+
+
+        attachmentFileObject = new AttachmentFileObject();
+        attachmentFileObject.setName("首页.html");
+        attachmentFileObject.fileType = "html";
+        attachmentFileObject.file_id =Global.getUUID32();
+        attachmentFileObject.created_at = 1541727370000L;
+        attachmentFileObject.size = 180121;
+        attachmentFileObject.isDownload=false;
         attachmentHeadFooter = new AttachmentHeadFooter(attachmentFileObject);
         objectList.add(attachmentHeadFooter);
 
@@ -319,15 +379,28 @@ public class ProjectAttachmentActivity extends BaseFileDownActivity implements V
             }else {
                 if (item.isDownload)
                 {
-                    final Intent intent = new Intent(this, AttachmentsDownloadDetailActivity.class);
-                    intent.putExtra(AttachmentsDownloadDetailActivity.ARG_ATTACHFILEPATH,FileUtils.getDestinationInExternalPublicDir(FileUtils.DefaultDirsFileName).getAbsolutePath()+"2018win7OA兼容模式调整.flv");
-                    intent.putExtra(AttachmentsDownloadDetailActivity.ARG_ATTACHMENTOBJECT,item);
-                    startActivity(intent);
-                    ToastUtils.showShort("点击是去:"+item.fileType);
+                    jumpDetail(item);
                 }
             }
         }
 
+    }
+
+    private void jumpDetail(AttachmentFileObject item) {
+        if (AttachmentFileObject.isTxt(item.fileType))
+        {
+            final Intent intent = new Intent(this, AttachmentTexTDetailActivity.class);
+            intent.putExtra(AttachmentBaseDetailActivity.ARG_ATTACHMENTOBJECT,item);
+            startActivity(intent);
+
+        }else {
+            final File file = FileUtil.getDestinationInExternalPublicDir(FileSaveHelp.getSettingDownPath(this), item.getName());
+            final Intent intent = new Intent(this, AttachmentsDownloadDetailActivity.class);
+            intent.putExtra(AttachmentsDownloadDetailActivity.ARG_ATTACHFILEPATH, file.getAbsolutePath());
+            intent.putExtra(AttachmentsDownloadDetailActivity.ARG_ATTACHMENTOBJECT, item);
+            startActivity(intent);
+            ToastUtils.showShort("点击是去:" + item.fileType);
+        }
     }
 
     @Override
@@ -447,7 +520,7 @@ public class ProjectAttachmentActivity extends BaseFileDownActivity implements V
                     }else if (status == DownloadManager.STATUS_SUCCESSFUL){
                         item.isDownload =true;
                         //可以删掉 shareprefse 里面的文件。读取IO太大。就慢了 删掉shareprefere 才能downloadid 为零
-                        susscesRemoveFile();
+                        susscesRemoveFile(item);
                         ToastUtils.showShort("下载成功");
                     }else {
                         item.isDownload =false;

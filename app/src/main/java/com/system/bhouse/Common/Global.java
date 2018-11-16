@@ -4,21 +4,32 @@ import android.content.res.AssetManager;
 import android.text.Editable;
 import android.text.Html;
 import android.text.Spannable;
+import android.util.Log;
 
 import org.xml.sax.XMLReader;
 
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.UUID;
 
 /**
  * Created by Administrator on 2017-10-30.
+ * 这才是 全局Global
  */
 
 public class Global {
 
+    private static final String ERRTAG = "errorLog";
     private static SimpleDateFormat DayFormatTime = new SimpleDateFormat("yyyy-MM-dd");
     public static final SimpleDateFormat mDateFormat = new SimpleDateFormat("yyyy-MM-dd EEE");
+
+    public static final String DOWNHOST_API="https://github.com/whywuzeng/Rxjava3/raw/master/javasync/";
 
     //文件大小
     public static DecimalFormat df = new DecimalFormat("#.00");
@@ -85,6 +96,51 @@ public class Global {
         }
         //return Math.round(size) + units[i];
         return df.format(size) + " " + units[i];
+    }
+
+    static public String readTextFile(File file)
+    {
+        final FileInputStream is;
+        try {
+            is = new FileInputStream(file);
+            return readTextFile(is);
+        } catch (FileNotFoundException e) {
+            errorLog(e);
+        }
+        return "";
+    }
+
+    private static String readTextFile(FileInputStream is)  {
+        final ByteArrayOutputStream stream = new ByteArrayOutputStream();
+        byte[] buf=new byte[1024];
+        int len;
+        try {
+            while ( (len= is.read(buf)) == -1)
+            {
+                stream.write(buf,0,len);
+            }
+            stream.close();
+            is.close();
+        } catch (IOException e) {
+            Global.errorLog(e);
+        }
+
+        return stream.toString();
+    }
+
+    static public void errorLog(Exception e)
+    {
+        if (e ==null)
+        {
+            return;
+        }
+        e.printStackTrace();
+        Log.e(ERRTAG, "errorLog: "+e);
+    }
+
+    public static String getUUID32(){
+        String uuid = UUID.randomUUID().toString().replace("-", "").toLowerCase();
+        return uuid;
     }
 
 }

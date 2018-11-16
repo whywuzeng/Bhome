@@ -7,18 +7,21 @@ import android.content.SharedPreferences;
 import android.database.ContentObserver;
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.Environment;
 import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
 
+import com.system.bhouse.Common.Global;
 import com.system.bhouse.Common.filewidget.databean.AttachmentFileObject;
+import com.system.bhouse.Common.filewidget.save.FileSaveHelp;
 import com.system.bhouse.bhouse.setup.WWCommon.SmartRefreshBaseActivity;
 import com.system.bhouse.bhouse.setup.utils.FileUtil;
 import com.system.bhouse.utils.FileUtils;
 import com.system.bhouse.utils.blankutils.ToastUtils;
 
 import java.io.File;
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 import java.util.ArrayList;
 
 /**
@@ -38,7 +41,13 @@ public abstract class BaseFileDownActivity extends SmartRefreshBaseActivity {
     private DownloadChangeObsever downloadChangeObsever;
     private DownloadManagerPro downloadManagerPro;
 
-    public static final String FILENAME ="2018win7OA%E5%85%BC%E5%AE%B9%E6%A8%A1%E5%BC%8F%E8%B0%83%E6%95%B4.flv";
+    //链接的名字
+    public static final String FILENAMEURL ="2018win7OA%E5%85%BC%E5%AE%B9%E6%A8%A1%E5%BC%8F%E8%B0%83%E6%95%B4.flv";
+
+    public static final String FILENAMEDOWN ="2018win7OA兼容模式调整.flv";
+
+    protected String urlDownload = Global.DOWNHOST_API+"%s";
+
 
     /**
      * 先放这里以后换个地方
@@ -85,20 +94,25 @@ public abstract class BaseFileDownActivity extends SmartRefreshBaseActivity {
         getContentResolver().unregisterContentObserver(downloadChangeObsever);
     }
 
-    protected long getDownloadID()
+    protected long getDownloadID(AttachmentFileObject object)
     {
-        return downlist.getLong(FILENAME,0L);
+        return downlist.getLong(object.file_id,0L);
     }
 
     protected void actionDownloadSingle(AttachmentFileObject tag){
+
         if (tag ==null)
         {
             ToastUtils.showShort("没有选中文件");
             return;
         }
-        final File dir = FileUtils.getDestinationInExternalPublicDir(  Environment.DIRECTORY_DOWNLOADS + File.separator + FileUtil.DOWNLOAD_FOLDER);
+        final File dir = FileUtils.getDestinationInExternalPublicDir(FileSaveHelp.getSettingDownPath(this),tag.getName());
+        if (dir.exists()&&dir.isFile())
+        {
+            return;
+        }
         final String absolutePath = dir.getAbsolutePath();
-        if (!share.contains(FileUtil.DOWNLOAD_SETTING))
+        if (!share.contains(FileUtil.DOWNLOAD_SETTING_HINT))
         {
             String msgFormat = "你的文件将下载到这个%s下载位置";
             AlertDialog.Builder builder =new AlertDialog.Builder(this);
@@ -113,15 +127,26 @@ public abstract class BaseFileDownActivity extends SmartRefreshBaseActivity {
                             .show();
 
             final SharedPreferences.Editor edit = share.edit();
-            edit.putBoolean(FileUtil.DOWNLOAD_SETTING,true);
+            edit.putBoolean(FileUtil.DOWNLOAD_SETTING_HINT,true);
             edit.commit();
         }else {
             download(tag);
         }
     }
 
-    protected void susscesRemoveFile(){
-        downListedit.putLong(FILENAME,0);
+    private String getEncodeUrl(AttachmentFileObject tag) {
+        String  tmpurlDownload="";
+        try {
+            tmpurlDownload=  URLEncoder.encode(tag.getName(),"UTF-8");
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
+        tmpurlDownload =String.format(urlDownload,tmpurlDownload);
+        return tmpurlDownload;
+    }
+
+    protected void susscesRemoveFile(AttachmentFileObject object){
+        downListedit.putLong(object.file_id,0);
     }
 
     private void download(AttachmentFileObject fileObject) {
@@ -133,28 +158,27 @@ public abstract class BaseFileDownActivity extends SmartRefreshBaseActivity {
     private void downLoad(ArrayList<AttachmentFileObject> list) {
         final AttachmentFileObject fileObject = list.get(0);
         //要检查权限
-
+        final String encodeUrl = getEncodeUrl(fileObject);
         //ping下载路径  这里只能模拟
-        String urldown ="https://dn-coding-net-production-file.codehub.cn/64bbff38-0a72-49d1-a973-6ebaab659a30.PNG?attname=IMG_1714.PNG&e=1542167298&token=goE9CtaiT5YaIP6ZQ1nAafd_C1Z_H2gVP8AwuC-5:XovB8A1pVOrN18xBe_BIq0Qsybw=";
 
         //要添加cookie 查看cookie机制
 
 
         //manage.request 下载设置
-        String url ="https://github.com/whywuzeng/Rxjava3/raw/master/javasync/2018win7OA%E5%85%BC%E5%AE%B9%E6%A8%A1%E5%BC%8F%E8%B0%83%E6%95%B4.flv";
-        final String[] split = url.split("/");
+//        String encodeUrl ="https://github.com/whywuzeng/Rxjava3/raw/master/javasync/2018win7OA%E5%85%BC%E5%AE%B9%E6%A8%A1%E5%BC%8F%E8%B0%83%E6%95%B4.flv";
+        final String[] split = encodeUrl.split("/");
         final String fileName = split[split.length - 1];
 
-        DownloadManager.Request request =new DownloadManager.Request(Uri.parse(url));
+        DownloadManager.Request request =new DownloadManager.Request(Uri.parse(encodeUrl));
         request.addRequestHeader("Cookie","");
-        request.setDestinationInExternalPublicDir(FileUtils.getDestinationInExternalPublicDir(FileUtils.DefaultDirsFileName).getAbsolutePath(),fileName);
+        request.setDestinationInExternalPublicDir(FileSaveHelp.getSettingDownPath(this),fileObject.getName());
         // 下载时，不显示通知栏
         request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_HIDDEN);
         request.setTitle(fileObject.getName());
         request.setVisibleInDownloadsUi(false);
         //保存下载downloadID
         final long downloadID = downloadManager.enqueue(request);
-        downListedit.putLong(fileName,downloadID);
+        downListedit.putLong(fileObject.file_id,downloadID);
         //启动handler
         downListedit.commit();
 

@@ -61,6 +61,30 @@ public class FileUtils {
         return file;
     }
 
+    /**
+     * 生成文件夹路径和文件名
+     * @param dirType
+     * @return
+     */
+    public static File getDestinationInExternalPublicDir(String dirType,String filename)
+    {
+        //获取的手机存储路径是/storage/emulated/0
+        final File file = Environment.getExternalStoragePublicDirectory(dirType);
+        if (file.exists())
+        {
+            if (!file.isDirectory())
+            {
+                throw new IllegalStateException(file.getAbsolutePath()+"already exist and not is a directory");
+            }
+        }else {
+            if (!file.mkdirs())
+            {
+                throw new IllegalStateException("unable create Directory"+file.getAbsolutePath());
+            }
+        }
+        return new File(file.getAbsolutePath()+File.separator+filename);
+    }
+
     @NonNull
     public static File getDirsFile() {
         return getDirsFile(DefaultDirsFileName);

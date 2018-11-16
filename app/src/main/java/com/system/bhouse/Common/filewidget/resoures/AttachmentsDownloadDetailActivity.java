@@ -145,7 +145,7 @@ public class AttachmentsDownloadDetailActivity extends BaseFileDownActivity {
     @OnClick(R.id.btn_open)
     public void onBtnOpenClicked() {
          File file = new File(mFilePath);
-        file= new File("/storage/emulated/0/storage/emulated/0/bhouseDownoad"+File.separator+"2018win7OA兼容模式调整.flv");
+//        file= new File("/storage/emulated/0/storage/emulated/0/bhouseDownoad"+File.separator+"2018win7OA兼容模式调整.flv");
         if (file.exists()&&file.isFile())
         {
             openFile(file);

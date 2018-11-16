@@ -266,4 +266,9 @@
     <string name="action_cancel">取消</string>
     <string name="action_all">全选</string>
     <string name="action_inverse">反选</string>
+    <string name="action_info">信息</string>
+    <string name="action_more">更多</string>
+    <string name="action_download">保存</string>
+    <string name="action_link">链接</string>
+    <string name="action_delete">删除</string>
 </resources>

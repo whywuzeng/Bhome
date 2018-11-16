@@ -20,7 +20,7 @@ public class FileUtil {
 
     public final static String DOWNLOAD_SETTING = "download_setting";
     public final static String DOWNLOAD_LIST = "download_list";
-
+    //设置界面 下载路径
     public final static String DOWNLOAD_PATH = "download_path";
     public final static String DOWNLOAD_SETTING_HINT = "download_setting_hint";
     public final static String DOWNLOAD_FOLDER = "BHome";
