@@ -32,7 +32,6 @@ public class AttachmentBaseDetailActivity extends WWBackActivity {
         super.onCreate(savedInstanceState);
         getData();
         mFile= getFileName();
-
     }
 
     private void getData() {
@@ -72,7 +71,7 @@ public class AttachmentBaseDetailActivity extends WWBackActivity {
         return super.onCreateOptionsMenu(menu);
     }
 
-    private int getMenuRes() {
+    protected int getMenuRes() {
         return R.menu.project_attachment_base;
     }
 

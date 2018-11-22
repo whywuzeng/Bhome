@@ -36,6 +36,11 @@
                 android:title="@string/action_delete"
                 app:showAsAction="always"
                 />
+            <item
+                android:id="@+id/action_tranfor"
+                android:icon="@drawable/ic_menu_edit"
+                android:title="@string/utf_8"
+                app:showAsAction="always"/>
         </menu>
 
     </item>

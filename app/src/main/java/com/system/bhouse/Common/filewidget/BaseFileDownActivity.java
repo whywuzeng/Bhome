@@ -109,6 +109,7 @@ public abstract class BaseFileDownActivity extends SmartRefreshBaseActivity {
         final File dir = FileUtils.getDestinationInExternalPublicDir(FileSaveHelp.getSettingDownPath(this),tag.getName());
         if (dir.exists()&&dir.isFile())
         {
+            tag.isDownload =true;
             return;
         }
         final String absolutePath = dir.getAbsolutePath();

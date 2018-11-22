@@ -1,5 +1,6 @@
 package com.system.bhouse.Common.filewidget.resoures;
 
+import android.app.Activity;
 import android.content.ActivityNotFoundException;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -105,7 +106,6 @@ public class AttachmentsDownloadDetailActivity extends BaseFileDownActivity {
         rlDownlaod.setVisibility(View.GONE);
         btnOpen.setVisibility(View.VISIBLE);
         layoutDynamicHistory.setVisibility(View.VISIBLE);
-
     }
 
     private void getData() {
@@ -148,13 +148,13 @@ public class AttachmentsDownloadDetailActivity extends BaseFileDownActivity {
 //        file= new File("/storage/emulated/0/storage/emulated/0/bhouseDownoad"+File.separator+"2018win7OA兼容模式调整.flv");
         if (file.exists()&&file.isFile())
         {
-            openFile(file);
+            openFile(AttachmentsDownloadDetailActivity.this,file);
         }else {
             ToastUtils.showShort("无法打开文件");
         }
     }
 
-    private void openFile(File file) {
+    public static void openFile(Activity activity,File file) {
         final Intent intent = new Intent();
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         intent.setAction(Intent.ACTION_VIEW);
@@ -169,7 +169,7 @@ public class AttachmentsDownloadDetailActivity extends BaseFileDownActivity {
         intent.setDataAndType(uri,type);
 
         try {
-            this.startActivity(intent);
+            activity.startActivity(intent);
             return;
         } catch (ActivityNotFoundException e) {
             e.printStackTrace();

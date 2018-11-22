@@ -119,4 +119,7 @@ public interface NewsService {
     })
     @GET("64bbff38-0a72-49d1-a973-6ebaab659a30.PNG?attname=IMG_1714.PNG&e=1542167298&token=goE9CtaiT5YaIP6ZQ1nAafd_C1Z_H2gVP8AwuC-5:XovB8A1pVOrN18xBe_BIq0Qsybw=")
     Observable<Object> getPicResrouce();
+
+    @GET("json/maopao.json")
+    Observable<Object> getMaoPaoMessage();
 }

@@ -173,4 +173,8 @@ public interface ApiService {
 
     @GET("")
     Observable<ResponseBody> getSingleApk();
+
+//https://github.com/whywuzeng/Rxjava3/blob/master/javasync/json/maopao.json
+//    @GET("json/maopao.json")
+//    Observable<Object>
 }

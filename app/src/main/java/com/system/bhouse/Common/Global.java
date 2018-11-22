@@ -13,6 +13,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -98,24 +99,24 @@ public class Global {
         return df.format(size) + " " + units[i];
     }
 
-    static public String readTextFile(File file)
+    static public String readTextFile(File file,String charset)
     {
         final FileInputStream is;
         try {
             is = new FileInputStream(file);
-            return readTextFile(is);
+            return readTextFile(is,charset);
         } catch (FileNotFoundException e) {
             errorLog(e);
         }
         return "";
     }
 
-    private static String readTextFile(FileInputStream is)  {
+    private static String readTextFile(FileInputStream is, String charset)  {
         final ByteArrayOutputStream stream = new ByteArrayOutputStream();
         byte[] buf=new byte[1024];
         int len;
         try {
-            while ( (len= is.read(buf)) == -1)
+            while ( (len= is.read(buf)) != -1)
             {
                 stream.write(buf,0,len);
             }
@@ -125,7 +126,12 @@ public class Global {
             Global.errorLog(e);
         }
 
-        return stream.toString();
+        try {
+            return new String(stream.toByteArray(),charset);
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+            return "nsupportedEncodingException";
+        }
     }
 
     static public void errorLog(Exception e)

@@ -271,4 +271,6 @@
     <string name="action_download">保存</string>
     <string name="action_link">链接</string>
     <string name="action_delete">删除</string>
+    <string name="utf_8">转为UTF-8编码</string>
+    <string name="action_save">保存</string>
 </resources>

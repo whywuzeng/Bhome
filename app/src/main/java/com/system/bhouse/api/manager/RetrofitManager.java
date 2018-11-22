@@ -140,7 +140,7 @@ public class RetrofitManager {
      * @param hostType host类型
      * @return 实例
      */
-    public static RetrofitManager getInstance(int hostType) {
+    public static RetrofitManager getInstance(@HostType.HostTypeChecker int hostType) {
         RetrofitManager instance = sInstanceManager.get(hostType);
         if (instance == null) {
             instance = new RetrofitManager(hostType);
@@ -243,6 +243,10 @@ public class RetrofitManager {
 
     public Observable<Object> getPicResrouce(){
         return mNewsService.getPicResrouce().compose(new BaseSchedulerTransformer<Object>());
+    }
+
+    public Observable<Object> getMaoPaoMessage(){
+        return mNewsService.getMaoPaoMessage().compose(new BaseSchedulerTransformer<Object>());
     }
 
 }

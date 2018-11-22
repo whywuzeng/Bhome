@@ -342,6 +342,8 @@
         <activity android:name="com.system.bhouse.Common.filewidget.resoures.AttachmentsDownloadDetailActivity"/>
         <activity android:name="com.system.bhouse.Common.filewidget.resoures.AttachmentTexTDetailActivity"/>
         <activity android:name="com.system.bhouse.Common.filewidget.resoures.AttachmentBaseDetailActivity"/>
+        <activity android:name="com.system.bhouse.Common.filewidget.resoures.TxtEditActivity"/>
+        <activity android:name="com.system.bhouse.Common.filewidget.maopao.ProjectMaopaoActivity"/>
 
         <!--<activity android:name="com.system.bhouse.bhouse.CommonTask.MaintainManagement.LoadingIntoWareHouseFragment.Fragment.LoadingIntoWareHouseContentMessageActivity_"-->
                   <!--android:screenOrientation="portrait"/>-->

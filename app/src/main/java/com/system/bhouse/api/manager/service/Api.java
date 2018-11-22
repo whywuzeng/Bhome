@@ -124,6 +124,13 @@ public class Api {
 
     public static final String COODING_PHOTO_HOST="https://dn-coding-net-production-file.codehub.cn/";
 
+
+    /**
+     * github json数据
+     */
+
+    public static final String GITHUB_JSON_HOST ="https://github.com/whywuzeng/Rxjava3/raw/master/javasync/";
+
     // 精选列表
     public static final String SINA_PHOTO_CHOICE_ID = "hdpic_toutiao";
     // 趣图列表
@@ -169,6 +176,8 @@ public class Api {
                 return Api.WEATHER_HOST;
                 case HostType.COODING_INFO:
                     return Api.COODING_PHOTO_HOST;
+            case HostType.SYNC_GITHUB:
+                return Api.GITHUB_JSON_HOST;
         }
         return "";
     }

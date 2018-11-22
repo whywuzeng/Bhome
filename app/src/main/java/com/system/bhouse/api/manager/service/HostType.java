@@ -45,9 +45,15 @@ public class HostType {
     public static final int COODING_INFO=4;
 
     /**
+     * github async  sync json Url
+     */
+    @HostTypeChecker
+    public static final int SYNC_GITHUB =5;
+
+    /**
      * 替代枚举的方案，使用IntDef保证类型安全
      */
-    @IntDef({NETEASE_NEWS_VIDEO, SINA_NEWS_PHOTO, WEATHER_INFO,COODING_INFO})
+    @IntDef({NETEASE_NEWS_VIDEO, SINA_NEWS_PHOTO, WEATHER_INFO,COODING_INFO,SYNC_GITHUB})
     @Retention(RetentionPolicy.SOURCE)
     public @interface HostTypeChecker {
 

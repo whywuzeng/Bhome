@@ -202,7 +202,7 @@ public class ProjectAttachmentActivity extends BaseFileDownActivity implements V
         objectList.add(attachmentHeadFooter);
 
         attachmentFileObject = new AttachmentFileObject();
-        attachmentFileObject.setName("数据文档 (3).txt");
+        attachmentFileObject.setName("新建文本文档.txt");
         attachmentFileObject.fileType = "txt";
         attachmentFileObject.file_id =Global.getUUID32();
         attachmentFileObject.created_at = 1541727370000L;
