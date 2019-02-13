@@ -1,3 +1,5 @@
-include ':app', ':htextview-library'
+include ':app'
 include  ':ZXingapp'
-
+include ':bhome-talk',':common',':factory'
+//资源module
+include ':lang',':face-res'

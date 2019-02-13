@@ -350,71 +350,72 @@
         <!--<activity android:name="com.system.bhouse.bhouse.CommonTask.MaintainManagement.LoadingIntoWareHouseFragment.Fragment.LoadingIntoWareHouseContentMessageActivity_"  com.system.bhouse.Common.filewidget.ProjectAttachmentActivity' is not assignable to 'android.app.Activity'-->
                   <!--android:screenOrientation="portrait"/>-->
 
-        <!--&lt;!&ndash; 个推的广播注册 &ndash;&gt;-->
-        <!--<receiver-->
-            <!--android:name="net.qiujuer.italker.push.MessageReceiver"-->
-            <!--android:enabled="true"-->
-            <!--android:exported="true"-->
-            <!--android:permission="1000">-->
-            <!--<intent-filter>-->
-                <!--<action android:name="com.igexin.sdk.action.${GETUI_APP_ID}" />-->
-            <!--</intent-filter>-->
-        <!--</receiver>-->
+        <!-- 个推的广播注册 -->
+        <receiver
+            android:name="net.qiujuer.italker.push.MessageReceiver"
+            android:enabled="true"
+            android:exported="true"
+            android:permission="1000">
+            <intent-filter>
+                <action android:name="com.igexin.sdk.action.${GETUI_APP_ID}" />
+            </intent-filter>
+        </receiver>
 
-        <!--<activity-->
-            <!--android:name="net.qiujuer.italker.push.LaunchActivity"-->
-            <!--android:label="@string/title_activity_launch"-->
-            <!--android:theme="@style/AppTheme.TransStatusBar">-->
-            <!--<intent-filter>-->
-                <!--<action android:name="android.intent.action.MAIN" />-->
 
-                <!--<category android:name="android.intent.category.LAUNCHER" />-->
-            <!--</intent-filter>-->
-        <!--</activity>-->
-        <!--<activity-->
-            <!--android:name="net.qiujuer.italker.push.activities.MainActivity"-->
-            <!--android:screenOrientation="portrait"-->
-            <!--android:theme="@style/AppTheme.Main" />-->
-        <!--<activity-->
-            <!--android:name="net.qiujuer.italker.push.activities.AccountActivity"-->
-            <!--android:screenOrientation="portrait"-->
-            <!--android:theme="@style/AppTheme.Account" />-->
-        <!--<activity-->
-            <!--android:name="com.yalantis.ucrop.UCropActivity"-->
-            <!--android:screenOrientation="portrait"-->
-            <!--android:theme="@style/AppTheme" />-->
-        <!--<activity-->
-            <!--android:name="net.qiujuer.italker.push.activities.UserActivity"-->
-            <!--android:label="@string/title_activity_user"-->
-            <!--android:screenOrientation="portrait"-->
-            <!--android:theme="@style/AppTheme.Account" />-->
-        <!--<activity-->
-            <!--android:name="net.qiujuer.italker.push.activities.SearchActivity"-->
-            <!--android:label="@string/title_search"-->
-            <!--android:screenOrientation="portrait"-->
-            <!--android:theme="@style/AppTheme.TransStatusBar" />-->
-        <!--<activity-->
-            <!--android:name="net.qiujuer.italker.push.activities.MessageActivity"-->
-            <!--android:label="@string/title_activity_message"-->
-            <!--android:screenOrientation="portrait"-->
-            <!--android:theme="@style/AppTheme.Message"-->
-            <!--/>-->
-        <!--&lt;!&ndash;android:windowSoftInputMode="adjustResize"&ndash;&gt;-->
+        <activity
+            android:name="net.qiujuer.italker.push.LaunchActivity"
+            android:label="@string/title_activity_launch"
+            android:theme="@style/AppTheme.TransStatusBar">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
 
-        <!--<activity-->
-            <!--android:name="net.qiujuer.italker.push.activities.PersonalActivity"-->
-            <!--android:label="@string/title_activity_personal"-->
-            <!--android:screenOrientation="portrait"-->
-            <!--android:theme="@style/AppTheme.TransStatusBar" />-->
-        <!--<activity-->
-            <!--android:name="net.qiujuer.italker.push.activities.GroupCreateActivity"-->
-            <!--android:screenOrientation="portrait"-->
-            <!--android:theme="@style/AppTheme.Group.Create" />-->
-        <!--<activity-->
-            <!--android:name="net.qiujuer.italker.push.activities.GroupMemberActivity"-->
-            <!--android:label="@string/title_member_list"-->
-            <!--android:screenOrientation="portrait"-->
-            <!--android:theme="@style/AppTheme.TransStatusBar" />-->
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name="net.qiujuer.italker.push.activities.MainActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.Main" />
+        <activity
+            android:name="net.qiujuer.italker.push.activities.AccountActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.Account" />
+        <activity
+            android:name="com.yalantis.ucrop.UCropActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme" />
+        <activity
+            android:name="net.qiujuer.italker.push.activities.UserActivity"
+            android:label="@string/title_activity_user"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.Account" />
+        <activity
+            android:name="net.qiujuer.italker.push.activities.SearchActivity"
+            android:label="@string/title_search"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.TransStatusBar" />
+        <activity
+            android:name="net.qiujuer.italker.push.activities.MessageActivity"
+            android:label="@string/title_activity_message"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.Message"
+            />
+        <!--android:windowSoftInputMode="adjustResize"-->
+
+        <activity
+            android:name="net.qiujuer.italker.push.activities.PersonalActivity"
+            android:label="@string/title_activity_personal"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.TransStatusBar" />
+        <activity
+            android:name="net.qiujuer.italker.push.activities.GroupCreateActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.Group.Create" />
+        <activity
+            android:name="net.qiujuer.italker.push.activities.GroupMemberActivity"
+            android:label="@string/title_member_list"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.TransStatusBar" />
 
         <meta-data
             android:name="design_width"
