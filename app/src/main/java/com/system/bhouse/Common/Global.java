@@ -4,6 +4,7 @@ import android.content.res.AssetManager;
 import android.text.Editable;
 import android.text.Html;
 import android.text.Spannable;
+import android.text.style.URLSpan;
 import android.util.Log;
 
 import org.xml.sax.XMLReader;
@@ -147,6 +148,42 @@ public class Global {
     public static String getUUID32(){
         String uuid = UUID.randomUUID().toString().replace("-", "").toLowerCase();
         return uuid;
+    }
+
+    public static Spannable changeHyperlinkColor(String content){
+        return Global.changeHyperlinkColor(content,null,null);
+    }
+
+    private static Spannable changeHyperlinkColor(String content, Html.ImageGetter imageGetter, Html.TagHandler tagHandler) {
+
+        return Global.changeHyperlinkColor(content,imageGetter,tagHandler,0xFF3BBD79);
+    }
+
+    private static Spannable changeHyperlinkColor(String content, Html.ImageGetter imageGetter, Html.TagHandler tagHandler, int color) {
+        final Spannable s = (Spannable) Html.fromHtml(content, imageGetter, tagHandler);
+        return getCustomSpannable(s,color);
+    }
+
+    private static Spannable getCustomSpannable(Spannable s, int color) {
+        URLSpan[] urlSpan = s.getSpans(0, s.length(), URLSpan.class);
+//        for (URLSpan span : urlSpan) {
+//            int start = s.getSpanStart(span);
+//            int end = s.getSpanEnd(span);
+//            s.removeSpan(span);
+//            span = new URLSpanNoUnderline(span.getURL(), color);
+//            s.setSpan(span, start, end, 0);
+//        }
+//
+//        QuoteSpan quoteSpans[] = s.getSpans(0, s.length(), QuoteSpan.class);
+//        for (QuoteSpan span : quoteSpans) {
+//            int start = s.getSpanStart(span);
+//            int end = s.getSpanEnd(span);
+//            s.removeSpan(span);
+//            GrayQuoteSpan grayQuoteSpan = new GrayQuoteSpan();
+//            s.setSpan(grayQuoteSpan, start, end, 0);
+//        }
+
+        return null;
     }
 
 }

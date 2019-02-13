@@ -4,8 +4,7 @@ package com.system.bhouse.utils;
 import android.util.Log;
 
 import com.socks.library.KLog;
-
-import org.apache.commons.io.IOUtils;
+import com.system.bhouse.utils.blankutils.FileIOUtils;
 
 import java.io.DataOutputStream;
 import java.io.File;
@@ -71,7 +70,7 @@ public class UploadUtils {
 			}
 			InputStream is = httpURLConnection.getInputStream();//服务器端响应
 
-			String result = IOUtils.toString(is, "UTF-8");
+			String result = FileIOUtils.writeStringFromIS("UTF-8",is);
 
 //			String s1 = BHEncodeUtils.unGzip(is);
 

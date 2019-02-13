@@ -1,6 +1,7 @@
 package com.system.bhouse.api.manager.service;
 
 
+import com.system.bhouse.Common.filewidget.maopao.maopaoBean;
 import com.system.bhouse.bean.NeteastNewsDetail;
 import com.system.bhouse.bean.NeteastNewsSummary;
 import com.system.bhouse.bean.WeatherInfo;
@@ -121,5 +122,5 @@ public interface NewsService {
     Observable<Object> getPicResrouce();
 
     @GET("json/maopao.json")
-    Observable<Object> getMaoPaoMessage();
+    Observable<List<maopaoBean.DataBean>> getMaoPaoMessage();
 }

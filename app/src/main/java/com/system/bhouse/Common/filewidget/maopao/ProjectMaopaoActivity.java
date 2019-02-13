@@ -1,17 +1,30 @@
 package com.system.bhouse.Common.filewidget.maopao;
 
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.widget.TextView;
 
+import com.bumptech.glide.load.DecodeFormat;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.system.bhouse.Common.filewidget.resoures.AttachmentBaseDetailActivity;
+import com.system.bhouse.Common.message.GifSpanTextView;
+import com.system.bhouse.Common.message.MinSizeImageView;
 import com.system.bhouse.api.manager.RetrofitManager;
 import com.system.bhouse.api.manager.service.HostType;
+import com.system.bhouse.bhouse.CommonTask.TransportationManagement.adapter.BaseQuickAdapter;
+import com.system.bhouse.bhouse.CommonTask.TransportationManagement.adapter.BaseViewHolder;
 import com.system.bhouse.bhouse.R;
+import com.system.bhouse.utils.TenUtils.GlideUtils;
+import com.system.bhouse.utils.blankutils.TimeUtils;
+
+import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import de.hdodenhof.circleimageview.CircleImageView;
 import rx.Observable;
 import rx.Observer;
 
@@ -29,6 +42,8 @@ public class ProjectMaopaoActivity extends AttachmentBaseDetailActivity {
     @Bind(R.id.blankLayout)
     View blankLayout;
 
+    private MaopaoAdapter maopaoAdapter;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -38,8 +53,9 @@ public class ProjectMaopaoActivity extends AttachmentBaseDetailActivity {
         final LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
         recycler.setLayoutManager(linearLayoutManager);
 
-        final Observable<Object> maoPaoMessage = RetrofitManager.getInstance(HostType.SYNC_GITHUB).getMaoPaoMessage();
-        maoPaoMessage.subscribe(new Observer<Object>() {
+
+        final Observable<List<maopaoBean.DataBean>> maoPaoMessage = RetrofitManager.getInstance(HostType.SYNC_GITHUB).getMaoPaoMessage();
+        maoPaoMessage.subscribe(new Observer<List<maopaoBean.DataBean>>() {
             @Override
             public void onCompleted() {
 
@@ -51,12 +67,50 @@ public class ProjectMaopaoActivity extends AttachmentBaseDetailActivity {
             }
 
             @Override
-            public void onNext(Object o) {
-
+            public void onNext(List<maopaoBean.DataBean> o) {
+                maopaoAdapter = new MaopaoAdapter(R.layout.recycle_item_maopao, o);
+                recycler.setAdapter(maopaoAdapter);
             }
         });
-
     }
 
-//    class MaopaoAdapter extends BaseQuickAdapter<>
+    class MaopaoAdapter extends BaseQuickAdapter<maopaoBean.DataBean, MyMaopaoViewHolder> {
+
+        public MaopaoAdapter(int layoutResId, @Nullable List<maopaoBean.DataBean> data) {
+            super(layoutResId, data);
+
+        }
+
+        @Override
+        protected void convert(MyMaopaoViewHolder helper, maopaoBean.DataBean item) {
+            GlideUtils.loadDefaultNoAnim(item.getOwner().getAvatar(),helper.icon,false, DecodeFormat.DEFAULT, DiskCacheStrategy.ALL);
+            helper.name.setText(item.getOwner().getName());
+            final String timeSpanByNow = TimeUtils.getFriendlyTimeSpanByNow(item.getUpdated_at());
+            helper.time.setText(timeSpanByNow);
+//            helper.content.setText();
+        }
+    }
+
+   static class MyMaopaoViewHolder extends BaseViewHolder {
+
+        @Bind(R.id.icon)
+        CircleImageView icon;
+        @Bind(R.id.name)
+        TextView name;
+        @Bind(R.id.time)
+        TextView time;
+        @Bind(R.id.content)
+        GifSpanTextView content;
+        @Bind(R.id.imageSingle)
+        MinSizeImageView imageSingle;
+        @Bind(R.id.comment)
+        TextView comment;
+        @Bind(R.id.delete)
+        TextView delete;
+
+        public MyMaopaoViewHolder(View view) {
+            super(view);
+            ButterKnife.bind(this, view);
+        }
+    }
 }

@@ -4,6 +4,7 @@ package com.system.bhouse.api.manager;
 import android.util.SparseArray;
 
 import com.socks.library.KLog;
+import com.system.bhouse.Common.filewidget.maopao.maopaoBean;
 import com.system.bhouse.api.manager.service.Api;
 import com.system.bhouse.api.manager.service.HostType;
 import com.system.bhouse.api.manager.service.NewsService;
@@ -245,8 +246,8 @@ public class RetrofitManager {
         return mNewsService.getPicResrouce().compose(new BaseSchedulerTransformer<Object>());
     }
 
-    public Observable<Object> getMaoPaoMessage(){
-        return mNewsService.getMaoPaoMessage().compose(new BaseSchedulerTransformer<Object>());
+    public Observable<List<maopaoBean.DataBean>> getMaoPaoMessage(){
+        return mNewsService.getMaoPaoMessage().compose(new BaseSchedulerTransformer<List<maopaoBean.DataBean>>());
     }
 
 }

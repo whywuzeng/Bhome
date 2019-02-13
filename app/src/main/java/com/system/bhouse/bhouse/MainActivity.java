@@ -58,8 +58,6 @@ import com.system.bhouse.utils.sharedpreferencesuser;
 import com.tencent.android.tpush.XGPushShowedResult;
 import com.zijunlin.Zxing.Demo.CaptureActivity;
 
-import org.apache.commons.io.IOUtils;
-
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
@@ -293,7 +291,8 @@ public class MainActivity extends BaseActivity implements  TopMiddleMenu.OnMenuI
             public void onNext(ResponseBody responseBody) {
                 try {
                     InputStream inputStream = responseBody.byteStream();
-                    String result = IOUtils.toString(inputStream, "GB2312");
+
+                    String result = responseBody.string();
                     KLog.e(result);
                     String[] split = result.split("&");
 
