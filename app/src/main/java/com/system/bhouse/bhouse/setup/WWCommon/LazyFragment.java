@@ -158,7 +158,6 @@ public class LazyFragment extends WWBaseFragment {
             onDestroyViewLazy();
         }
         isInit = false;
-        ButterKnife.unbind(this);
     }
 
     //当Fragment被滑到可见的位置时，调用

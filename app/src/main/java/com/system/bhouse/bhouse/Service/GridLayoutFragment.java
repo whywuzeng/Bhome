@@ -65,7 +65,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import rx.Observable;
 import rx.Subscription;
@@ -215,7 +215,6 @@ public class GridLayoutFragment extends Fragment implements GvMainAdapter.ImageC
         super.onDestroy();
 
         appBar.removeOnOffsetChangedListener(this);
-        ButterKnife.unbind(this);
     }
 
     @Override
@@ -237,58 +236,58 @@ public class GridLayoutFragment extends Fragment implements GvMainAdapter.ImageC
      */
     private boolean hasMeasured;
 
-    @Bind(R.id.toolbar)
+    @BindView(R.id.toolbar)
     public Toolbar toolbar;
 
     /**
      * toolbar滑动
      */
-    @Bind(R.id.app_bar)
+    @BindView(R.id.app_bar)
     public AppBarLayout appBar;
     /**
      * 大布局背景，遮罩层
      */
-    @Bind(R.id.bg_content)
+    @BindView(R.id.bg_content)
     public View bgContent;
     /**
      * 展开状态下toolbar显示的内容
      */
-    @Bind(R.id.include_toolbar_open)
+    @BindView(R.id.include_toolbar_open)
     public View toolbarOpen;
     /**
      * 展开状态下toolbar的遮罩层
      */
-    @Bind(R.id.bg_toolbar_open)
+    @BindView(R.id.bg_toolbar_open)
     public View bgToolbarOpen;
     /**
      * 收缩状态下toolbar显示的内容
      */
-    @Bind(R.id.include_toolbar_close)
+    @BindView(R.id.include_toolbar_close)
     public View toolbarClose;
     /**
      * 收缩状态下toolbar的遮罩层
      */
-    @Bind(R.id.bg_toolbar_close)
+    @BindView(R.id.bg_toolbar_close)
     public View bgToolbarClose;
 
     /**
      * 鸡汤字
      */
-    @Bind(R.id.tv_content_jitang)
+    @BindView(R.id.tv_content_jitang)
     TextView tv_content_jitang;
 
     /**
      * coordinatorlayout
      */
-    @Bind(R.id.coordinatorlayout)
+    @BindView(R.id.coordinatorlayout)
     CoordinatorLayout coordinatorlayout;
 
-    @Bind(R.id.action_capture)
+    @BindView(R.id.action_capture)
     ImageView action_capture;
-    @Bind(R.id.action_capture_cl)
+    @BindView(R.id.action_capture_cl)
     ImageView action_capture_cl;
 
-    @Bind(R.id.my_textureview)
+    @BindView(R.id.my_textureview)
     SceneTextureView my_textureview;
 
     /**

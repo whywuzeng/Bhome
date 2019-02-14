@@ -26,7 +26,7 @@ import com.system.bhouse.utils.blankutils.ToastUtils;
 
 import java.io.File;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
@@ -39,33 +39,33 @@ import butterknife.OnClick;
  */
 public class AttachmentsDownloadDetailActivity extends BaseFileDownActivity {
 
-    @Bind(R.id.icon)
+    @BindView(R.id.icon)
     ImageView icon;
-    @Bind(R.id.name)
+    @BindView(R.id.name)
     TextView name;
-    @Bind(R.id.content)
+    @BindView(R.id.content)
     TextView content;
-    @Bind(R.id.tv_download)
+    @BindView(R.id.tv_download)
     TextView tvDownload;
-    @Bind(R.id.progressbar)
+    @BindView(R.id.progressbar)
     ProgressBar progressbar;
-    @Bind(R.id.iv_download_canceld)
+    @BindView(R.id.iv_download_canceld)
     ImageView ivDownloadCanceld;
-    @Bind(R.id.rl_downlaod)
+    @BindView(R.id.rl_downlaod)
     RelativeLayout rlDownlaod;
-    @Bind(R.id.btn_download)
+    @BindView(R.id.btn_download)
     TextView btnDownload;
-    @Bind(R.id.btn_open)
+    @BindView(R.id.btn_open)
     TextView btnOpen;
-    @Bind(R.id.btnLeft)
+    @BindView(R.id.btnLeft)
     TextView btnLeft;
-    @Bind(R.id.btnRight)
+    @BindView(R.id.btnRight)
     TextView btnRight;
-    @Bind(R.id.iconTxt)
+    @BindView(R.id.iconTxt)
     TextView iconTxt;
-    @Bind(R.id.main_layout)
+    @BindView(R.id.main_layout)
     LinearLayout mainLayout;
-    @Bind(R.id.layout_dynamic_history)
+    @BindView(R.id.layout_dynamic_history)
     ConstraintLayout layoutDynamicHistory;
     private SharedPreferences share;
     public static final String ARG_ATTACHMENTOBJECT = "arg_attachmentobject";

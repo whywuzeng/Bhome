@@ -73,10 +73,10 @@ android {
                     XG_ACCESS_KEY: "A47RF3E3Z3MI",
 
                     //个推相关参数
-                    GETUI_APP_ID    : "Rr51sROK4B8FXbq0TUjAF5",
-                    GETUI_APP_KEY   : "eurxTdqHECAKgc7s4xtUe9",
-                    GETUI_APP_SECRET: "wvAHiSQwuJ79Fp1tBy8Td8",
-                    PACKAGE_NAME    : "com.system.bhouse.bhouse"
+                    GETUI_APP_ID    : "QYviEqYeTp5ciu6cxr1jb3",
+                    GETUI_APP_KEY   : "IkBzdW1FSd8912w4hmjDB7",
+                    GETUI_APP_SECRET: "n0LaBqGCTM9Qkp2IhhZhD7",
+                    PACKAGE_NAME    : applicationId
             ]
 
         }
@@ -241,6 +241,10 @@ dependencies {
     }
     annotationProcessor "com.github.hotchemi:permissionsdispatcher-processor:3.1.0"
     implementation 'com.android.support.constraint:constraint-layout:1.1.3'
+
+
+    // 个推
+    implementation "com.getui:sdk:$rootProject.ext.getuiVersion"
 
     //talk 聊天项目
     implementation project(':bhome-talk')

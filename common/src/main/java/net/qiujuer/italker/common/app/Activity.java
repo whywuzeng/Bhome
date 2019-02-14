@@ -1,13 +1,19 @@
 package net.qiujuer.italker.common.app;
 
 import android.annotation.SuppressLint;
+import android.content.pm.ActivityInfo;
+import android.content.res.TypedArray;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 
 import net.qiujuer.italker.common.widget.convention.PlaceHolderView;
 
+import java.lang.reflect.Field;
+import java.lang.reflect.Method;
 import java.util.List;
 
 import butterknife.ButterKnife;
@@ -18,10 +24,19 @@ import butterknife.ButterKnife;
 
 public abstract class Activity extends AppCompatActivity {
 
+    private static final String TAG = "Activity";
+    
     protected PlaceHolderView mPlaceHolderView;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
+        /**
+         * 初始化判断是否是 透明 ，方向固定
+         */
+        if (Build.VERSION.SDK_INT == Build.VERSION_CODES.O && isTranslucentOrFloating()) {
+            boolean result = fixOrientation();
+            Log.i(TAG, "avoid calling setRequestedOrientation when Oreo.");
+        }
         super.onCreate(savedInstanceState);
         // 在界面未初始化之前调用的初始化窗口
         initWidows();
@@ -36,6 +51,15 @@ public abstract class Activity extends AppCompatActivity {
         } else {
             finish();
         }
+    }
+
+    @Override
+    public void setRequestedOrientation(int requestedOrientation) {
+        if (Build.VERSION.SDK_INT == Build.VERSION_CODES.O && isTranslucentOrFloating()) {
+            Log.i(TAG, "avoid calling setRequestedOrientation when Oreo.");
+            return;
+        }
+        super.setRequestedOrientation(requestedOrientation);
     }
 
     /**
@@ -122,4 +146,39 @@ public abstract class Activity extends AppCompatActivity {
     public void setPlaceHolderView(PlaceHolderView placeHolderView) {
         this.mPlaceHolderView = placeHolderView;
     }
+
+    /**
+     * 8.0透明布局 方向设置 crash 。8.1修复此bug
+     * @return
+     */
+    private boolean isTranslucentOrFloating() {
+        boolean isTranslucentOrFloating = false;
+        try {
+            int[] styleableRes = (int[]) Class.forName("com.android.internal.R$styleable").getField("Window").get(null);
+            final TypedArray ta = obtainStyledAttributes(styleableRes);
+            Method m = ActivityInfo.class.getMethod("isTranslucentOrFloating", TypedArray.class);
+            m.setAccessible(true);
+            isTranslucentOrFloating = (boolean) m.invoke(null, ta);
+            m.setAccessible(false);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return isTranslucentOrFloating;
+    }
+
+    private boolean fixOrientation(){
+        try {
+            Field field = android.app.Activity.class.getDeclaredField("mActivityInfo");
+            field.setAccessible(true);
+            ActivityInfo o = (ActivityInfo)field.get(this);
+            o.screenOrientation = -1;
+            field.setAccessible(false);
+            return true;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+
+
 }

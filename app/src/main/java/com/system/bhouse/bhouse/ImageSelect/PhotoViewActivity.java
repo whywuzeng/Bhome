@@ -19,7 +19,7 @@ import com.system.bhouse.utils.AppManager;
 
 import java.util.Locale;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import uk.co.senab.photoview.PhotoView;
@@ -34,11 +34,11 @@ import uk.co.senab.photoview.PhotoView;
  */
 public class PhotoViewActivity extends BaseActivity {
 
-    @Bind(R.id.topfanhuititle_textview_zhende)
+    @BindView(R.id.topfanhuititle_textview_zhende)
     TextView topfanhuititleTextviewZhende;
-    @Bind(R.id.photoview)
+    @BindView(R.id.photoview)
     PhotoView photoview;
-    @Bind(R.id.fanhui_lin)
+    @BindView(R.id.fanhui_lin)
     LinearLayout fanhuiLin;
 
     @Override

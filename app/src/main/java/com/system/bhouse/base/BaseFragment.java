@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 import com.system.bhouse.Common.LoadOrder;
 
 import butterknife.ButterKnife;
+import butterknife.Unbinder;
 
 /**
  * Created by Administrator on 2016-4-15.
@@ -30,6 +31,8 @@ public abstract class BaseFragment<T extends BasePresenter> extends Fragment imp
     protected boolean isshow;
 
     protected boolean isstart=false;
+    private Unbinder unbinder;
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -45,7 +48,7 @@ public abstract class BaseFragment<T extends BasePresenter> extends Fragment imp
             }
 
             fragmentrootview = inflater.inflate(mContentViewId, container, false);
-            ButterKnife.bind(this,  fragmentrootview);
+            unbinder = ButterKnife.bind(this, fragmentrootview);
             initview(fragmentrootview);
             isstart=!isstart;
         }
@@ -72,7 +75,10 @@ public abstract class BaseFragment<T extends BasePresenter> extends Fragment imp
         if (parent != null) {
             parent.removeView(fragmentrootview);
         }
-        ButterKnife.unbind(this);
+        if (unbinder!=null)
+        {
+            unbinder.unbind();
+        }
     }
 
     @Override

@@ -25,7 +25,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
-import butterknife.Bind;
+import butterknife.BindView;
 
 /**
  * Created by Administrator on 2018-10-16.
@@ -37,15 +37,15 @@ import butterknife.Bind;
 
 public class ScanResultFragment extends SmartRefreshBaseFragment {
 
-    @Bind(R.id.listView)
+    @BindView(R.id.listView)
     RecyclerView listView;
-    @Bind(R.id.swipeRefreshLayout)
+    @BindView(R.id.swipeRefreshLayout)
     SmartRefreshLayout swipeRefreshLayout;
-    @Bind(R.id.icon)
+    @BindView(R.id.icon)
     View icon;
-    @Bind(R.id.message)
+    @BindView(R.id.message)
     TextView message;
-    @Bind(R.id.btnRetry)
+    @BindView(R.id.btnRetry)
     Button btnRetry;
     private String sToday;
     private String sYesterday;

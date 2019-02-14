@@ -23,7 +23,6 @@ import net.qiujuer.italker.common.app.Activity;
 import net.qiujuer.italker.common.widget.PortraitView;
 import net.qiujuer.italker.factory.persistence.Account;
 import net.qiujuer.italker.push.R;
-import net.qiujuer.italker.push.R2;
 import net.qiujuer.italker.push.frags.main.ActiveFragment;
 import net.qiujuer.italker.push.frags.main.ContactFragment;
 import net.qiujuer.italker.push.frags.main.GroupFragment;
@@ -31,40 +30,37 @@ import net.qiujuer.italker.push.helper.NavHelper;
 
 import java.util.Objects;
 
-import butterknife.BindView;
-import butterknife.OnClick;
-
-public class MainActivity extends Activity
+public class TalkMainActivity extends Activity
         implements BottomNavigationView.OnNavigationItemSelectedListener,
-        NavHelper.OnTabChangedListener<Integer> {
+        NavHelper.OnTabChangedListener<Integer>, View.OnClickListener {
 
-    @BindView(R2.id.appbar)
+//    @BindView(R2.id.appbar)
     View mLayAppbar;
 
-    @BindView(R2.id.im_portrait)
+//    @BindView(R2.id.main_im_portrait)
     PortraitView mPortrait;
 
-    @BindView(R2.id.txt_title)
+//    @BindView(R2.id.txt_title)
     TextView mTitle;
 
-    @BindView(R2.id.lay_container)
+//    @BindView(R2.id.lay_container)
     FrameLayout mContainer;
 
-    @BindView(R2.id.navigation)
+//    @BindView(R2.id.navigation)
     BottomNavigationView mNavigation;
 
-    @BindView(R2.id.btn_action)
+//    @BindView(R2.id.btn_action)
     FloatActionButton mAction;
 
     private NavHelper<Integer> mNavHelper;
 
     /**
-     * MainActivity 显示的入口
+     * TalkMainActivity 显示的入口
      *
      * @param context 上下文
      */
     public static void show(Context context) {
-        context.startActivity(new Intent(context, MainActivity.class));
+        context.startActivity(new Intent(context, TalkMainActivity.class));
     }
 
     @Override
@@ -80,19 +76,29 @@ public class MainActivity extends Activity
 
     @Override
     protected int getContentLayoutId() {
-        return R.layout.activity_main;
+        return R.layout.activity_talk_main;
     }
 
     @Override
     protected void initWidget() {
-        super.initWidget();
+//        super.initWidget();
+        mLayAppbar = findViewById(R.id.appbar);
+        mPortrait = findViewById(R.id.main_im_portrait);
+        mTitle = findViewById(R.id.txt_title);
+        mContainer = findViewById(R.id.lay_container);
+        mNavigation = findViewById(R.id.navigation);
+        mAction = findViewById(R.id.btn_action);
+
+        findViewById(R.id.im_search).setOnClickListener(this);
+        mPortrait.setOnClickListener(this);
+        findViewById(R.id.btn_action).setOnClickListener(this);
 
         // 初始化底部辅助工具类
-        mNavHelper = new NavHelper<>(this, R2.id.lay_container,
+        mNavHelper = new NavHelper<>(this, R.id.lay_container,
                 getSupportFragmentManager(), this);
-        mNavHelper.add(R2.id.action_home, new NavHelper.Tab<>(ActiveFragment.class, R.string.title_home))
-                .add(R2.id.action_group, new NavHelper.Tab<>(GroupFragment.class, R.string.title_group))
-                .add(R2.id.action_contact, new NavHelper.Tab<>(ContactFragment.class, R.string.title_contact));
+        mNavHelper.add(R.id.action_home, new NavHelper.Tab<>(ActiveFragment.class, R.string.title_home))
+                .add(R.id.action_group, new NavHelper.Tab<>(GroupFragment.class, R.string.title_group))
+                .add(R.id.action_contact, new NavHelper.Tab<>(ContactFragment.class, R.string.title_contact));
 
 
         // 添加对底部按钮点击的监听
@@ -116,18 +122,18 @@ public class MainActivity extends Activity
         // 从底部导中接管我们的Menu，然后进行手动的触发第一次点击
         Menu menu = mNavigation.getMenu();
         // 触发首次选中Home
-        menu.performIdentifierAction(R2.id.action_home, 0);
+        menu.performIdentifierAction(R.id.action_home, 0);
 
         // 初始化头像加载
         mPortrait.setup(Glide.with(this), Account.getUser());
     }
 
-    @OnClick(R2.id.im_portrait)
+//    @OnClick(R2.id.main_im_portrait)
     void onPortraitClick() {
         PersonalActivity.show(this, Account.getUserId());
     }
 
-    @OnClick(R2.id.im_search)
+//    @OnClick(R2.id.im_search)
     void onSearchMenuClick() {
         // 在群的界面的时候，点击顶部的搜索就进入群搜索界面
         // 其他都为人搜索的界面
@@ -136,7 +142,7 @@ public class MainActivity extends Activity
         SearchActivity.show(this, type);
     }
 
-    @OnClick(R2.id.btn_action)
+//    @OnClick(R2.id.btn_action)
     void onActionClick() {
         // 浮动按钮点击时，判断当前界面是群还是联系人界面
         // 如果是群，则打开群创建的界面
@@ -202,5 +208,32 @@ public class MainActivity extends Activity
                 .start();
 
 
+    }
+
+    /**
+     *     findViewById(R.id.im_search).setOnClickListener(this);
+     mPortrait.setOnClickListener(this);
+     findViewById(R.id.btn_action).setOnClickListener(this);
+     * @param v
+     */
+
+    @Override
+    public void onClick(View v) {
+        int i = v.getId();
+        if (i == R.id.im_search) {
+            onSearchMenuClick();
+
+        }
+        else if (i == R.id.main_im_portrait) {
+            onPortraitClick();
+
+        }
+        else if (i == R.id.btn_action) {
+            onActionClick();
+
+        }
+        else {
+
+        }
     }
 }

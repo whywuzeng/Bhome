@@ -21,7 +21,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 
 /**
@@ -161,55 +161,55 @@ public class ComponentReturnsLoadingAdapter extends LoadingAdapter<ComponentRetu
     }
 
     public class ItemViewHolder extends RecyclerView.ViewHolder {
-        @Bind(R.id.timeClock)
+        @BindView(R.id.timeClock)
         ImageView timeClock;
-        @Bind(R.id.tvMonthDay)
+        @BindView(R.id.tvMonthDay)
         TextView tvMonthDay;
-        @Bind(R.id.tvWeek)
+        @BindView(R.id.tvWeek)
         TextView tvWeek;
-        @Bind(R.id.text_tableId)
+        @BindView(R.id.text_tableId)
         TextView textTableId;
-        @Bind(R.id.text_tableId_content)
+        @BindView(R.id.text_tableId_content)
         TextView textTableIdContent;
-        @Bind(R.id.text_projectName)
+        @BindView(R.id.text_projectName)
         TextView textProjectName;
-        @Bind(R.id.text_projectName_content)
+        @BindView(R.id.text_projectName_content)
         TextView textProjectNameContent;
-        @Bind(R.id.text_dong)
+        @BindView(R.id.text_dong)
         TextView textDong;
-        @Bind(R.id.text_dong_content)
+        @BindView(R.id.text_dong_content)
         TextView textDongContent;
-        @Bind(R.id.text_ceng)
+        @BindView(R.id.text_ceng)
         TextView textCeng;
-        @Bind(R.id.text_ceng_content)
+        @BindView(R.id.text_ceng_content)
         TextView textCengContent;
-        @Bind(R.id.text_reqiuerDate)
+        @BindView(R.id.text_reqiuerDate)
         TextView textReqiuerDate;
-        @Bind(R.id.text_reqiuerDate_content)
+        @BindView(R.id.text_reqiuerDate_content)
         TextView textReqiuerDateContent;
-        @Bind(R.id.text_description)
+        @BindView(R.id.text_description)
         TextView textDescription;
-        @Bind(R.id.text_description_content)
+        @BindView(R.id.text_description_content)
         TextView textDescriptionContent;
-        @Bind(R.id.text_status)
+        @BindView(R.id.text_status)
         TextView textStatus;
-        @Bind(R.id.text_status_content)
+        @BindView(R.id.text_status_content)
         TextView textStatusContent;
-        @Bind(R.id.text_entryPeople)
+        @BindView(R.id.text_entryPeople)
         TextView textEntryPeople;
-        @Bind(R.id.text_entryPeople_content)
+        @BindView(R.id.text_entryPeople_content)
         TextView textEntryPeopleContent;
-        @Bind(R.id.text_entryTime)
+        @BindView(R.id.text_entryTime)
         TextView textEntryTime;
-        @Bind(R.id.text_entryTime_content)
+        @BindView(R.id.text_entryTime_content)
         TextView textEntryTimeContent;
-        @Bind(R.id.main_layout)
+        @BindView(R.id.main_layout)
         LinearLayout mainLayout;
-        @Bind(R.id.ll_bottom_3)
+        @BindView(R.id.ll_bottom_3)
         LinearLayout llBottom3;
-        @Bind(R.id.ll_bottom_2)
+        @BindView(R.id.ll_bottom_2)
         LinearLayout llBottom2;
-        @Bind(R.id.ll_bottom_1)
+        @BindView(R.id.ll_bottom_1)
         LinearLayout llBottom1;
 
         ItemViewHolder(View view) {

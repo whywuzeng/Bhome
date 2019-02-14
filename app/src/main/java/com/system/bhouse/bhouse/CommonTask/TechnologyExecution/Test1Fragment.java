@@ -35,7 +35,7 @@ import com.system.bhouse.utils.ValueUtils;
 import java.util.ArrayList;
 import java.util.List;
 
-import butterknife.Bind;
+import butterknife.BindView;
 
 /**
  * Created by Administrator on 2018-07-17.
@@ -47,7 +47,7 @@ import butterknife.Bind;
 
 public class Test1Fragment extends BaseBackFragment implements ItemTouchListener, BaseQuickAdapter.OnItemChildClickListener {
 
-    @Bind(R.id.my_recycle_view)
+    @BindView(R.id.my_recycle_view)
     RecyclerView my_recycle_view;
 
     //data 工序数据

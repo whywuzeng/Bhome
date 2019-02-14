@@ -32,7 +32,7 @@ import com.system.bhouse.utils.custom.CustomToast;
 import java.util.ArrayList;
 import java.util.List;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import de.greenrobot.event.EventBus;
@@ -48,11 +48,11 @@ public class InformationActivity extends WWBaseActivity implements SimpleTreeAda
 
     private static final String tag = "InformationActivity";
 
-    @Bind(R.id.text_title)
+    @BindView(R.id.text_title)
     TextView textTitle;
 
     protected List<Node> mDatas = new ArrayList<Node>();
-    @Bind(R.id.img_left_back)
+    @BindView(R.id.img_left_back)
     AppCompatImageView imgLeftBack;
 
     private SimpleTreeAdapter mAdapter;
@@ -241,7 +241,6 @@ public class InformationActivity extends WWBaseActivity implements SimpleTreeAda
     @Override
     public void onDestroy() {
         super.onDestroy();
-        ButterKnife.unbind(this);
         mShimmer.cancel();
     }
 

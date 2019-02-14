@@ -22,7 +22,7 @@ import com.system.bhouse.utils.blankutils.TimeUtils;
 
 import java.util.List;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import de.hdodenhof.circleimageview.CircleImageView;
 import rx.Observable;
@@ -36,10 +36,10 @@ import rx.Observer;
  * com.system.bhouse.Common.filewidget.maopao
  */
 public class ProjectMaopaoActivity extends AttachmentBaseDetailActivity {
-    @Bind(R.id.recycler)
+    @BindView(R.id.recycler)
     RecyclerView recycler;
 
-    @Bind(R.id.blankLayout)
+    @BindView(R.id.blankLayout)
     View blankLayout;
 
     private MaopaoAdapter maopaoAdapter;
@@ -93,19 +93,19 @@ public class ProjectMaopaoActivity extends AttachmentBaseDetailActivity {
 
    static class MyMaopaoViewHolder extends BaseViewHolder {
 
-        @Bind(R.id.icon)
+        @BindView(R.id.icon)
         CircleImageView icon;
-        @Bind(R.id.name)
+        @BindView(R.id.name)
         TextView name;
-        @Bind(R.id.time)
+        @BindView(R.id.time)
         TextView time;
-        @Bind(R.id.content)
+        @BindView(R.id.content)
         GifSpanTextView content;
-        @Bind(R.id.imageSingle)
+        @BindView(R.id.imageSingle)
         MinSizeImageView imageSingle;
-        @Bind(R.id.comment)
+        @BindView(R.id.comment)
         TextView comment;
-        @Bind(R.id.delete)
+        @BindView(R.id.delete)
         TextView delete;
 
         public MyMaopaoViewHolder(View view) {

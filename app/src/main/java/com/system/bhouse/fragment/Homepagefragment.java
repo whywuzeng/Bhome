@@ -17,13 +17,13 @@ import android.widget.Toast;
 
 import com.system.bhouse.bhouse.R;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class Homepagefragment extends Fragment {
-    @Bind(R.id.gridview)
+    @BindView(R.id.gridview)
     GridView gridview;
-    @Bind(R.id.text_title)
+    @BindView(R.id.text_title)
     TextView textTitle;
 
     private int[] ints = {R.drawable.caigou, R.drawable.chengben, R.drawable.xiaoshou, R.drawable.yusuan, R.drawable.zichan, R.drawable.zijin, R.drawable.kaohe, R.drawable.kucun};
@@ -126,7 +126,6 @@ public class Homepagefragment extends Fragment {
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        ButterKnife.unbind(this);
     }
 
     private int[] Sin = {R.string.zijing, R.string.yusuan, R.string.chengben,

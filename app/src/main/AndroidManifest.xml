@@ -351,32 +351,36 @@
                   <!--android:screenOrientation="portrait"/>-->
 
         <!-- 个推的广播注册 -->
-        <receiver
-            android:name="net.qiujuer.italker.push.MessageReceiver"
-            android:enabled="true"
-            android:exported="true"
-            android:permission="1000">
-            <intent-filter>
-                <action android:name="com.igexin.sdk.action.${GETUI_APP_ID}" />
-            </intent-filter>
-        </receiver>
+        <!--<receiver-->
+            <!--android:name=".BhomeMessageReceiver"-->
+            <!--android:enabled="true"-->
+            <!--android:exported="true"-->
+            <!--android:permission="1000">-->
+            <!--<intent-filter>-->
+                <!--<action android:name="com.igexin.sdk.action.${GETUI_APP_ID}" />-->
+            <!--</intent-filter>-->
+        <!--</receiver>-->
+
+        <!-- 个推的intentService注册 -->
+        <service android:name="com.system.bhouse.bhouse.GetuiIntentService"/>
 
 
         <activity
             android:name="net.qiujuer.italker.push.LaunchActivity"
             android:label="@string/title_activity_launch"
             android:theme="@style/AppTheme.TransStatusBar">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
+            <!--<intent-filter>-->
+                <!--<action android:name="android.intent.action.MAIN" />-->
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
+                <!--<category android:name="android.intent.category.LAUNCHER" />-->
+            <!--</intent-filter>-->
         </activity>
         <activity
-            android:name="net.qiujuer.italker.push.activities.MainActivity"
+            android:name="net.qiujuer.italker.push.activities.TalkMainActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.Main" />
         <activity
+            android:launchMode="singleTask"
             android:name="net.qiujuer.italker.push.activities.AccountActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.Account" />
@@ -495,6 +499,11 @@
     <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW"/>
     <!--允许未知来源应用-->
     <uses-permission android:name="android.permission.REQUEST_INSTALL_PACKAGES" />
+    <!-- 录音权限 -->
+    <uses-permission android:name="android.permission.RECORD_AUDIO" />
+
+    <!-- 读取存储权限 -->
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
     <!--华为的文档很好找，华为桌面加角标-->
     <uses-permission android:name="com.huawei.android.launcher.permission.CHANGE_BADGE"/>

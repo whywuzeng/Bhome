@@ -47,12 +47,15 @@ import com.system.bhouse.utils.blankutils.ToastUtils;
 import com.system.bhouse.utils.sharedpreferencesuser;
 import com.tencent.android.tpush.XGPushShowedResult;
 
+import net.qiujuer.italker.push.LaunchActivity;
+
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.EFragment;
 import org.androidannotations.annotations.OnActivityResult;
 import org.androidannotations.annotations.ViewById;
 
 import java.util.Calendar;
+import java.util.Objects;
 
 import de.greenrobot.event.EventBus;
 import de.hdodenhof.circleimageview.CircleImageView;
@@ -124,6 +127,9 @@ public class AboutWeFragment extends WWBaseFragment {
     @ViewById(R.id.tv_toolbar_title_mid)
     TextView tvToolbarTitleMid;
 
+    @ViewById(R.id.ll_message)
+    LinearLayout llMessage;
+
     @AfterViews
     public void initAboutWeFrag() {
 
@@ -173,6 +179,11 @@ public class AboutWeFragment extends WWBaseFragment {
                 MyNotificationActivity_.intent(getActivity()).start();
             }
         });
+
+        llMessage.setOnClickListener(v -> {
+            LaunchActivity.show(Objects.requireNonNull(getActivity()));
+        });
+
 
         initBadgerView(App.ColumCount);
 //        SetAvatorIcon();

@@ -39,7 +39,7 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.List;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 
 /**
@@ -55,7 +55,7 @@ public class ProduceActivity extends WWBackActivity implements BaseQuickAdapter.
 
     private static final String TAG = "ProduceActivity";
     
-    @Bind(R.id.recycler_view)
+    @BindView(R.id.recycler_view)
     RecyclerView recyclerView;
 
     private static final int RESULT_LOCAL = 2;

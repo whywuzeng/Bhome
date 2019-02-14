@@ -17,7 +17,7 @@ import com.system.bhouse.utils.TenUtils.GlideUtils;
 import java.util.ArrayList;
 import java.util.List;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 
 /**
@@ -71,15 +71,15 @@ public class NewsListLoadingAdapter extends LoadingAdapter<NeteastNewsSummary> {
     }
 
     static  class ItemViewHolder extends RecyclerView.ViewHolder {
-        @Bind(R.id.iv_news_summary_photo)
+        @BindView(R.id.iv_news_summary_photo)
         ImageView ivNewsSummaryPhoto;
-        @Bind(R.id.tv_news_summary_title)
+        @BindView(R.id.tv_news_summary_title)
         TextView tvNewsSummaryTitle;
-        @Bind(R.id.tv_news_summary_digest)
+        @BindView(R.id.tv_news_summary_digest)
         TextView tvNewsSummaryDigest;
-        @Bind(R.id.tv_news_summary_ptime)
+        @BindView(R.id.tv_news_summary_ptime)
         TextView tvNewsSummaryPtime;
-        @Bind(R.id.home_item_root_view)
+        @BindView(R.id.home_item_root_view)
         CardView homeItemRootView;
 
         ItemViewHolder(View view) {

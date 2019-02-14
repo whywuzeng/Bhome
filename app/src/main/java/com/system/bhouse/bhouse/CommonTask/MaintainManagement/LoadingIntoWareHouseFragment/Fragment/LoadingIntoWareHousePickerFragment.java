@@ -24,7 +24,7 @@ import com.system.bhouse.bhouse.R;
 import java.util.ArrayList;
 import java.util.List;
 
-import butterknife.Bind;
+import butterknife.BindView;
 
 /**
  * Created by Administrator on 2018-08-24.
@@ -43,20 +43,20 @@ public class LoadingIntoWareHousePickerFragment extends BaseBackFragment impleme
     public static final String BUNDLE_RESULT_AGES_BOMID = "bundle_result_ages_bomid";
     public static final String BUNDLE_RESULT_AGES_TITLE = "bundle_result_ages_title";
     public static final String BUNDLE_RESULT_AGES_CONTAINER="bundle_result_ages_container";
-    @Bind(R.id.et_query)
+    @BindView(R.id.et_query)
     EditText etQuery;
-    @Bind(R.id.tv_Empty)
+    @BindView(R.id.tv_Empty)
     TextView tvEmpty;
-    @Bind(R.id.spDwon)
+    @BindView(R.id.spDwon)
     Spinner spDwon;
 
     private ArrayAdapter<String> stringArrayAdapter;
     private List<LoadingIntoPickBeanSection> mySections;
     private BaseSectionQuickAdapter commonSectionAdapter;
 
-    @Bind(R.id.listView)
+    @BindView(R.id.listView)
     LRecyclerView listView;
-    @Bind(R.id.toolbar_com)
+    @BindView(R.id.toolbar_com)
     android.support.v7.widget.Toolbar mToolbar;
 
     public final static String TITLE_EXTRA = "title";

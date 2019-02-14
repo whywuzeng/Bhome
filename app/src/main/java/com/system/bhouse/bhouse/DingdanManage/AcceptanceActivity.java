@@ -18,7 +18,7 @@ import com.system.bhouse.utils.AppManager;
 
 import java.util.ArrayList;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
@@ -33,9 +33,9 @@ import butterknife.OnClick;
 public class AcceptanceActivity extends BaseActivity {
 
 
-    @Bind(R.id.topfanhuititle_textview_zhende)
+    @BindView(R.id.topfanhuititle_textview_zhende)
     TextView topfanhuititle_textview_zhende;
-    @Bind(R.id.fanhui_lin)
+    @BindView(R.id.fanhui_lin)
     LinearLayout fanhuiLin;
     private TabLayout viewById;
     private ViewPager viewById1;

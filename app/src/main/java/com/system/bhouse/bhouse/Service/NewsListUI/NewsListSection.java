@@ -14,7 +14,7 @@ import com.system.bhouse.ui.sectioned.Section;
 
 import java.util.List;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 
 /**
@@ -70,15 +70,15 @@ public class NewsListSection extends Section {
     }
 
     static class ItemResViewHolder extends RecyclerView.ViewHolder {
-        @Bind(R.id.iv_news_summary_photo)
+        @BindView(R.id.iv_news_summary_photo)
         ImageView ivNewsSummaryPhoto;
-        @Bind(R.id.tv_news_summary_title)
+        @BindView(R.id.tv_news_summary_title)
         TextView tvNewsSummaryTitle;
-        @Bind(R.id.tv_news_summary_digest)
+        @BindView(R.id.tv_news_summary_digest)
         TextView tvNewsSummaryDigest;
-        @Bind(R.id.tv_news_summary_ptime)
+        @BindView(R.id.tv_news_summary_ptime)
         TextView tvNewsSummaryPtime;
-        @Bind(R.id.home_item_root_view)
+        @BindView(R.id.home_item_root_view)
         CardView homeItemRootView;
 
         ItemResViewHolder(View view) {
@@ -110,7 +110,7 @@ public class NewsListSection extends Section {
     }
 
      static class HeadViewHolder extends RecyclerView.ViewHolder{
-        @Bind(R.id.tv_more)
+        @BindView(R.id.tv_more)
         TextView tvMore;
 
         HeadViewHolder(View view) {

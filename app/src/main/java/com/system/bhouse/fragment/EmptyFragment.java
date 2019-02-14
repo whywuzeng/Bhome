@@ -10,7 +10,7 @@ import android.widget.ImageView;
 
 import com.system.bhouse.bhouse.R;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 
 /**
@@ -19,7 +19,7 @@ import butterknife.ButterKnife;
 
 public class EmptyFragment extends Fragment {
 
-    @Bind(R.id.iv_cen_liuhan)
+    @BindView(R.id.iv_cen_liuhan)
     ImageView imageView;
 
     public String textTitle ="";
@@ -64,6 +64,5 @@ public class EmptyFragment extends Fragment {
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        ButterKnife.unbind(this);
     }
 }

@@ -11,7 +11,7 @@ import net.qiujuer.italker.factory.presenter.account.LoginContract;
 import net.qiujuer.italker.factory.presenter.account.LoginPresenter;
 import net.qiujuer.italker.push.R;
 import net.qiujuer.italker.push.R2;
-import net.qiujuer.italker.push.activities.MainActivity;
+import net.qiujuer.italker.push.activities.TalkMainActivity;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -101,7 +101,7 @@ public class LoginFragment extends PresenterFragment<LoginContract.Presenter>
 
     @Override
     public void loginSuccess() {
-        MainActivity.show(getContext());
+        TalkMainActivity.show(getContext());
         getActivity().finish();
     }
 }

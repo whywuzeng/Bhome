@@ -11,7 +11,7 @@ import com.system.bhouse.bhouse.R;
 import java.util.ArrayList;
 import java.util.List;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 
 /**
@@ -24,131 +24,131 @@ import butterknife.ButterKnife;
 
 public class ModuleAssignViewHolder extends BaseViewHolder{
 
-    @Bind(R.id.tv_wuliao)
+    @BindView(R.id.tv_wuliao)
    public TextView tv_wuliao;
-    @Bind(R.id.WuliaoUnit)
+    @BindView(R.id.WuliaoUnit)
     public TextView WuliaoUnit;
-    @Bind(R.id.tv_count)
+    @BindView(R.id.tv_count)
     public TextView tv_count;
-    @Bind(R.id.mianLayout)
+    @BindView(R.id.mianLayout)
     public  LinearLayout mianLayout;
-    @Bind(R.id.img_delete_item)
+    @BindView(R.id.img_delete_item)
     public  ImageView imgDeleteItem;
-    @Bind(R.id.tv_count_measure)
+    @BindView(R.id.tv_count_measure)
     public  TextView tv_count_measure;
-    @Bind(R.id.tv_count_amount)
+    @BindView(R.id.tv_count_amount)
     public TextView tv_count_amount;
-    @Bind(R.id.iv_litte_grey_right_arrow)
+    @BindView(R.id.iv_litte_grey_right_arrow)
     public  ImageView ivLitteGreyRightArrow;
 
-    @Bind(R.id.tv_wuliao_id)
+    @BindView(R.id.tv_wuliao_id)
     public TextView tv_wuliao_id;
-    @Bind(R.id.tv_WuliaoUnit_id)
+    @BindView(R.id.tv_WuliaoUnit_id)
     public  TextView tv_WuliaoUnit_id;
-    @Bind(R.id.tv_count_measure_id)
+    @BindView(R.id.tv_count_measure_id)
     public  TextView tv_count_measure_id;
-    @Bind(R.id.tv_count_amount_id)
+    @BindView(R.id.tv_count_amount_id)
     public  TextView tv_count_amount_id;
-    @Bind(R.id.tv_count_id)
+    @BindView(R.id.tv_count_id)
     public  TextView tv_count_id;
 
 
-    @Bind(R.id.tv_unit_id)
+    @BindView(R.id.tv_unit_id)
     public TextView tv_unit_id;
-    @Bind(R.id.tv_unit)
+    @BindView(R.id.tv_unit)
     public  TextView tv_unit;
-    @Bind(R.id.tv_requireNum_id)
+    @BindView(R.id.tv_requireNum_id)
     public TextView tv_requireNum_id;
-    @Bind(R.id.tv_requireNum)
+    @BindView(R.id.tv_requireNum)
     public  TextView tv_requireNum;
-    @Bind(R.id.tv_ReceiptAmount_id)
+    @BindView(R.id.tv_ReceiptAmount_id)
     public  TextView tv_ReceiptAmount_id;
-    @Bind(R.id.tv_ReceiptAmount)
+    @BindView(R.id.tv_ReceiptAmount)
     public TextView tv_ReceiptAmount;
-    @Bind(R.id.tv_projectName_id)
+    @BindView(R.id.tv_projectName_id)
     public  TextView tv_projectName_id;
-    @Bind(R.id.tv_projectName)
+    @BindView(R.id.tv_projectName)
     public TextView tv_projectName;
-    @Bind(R.id.tv_dong_id)
+    @BindView(R.id.tv_dong_id)
     public TextView tv_dong_id;
-    @Bind(R.id.tv_dong)
+    @BindView(R.id.tv_dong)
     public  TextView tv_dong;
-    @Bind(R.id.tv_cengAmount_id)
+    @BindView(R.id.tv_cengAmount_id)
     public TextView tv_cengAmount_id;
-    @Bind(R.id.tv_cengAmount)
+    @BindView(R.id.tv_cengAmount)
     public  TextView tv_cengAmount;
 
-    @Bind(R.id.tv_shifouproduce_id)
+    @BindView(R.id.tv_shifouproduce_id)
     public  TextView tv_shifouproduce_id;
-    @Bind(R.id.tv_shifouproduce)
+    @BindView(R.id.tv_shifouproduce)
     public  TextView tv_shifouproduce;
-    @Bind(R.id.tv_subBeizhu_id)
+    @BindView(R.id.tv_subBeizhu_id)
     public TextView tv_subBeizhu_id;
-    @Bind(R.id.tv_subBeizhu)
+    @BindView(R.id.tv_subBeizhu)
     public TextView tv_subBeizhu;
 
-    @Bind(R.id.lll_bottom_1)
+    @BindView(R.id.lll_bottom_1)
     public  LinearLayout lll_bottom_1;
-    @Bind(R.id.vvv_bottom_1)
+    @BindView(R.id.vvv_bottom_1)
     public  View vvv_bottom_1;
 
-    @Bind(R.id.lll_bottom_2)
+    @BindView(R.id.lll_bottom_2)
     public LinearLayout lll_bottom_2;
-    @Bind(R.id.vvv_bottom_2)
+    @BindView(R.id.vvv_bottom_2)
     public View vvv_bottom_2;
 
-    @Bind(R.id.ll_top_1)
+    @BindView(R.id.ll_top_1)
     public  LinearLayout ll_top_1;
-    @Bind(R.id.ll_bottom_4)
+    @BindView(R.id.ll_bottom_4)
     public LinearLayout ll_bottom_4;
-    @Bind(R.id.vv_bottom_4)
+    @BindView(R.id.vv_bottom_4)
     public View vv_bottom_4;
-    @Bind(R.id.vv_top_2)
+    @BindView(R.id.vv_top_2)
     public View vv_top_2;
 
-    @Bind(R.id.iv_projectName)
+    @BindView(R.id.iv_projectName)
     public ImageView ivprojectname;
-    @Bind(R.id.iv_subBeizhu)
+    @BindView(R.id.iv_subBeizhu)
     public  ImageView ivsubBeizhu;
 
-    @Bind(R.id.ll_projectName)
+    @BindView(R.id.ll_projectName)
     public LinearLayout ll_projectName;
 
     //6-21新增的id
-    @Bind(R.id.ll_top1_deleteIv)
+    @BindView(R.id.ll_top1_deleteIv)
     public LinearLayout ll_top1_deleteIv;
-    @Bind(R.id.vv_top1_deleteIv)
+    @BindView(R.id.vv_top1_deleteIv)
     public  View vv_top1_deleteIv;
-    @Bind(R.id.ll_top2)
+    @BindView(R.id.ll_top2)
     public  LinearLayout ll_top2;
-    @Bind(R.id.vv_top_22)
+    @BindView(R.id.vv_top_22)
     public View vv_top_22;
-    @Bind(R.id.ll_top3)
+    @BindView(R.id.ll_top3)
     public  LinearLayout ll_top3;
-    @Bind(R.id.vv_top_3)
+    @BindView(R.id.vv_top_3)
     public View vv_top_3;
-    @Bind(R.id.ll_top4)
+    @BindView(R.id.ll_top4)
     public  LinearLayout ll_top4;
-    @Bind(R.id.vv_top_4)
+    @BindView(R.id.vv_top_4)
     public View vv_top_4;
-    @Bind(R.id.ll_top5)
+    @BindView(R.id.ll_top5)
     public  LinearLayout ll_top5;
-    @Bind(R.id.vv_top_5)
+    @BindView(R.id.vv_top_5)
     public View vv_top_5;
-    @Bind(R.id.ll_top6)
+    @BindView(R.id.ll_top6)
     public LinearLayout ll_top6;
-    @Bind(R.id.vv_top_6)
+    @BindView(R.id.vv_top_6)
     public View vv_top_6;
-    @Bind(R.id.vv_projectName)
+    @BindView(R.id.vv_projectName)
     public View vv_projectName;
 
-    @Bind(R.id.ll_ll_view_4)
+    @BindView(R.id.ll_ll_view_4)
     public LinearLayout ll_ll_view_4;
-    @Bind(R.id.ll_view_4)
+    @BindView(R.id.ll_view_4)
     public View ll_view_4;
-    @Bind(R.id.ll_linearlayout_4)
+    @BindView(R.id.ll_linearlayout_4)
     public  LinearLayout ll_linearlayout_4;
-    @Bind(R.id.vvvv_bottom_2)
+    @BindView(R.id.vvvv_bottom_2)
     public  View vvvv_bottom_2;
 
 

@@ -13,7 +13,7 @@ import com.system.bhouse.bhouse.R;
 import com.system.bhouse.bhouse.phone.view.WechatTab;
 import com.system.bhouse.bhouse.setup.WWCommon.WWBaseFragment;
 
-import butterknife.Bind;
+import butterknife.BindView;
 
 /**
  * Created by Administrator on 2018-10-16.
@@ -25,9 +25,9 @@ import butterknife.Bind;
 
 public class ScanResultParentFragment extends WWBaseFragment {
 
-    @Bind(R.id.tabs)
+    @BindView(R.id.tabs)
     WechatTab tabs;
-    @Bind(R.id.scanresultProgram)
+    @BindView(R.id.scanresultProgram)
     ViewPager scanresultProgram;
     private String[] typeItem;
     private String[] typeItemTag;

@@ -95,6 +95,15 @@ public abstract class Fragment extends android.support.v4.app.Fragment {
 
     }
 
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+//        if (mRootUnBinder!=null)
+//        {
+//            mRootUnBinder.unbind();
+//        }
+    }
+
     /**
      * 当首次初始化数据的时候会调用的方法
      */

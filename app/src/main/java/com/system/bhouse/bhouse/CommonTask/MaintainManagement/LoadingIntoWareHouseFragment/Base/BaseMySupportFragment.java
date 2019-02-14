@@ -80,7 +80,6 @@ public class BaseMySupportFragment extends MySupportFragment{
         }
 
         super.onDestroy();
-        ButterKnife.unbind(this);
     }
 
     //添加滑动响应

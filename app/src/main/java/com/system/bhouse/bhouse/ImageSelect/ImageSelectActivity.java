@@ -39,7 +39,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import io.github.lijunguan.imgselector.ImageSelector;
 
@@ -57,9 +57,9 @@ import static com.system.bhouse.base.App.USER_INFO;
  */
 
 public class ImageSelectActivity extends BaseActivity {
-    @Bind(R.id.topfanhuititle_textview_zhende)
+    @BindView(R.id.topfanhuititle_textview_zhende)
     TextView topfanhuititleTextviewZhende;
-    @Bind(R.id.fanhui_lin)
+    @BindView(R.id.fanhui_lin)
     LinearLayout llLin;
     private Toolbar toolbar;
     private Button btnimageSelect;
@@ -394,9 +394,9 @@ public class ImageSelectActivity extends BaseActivity {
 
         static class ImgViewHolder extends RecyclerView.ViewHolder {
 
-            @Bind(R.id.et_file_name)
+            @BindView(R.id.et_file_name)
             EditText et_file_name;
-            @Bind(R.id.iv_selectimage)
+            @BindView(R.id.iv_selectimage)
              ImageView iv_selectimage;
 
             public ImgViewHolder(View itemView) {

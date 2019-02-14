@@ -20,7 +20,7 @@ import net.qiujuer.italker.factory.presenter.user.UpdateInfoContract;
 import net.qiujuer.italker.factory.presenter.user.UpdateInfoPresenter;
 import net.qiujuer.italker.push.R;
 import net.qiujuer.italker.push.R2;
-import net.qiujuer.italker.push.activities.MainActivity;
+import net.qiujuer.italker.push.activities.TalkMainActivity;
 import net.qiujuer.italker.push.frags.media.GalleryFragment;
 
 import java.io.File;
@@ -177,7 +177,7 @@ public class UpdateInfoFragment extends PresenterFragment<UpdateInfoContract.Pre
     @Override
     public void updateSucceed() {
         // 更新成功跳转到主界面
-        MainActivity.show(getContext());
+        TalkMainActivity.show(getContext());
         getActivity().finish();
     }
 

@@ -64,7 +64,7 @@ import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import de.greenrobot.event.EventBus;
@@ -75,7 +75,7 @@ import rx.Observer;
 public class MainActivity extends BaseActivity implements  TopMiddleMenu.OnMenuItemClickListener {
 
     private ServiceConnection connection;
-    private static String Tag = "Bind";
+    private static String Tag = "BindView";
     private static int First = 0;
     private static int Second = 1;
     private static int Third = 2;
@@ -115,55 +115,55 @@ public class MainActivity extends BaseActivity implements  TopMiddleMenu.OnMenuI
 
     String[] s1 = {"1", "2", "3", "4", "5"};
 
-    @Bind(R.id.content_pager)
+    @BindView(R.id.content_pager)
     IndexViewPager contentPager;
-    @Bind(R.id.first_page_iv)
+    @BindView(R.id.first_page_iv)
     ImageView firstPageIv;
-    @Bind(R.id.first_page_tv)
+    @BindView(R.id.first_page_tv)
     TextView firstPageTv;
-    @Bind(R.id.first_page_item)
+    @BindView(R.id.first_page_item)
     LinearLayout firstPageItem;
-    @Bind(R.id.classic_iv)
+    @BindView(R.id.classic_iv)
     ImageView classicIv;
-    @Bind(R.id.classic_tv)
+    @BindView(R.id.classic_tv)
     TextView classicTv;
-    @Bind(R.id.classic_item)
+    @BindView(R.id.classic_item)
     LinearLayout classicItem;
-    @Bind(R.id.shopping_car_iv)
+    @BindView(R.id.shopping_car_iv)
     ImageView shoppingCarIv;
-    @Bind(R.id.shopping_car_tv)
+    @BindView(R.id.shopping_car_tv)
     TextView shoppingCarTv;
-    @Bind(R.id.shopping_car_item)
+    @BindView(R.id.shopping_car_item)
     LinearLayout shoppingCarItem;
-    @Bind(R.id.house_keeper_iv)
+    @BindView(R.id.house_keeper_iv)
     ImageView houseKeeperIv;
-    @Bind(R.id.house_keeper_tv)
+    @BindView(R.id.house_keeper_tv)
     TextView houseKeeperTv;
-    @Bind(R.id.house_keeper_item)
+    @BindView(R.id.house_keeper_item)
     LinearLayout houseKeeperItem;
-    @Bind(R.id.my_lehu_iv)
+    @BindView(R.id.my_lehu_iv)
     ImageView myLehuIv;
-    @Bind(R.id.my_lehu_tv)
+    @BindView(R.id.my_lehu_tv)
     TextView myLehuTv;
-    @Bind(R.id.my_lehu_item)
+    @BindView(R.id.my_lehu_item)
     LinearLayout myLehuItem;
-    @Bind(R.id.first_page_item_flag)
+    @BindView(R.id.first_page_item_flag)
     ImageView firstPageItemFlag;
-    @Bind(R.id.classic_item_flag)
+    @BindView(R.id.classic_item_flag)
     ImageView classicItemFlag;
-    @Bind(R.id.shopping_car_item_flag)
+    @BindView(R.id.shopping_car_item_flag)
     ImageView shoppingCarItemFlag;
-    @Bind(R.id.house_keeper_item_flag)
+    @BindView(R.id.house_keeper_item_flag)
     ImageView houseKeeperItemFlag;
-    @Bind(R.id.my_lehu_item_flag)
+    @BindView(R.id.my_lehu_item_flag)
     ImageView myLehuItemFlag;
 
-//    @Bind(R.id.tv_toolbar_title_mid)
+//    @BindView(R.id.tv_toolbar_title_mid)
 //    TextView tv_toolbar_title_mid;
 
     FragmentManager mFragmentManager;
 
-    @Bind(R.id.mSatelliteMenuLeftTop)
+    @BindView(R.id.mSatelliteMenuLeftTop)
     TopMiddleMenu mSatelliteMenuLeftTop;
 
 

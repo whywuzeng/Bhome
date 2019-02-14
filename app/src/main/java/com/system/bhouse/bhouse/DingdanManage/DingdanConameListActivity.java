@@ -19,7 +19,7 @@ import com.system.bhouse.bhouse.R;
 import com.system.bhouse.ui.floatingtoolbar.FloatingToolbar;
 import com.system.bhouse.utils.AppManager;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 
 /**
@@ -32,9 +32,9 @@ import butterknife.ButterKnife;
  */
 public class DingdanConameListActivity extends BaseActivity implements FloatingToolbar.ItemClickListener{
 
-    @Bind(R.id.topfanhuititle_textview_zhende)
+    @BindView(R.id.topfanhuititle_textview_zhende)
     TextView topfanhuititle_textview_zhende;
-    @Bind(R.id.rel_fragment)
+    @BindView(R.id.rel_fragment)
     RelativeLayout rel_fragment;
     private LinearLayout fanhui_lin;
     private FragmentManager supportFragmentManager;

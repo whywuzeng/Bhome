@@ -15,7 +15,7 @@ import com.system.bhouse.bhouse.produce.adpter.QDRecyclerViewAdapter;
 
 import java.util.ArrayList;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 
 
@@ -26,7 +26,7 @@ import butterknife.ButterKnife;
 
 public class QDSnapHelperActivity extends AppCompatActivity {
 
-    @Bind(R.id.pagerWrap)
+    @BindView(R.id.pagerWrap)
     ViewGroup mPagerWrap;
 
     RecyclerView mRecyclerView;
@@ -113,6 +113,5 @@ public class QDSnapHelperActivity extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        ButterKnife.unbind(this);
     }
 }

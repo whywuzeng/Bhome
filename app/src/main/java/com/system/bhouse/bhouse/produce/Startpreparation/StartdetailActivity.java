@@ -24,8 +24,7 @@ import com.system.bhouse.utils.ProgressUtils;
 
 import java.util.ArrayList;
 
-import butterknife.Bind;
-import butterknife.ButterKnife;
+import butterknife.BindView;
 
 import static butterknife.ButterKnife.bind;
 
@@ -35,11 +34,11 @@ import static butterknife.ButterKnife.bind;
 
 public class StartdetailActivity extends AppCompatActivity implements View.OnClickListener {
 
-    @Bind(R.id.recycler_view)
+    @BindView(R.id.recycler_view)
     RecyclerView recyclerView;
     private SectionedRecyclerViewAdapter mRecyclerViewAdapter;
 
-    @Bind(R.id.rl_tv_more)
+    @BindView(R.id.rl_tv_more)
     TextView rl_tv_more;
 
     private ArrayList<ProductionOrderDetail> mProductionOrderDetails=new ArrayList<>();
@@ -161,6 +160,5 @@ public class StartdetailActivity extends AppCompatActivity implements View.OnCli
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        ButterKnife.unbind(this);
     }
 }

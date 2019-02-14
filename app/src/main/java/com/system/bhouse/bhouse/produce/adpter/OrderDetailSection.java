@@ -11,7 +11,7 @@ import com.system.bhouse.ui.sectioned.Section;
 import java.util.ArrayList;
 import java.util.List;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 
 /**
@@ -77,17 +77,17 @@ public class OrderDetailSection extends Section {
     }
 
     static class detail_headviewViewHolder extends RecyclerView.ViewHolder {
-        @Bind(R.id.detail_danCode)
+        @BindView(R.id.detail_danCode)
         TextView detailDanCode;
-        @Bind(R.id.detail_planstartDate)
+        @BindView(R.id.detail_planstartDate)
         TextView detailPlanstartDate;
-        @Bind(R.id.detail_plancloseDate)
+        @BindView(R.id.detail_plancloseDate)
         TextView detailPlancloseDate;
-        @Bind(R.id.detail_danStatus)
+        @BindView(R.id.detail_danStatus)
         TextView detailDanStatus;
-        @Bind(R.id.detail_zhidanpeople)
+        @BindView(R.id.detail_zhidanpeople)
         TextView detailZhidanpeople;
-        @Bind(R.id.detail_shenhepeople)
+        @BindView(R.id.detail_shenhepeople)
         TextView detailShenhepeople;
 
         detail_headviewViewHolder(View view) {
@@ -97,15 +97,15 @@ public class OrderDetailSection extends Section {
     }
 
     static class activity_detail_itemViewHolder extends RecyclerView.ViewHolder{
-        @Bind(R.id.detail_item_danCode)
+        @BindView(R.id.detail_item_danCode)
         TextView detailItemDanCode;
-        @Bind(R.id.detail_item_cailiao)
+        @BindView(R.id.detail_item_cailiao)
         TextView detailItemCailiao;
-        @Bind(R.id.detail_item_guige)
+        @BindView(R.id.detail_item_guige)
         TextView detailItemGuige;
-        @Bind(R.id.detail_item_jiliang)
+        @BindView(R.id.detail_item_jiliang)
         TextView detailItemJiliang;
-        @Bind(R.id.detail_item_sum)
+        @BindView(R.id.detail_item_sum)
         TextView detailItemSum;
 
         activity_detail_itemViewHolder(View view) {

@@ -19,7 +19,7 @@ import com.system.bhouse.utils.AppManager;
 
 import java.util.ArrayList;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 
 /**
@@ -33,7 +33,7 @@ import butterknife.ButterKnife;
 public class DingdanSellActivity extends BaseActivity {
 
 
-    @Bind(R.id.topfanhuititle_textview_zhende)
+    @BindView(R.id.topfanhuititle_textview_zhende)
     TextView topfanhuititle_textview_zhende;
     private TabLayout viewById;
     private ViewPager viewById1;

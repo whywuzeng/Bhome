@@ -14,7 +14,7 @@ import org.androidannotations.annotations.EBean;
 import org.androidannotations.annotations.RootContext;
 import org.androidannotations.annotations.res.StringArrayRes;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 
 /**
@@ -67,11 +67,11 @@ public class StatusAdapter extends BaseAdapter {
     }
 
     static class ViewHolder {
-        @Bind(R.id.icon)
+        @BindView(R.id.icon)
         View icon;
-        @Bind(R.id.title)
+        @BindView(R.id.title)
         TextView title;
-        @Bind(R.id.check)
+        @BindView(R.id.check)
         ImageView check;
 
         ViewHolder(View view) {

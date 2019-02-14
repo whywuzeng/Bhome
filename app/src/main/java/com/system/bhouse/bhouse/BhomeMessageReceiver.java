@@ -1,4 +1,4 @@
-package net.qiujuer.italker.push;
+package com.system.bhouse.bhouse;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -6,17 +6,21 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 
+import com.igexin.sdk.PushConsts;
+
 import net.qiujuer.italker.factory.Factory;
 import net.qiujuer.italker.factory.data.helper.AccountHelper;
 import net.qiujuer.italker.factory.persistence.Account;
+import net.qiujuer.italker.push.MessageReceiver;
 
 /**
- * 个推的消息接收器
- *
- * @author qiujuer Email:qiujuer@live.cn
- * @version 1.0.0
+ * Created by Administrator on 2019-02-14.
+ * <p>
+ * by author wz
+ * <p>
+ * com.system.bhouse.bhouse
  */
-public class MessageReceiver extends BroadcastReceiver {
+public class BhomeMessageReceiver extends BroadcastReceiver {
     private static final String TAG = MessageReceiver.class.getSimpleName();
 
     @Override
@@ -27,15 +31,16 @@ public class MessageReceiver extends BroadcastReceiver {
         Bundle bundle = intent.getExtras();
 
         // 判断当前消息的意图
-        switch (bundle.getInt("action")) {
-            case 10002: {
+        assert bundle != null;
+        switch (bundle.getInt(PushConsts.CMD_ACTION)) {
+            case PushConsts.GET_CLIENTID: {
                 Log.i(TAG, "GET_CLIENTID:" + bundle.toString());
                 // 当Id初始化的时候
                 // 获取设备Id
                 onClientInit(bundle.getString("clientid"));
                 break;
             }
-            case 10001: {
+            case PushConsts.GET_MSG_DATA: {
                 // 常规消息送达
                 byte[] payload = bundle.getByteArray("payload");
                 if (payload != null) {

@@ -14,7 +14,7 @@ import com.system.bhouse.bhouse.R;
 
 import java.io.File;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.OnClick;
 
 /**
@@ -26,13 +26,13 @@ import butterknife.OnClick;
  */
 public class FileListHeadItem extends FrameLayout {
 
-    @Bind(R.id.iv_file_reload)
+    @BindView(R.id.iv_file_reload)
     ImageView ivFileReload;
-    @Bind(R.id.iv_download_canceld)
+    @BindView(R.id.iv_download_canceld)
     ImageView ivDownloadCanceld;
-    @Bind(R.id.progressBar)
+    @BindView(R.id.progressBar)
     ProgressBar progressBar;
-    @Bind(R.id.tv_floder_name)
+    @BindView(R.id.tv_floder_name)
     TextView tvFloderName;
 
     public FileListHeadItem(@NonNull Context context) {

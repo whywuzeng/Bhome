@@ -18,7 +18,7 @@ import com.system.bhouse.utils.TenUtils.L;
 import java.util.ArrayList;
 import java.util.concurrent.TimeUnit;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import rx.Observable;
 
@@ -146,19 +146,19 @@ public class ComTaskContentItemSection extends Section {
     }
 
     protected class ViewHolder extends RecyclerView.ViewHolder {
-        @Bind(R.id.tv_wuliao)
+        @BindView(R.id.tv_wuliao)
         TextView tvWuliao;
-        @Bind(R.id.WuliaoUnit)
+        @BindView(R.id.WuliaoUnit)
         TextView WuliaoUnit;
-        @Bind(R.id.tv_count)
+        @BindView(R.id.tv_count)
         TextView tvCount;
-        @Bind(R.id.mianLayout)
+        @BindView(R.id.mianLayout)
         LinearLayout mianLayout;
-        @Bind(R.id.img_delete_item)
+        @BindView(R.id.img_delete_item)
         ImageView imgDeleteItem;
-        @Bind(R.id.tv_count_measure)
+        @BindView(R.id.tv_count_measure)
         TextView tvCount1;
-        @Bind(R.id.tv_count_amount)
+        @BindView(R.id.tv_count_amount)
         TextView tvCount2;
 
         ViewHolder(View view) {
@@ -182,7 +182,7 @@ public class ComTaskContentItemSection extends Section {
     }
 
     protected class FooterViewHolder extends RecyclerView.ViewHolder {
-        @Bind(R.id.btn_addItem)
+        @BindView(R.id.btn_addItem)
         Button btnAddItem;
 
         FooterViewHolder(View view) {

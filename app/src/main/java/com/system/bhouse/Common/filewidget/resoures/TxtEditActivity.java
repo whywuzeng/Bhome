@@ -11,7 +11,7 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 
 /**
@@ -23,7 +23,7 @@ import butterknife.ButterKnife;
  */
 public class TxtEditActivity extends AttachmentBaseDetailActivity {
 
-    @Bind(R.id.editText)
+    @BindView(R.id.editText)
     EditText editText;
 
     private final static String GBK_CHARSET="gbk";

@@ -59,7 +59,7 @@ import org.json.JSONObject;
 
 import java.lang.ref.WeakReference;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import rx.Observable;
@@ -70,17 +70,17 @@ import rx.Subscriber;
  * 登录的activity
  */
 public class LoginActivity extends WWCheckActivity {
-    @Bind(R.id.usernumber)
+    @BindView(R.id.usernumber)
     EditText usernumber;
-    @Bind(R.id.password_btn)
+    @BindView(R.id.password_btn)
     EditText passwordBtn;
-    @Bind(R.id.btn_login)
+    @BindView(R.id.btn_login)
     Button btnLogin;
 
 
-    @Bind(R.id.login_cb_remember)
+    @BindView(R.id.login_cb_remember)
     CheckBox loginCbRemember;
-    @Bind(R.id.btn_domian)
+    @BindView(R.id.btn_domian)
     TextView btnDomian;
     private String password, usernumber1;
     private Toast mToast;
@@ -88,7 +88,7 @@ public class LoginActivity extends WWCheckActivity {
     private WaveView wave;
     private ImageView psw_visiable;
     private boolean isChecked=true;
-    @Bind(R.id.login_cb_device)
+    @BindView(R.id.login_cb_device)
     TextView login_cb_device;
 
     //手机系统硬件配置信息

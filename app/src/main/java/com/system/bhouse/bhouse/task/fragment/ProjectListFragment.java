@@ -22,7 +22,7 @@ import org.androidannotations.annotations.ViewById;
 
 import java.util.ArrayList;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import se.emilsjolander.stickylistheaders.StickyListHeadersAdapter;
 import se.emilsjolander.stickylistheaders.StickyListHeadersListView;
@@ -108,29 +108,29 @@ public class ProjectListFragment extends RefreshBaseFragment implements View.OnC
     }
 
     static class ViewHolder {
-        @Bind(R.id.icon)
+        @BindView(R.id.icon)
         ImageView icon;
-        @Bind(R.id.privatePin)
+        @BindView(R.id.privatePin)
         ImageView privatePin;
-        @Bind(R.id.privateIcon)
+        @BindView(R.id.privateIcon)
         View privateIcon;
-        @Bind(R.id.name)
+        @BindView(R.id.name)
         TextView name;
-        @Bind(R.id.name2)
+        @BindView(R.id.name2)
         TextView name2;
-        @Bind(R.id.txtDesc)
+        @BindView(R.id.txtDesc)
         TextView txtDesc;
-        @Bind(R.id.tv_start_count)
+        @BindView(R.id.tv_start_count)
         TextView tvStartCount;
-        @Bind(R.id.tv_follow_count)
+        @BindView(R.id.tv_follow_count)
         TextView tvFollowCount;
-        @Bind(R.id.tv_fork_count)
+        @BindView(R.id.tv_fork_count)
         TextView tvForkCount;
-        @Bind(R.id.ll_bottom_menu)
+        @BindView(R.id.ll_bottom_menu)
         LinearLayout llBottomMenu;
-        @Bind(R.id.comment)
+        @BindView(R.id.comment)
         TextView comment;
-        @Bind(R.id.flayoutAction)
+        @BindView(R.id.flayoutAction)
         FrameLayout flayoutAction;
 
         ViewHolder(View view) {

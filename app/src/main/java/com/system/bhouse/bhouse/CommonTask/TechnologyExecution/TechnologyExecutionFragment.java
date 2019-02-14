@@ -41,8 +41,8 @@ import com.system.bhouse.bhouse.CommonTask.Widget.TimeLineItemTopBottomDecoratio
 import com.system.bhouse.bhouse.R;
 import com.system.bhouse.config.Const;
 import com.system.bhouse.utils.ClickUtils;
-import com.system.bhouse.utils.blankutils.TimeUtils;
 import com.system.bhouse.utils.ValueUtils;
+import com.system.bhouse.utils.blankutils.TimeUtils;
 import com.zijunlin.Zxing.Demo.CaptureActivity;
 
 import org.json.JSONArray;
@@ -55,8 +55,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import butterknife.Bind;
-import butterknife.ButterKnife;
+import butterknife.BindView;
 import butterknife.OnClick;
 
 /**
@@ -77,7 +76,7 @@ public class TechnologyExecutionFragment extends BaseBackFragment implements Bas
 
     public static final int RESULT_COMPONENT = 2 << 2;
 
-    @Bind(R.id.my_recycle_view)
+    @BindView(R.id.my_recycle_view)
     RecyclerView my_recycle_view;
 
     private View notDataView;
@@ -87,14 +86,14 @@ public class TechnologyExecutionFragment extends BaseBackFragment implements Bas
     private ArrayList<TechnologyBean> TechnologyBeans;
 
     //数据显示控件
-    @Bind(R.id.tv_component_content)
+    @BindView(R.id.tv_component_content)
     TextView tv_component_content;
 
-    @Bind(R.id.tv_orderid_content)
+    @BindView(R.id.tv_orderid_content)
     TextView tv_orderid_content;
     private SpinnerDialog spinnerDialog;
 
-    @Bind(R.id.orderid_qrcode)
+    @BindView(R.id.orderid_qrcode)
     Button orderidBtn;
 
 
@@ -502,7 +501,6 @@ public class TechnologyExecutionFragment extends BaseBackFragment implements Bas
     @Override
     public void onDestroy() {
         super.onDestroy();
-        ButterKnife.unbind(this);
     }
 
     @Override

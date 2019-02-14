@@ -57,7 +57,7 @@ import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import de.greenrobot.event.EventBus;
 
 /**
@@ -85,13 +85,13 @@ public class LoadingIntoWareHouseContentMessageFragment extends BaseContentMessa
     //分录
     public static final String ON_ITEM_CHILD_CLICK = "onItemChildClick";
 
-    @Bind(R.id.listView)
+    @BindView(R.id.listView)
     RecyclerView listView;
-    @Bind(R.id.topListView)
+    @BindView(R.id.topListView)
     RecyclerView topListView;
-    @Bind(R.id.tv_title_live_layout)
+    @BindView(R.id.tv_title_live_layout)
     TextView tv_title_live_layout;
-    @Bind(R.id.toolbar_com)
+    @BindView(R.id.toolbar_com)
     Toolbar toolbar;
 
 

@@ -20,7 +20,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import rx.Observable;
 
@@ -286,134 +286,134 @@ public class FinishedStorageContentItemSection extends Section {
      */
 
     protected class ViewHolder extends RecyclerView.ViewHolder {
-        @Bind(R.id.tv_wuliao)
+        @BindView(R.id.tv_wuliao)
         TextView tv_wuliao;
-        @Bind(R.id.WuliaoUnit)
+        @BindView(R.id.WuliaoUnit)
         TextView WuliaoUnit;
-        @Bind(R.id.tv_count)
+        @BindView(R.id.tv_count)
         TextView tv_count;
-        @Bind(R.id.mianLayout)
+        @BindView(R.id.mianLayout)
         LinearLayout mianLayout;
-        @Bind(R.id.img_delete_item)
+        @BindView(R.id.img_delete_item)
         ImageView imgDeleteItem;
-        @Bind(R.id.tv_count_measure)
+        @BindView(R.id.tv_count_measure)
         TextView tv_count_measure;
-        @Bind(R.id.tv_count_amount)
+        @BindView(R.id.tv_count_amount)
         TextView tv_count_amount;
-        @Bind(R.id.iv_litte_grey_right_arrow)
+        @BindView(R.id.iv_litte_grey_right_arrow)
         ImageView ivLitteGreyRightArrow;
 
-        @Bind(R.id.tv_wuliao_id)
+        @BindView(R.id.tv_wuliao_id)
         TextView tv_wuliao_id;
-        @Bind(R.id.tv_WuliaoUnit_id)
+        @BindView(R.id.tv_WuliaoUnit_id)
         TextView tv_WuliaoUnit_id;
-        @Bind(R.id.tv_count_measure_id)
+        @BindView(R.id.tv_count_measure_id)
         TextView tv_count_measure_id;
-        @Bind(R.id.tv_count_amount_id)
+        @BindView(R.id.tv_count_amount_id)
         TextView tv_count_amount_id;
-        @Bind(R.id.tv_count_id)
+        @BindView(R.id.tv_count_id)
         TextView tv_count_id;
 
 
-        @Bind(R.id.tv_unit_id)
+        @BindView(R.id.tv_unit_id)
         TextView tv_unit_id;
-        @Bind(R.id.tv_unit)
+        @BindView(R.id.tv_unit)
         TextView tv_unit;
-        @Bind(R.id.tv_requireNum_id)
+        @BindView(R.id.tv_requireNum_id)
         TextView tv_requireNum_id;
-        @Bind(R.id.tv_requireNum)
+        @BindView(R.id.tv_requireNum)
         TextView tv_requireNum;
-        @Bind(R.id.tv_ReceiptAmount_id)
+        @BindView(R.id.tv_ReceiptAmount_id)
         TextView tv_ReceiptAmount_id;
-        @Bind(R.id.tv_ReceiptAmount)
+        @BindView(R.id.tv_ReceiptAmount)
         TextView tv_ReceiptAmount;
-        @Bind(R.id.tv_projectName_id)
+        @BindView(R.id.tv_projectName_id)
         TextView tv_projectName_id;
-        @Bind(R.id.tv_projectName)
+        @BindView(R.id.tv_projectName)
         TextView tv_projectName;
-        @Bind(R.id.tv_dong_id)
+        @BindView(R.id.tv_dong_id)
         TextView tv_dong_id;
-        @Bind(R.id.tv_dong)
+        @BindView(R.id.tv_dong)
         TextView tv_dong;
-        @Bind(R.id.tv_cengAmount_id)
+        @BindView(R.id.tv_cengAmount_id)
         TextView tv_cengAmount_id;
-        @Bind(R.id.tv_cengAmount)
+        @BindView(R.id.tv_cengAmount)
         TextView tv_cengAmount;
 
-        @Bind(R.id.tv_shifouproduce_id)
+        @BindView(R.id.tv_shifouproduce_id)
         TextView tv_shifouproduce_id;
-        @Bind(R.id.tv_shifouproduce)
+        @BindView(R.id.tv_shifouproduce)
         TextView tv_shifouproduce;
-        @Bind(R.id.tv_subBeizhu_id)
+        @BindView(R.id.tv_subBeizhu_id)
         TextView tv_subBeizhu_id;
-        @Bind(R.id.tv_subBeizhu)
+        @BindView(R.id.tv_subBeizhu)
         TextView tv_subBeizhu;
 
-        @Bind(R.id.lll_bottom_1)
+        @BindView(R.id.lll_bottom_1)
         LinearLayout lll_bottom_1;
-        @Bind(R.id.vvv_bottom_1)
+        @BindView(R.id.vvv_bottom_1)
         View  vvv_bottom_1;
 
-        @Bind(R.id.lll_bottom_2)
+        @BindView(R.id.lll_bottom_2)
         LinearLayout lll_bottom_2;
-        @Bind(R.id.vvv_bottom_2)
+        @BindView(R.id.vvv_bottom_2)
         View vvv_bottom_2;
 
-        @Bind(R.id.ll_top_1)
+        @BindView(R.id.ll_top_1)
         LinearLayout ll_top_1;
-        @Bind(R.id.ll_bottom_4)
+        @BindView(R.id.ll_bottom_4)
         LinearLayout ll_bottom_4;
-        @Bind(R.id.vv_bottom_4)
+        @BindView(R.id.vv_bottom_4)
         View vv_bottom_4;
-        @Bind(R.id.vv_top_2)
+        @BindView(R.id.vv_top_2)
         View vv_top_2;
 
-        @Bind(R.id.iv_projectName)
+        @BindView(R.id.iv_projectName)
         ImageView ivprojectname;
-        @Bind(R.id.iv_subBeizhu)
+        @BindView(R.id.iv_subBeizhu)
         ImageView ivsubBeizhu;
 
-        @Bind(R.id.ll_projectName)
+        @BindView(R.id.ll_projectName)
          LinearLayout ll_projectName;
 
-        @Bind(R.id.ll_bottom_5_iv_right_arrow)
+        @BindView(R.id.ll_bottom_5_iv_right_arrow)
         ImageView ll_bottom_5_iv_right_arrow;
 
         //6-21新增的id
-        @Bind(R.id.ll_top1_deleteIv)
+        @BindView(R.id.ll_top1_deleteIv)
         LinearLayout ll_top1_deleteIv;
-        @Bind(R.id.vv_top1_deleteIv)
+        @BindView(R.id.vv_top1_deleteIv)
                 View vv_top1_deleteIv;
-        @Bind(R.id.ll_top2)
+        @BindView(R.id.ll_top2)
                 LinearLayout ll_top2;
-        @Bind(R.id.vv_top_22)
+        @BindView(R.id.vv_top_22)
                 View vv_top_22;
-        @Bind(R.id.ll_top3)
+        @BindView(R.id.ll_top3)
                 LinearLayout ll_top3;
-        @Bind(R.id.vv_top_3)
+        @BindView(R.id.vv_top_3)
                 View vv_top_3;
-        @Bind(R.id.ll_top4)
+        @BindView(R.id.ll_top4)
                 LinearLayout ll_top4;
-        @Bind(R.id.vv_top_4)
+        @BindView(R.id.vv_top_4)
                 View vv_top_4;
-        @Bind(R.id.ll_top5)
+        @BindView(R.id.ll_top5)
                 LinearLayout ll_top5;
-        @Bind(R.id.vv_top_5)
+        @BindView(R.id.vv_top_5)
                 View vv_top_5;
-        @Bind(R.id.ll_top6)
+        @BindView(R.id.ll_top6)
                 LinearLayout ll_top6;
-        @Bind(R.id.vv_top_6)
+        @BindView(R.id.vv_top_6)
                 View vv_top_6;
-        @Bind(R.id.vv_projectName)
+        @BindView(R.id.vv_projectName)
                 View vv_projectName;
 
-        @Bind(R.id.ll_ll_view_4)
+        @BindView(R.id.ll_ll_view_4)
                 LinearLayout ll_ll_view_4;
-        @Bind(R.id.ll_view_4)
+        @BindView(R.id.ll_view_4)
                 View ll_view_4;
-        @Bind(R.id.ll_linearlayout_4)
+        @BindView(R.id.ll_linearlayout_4)
                 LinearLayout ll_linearlayout_4;
-        @Bind(R.id.vvvv_bottom_2)
+        @BindView(R.id.vvvv_bottom_2)
                 View vvvv_bottom_2;
 
 
@@ -444,7 +444,7 @@ public class FinishedStorageContentItemSection extends Section {
     }
 
     protected class FooterViewHolder extends RecyclerView.ViewHolder {
-        @Bind(R.id.btn_addItem)
+        @BindView(R.id.btn_addItem)
         Button btnAddItem;
 
         FooterViewHolder(View view) {

@@ -12,7 +12,7 @@ import com.system.bhouse.ui.sectioned.Section;
 import java.util.ArrayList;
 import java.util.List;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 
 /**
@@ -89,13 +89,13 @@ public class WorkflowSection extends Section {
     }
 
     static class WorkflowViewHolder extends RecyclerView.ViewHolder{
-        @Bind(R.id.tv_num_1)
+        @BindView(R.id.tv_num_1)
         TextView tvNum1;
-        @Bind(R.id.tv_num_2)
+        @BindView(R.id.tv_num_2)
         TextView tvNum2;
-        @Bind(R.id.tv_num_3)
+        @BindView(R.id.tv_num_3)
         TextView tvNum3;
-        @Bind(R.id.tv_num_4)
+        @BindView(R.id.tv_num_4)
         TextView tvNum4;
 
         WorkflowViewHolder(View view) {

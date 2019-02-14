@@ -40,7 +40,7 @@ import com.system.bhouse.ui.sectioned.SectionedRecyclerViewAdapter;
 import java.util.ArrayList;
 import java.util.List;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 
 /**
@@ -50,25 +50,25 @@ import butterknife.ButterKnife;
 public class ScheduleFragment extends BaseFragment<WorkflowlistPresenterImp> implements WorkflowlistView,View.OnClickListener {
 
 
-    @Bind(R.id.site_search_back)
+    @BindView(R.id.site_search_back)
     ImageView siteSearchBack;
-    @Bind(R.id.tv_query)
+    @BindView(R.id.tv_query)
     TextView tvQuery;
-    @Bind(R.id.et_search_content)
+    @BindView(R.id.et_search_content)
     EditText etSearchContent;
-    @Bind(R.id.middle_search)
+    @BindView(R.id.middle_search)
     LinearLayout middleSearch;
-    @Bind(R.id.tv_history_top)
+    @BindView(R.id.tv_history_top)
     TextView tvHistoryTop;
-    @Bind(R.id.tv_delAll)
+    @BindView(R.id.tv_delAll)
     TextView tvDelAll;
-    @Bind(R.id.clv_search_stroy)
+    @BindView(R.id.clv_search_stroy)
     CustomListView clvSearchStroy;
-    @Bind(R.id.ll_history_layout)
+    @BindView(R.id.ll_history_layout)
     LinearLayout llHistoryLayout;
-    @Bind(R.id.layout_maylike)
+    @BindView(R.id.layout_maylike)
     LinearLayout layoutMaylike;
-    @Bind(R.id.rv_listview)
+    @BindView(R.id.rv_listview)
     RecyclerView rv_listview;
     private SearchRecordDao searchRecordDao; //数据库
     private String key_word;
@@ -305,7 +305,6 @@ public class ScheduleFragment extends BaseFragment<WorkflowlistPresenterImp> imp
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        ButterKnife.unbind(this);
     }
 
     @Override

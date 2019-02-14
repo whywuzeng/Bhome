@@ -42,7 +42,7 @@ import java.util.Set;
 import java.util.TreeSet;
 import java.util.concurrent.TimeUnit;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import de.greenrobot.event.EventBus;
 import rx.Observable;
@@ -60,11 +60,11 @@ public class ProductionOrderViewActivity extends WWBackActivity implements Produ
 
     public static final String TAG = "comtaskcontentmessageactivity";
 
-    @Bind(R.id.listView)
+    @BindView(R.id.listView)
     RecyclerView listView;
-    @Bind(R.id.topListView)
+    @BindView(R.id.topListView)
     RecyclerView topListView;
-    @Bind(R.id.tv_title_live_layout)
+    @BindView(R.id.tv_title_live_layout)
     TextView tv_title_live_layout;
 
     String HId;

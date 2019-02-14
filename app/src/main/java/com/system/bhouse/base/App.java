@@ -13,7 +13,7 @@ import android.os.StrictMode;
 import android.os.Vibrator;
 import android.preference.PreferenceManager;
 import android.provider.Settings;
-import android.support.multidex.MultiDexApplication;
+import android.support.multidex.MultiDex;
 import android.util.Log;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
@@ -24,6 +24,7 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.facebook.stetho.Stetho;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.igexin.sdk.PushManager;
 import com.socks.library.KLog;
 import com.system.bhouse.base.database.DatabaseManager;
 import com.system.bhouse.base.storage.BHAppStartTimeFlag;
@@ -38,6 +39,9 @@ import com.system.bhouse.bhouse.task.bean.UserObject;
 import com.system.bhouse.db.DBHelper;
 import com.tencent.android.tpush.XGPushConfig;
 
+import net.qiujuer.italker.common.app.Application;
+import net.qiujuer.italker.factory.Factory;
+
 import java.lang.reflect.Method;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -47,7 +51,7 @@ import java.util.GregorianCalendar;
 /**
  * Created by Administrator on 2016-4-5.
  */
-public class App extends MultiDexApplication {
+public class App extends Application {
     private static final String TAG = "App";
     private static Context mApp;
 
@@ -123,6 +127,7 @@ public class App extends MultiDexApplication {
         SharedPreferences defaultSharedPreferences = PreferenceManager.getDefaultSharedPreferences(base);
         defaultSharedPreferences.edit().putLong(BHAppStartTimeFlag.TIME_FLAG.name(),System.currentTimeMillis()).apply();
         Log.e(TAG, "attachBaseContext: time:"+ System.currentTimeMillis());
+        MultiDex.install(this);
     }
 
     @Override
@@ -133,6 +138,12 @@ public class App extends MultiDexApplication {
         mApp=this;
         KLog.init(BuildConfig.DEBUG);
         fileUriExposure();
+
+        // 调用Factory进行初始化
+        Factory.setup();
+        // 推送进行初始化
+        PushManager.getInstance().initialize(this.getApplicationContext(),null);
+        PushManager.getInstance().registerPushIntentService(this.getApplicationContext(), com.system.bhouse.bhouse.GetuiIntentService.class);
 
         dbHelper = DBHelper.getInstance(this);
         db = dbHelper.getWritableDatabase();

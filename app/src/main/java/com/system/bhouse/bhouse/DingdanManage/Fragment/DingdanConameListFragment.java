@@ -47,7 +47,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 
 /**
@@ -61,27 +61,27 @@ import butterknife.ButterKnife;
 @ActivityFragmentInject(contentViewId = R.layout.dingdanconamelistfragment)
 public class DingdanConameListFragment extends BaseFragment<DingdanConameListPresenter> implements DingdanConameListView,DingdanConameListActivity.getClickListenerToActivity {
 
-    @Bind(R.id.coname_list_content)
+    @BindView(R.id.coname_list_content)
     MListView coname_list_content;
-    @Bind(R.id.dingdan_list_content)
+    @BindView(R.id.dingdan_list_content)
     MListView dingdan_list_content;
-    @Bind(R.id.tpl_view)
+    @BindView(R.id.tpl_view)
     ThreePointLoadingView tpl_view;
 //
-//    @Bind(R.id.btn_uploadpic)
+//    @butterknife.BindView(R.id.btn_uploadpic)
 //    //图片上传
 //            Button btnUploadpic;
-//    @Bind(R.id.btn_switchstatus)
+//    @butterknife.BindView(R.id.btn_switchstatus)
 //    //订单状态转换
 //            Button btnSwitchstatus;
-    @Bind(R.id.iv_uploadpic)
+    @BindView(R.id.iv_uploadpic)
     ImageView ivUploadpic;
-//    @Bind(R.id.ll_top)
+//    @butterknife.BindView(R.id.ll_top)
 //    LinearLayout ll_top;
     //图片上传的其他图片
-    @Bind(R.id.iv_uploadpic1)
+    @BindView(R.id.iv_uploadpic1)
     ImageView iv_uploadpic1;
-    @Bind(R.id.iv_uploadpic2)
+    @BindView(R.id.iv_uploadpic2)
     ImageView iv_uploadpic2;
 
     // coname 的数据
@@ -418,7 +418,6 @@ public class DingdanConameListFragment extends BaseFragment<DingdanConameListPre
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        ButterKnife.unbind(this);
     }
 
 
@@ -469,9 +468,9 @@ public class DingdanConameListFragment extends BaseFragment<DingdanConameListPre
 
 
         class ViewHolder {
-            @Bind(R.id.et_orideritem)
+            @BindView(R.id.et_orideritem)
             TextView et_orideritem;
-            @Bind(R.id.orderitem_tv)
+            @BindView(R.id.orderitem_tv)
             TextView orderitem_tv;
 
             ViewHolder(View view) {
@@ -574,45 +573,45 @@ public class DingdanConameListFragment extends BaseFragment<DingdanConameListPre
 
 
         class ViewHolder {
-            @Bind(R.id.dingdanxianshi_tv_custom)
+            @BindView(R.id.dingdanxianshi_tv_custom)
             TextView dingdanxianshi_tv_custom;
-            @Bind(R.id.dingdanxiugai_tv_custom)
+            @BindView(R.id.dingdanxiugai_tv_custom)
             TextView dingdanxiugai_tv_custom;
-            @Bind(R.id.dingdan_bieshugenzhong_tv)
+            @BindView(R.id.dingdan_bieshugenzhong_tv)
             TextView dingdan_bieshugenzhong_tv;
-            @Bind(R.id.dingdan_canpinleixing_tv)
+            @BindView(R.id.dingdan_canpinleixing_tv)
             TextView dingdan_canpinleixing_tv;
-            @Bind(R.id.dingdan_bieshubianma_tv)
+            @BindView(R.id.dingdan_bieshubianma_tv)
             TextView dingdan_bieshubianma_tv;
-            @Bind(R.id.dingdan_chanpinbieshumingchen_tv)
+            @BindView(R.id.dingdan_chanpinbieshumingchen_tv)
             TextView dingdan_chanpinbieshumingchen_tv;
-            @Bind(R.id.dingdan_chanpinguige_tv)
+            @BindView(R.id.dingdan_chanpinguige_tv)
             TextView dingdan_chanpinguige_tv;
-            @Bind(R.id.dingdan_dinggoushuliang_tv)
+            @BindView(R.id.dingdan_dinggoushuliang_tv)
             TextView dingdan_dinggoushuliang_tv;
-//            @Bind(R.id.dingdan_yunju_tv)
+//            @butterknife.BindView(R.id.dingdan_yunju_tv)
 //            TextView dingdan_yunju_tv;
-//            @Bind(R.id.dingdan_yunfei_tv)
+//            @butterknife.BindView(R.id.dingdan_yunfei_tv)
 //            TextView dingdan_yunfei_tv;
-//            @Bind(R.id.dingdan_cailianfei_tv)
+//            @butterknife.BindView(R.id.dingdan_cailianfei_tv)
 //            TextView dingdan_cailianfei_tv;
-//            @Bind(R.id.dingdan_yunshufei_tv)
+//            @butterknife.BindView(R.id.dingdan_yunshufei_tv)
 //            TextView dingdan_yunshufei_tv;
-//            @Bind(R.id.dingdan_qitafeiyong_tv)
+//            @butterknife.BindView(R.id.dingdan_qitafeiyong_tv)
 //            TextView dingdan_qitafeiyong_tv;
-//            @Bind(R.id.dingdan_heijijine_tv)
+//            @butterknife.BindView(R.id.dingdan_heijijine_tv)
 //            TextView dingdan_heijijine_tv;
-//            @Bind(R.id.dingdan_shengchangongchang_tv)
+//            @butterknife.BindView(R.id.dingdan_shengchangongchang_tv)
 //            TextView dingdan_shengchangongchang_tv;
-//            @Bind(R.id.dingdan_danjuzhuangtai_tv)
+//            @butterknife.BindView(R.id.dingdan_danjuzhuangtai_tv)
 //            TextView dingdan_danjuzhuangtai_tv;
-//            @Bind(R.id.dingdan_lururen_tv)
+//            @butterknife.BindView(R.id.dingdan_lururen_tv)
 //            TextView dingdan_lururen_tv;
-//            @Bind(R.id.dingdan_lurushijian_tv)
+//            @butterknife.BindView(R.id.dingdan_lurushijian_tv)
 //            TextView dingdan_lurushijian_tv;
-//            @Bind(R.id.dingdan_shenghairen_tv)
+//            @butterknife.BindView(R.id.dingdan_shenghairen_tv)
 //            TextView dingdan_shenghairen_tv;
-//            @Bind(R.id.dingdan_shenhaishijian_tv)
+//            @butterknife.BindView(R.id.dingdan_shenhaishijian_tv)
 //            TextView dingdan_shenhaishijian_tv;
 
             ViewHolder(View view) {

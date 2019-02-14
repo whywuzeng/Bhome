@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context="net.qiujuer.italker.push.activities.MainActivity">
+    tools:context="net.qiujuer.italker.push.activities.TalkMainActivity">
 
     <android.support.design.widget.AppBarLayout
         android:id="@+id/appbar"
@@ -23,7 +23,7 @@
             android:paddingRight="@dimen/len_4">
 
             <net.qiujuer.italker.common.widget.PortraitView
-                android:id="@+id/im_portrait"
+                android:id="@+id/main_im_portrait"
                 android:layout_width="@dimen/len_40"
                 android:layout_height="@dimen/len_40"
                 android:layout_margin="@dimen/len_4"
@@ -39,7 +39,8 @@
                 android:layout_gravity="center"
                 android:gravity="center"
                 android:text="@string/app_name"
-                android:textAppearance="@style/TextAppearance.Title" />
+                 />
+            <!--android:textAppearance="@style/TextAppearance.Title"-->
 
             <ImageView
                 android:id="@+id/im_search"

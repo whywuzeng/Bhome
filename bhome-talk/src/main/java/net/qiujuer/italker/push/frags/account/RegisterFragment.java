@@ -11,7 +11,7 @@ import net.qiujuer.italker.factory.presenter.account.RegisterContract;
 import net.qiujuer.italker.factory.presenter.account.RegisterPresenter;
 import net.qiujuer.italker.push.R;
 import net.qiujuer.italker.push.R2;
-import net.qiujuer.italker.push.activities.MainActivity;
+import net.qiujuer.italker.push.activities.TalkMainActivity;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -111,7 +111,7 @@ public class RegisterFragment extends PresenterFragment<RegisterContract.Present
     public void registerSuccess() {
         // 注册成功，这个时候账户已经登录
         // 我们需要进行跳转到MainActivity界面
-        MainActivity.show(getContext());
+        TalkMainActivity.show(getContext());
         // 关闭当前界面
         getActivity().finish();
     }

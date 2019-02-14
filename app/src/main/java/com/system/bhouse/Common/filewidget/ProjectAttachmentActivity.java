@@ -45,7 +45,7 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
@@ -61,14 +61,14 @@ public class ProjectAttachmentActivity extends BaseFileDownActivity implements V
 
     private static final String TAG = "Project";
 
-    @Bind(R.id.listView)
+    @BindView(R.id.listView)
     RecyclerView mRecyclerView;
-    @Bind(R.id.folder_actions_layout)
+    @BindView(R.id.folder_actions_layout)
     FrameLayout folderActionsLayout;
-    @Bind(R.id.files_actions_layout)
+    @BindView(R.id.files_actions_layout)
     FrameLayout filesActionsLayout;
     private boolean isEditMode = false;
-    @Bind(R.id.common_folder_bottom_upload)
+    @BindView(R.id.common_folder_bottom_upload)
     FrameLayout common_folder_bottom_upload;
 
     //check被点击

@@ -8,7 +8,7 @@ import android.widget.TextView;
 import com.system.bhouse.bhouse.R;
 import com.system.bhouse.ui.sectioned.Section;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 
 /**
@@ -57,9 +57,9 @@ public class TaskListSection extends Section {
     }
 
     static class TaskItemResViewHolder extends RecyclerView.ViewHolder{
-        @Bind(R.id.tv_task_title)
+        @BindView(R.id.tv_task_title)
         TextView tvTaskTitle;
-        @Bind(R.id.tv_task_textcontent)
+        @BindView(R.id.tv_task_textcontent)
         TextView tvTaskTextcontent;
 
         TaskItemResViewHolder(View view) {

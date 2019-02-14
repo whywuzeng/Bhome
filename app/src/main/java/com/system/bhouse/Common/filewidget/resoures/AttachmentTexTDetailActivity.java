@@ -11,7 +11,7 @@ import android.widget.TextView;
 import com.system.bhouse.Common.Global;
 import com.system.bhouse.bhouse.R;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 
 /**
@@ -23,9 +23,9 @@ import butterknife.ButterKnife;
  */
 public class AttachmentTexTDetailActivity extends AttachmentBaseDetailActivity {
 
-    @Bind(R.id.textView)
+    @BindView(R.id.textView)
     TextView textView;
-    @Bind(R.id.layout_dynamic_history)
+    @BindView(R.id.layout_dynamic_history)
     ConstraintLayout layoutDynamicHistory;
 
     private final static String GBK_CHARSET="gbk";

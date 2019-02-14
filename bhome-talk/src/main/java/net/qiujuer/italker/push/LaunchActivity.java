@@ -5,6 +5,8 @@ import android.animation.AnimatorListenerAdapter;
 import android.animation.ArgbEvaluator;
 import android.animation.ObjectAnimator;
 import android.animation.ValueAnimator;
+import android.content.Context;
+import android.content.Intent;
 import android.graphics.drawable.ColorDrawable;
 import android.text.TextUtils;
 import android.util.Property;
@@ -15,13 +17,20 @@ import net.qiujuer.genius.ui.compat.UiCompat;
 import net.qiujuer.italker.common.app.Activity;
 import net.qiujuer.italker.factory.persistence.Account;
 import net.qiujuer.italker.push.activities.AccountActivity;
-import net.qiujuer.italker.push.activities.MainActivity;
+import net.qiujuer.italker.push.activities.TalkMainActivity;
 import net.qiujuer.italker.push.frags.assist.PermissionsFragment;
 
 public class LaunchActivity extends Activity {
     // Drawable
     private ColorDrawable mBgDrawable;
 
+    /**
+     * 启动launchActivity
+     * @param context
+     */
+    public static void show(Context context){
+        context.startActivity(new Intent(context,LaunchActivity.class));
+    }
 
     @Override
     protected int getContentLayoutId() {
@@ -110,7 +119,7 @@ public class LaunchActivity extends Activity {
         if (PermissionsFragment.haveAll(this, getSupportFragmentManager())) {
             // 检查跳转到主页还是登录
             if (Account.isLogin()) {
-                MainActivity.show(this);
+                TalkMainActivity.show(this);
             } else {
                 AccountActivity.show(this);
             }

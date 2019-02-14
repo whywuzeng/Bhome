@@ -32,6 +32,7 @@ import org.json.JSONObject;
 import java.lang.reflect.Field;
 
 import butterknife.ButterKnife;
+import butterknife.Unbinder;
 
 /**
  * Created by Administrator on 2017-10-31.
@@ -51,6 +52,7 @@ public class WWBaseFragment extends Fragment implements FootUpdate.LoadMore, Glo
 
     private ProgressDialog mProgressDialog;
     private SingleToast mSingleToast;
+    private Unbinder unbinder;
 
     protected void showProgressBar(boolean show) {
         showProgressBar(show, "");
@@ -211,7 +213,6 @@ public class WWBaseFragment extends Fragment implements FootUpdate.LoadMore, Glo
     {
         super.onDestroyView();
         KLog.e("onDestroyView");
-        ButterKnife.unbind(this);
         contentView=null;
         container=null;
         inflater=null;
@@ -241,7 +242,10 @@ public class WWBaseFragment extends Fragment implements FootUpdate.LoadMore, Glo
             mProgressDialog.dismiss();
             mProgressDialog = null;
         }
-
+        if (unbinder!=null)
+        {
+            unbinder.unbind();
+        }
         super.onDestroy();
     }
 
@@ -280,7 +284,7 @@ public class WWBaseFragment extends Fragment implements FootUpdate.LoadMore, Glo
     public void setContentView(int layoutResID)
     {
         setContentView((ViewGroup)inflater.inflate(layoutResID,container,false));
-        ButterKnife.bind(this, contentView);
+        unbinder = ButterKnife.bind(this, contentView);
     }
 
     public void setContentView(View view)

@@ -28,7 +28,6 @@ import com.trello.rxlifecycle.components.support.RxAppCompatActivity;
 
 import java.util.concurrent.TimeUnit;
 
-import butterknife.ButterKnife;
 import rx.Observable;
 import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;
@@ -296,7 +295,6 @@ public class WWBaseActivity extends RxAppCompatActivity implements StartActivity
 
     @Override
     protected void onDestroy() {
-        ButterKnife.unbind(this);
         if (mProgressDialog != null) {
             mProgressDialog.dismiss();
             mProgressDialog = null;

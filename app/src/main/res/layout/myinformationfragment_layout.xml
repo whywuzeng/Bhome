@@ -408,22 +408,23 @@
             </LinearLayout>
 
             <LinearLayout
+                android:id="@+id/ll_message"
                 android:orientation="horizontal"
                 android:background="@color/white"
                 android:layout_marginTop="1dp"
-                android:visibility="gone"
+                android:visibility="visible"
                 android:layout_width="match_parent"
                 android:layout_height="50dp">
 
                 <ImageView
                     android:layout_marginLeft="10dp"
                     android:layout_gravity="center_vertical"
-                    android:src="@drawable/ic_help_question_mark"
+                    android:src="@drawable/ic_message"
                     android:layout_width="26dp"
                     android:layout_height="26dp"/>
 
                 <TextView
-                    android:text="帮助与反馈"
+                    android:text="@string/action_info"
                     android:textSize="14sp"
                     android:layout_marginLeft="27dp"
                     android:layout_gravity="center_vertical"

@@ -25,7 +25,7 @@ import org.androidannotations.annotations.ViewById;
 
 import java.util.ArrayList;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import de.hdodenhof.circleimageview.CircleImageView;
 import se.emilsjolander.stickylistheaders.StickyListHeadersAdapter;
@@ -257,7 +257,7 @@ public class UsersListFragment extends WWBaseFragment {
         }
 
         class HeaderViewHolder {
-            @Bind(R.id.head)
+            @BindView(R.id.head)
             TextView head;
 
             HeaderViewHolder(View view) {
@@ -266,15 +266,15 @@ public class UsersListFragment extends WWBaseFragment {
         }
 
         class ItemViewHolder {
-            @Bind(R.id.divideTitle)
+            @BindView(R.id.divideTitle)
             TextView divideTitle;
-            @Bind(R.id.icon)
+            @BindView(R.id.icon)
             CircleImageView icon;
-            @Bind(R.id.name)
+            @BindView(R.id.name)
             TextView name;
-            @Bind(R.id.followMutual)
+            @BindView(R.id.followMutual)
             CheckBox followMutual;
-            @Bind(R.id.divide_line)
+            @BindView(R.id.divide_line)
             View divideLine;
 
             ItemViewHolder(View view) {
