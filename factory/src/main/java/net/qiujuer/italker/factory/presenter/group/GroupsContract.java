@@ -18,5 +18,6 @@ public interface GroupsContract {
     // 都在基类完成了
     interface View extends BaseContract.RecyclerView<Presenter, Group> {
 
+        void forceExit();
     }
 }

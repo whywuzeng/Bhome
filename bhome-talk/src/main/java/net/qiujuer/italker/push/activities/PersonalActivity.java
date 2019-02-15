@@ -85,14 +85,14 @@ public class PersonalActivity extends PresenterToolbarActivity<PersonalContract.
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater menuInflater = getMenuInflater();
         menuInflater.inflate(R.menu.personal, menu);
-        mFollowItem = menu.findItem(R2.id.action_follow);
+        mFollowItem = menu.findItem(R.id.action_follow);
         changeFollowItemStatus();
         return true;
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        if (item.getItemId() == R2.id.action_follow) {
+        if (item.getItemId() == R.id.action_follow) {
             // TODO 进行关注操作
             return true;
         }

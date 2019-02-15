@@ -122,7 +122,7 @@ public abstract class ChatFragment<InitModel>
         // 拿到占位布局
         // 替换顶部布局一定需要发生在super之前
         // 防止控件绑定异常
-        ViewStub stub = (ViewStub) root.findViewById(R2.id.view_stub_header);
+        ViewStub stub = (ViewStub) root.findViewById(R.id.view_stub_header);
         stub.setLayoutResource(getHeaderLayoutId());
         stub.inflate();
 
@@ -130,7 +130,7 @@ public abstract class ChatFragment<InitModel>
         super.initWidget(root);
 
         // 初始化面板操作
-        mPanelBoss = (AirPanel.Boss) root.findViewById(R2.id.lay_content);
+        mPanelBoss = (AirPanel.Boss) root.findViewById(R.id.lay_content);
         mPanelBoss.setup(new AirPanel.PanelListener() {
             @Override
             public void requestHideSoftKeyboard() {
@@ -138,7 +138,7 @@ public abstract class ChatFragment<InitModel>
                 Util.hideKeyboard(mContent);
             }
         });
-        mPanelFragment = (PanelFragment) getChildFragmentManager().findFragmentById(R2.id.frag_panel);
+        mPanelFragment = (PanelFragment) getChildFragmentManager().findFragmentById(R.id.frag_panel);
         mPanelFragment.setup(this);
 
         initToolbar();

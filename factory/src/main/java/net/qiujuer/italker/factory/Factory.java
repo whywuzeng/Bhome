@@ -150,6 +150,8 @@ public class Factory {
                 break;
             case RspModel.ERROR_ACCOUNT_TOKEN:
                 Application.showToast(R.string.data_rsp_error_account_token);
+
+                decodeRspCode(R.string.data_rsp_error_account_token,callback);
                 instance.logout();
                 break;
             case RspModel.ERROR_ACCOUNT_LOGIN:
@@ -174,12 +176,15 @@ public class Factory {
             callback.onDataNotAvailable(resId);
     }
 
-
     /**
      * 收到账户退出的消息需要进行账户退出重新登录
      */
+    //todo 要写一个全局回调 退出 到登录界面
     private void logout() {
-        
+//        //启用广播
+//        Intent intent = new Intent("com.example.broadcastpractice.FORCE_OFFLINE");
+//        //发送广播--标准广播
+//        sendBroadcast(intent);
     }
 
 

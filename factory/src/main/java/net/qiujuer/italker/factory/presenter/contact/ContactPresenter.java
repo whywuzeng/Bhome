@@ -54,4 +54,9 @@ public class ContactPresenter extends BaseSourcePresenter<User, User, ContactDat
         // 调用基类方法进行界面刷新
         refreshData(result, users);
     }
+
+    @Override
+    public void onDataNotAvailable(int strRes) {
+
+    }
 }

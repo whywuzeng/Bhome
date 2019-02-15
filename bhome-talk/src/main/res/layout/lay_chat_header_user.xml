@@ -2,17 +2,19 @@
 <android.support.design.widget.CollapsingToolbarLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/collapsingToolbarLayout"
-    app:collapsedTitleTextAppearance="@style/TextAppearance.Title"
     app:contentScrim="@color/colorAccent"
     app:expandedTitleGravity="bottom|center_horizontal"
     app:expandedTitleMarginBottom="@dimen/len_16"
-    app:expandedTitleTextAppearance="@style/TextAppearance.Title"
     app:layout_scrollFlags="scroll|exitUntilCollapsed|snap"
     app:title="@string/app_name"
     app:toolbarId="@id/toolbar"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@color/trans">
+
+    <!--todo 这里主题有冲突-->
+    <!--app:expandedTitleTextAppearance="@style/TextAppearance.Title"-->
+    <!--app:collapsedTitleTextAppearance="@style/TextAppearance.Title"-->
 
     <ImageView
         android:id="@+id/im_header"

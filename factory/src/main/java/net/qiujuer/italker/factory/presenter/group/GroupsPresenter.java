@@ -2,10 +2,10 @@ package net.qiujuer.italker.factory.presenter.group;
 
 import android.support.v7.util.DiffUtil;
 
+import net.qiujuer.italker.factory.R;
 import net.qiujuer.italker.factory.data.group.GroupsDataSource;
 import net.qiujuer.italker.factory.data.group.GroupsRepository;
 import net.qiujuer.italker.factory.data.helper.GroupHelper;
-import net.qiujuer.italker.factory.data.helper.UserHelper;
 import net.qiujuer.italker.factory.model.db.Group;
 import net.qiujuer.italker.factory.presenter.BaseSourcePresenter;
 import net.qiujuer.italker.factory.utils.DiffUiDataCallback;
@@ -31,7 +31,7 @@ public class GroupsPresenter extends BaseSourcePresenter<Group, Group,
 
         // 加载网络数据, 以后可以优化到下拉刷新中
         // 只有用户下拉进行网络请求刷新
-        GroupHelper.refreshGroups();
+        GroupHelper.refreshGroups(this);
     }
 
     @Override
@@ -47,5 +47,15 @@ public class GroupsPresenter extends BaseSourcePresenter<Group, Group,
 
         // 界面刷新
         refreshData(result, groups);
+    }
+
+    @Override
+    public void onDataNotAvailable(int strRes) {
+        GroupsContract.View view = getView();
+        if (view == null)
+            return;
+        if (strRes == R.string.data_rsp_error_account_token) {
+            view.forceExit();
+        }
     }
 }

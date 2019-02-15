@@ -40,6 +40,8 @@
                 android:gravity="center"
                 android:text="@string/app_name"
                  />
+
+            <!--todo 这里主题有冲突-->
             <!--android:textAppearance="@style/TextAppearance.Title"-->
 
             <ImageView

@@ -51,7 +51,7 @@ public class UserActivity extends Activity {
         mCurFragment = new UpdateInfoFragment();
         getSupportFragmentManager()
                 .beginTransaction()
-                .add(R2.id.lay_container, mCurFragment)
+                .add(R.id.lay_container, mCurFragment)
                 .commit();
 
         // 初始化背景

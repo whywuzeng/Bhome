@@ -15,6 +15,6 @@ public interface SessionContract {
 
     // 都在基类完成了
     interface View extends BaseContract.RecyclerView<Presenter, Session> {
-
+        void forceExit();
     }
 }

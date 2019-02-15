@@ -143,7 +143,7 @@ public class GroupCreateActivity extends PresenterToolbarActivity<GroupCreateCon
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        if (item.getItemId() == R2.id.action_create) {
+        if (item.getItemId() == R.id.action_create) {
             //  进行创建
             onCreateClick();
         }

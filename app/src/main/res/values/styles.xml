@@ -2,9 +2,11 @@
 
     <!-- Base application theme. -->
     <style name="AppTheme" parent="Theme.AppCompat">
-        <!-- Customize your theme here. -->
+
+        <!--设置没有Title-->
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
+        <item name="android:windowNoTitle">true</item>
 
         <!-- Genius style -->
         <item name="gTextViewStyle">@style/Genius.Widget.TextView</item>
@@ -15,12 +17,11 @@
         <item name="gEditTextStyle">@style/Genius.Widget.EditText</item>
         <item name="gLoadingStyle">@style/Genius.Widget.Loading</item>
         <item name="gImageViewStyle">@style/Genius.Widget.ImageView</item>
+
     </style>
 
- <!--自我测试  app:popupTheme style-->
+    <!--自我测试  toolbar 溢出的样式 app:popupTheme style-->
     <style name="AppThemeTestPop.Base" parent="AppTheme">
-        <item name="windowActionBar">false</item>
-        <item name="windowNoTitle">true</item>
         <item name="colorPrimary">@color/material_white90</item>
         <item name="colorPrimaryDark">@color/black</item>
         <item name="colorAccent">@color/material_green_A200</item>
@@ -30,10 +31,8 @@
         <!-- 配置app自己的theme -->
     </style>
 
-    <!--自我测试  app:Theme style-->
+    <!--自我测试 toolbar 平常的样式 app:Theme style-->
     <style name="AppThemeTest.Base" parent="AppTheme">
-        <item name="windowActionBar">false</item>
-        <item name="windowNoTitle">true</item>
         <item name="colorPrimary">@color/material_blue_300</item>
         <item name="colorPrimaryDark">@color/black</item>
         <item name="colorAccent">@color/material_green_A200</item>
@@ -46,36 +45,27 @@
     <!--<item name="android:windowActionBarOverlay">true</item>-->
 
     <style name="MainAppTheme.Base" parent="AppTheme">
-        <item name="windowActionBar">false</item>
-        <item name="windowNoTitle">true</item>
+        <!--actionbar颜色-->
         <item name="colorPrimary">@color/material_blue_50</item>
+        <!--状态栏的颜色-->
         <item name="colorPrimaryDark">@color/black</item>
+        <!--圈圈，滑动条的颜色-->
         <item name="colorAccent">@color/material_green_A200</item>
-        <item name="android:actionBarSize">@dimen/actionBarSize</item>
+        <!--ToolBar高度-->
+        <item name="actionBarSize">@dimen/actionBarSize</item>
+
+        <!--todo 试试这个backgroundColoer 作用-->
         <item name="backgroundColor">@color/common_color_parentlayout_bg</item>
+
+        <!--那麼ActionMode就可以覆蓋在toolbar之上-->
         <item name="android:windowActionModeOverlay">true</item>
-        <item name="actionModeStyle">@style/CustomActionMode</item>
+        <!--todo 试试加了android 和不加的区别  省略android 可以适配多个系统版本-->
         <item name="windowActionModeOverlay">true</item>
+        <item name="actionModeStyle">@style/CustomActionMode</item>
         <item name="actionModeBackground">@color/greed_11B57C</item>
-        <item name="android:actionModeBackground">@color/greed_11B57C</item>
     </style>
 
     <!--<item name="android:windowActionBarOverlay">true</item>-->
-
-<style name="AppTheme.Base" parent="AppTheme">
-    <item name="windowActionBar">false</item>
-    <item name="windowNoTitle">true</item>
-    <item name="colorPrimary">@color/material_blue_500</item>
-    <item name="colorPrimaryDark">@color/black</item>
-    <item name="colorAccent">@color/material_green_A200</item>
-    <item name="android:actionBarSize">@dimen/actionBarSize</item>
-    <item name="backgroundColor">@color/common_color_parentlayout_bg</item>
-    <item name="android:windowActionModeOverlay">true</item>
-    <item name="actionModeStyle">@style/CustomActionMode</item>
-    <item name="windowActionModeOverlay">true</item>
-    <!--<item name="android:textColorPrimary">@color/qmui_config_color_white </item>-->
-    <!-- 配置app自己的theme -->
-</style>
 
     <!--设置自己的ActionMode-->
     <style name="CustomActionMode" parent="@style/Widget.AppCompat.ActionMode">
@@ -83,7 +73,7 @@
         <item name="height">64dp</item>
     </style>
 
-    <!--解决白屏显示问题-->
+    <!--解决白屏显示问题 设置全面屏-->
     <style name="Theme.Translucent" parent="MainAppTheme.Base">
         <item name="android:windowFullscreen">true</item>
         <item name="android:windowIsTranslucent">true</item>
@@ -150,6 +140,7 @@
         <item name="android:activityCloseExitAnimation">@anim/out_to_right</item>
 
     </style>
+
      <!--车次管理   -->
     <style name="to_from_dialog" parent="@android:style/Theme.Dialog">
         <item name="android:windowEnterAnimation">@anim/in_from_right</item>

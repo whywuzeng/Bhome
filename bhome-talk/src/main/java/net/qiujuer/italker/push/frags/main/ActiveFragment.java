@@ -106,6 +106,10 @@ public class ActiveFragment extends PresenterFragment<SessionContract.Presenter>
         mPlaceHolderView.triggerOkOrEmpty(mAdapter.getItemCount() > 0);
     }
 
+    @Override
+    public void forceExit() {
+    }
+
     // 界面数据渲染
      class ViewHolder extends RecyclerAdapter.ViewHolder<Session> {
         @BindView(R2.id.im_portrait)

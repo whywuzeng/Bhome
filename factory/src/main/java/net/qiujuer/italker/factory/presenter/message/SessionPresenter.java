@@ -2,6 +2,7 @@ package net.qiujuer.italker.factory.presenter.message;
 
 import android.support.v7.util.DiffUtil;
 
+import net.qiujuer.italker.factory.R;
 import net.qiujuer.italker.factory.data.message.SessionDataSource;
 import net.qiujuer.italker.factory.data.message.SessionRepository;
 import net.qiujuer.italker.factory.model.db.Session;
@@ -36,5 +37,16 @@ public class SessionPresenter extends BaseSourcePresenter<Session, Session,
 
         // 刷新界面
         refreshData(result, sessions);
+    }
+
+
+    @Override
+    public void onDataNotAvailable(int strRes) {
+        SessionContract.View view = getView();
+        if (view == null)
+            return;
+        if (strRes == R.string.data_rsp_error_account_token) {
+            view.forceExit();
+        }
     }
 }

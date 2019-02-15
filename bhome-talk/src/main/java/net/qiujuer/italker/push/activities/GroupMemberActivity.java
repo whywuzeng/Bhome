@@ -146,7 +146,7 @@ public class GroupMemberActivity extends PresenterToolbarActivity<GroupMembersCo
 
         ViewHolder(View itemView) {
             super(itemView);
-            itemView.findViewById(R2.id.cb_select).setVisibility(View.GONE);
+            itemView.findViewById(R.id.cb_select).setVisibility(View.GONE);
         }
 
         @Override

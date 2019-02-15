@@ -37,6 +37,9 @@ public class BasePresenter<T extends BaseContract.View> implements BaseContract.
         if (view != null) {
             view.showLoading();
         }
+
+        //开始注册退出登录广播
+
     }
 
     @SuppressWarnings("unchecked")
@@ -48,5 +51,8 @@ public class BasePresenter<T extends BaseContract.View> implements BaseContract.
             // 把Presenter设置为NULL
             view.setPresenter(null);
         }
+
+        //开始注销退出登录广播
+
     }
 }

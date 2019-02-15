@@ -19,7 +19,7 @@
         android:padding="@dimen/len_4"
         android:src="@drawable/ic_play"
         android:tint="@color/textPrimary"
-        android:visibility="gone" />
+        android:visibility="gone"/>
 
     <ImageView
         android:id="@+id/im_delete"
@@ -46,11 +46,15 @@
         android:padding="@dimen/len_20"
         android:src="@drawable/ic_record"
         android:tint="@color/white"
-        app:gBackgroundColor="@color/colorAccent"
-        app:gTouchColor="@color/white_alpha_16"
-        app:shadowAlpha="128"
-        app:shadowColor="@color/colorAccent"
-        app:shadowDx="0dp"
-        app:shadowDy="0dp"
-        app:shadowRadius="@dimen/len_8" />
+        android:background="@color/colorAccent"
+       />
 </merge>
+ <!--todo 这里主题有冲突-->
+    <!--app:gBackgroundColor="@color/colorAccent"-->
+    <!--app:gTouchColor="@color/white_alpha_16"-->
+
+    <!--app:shadowAlpha="128"-->
+    <!--app:shadowColor="@color/colorAccent"-->
+    <!--app:shadowDx="0dp"-->
+    <!--app:shadowDy="0dp"-->
+    <!--app:shadowRadius="@dimen/len_8"-->

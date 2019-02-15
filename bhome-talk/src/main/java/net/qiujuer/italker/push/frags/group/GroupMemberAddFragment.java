@@ -112,7 +112,7 @@ public class GroupMemberAddFragment extends BottomSheetDialogFragment
         mToolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(MenuItem item) {
-                if (item.getItemId() == R2.id.action_create) {
+                if (item.getItemId() == R.id.action_create) {
                     if (mPresenter != null)
                         mPresenter.submit();
                     return true;
@@ -121,7 +121,7 @@ public class GroupMemberAddFragment extends BottomSheetDialogFragment
             }
         });
 
-        MenuItem item = mToolbar.getMenu().findItem(R2.id.action_create);
+        MenuItem item = mToolbar.getMenu().findItem(R.id.action_create);
         Drawable drawable = item.getIcon();
         drawable = DrawableCompat.wrap(drawable);
         DrawableCompat.setTint(drawable, UiCompat.getColor(getResources(), R.color.textPrimary));

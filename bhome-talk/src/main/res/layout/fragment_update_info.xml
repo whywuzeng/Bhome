@@ -26,7 +26,8 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:title="@string/label_update_info_tips"
-            app:titleTextAppearance="@style/TextAppearance.AppCompat.Display1" />
+            />
+        <!--app:titleTextAppearance="@style/TextAppearance.AppCompat.Display1"-->
 
 
         <net.qiujuer.italker.common.widget.PortraitView

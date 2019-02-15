@@ -1,6 +1,8 @@
 package net.qiujuer.italker.push.frags.main;
 
 
+import android.content.ComponentName;
+import android.content.Intent;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -18,6 +20,8 @@ import net.qiujuer.italker.factory.presenter.group.GroupsPresenter;
 import net.qiujuer.italker.push.R;
 import net.qiujuer.italker.push.R2;
 import net.qiujuer.italker.push.activities.MessageActivity;
+
+import java.util.Objects;
 
 import butterknife.BindView;
 
@@ -98,6 +102,14 @@ public class GroupFragment extends PresenterFragment<GroupsContract.Presenter>
     public void onAdapterDataChanged() {
         // 进行界面操作
         mPlaceHolderView.triggerOkOrEmpty(mAdapter.getItemCount() > 0);
+    }
+
+    @Override
+    public void forceExit() {
+        Intent intent = new Intent("com.system.bhouse.bhouse.FORCE_OFFLINE");
+        intent.setComponent(new ComponentName("com.system.bhouse.bhouse","com.system.bhouse.bhouse.BhomeMessageReceiver"));
+        Objects.requireNonNull(getActivity()).sendBroadcast(intent);
+        getActivity().finish();
     }
 
 

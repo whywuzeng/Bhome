@@ -169,7 +169,7 @@ public class ChatGroupFragment extends ChatFragment<Group>
             mToolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
                 @Override
                 public boolean onMenuItemClick(MenuItem item) {
-                    if (item.getItemId() == R2.id.action_add) {
+                    if (item.getItemId() == R.id.action_add) {
                         // mReceiverId 就是群的Id
                         GroupMemberActivity.showAdmin(getContext(), mReceiverId );
                         return true;

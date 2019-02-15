@@ -125,7 +125,7 @@ public class GroupHelper {
     }
 
     // 刷新我的群组列表
-    public static void refreshGroups() {
+    public static void refreshGroups(final DataSource.FailedCallback callback) {
         RemoteService service = Network.remote();
         service.groups("").enqueue(new Callback<RspModel<List<GroupCard>>>() {
             @Override
@@ -138,7 +138,7 @@ public class GroupHelper {
                         Factory.getGroupCenter().dispatch(groupCards.toArray(new GroupCard[0]));
                     }
                 } else {
-                    Factory.decodeRspCode(rspModel, null);
+                    Factory.decodeRspCode(rspModel, callback);
                 }
             }
 

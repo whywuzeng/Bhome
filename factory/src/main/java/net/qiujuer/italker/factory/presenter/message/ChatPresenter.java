@@ -117,4 +117,9 @@ public class ChatPresenter<View extends ChatContract.View>
         // 进行界面刷新
         refreshData(result, messages);
     }
+
+    @Override
+    public void onDataNotAvailable(int strRes) {
+
+    }
 }

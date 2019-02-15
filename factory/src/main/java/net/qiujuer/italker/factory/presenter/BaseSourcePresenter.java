@@ -15,7 +15,7 @@ public abstract class BaseSourcePresenter<Data, ViewModel,
         Source extends DbDataSource<Data>,
         View extends BaseContract.RecyclerView>
         extends BaseRecyclerPresenter<ViewModel, View>
-        implements DataSource.SucceedCallback<List<Data>> {
+        implements DataSource.SucceedCallback<List<Data>> , DataSource.FailedCallback {
 
     protected Source mSource;
 

@@ -67,7 +67,7 @@ public class ChatUserFragment extends ChatFragment<User>
         toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(MenuItem item) {
-                if (item.getItemId() == R2.id.action_person) {
+                if (item.getItemId() == R.id.action_person) {
                     onPortraitClick();
                 }
                 return false;
@@ -75,7 +75,7 @@ public class ChatUserFragment extends ChatFragment<User>
         });
 
         // 拿到菜单Icon
-        mUserInfoMenuItem = toolbar.getMenu().findItem(R2.id.action_person);
+        mUserInfoMenuItem = toolbar.getMenu().findItem(R.id.action_person);
     }
 
     // 进行高度的综合运算，透明我们的头像和Icon

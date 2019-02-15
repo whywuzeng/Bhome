@@ -10,6 +10,7 @@ import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 
+import net.qiujuer.italker.common.callback.IGlobalCallBack;
 import net.qiujuer.italker.common.widget.convention.PlaceHolderView;
 
 import java.lang.reflect.Field;
@@ -27,6 +28,8 @@ public abstract class Activity extends AppCompatActivity {
     private static final String TAG = "Activity";
     
     protected PlaceHolderView mPlaceHolderView;
+
+    private IGlobalCallBack globalCallBack;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -179,6 +182,4 @@ public abstract class Activity extends AppCompatActivity {
         }
         return false;
     }
-
-
 }
