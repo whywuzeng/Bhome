@@ -43,7 +43,7 @@ public class TalkMainActivity extends Activity
 //    @BindView(R2.id.txt_title)
     TextView mTitle;
 
-//    @BindView(R2.id.lay_container)
+//    @BindView(R2.id.ivBackgroud)
     FrameLayout mContainer;
 
 //    @BindView(R2.id.navigation)
@@ -105,7 +105,7 @@ public class TalkMainActivity extends Activity
         mNavigation.setOnNavigationItemSelectedListener(this);
 
         Glide.with(this)
-                .load(R.drawable.bg_src_morning)
+                .load(R.drawable.yuandazhugong)
                 .centerCrop()
                 .into(new ViewTarget<View, GlideDrawable>(mLayAppbar) {
                     @Override
@@ -211,9 +211,6 @@ public class TalkMainActivity extends Activity
     }
 
     /**
-     *     findViewById(R.id.im_search).setOnClickListener(this);
-     mPortrait.setOnClickListener(this);
-     findViewById(R.id.btn_action).setOnClickListener(this);
      * @param v
      */
 
@@ -222,15 +219,12 @@ public class TalkMainActivity extends Activity
         int i = v.getId();
         if (i == R.id.im_search) {
             onSearchMenuClick();
-
         }
         else if (i == R.id.main_im_portrait) {
             onPortraitClick();
-
         }
         else if (i == R.id.btn_action) {
             onActionClick();
-
         }
         else {
 

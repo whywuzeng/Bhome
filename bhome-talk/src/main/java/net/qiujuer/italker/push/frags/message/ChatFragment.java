@@ -58,7 +58,7 @@ import butterknife.OnClick;
  * @author qiujuer Email:qiujuer@live.cn
  * @version 1.0.0
  */
-public abstract class ChatFragment<InitModel>
+public abstract class ChatFragment<InitModel,InitMaker>
         extends PresenterFragment<ChatContract.Presenter>
         implements AppBarLayout.OnOffsetChangedListener,
         ChatContract.View<InitModel>, PanelFragment.PanelCallback {
@@ -628,5 +628,9 @@ public abstract class ChatFragment<InitModel>
         }
     }
 
+    public void setSelfUserListener(ISelfMessageListener listener) {
+        this.listener = listener;
+    }
 
+    protected ISelfMessageListener<InitMaker> listener;
 }

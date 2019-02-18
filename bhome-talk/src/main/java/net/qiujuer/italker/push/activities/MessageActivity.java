@@ -2,8 +2,10 @@ package net.qiujuer.italker.push.activities;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.widget.ImageView;
 
 import net.qiujuer.italker.common.app.Activity;
 import net.qiujuer.italker.common.app.Fragment;
@@ -11,11 +13,18 @@ import net.qiujuer.italker.factory.model.Author;
 import net.qiujuer.italker.factory.model.db.Group;
 import net.qiujuer.italker.factory.model.db.Message;
 import net.qiujuer.italker.factory.model.db.Session;
+import net.qiujuer.italker.factory.model.db.User;
+import net.qiujuer.italker.factory.model.db.view.MemberUserModel;
 import net.qiujuer.italker.push.R;
+import net.qiujuer.italker.push.R2;
 import net.qiujuer.italker.push.frags.message.ChatGroupFragment;
 import net.qiujuer.italker.push.frags.message.ChatUserFragment;
+import net.qiujuer.italker.push.frags.message.ISelfMessageListener;
+import net.qiujuer.italker.utils.BitmapWaterMarkUtil;
 
-public class MessageActivity extends Activity {
+import butterknife.BindView;
+
+public class MessageActivity extends Activity implements ISelfMessageListener {
     // 接收者Id，可以是群，也可以是人的Id
     public static final String KEY_RECEIVER_ID = "KEY_RECEIVER_ID";
     // 是否是群
@@ -24,6 +33,8 @@ public class MessageActivity extends Activity {
     private String mReceiverId;
     private boolean mIsGroup;
 
+    @BindView(R2.id.iv_bg)
+    ImageView ivBackgroud;
     /**
      * 通过Session发起聊天
      *
@@ -88,10 +99,16 @@ public class MessageActivity extends Activity {
 //        AndroidBug5497Workaround.assistActivity(this);
         setTitle("");
         Fragment fragment;
-        if (mIsGroup)
+        if (mIsGroup) {
             fragment = new ChatGroupFragment();
-        else
+            ChatGroupFragment groupFragment = (ChatGroupFragment) fragment;
+            groupFragment.setSelfUserListener(this);
+        }
+        else {
             fragment = new ChatUserFragment();
+            ChatUserFragment userFragment = (ChatUserFragment) fragment;
+            userFragment.setSelfUserListener(this);
+        }
 
         // 从Activity传递参数到Fragment中去
         Bundle bundle = new Bundle();
@@ -101,5 +118,17 @@ public class MessageActivity extends Activity {
         getSupportFragmentManager().beginTransaction()
                 .add(R.id.lay_container, fragment)
                 .commit();
+    }
+
+    @Override
+    public void onSelfUserListener(Object user) {
+        BitmapDrawable bitmapDrawable = null;
+        if (user instanceof User) {
+            bitmapDrawable = BitmapWaterMarkUtil.BitmapDrawableWithBitmap(((User) user).getName(), this);
+        }
+        else if (user instanceof MemberUserModel) {
+            bitmapDrawable = BitmapWaterMarkUtil.BitmapDrawableWithBitmap(((MemberUserModel) user).name ,this);
+        }
+        ivBackgroud.setBackgroundDrawable(bitmapDrawable);
     }
 }

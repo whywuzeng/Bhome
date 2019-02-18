@@ -122,4 +122,9 @@ public class ChatPresenter<View extends ChatContract.View>
     public void onDataNotAvailable(int strRes) {
 
     }
+
+    @Override
+    public void start() {
+        super.start();
+    }
 }

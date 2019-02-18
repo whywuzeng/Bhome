@@ -26,7 +26,7 @@ import butterknife.OnClick;
 /**
  * 用户聊天界面
  */
-public class ChatUserFragment extends ChatFragment<User>
+public class ChatUserFragment extends ChatFragment<User,User>
         implements ChatContract.UserView {
     @BindView(R2.id.im_portrait)
     PortraitView mPortrait;
@@ -145,4 +145,12 @@ public class ChatUserFragment extends ChatFragment<User>
         mPortrait.setup(Glide.with(this), user.getPortrait());
         mCollapsingLayout.setTitle(user.getName());
     }
+
+    @Override
+    public void onInitWaterMark(User user) {
+        if (listener!=null) {
+            listener.onSelfUserListener(user);
+        }
+    }
+
 }

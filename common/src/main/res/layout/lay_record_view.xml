@@ -49,7 +49,7 @@
         android:background="@color/colorAccent"
        />
 </merge>
- <!--todo 这里主题有冲突-->
+    <!--todo 这里主题有冲突-->
     <!--app:gBackgroundColor="@color/colorAccent"-->
     <!--app:gTouchColor="@color/white_alpha_16"-->
 

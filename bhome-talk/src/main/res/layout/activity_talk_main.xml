@@ -15,6 +15,8 @@
         android:outlineProvider="bounds"
         tools:targetApi="lollipop">
 
+        <!-- bounds 会按照View的大小来描绘阴影-->
+
         <FrameLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -39,10 +41,8 @@
                 android:layout_gravity="center"
                 android:gravity="center"
                 android:text="@string/app_name"
+                android:textAppearance="@style/TextAppearance.Title"
                  />
-
-            <!--todo 这里主题有冲突-->
-            <!--android:textAppearance="@style/TextAppearance.Title"-->
 
             <ImageView
                 android:id="@+id/im_search"
@@ -64,6 +64,7 @@
         android:id="@+id/lay_container"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:background="@color/litte_strong_gray"
         android:layout_marginBottom="@dimen/len_52"
         app:layout_behavior="@string/appbar_scrolling_view_behavior" />
 

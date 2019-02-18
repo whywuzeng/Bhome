@@ -114,12 +114,19 @@ public class NavHelper<T> {
 
         if (newTab != null) {
             if (newTab.fragment == null) {
-                // 首次新建
-                Fragment fragment = Fragment.instantiate(context, newTab.clx.getName(), null);
-                // 缓存起来
-                newTab.fragment = fragment;
-                // 提交到FragmentManger
-                ft.add(containerId, fragment, newTab.clx.getName());
+                if (fragmentManager.findFragmentByTag(newTab.clx.getName())==null) {
+                    // 首次新建
+                    Fragment fragment = Fragment.instantiate(context, newTab.clx.getName(), null);
+                    // 缓存起来
+                    newTab.fragment = fragment;
+                    // 提交到FragmentManger
+                    ft.add(containerId, fragment, newTab.clx.getName());
+                }else {
+                    // 内存重启导致fragment还在界面上，但是newtab.fragment还是为空
+                    Fragment fragment = fragmentManager.findFragmentByTag(newTab.clx.getName());
+                    // 缓存起来
+                    newTab.fragment = fragment;
+                }
             } else {
                 // 从FragmentManger的缓存空间中重新加载到界面中
                 ft.attach(newTab.fragment);

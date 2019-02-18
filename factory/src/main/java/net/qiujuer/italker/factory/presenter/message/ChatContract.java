@@ -33,11 +33,13 @@ public interface ChatContract {
     interface View<InitModel> extends BaseContract.RecyclerView<Presenter, Message> {
         // 初始化的Model
         void onInit(InitModel model);
+
     }
 
     // 人聊天的界面
     interface UserView extends View<User> {
-
+        //用户的水印信息
+        void onInitWaterMark(User user);
     }
 
     // 群聊天的界面
@@ -47,5 +49,8 @@ public interface ChatContract {
 
         // 初始化成员信息
         void onInitGroupMembers(List<MemberUserModel> members, long moreCount);
+
+        //群里自己的别名
+        void onInitWaterMark(MemberUserModel selfUser);
     }
 }

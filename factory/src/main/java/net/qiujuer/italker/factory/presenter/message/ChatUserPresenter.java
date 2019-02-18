@@ -1,9 +1,12 @@
 package net.qiujuer.italker.factory.presenter.message;
 
+import android.text.TextUtils;
+
 import net.qiujuer.italker.factory.data.helper.UserHelper;
 import net.qiujuer.italker.factory.data.message.MessageRepository;
 import net.qiujuer.italker.factory.model.db.Message;
 import net.qiujuer.italker.factory.model.db.User;
+import net.qiujuer.italker.factory.persistence.Account;
 
 /**
  * @author qiujuer Email:qiujuer@live.cn
@@ -26,5 +29,10 @@ public class ChatUserPresenter extends ChatPresenter<ChatContract.UserView>
         // 从本地拿这个人的信息
         User receiver = UserHelper.findFromLocal(mReceiverId);
         getView().onInit(receiver);
+
+        if (!TextUtils.isEmpty(Account.getUserId())) {
+            User user = UserHelper.findFromLocal(Account.getUserId());
+            getView().onInitWaterMark(user);
+        }
     }
 }

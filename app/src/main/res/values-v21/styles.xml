@@ -1,74 +1,55 @@
 <resources>
 
     <!-- Base application theme. -->
-    <style name="AppTheme" parent="Theme.Design.Light.NoActionBar">
-        <!-- Customize your theme here. -->
+    <style name="AppTheme" parent="Theme.AppCompat">
+        <!--设置没有Title-->
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
-    </style>
+        <item name="android:windowNoTitle">true</item>
 
-    <!--自我测试  app:popupTheme style-->
-    <style name="AppThemeTestPop.Base" parent="AppTheme">
-        <item name="windowActionBar">false</item>
-        <item name="windowNoTitle">true</item>
-        <item name="colorPrimary">@color/material_white90</item>
-        <item name="colorPrimaryDark">@color/black</item>
-        <item name="colorAccent">@color/material_green_A200</item>
-        <item name="android:actionBarSize">@dimen/actionBarSize</item>
-        <item name="backgroundColor">@color/common_color_parentlayout_bg</item>
+        <!-- Genius style -->
+        <item name="gTextViewStyle">@style/Genius.Widget.TextView</item>
+        <item name="gButtonStyle">@style/Genius.Widget.Button</item>
+        <item name="gFloatActionButtonStyle">@style/Genius.Widget.FloatActionButton</item>
+        <item name="gSeekBarStyle">@style/Genius.Widget.SeekBar</item>
+        <item name="gCheckBoxStyle">@style/Genius.Widget.CompoundButton.CheckBox</item>
+        <item name="gEditTextStyle">@style/Genius.Widget.EditText</item>
+        <item name="gLoadingStyle">@style/Genius.Widget.Loading</item>
+        <item name="gImageViewStyle">@style/Genius.Widget.ImageView</item>
 
+        <item name="toolbarTitleSize">@dimen/font_18</item>
+        <item name="toolbarTitleColor">@color/white_alpha_224</item>
+        <item name="toolbarMenuIconColor">@color/white_alpha_224</item>
 
-        <!--<item name="android:textColorPrimary">@color/qmui_config_color_white </item>-->
-        <!-- 配置app自己的theme -->
-    </style>
-
-    <!--自我测试  app:Theme style-->
-    <style name="AppThemeTest.Base" parent="AppTheme">
-        <item name="windowActionBar">false</item>
-        <item name="windowNoTitle">true</item>
-        <item name="colorPrimary">@color/material_blue_300</item>
-        <item name="colorPrimaryDark">@color/black</item>
-        <item name="colorAccent">@color/material_green_A200</item>
-        <item name="android:actionBarSize">@dimen/actionBarSize</item>
-        <item name="backgroundColor">@color/common_color_parentlayout_bg</item>
-        <!--<item name="android:textColorPrimary">@color/qmui_config_color_white </item>-->
-        <!-- 配置app自己的theme -->
-    </style>
-
-    <style name="AppTheme.Base" parent="AppTheme">
-        <item name="windowActionBar">false</item>
-        <item name="windowNoTitle">true</item>
-        <item name="colorPrimary">@color/material_blue_500</item>
-        <item name="colorPrimaryDark">@color/black</item>
-        <item name="colorAccent">@color/material_green_A200</item>
-        <item name="android:actionBarSize">@dimen/actionBarSize</item>
-        <item name="backgroundColor">@color/common_color_parentlayout_bg</item>
-        <item name="actionModeBackground">@color/divide</item>
-        <item name="android:actionModeBackground">@color/divide</item>
-        <item name="android:actionModeCloseDrawable">@drawable/task_add_cab_back</item>
-        <item name="actionModeCloseDrawable">@drawable/task_add_cab_back</item>
-        <item name="actionModeStyle">@style/CustomActionMode</item>
-        <!--<item name="android:windowTranslucentStatus">false</item>-->
-        <!--<item name="android:windowTranslucentNavigation">true</item>-->
-        <!--&lt;!&ndash;Android 5.x开始需要把颜色设置透明，否则导航栏会呈现系统默认的浅灰色&ndash;&gt;-->
-        <!--<item name="android:statusBarColor">@android:color/transparent</item>-->
-
-        <!--<item name="android:textColorPrimary">@color/qmui_config_color_white </item>-->
-        <!-- 配置app自己的theme -->
-
+        <!--背景色  应为主题的是黑色背景-->
+        <item name="android:windowBackground">@color/windowsBackground</item>
     </style>
 
     <!--给主Activity设置的Theme-->
     <style name="MainAppTheme.Base" parent="AppTheme">
-        <item name="windowActionBar">false</item>
-        <item name="windowNoTitle">true</item>
+        <!--actionbar颜色-->
         <item name="colorPrimary">@color/material_blue_50</item>
+        <!--状态栏的颜色-->
         <item name="colorPrimaryDark">@color/black</item>
+        <!--圈圈，滑动条的颜色-->
         <item name="colorAccent">@color/material_green_A200</item>
-        <item name="android:actionBarSize">@dimen/actionBarSize</item>
+        <!--ToolBar高度-->
+        <item name="actionBarSize">@dimen/actionBarSize</item>
+
         <item name="backgroundColor">@color/common_color_parentlayout_bg</item>
-        <item name="android:windowActionModeOverlay">false</item>
+
+        <!--那麼ActionMode就可以覆蓋在toolbar之上-->
+        <item name="android:windowActionModeOverlay">true</item>
         <item name="windowActionModeOverlay">true</item>
+        <item name="actionModeStyle">@style/CustomActionMode</item>
+        <item name="actionModeBackground">@color/greed_11B57C</item>
+
+        <!--API21 特有的API-->
+        <!--去除默认阴影-->
+        <item name="android:elevation">0dp</item>
+        <item name="android:outlineProvider">none</item>
+        <!--设置底部导航颜色-->
+        <item name="android:navigationBarColor">@color/colorAccent</item>
     </style>
 
 
@@ -87,45 +68,12 @@
         <item name="height">@dimen/actionBarSize</item>
     </style>
 
-    <!--解决白屏显示问题-->
+    <!--解决白屏显示问题 设置全屏透明-->
     <style name="Theme.Translucent" parent="MainAppTheme.Base">
         <item name="android:windowFullscreen">true</item>
         <item name="android:windowIsTranslucent">true</item>
     </style>
 
-    <style name="text_18_ffffff">
-        <item name="android:textSize">18.0dip</item>
-        <item name="android:textColor">@color/blue1</item>
-    </style>
-
-    <style name="text_16_666666">
-        <item name="android:textSize">16.0dip</item>
-        <item name="android:textColor">#ff666666</item>
-    </style>
-
-    <style name="sdw_white">
-        <item name="android:shadowColor">#7fffffff</item>
-        <item name="android:shadowDx">0.0</item>
-        <item name="android:shadowDy">0.65</item>
-        <item name="android:shadowRadius">1.0</item>
-    </style>
-
-    <style name="sdw_79351b">
-        <item name="android:shadowColor">#ff79351b</item>
-        <item name="android:shadowDx">0.0</item>
-        <item name="android:shadowDy">1.0</item>
-        <item name="android:shadowRadius">1.0</item>
-    </style>
-
-    <style name="text_15_ffffff_sdw" parent="@style/sdw_79351b">
-        <item name="android:textSize">15.0dip</item>
-        <item name="android:textColor">#ffffffff</item>
-    </style>
-
-    <style name="text_15_666666_sdw" parent="@style/sdw_white">
-        <item name="android:textSize">15.0dip</item>
-        <item name="android:textColor">#ff666666</item>
-    </style>
 
     <style name="Dialog" parent="android:style/Theme.Dialog">
         <item name="android:background">#00000000</item>
@@ -140,363 +88,12 @@
         <item name="android:backgroundDimEnabled">true</item>
     </style>
 
-    <style name="fade">
-        <item name="android:activityOpenEnterAnimation">@anim/in_from_right</item>
-        <item name="android:activityOpenExitAnimation">@anim/out_to_left</item>
-        <item name="android:activityCloseEnterAnimation">@anim/in_from_left</item>
-        <item name="android:activityCloseExitAnimation">@anim/out_to_right</item>
-
-        <!-- 配置app自己的theme -->
-    </style>
-    <!--车次管理   -->
-    <style name="to_from_dialog" parent="@android:style/Theme.Dialog">
-        <item name="android:windowEnterAnimation">@anim/in_from_right</item>
-        <item name="android:windowExitAnimation">@anim/out_to_left</item>
-    </style>
-
-    <style name="fade_dialog" parent="@android:style/Theme.Dialog">
-        <item name="android:windowEnterAnimation">@anim/in_scale</item>
-        <item name="android:windowExitAnimation">@anim/out_scale</item>
-        <!-- 配置app自己的theme -->
-    </style>
-
-    <style name="Anim_fade" parent="AppTheme.Base">
-        <item name="android:windowAnimationStyle">@style/fade</item>
-    </style>
-
-    <!-- This configures the styles for the title within the Toolbar  -->
-    <style name="Toolbar.TitleText" parent="TextAppearance.Widget.AppCompat.Toolbar.Title">
-        <item name="android:textSize">0.01dp</item>
-        <item name="android:textColor">@android:color/white</item>
-        <item name="android:textStyle">normal</item>
-    </style>
-
-    <style name="AnimBottom" parent="@android:style/Animation">
-        <item name="android:windowEnterAnimation">@anim/push_bottom_in</item>
-        <item name="android:windowExitAnimation">@anim/push_bottom_out</item>
-        <item name="android:windowBackground">@color/zhanghuise_bottom</item>
-        <item name="android:windowIsTranslucent">false</item>
-        <item name="android:windowContentOverlay">@null</item>
-        <item name="android:windowNoTitle">true</item>
-        <item name="android:windowIsFloating">true</item>
-        <item name="android:backgroundDimEnabled">false</item>
-    </style>
-
-    <style name="title_normal">
-        <item name="android:textSize">20.0sp</item>
-        <item name="android:textColor">@color/title</item>
-    </style>
-
-    <style name="more_item_h">
-        <item name="android:textSize">17.0sp</item>
-        <item name="android:textColor">#ff444444</item>
-    </style>
-
-    <style name="more_item">
-        <item name="android:textSize">18.0sp</item>
-        <item name="android:textColor">#ff444444</item>
-    </style>
-
-    <style name="button_wrapper_style">
-        <item name="android:layout_width">match_parent</item>
-        <item name="android:layout_height">match_parent</item>
-        <item name="android:layout_margin">6dp</item>
-    </style>
-
-    <style name="CustomCheckboxTheme" parent="@android:style/Widget.CompoundButton.CheckBox">
-        <item name="android:button">@drawable/checkbox_style</item>
-    </style>
-
-    <style name="DivideSectionBottom5">
-        <item name="android:background">@mipmap/shadow_bottom</item>
-        <item name="android:layout_height">5dp</item>
-        <item name="android:layout_width">match_parent</item>
-    </style>
-
-    <style name="DivideSectionTop5">
-        <item name="android:background">@mipmap/shadow_top</item>
-        <item name="android:layout_height">5dp</item>
-        <item name="android:layout_alignParentBottom">true</item>
-        <item name="android:layout_width">match_parent</item>
-    </style>
 
     <!--分割线-->
     <style name="DivideLine" parent="@android:style/TextAppearance.Medium">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">0.5dp</item>
         <item name="android:background">@color/divide_line</item>
-    </style>
-
-    <!--分割线 gap 1dp-->
-    <style name="DivideLine1dpGap" >
-        <item name="android:layout_width">match_parent</item>
-        <item name="android:layout_height">1dp</item>
-        <item name="android:background">@drawable/divide_line_gap</item>
-    </style>
-
-    <!--分割线 1dp-->
-    <style name="DivideLine1dp" parent="@android:style/TextAppearance.Medium">
-        <item name="android:layout_width">match_parent</item>
-        <item name="android:layout_height">1dp</item>
-        <item name="android:background">@color/divide_line</item>
-    </style>
-
-    <style name="TextViewFilterTag">
-        <item name="android:layout_width">match_parent</item>
-        <item name="android:layout_height">wrap_content</item>
-        <item name="android:drawablePadding">15dp</item>
-        <item name="android:paddingRight">20dp</item>
-        <item name="android:gravity">center_vertical</item>
-        <item name="android:paddingBottom">15dp</item>
-        <item name="android:paddingLeft">20dp</item>
-        <item name="android:textSize">15sp</item>
-        <item name="android:paddingTop">15dp</item>
-        <item name="android:textColor">@color/font_2</item>
-    </style>
-
-    <style name="GrayBoxMarrginSize">
-        <item name="android:layout_marginLeft">9dp</item>
-        <item name="android:layout_marginRight">9dp</item>
-        <item name="android:layout_marginTop">7dp</item>
-        <item name="android:layout_marginBottom">7dp</item>
-    </style>
-
-
-    <style name="LoginButton" parent="@style/RightAngledButton">
-        <item name="android:textColor">@drawable/selector_btn_common_login_textcolor</item>
-        <item name="android:background">@drawable/selector_btn_common_login_v8</item>
-        <item name="android:layout_width">fill_parent</item>
-        <item name="android:layout_marginLeft">25.0dip</item>
-        <item name="android:layout_marginRight">25.0dip</item>
-    </style>
-
-    <!-- 蓝色框的按钮背景-->
-
-    <style name="LoginButtonRadius" parent="@style/RightAngledButton">
-        <item name="android:textColor">@drawable/selector_btn_common_radius_textcolor</item>
-        <item name="android:background">@drawable/selector_btn_common_radius_v8</item>
-        <item name="android:layout_width">fill_parent</item>
-        <item name="android:textSize">@dimen/common_font_fs4</item>
-        <item name="android:layout_height">@dimen/common_button_task_height</item>
-        <item name="android:layout_marginLeft">25.0dip</item>
-        <item name="android:layout_marginRight">25.0dip</item>
-    </style>
-
-    <!--整个背景都是蓝色的按钮背景-->
-
-    <style name="RightAngledButton">
-        <item name="android:textSize">@dimen/common_font_fs2</item>
-        <item name="android:textColor">@drawable/selector_btn_common_textcolor</item>
-        <item name="android:gravity">center</item>
-        <item name="android:background">@drawable/selector_btn_common</item>
-        <item name="android:layout_width">wrap_content</item>
-        <item name="android:layout_height">@dimen/common_button_height</item>
-    </style>
-
-    <!--灰色框  白色底-->
-
-    <style name="GreyBoxButton">
-        <item name="android:background"> @drawable/selector_layout_common_radius_v8</item>
-    </style>
-
-    <style name="GreyBoxButtonfang">
-        <item name="android:background"> @drawable/selector_layout_common_radius_v8_fang</item>
-    </style>
-
-    <style name="GreySimpleButtonfang">
-        <item name="android:background"> @drawable/selector_layout_common_simple_fang</item>
-    </style>
-
-    <style name="LoginMargin">
-        <item name="android:layout_width">fill_parent</item>
-        <item name="android:layout_height">44.0dip</item>
-        <item name="android:layout_marginLeft">25.0dip</item>
-        <item name="android:layout_marginRight">25.0dip</item>
-    </style>
-
-    <style name="PasswordEditTextV8" parent="@style/LoginEditTextStyleV8">
-        <item name="android:layout_marginLeft">@dimen/common_margin_dz2</item>
-        <item name="android:password">true</item>
-        <item name="android:maxLength">30</item>
-        <item name="android:inputType">textPassword</item>
-    </style>
-
-    <style name="AccountEditTextV8" parent="@style/LoginEditTextStyleV8">
-        <item name="android:layout_marginLeft">@dimen/common_margin_dz2</item>
-        <item name="android:maxLength">30</item>
-    </style>
-
-
-    <style name="LoginEditTextStyleV8">
-        <item name="android:textSize">@dimen/common_font_fs6</item>
-        <item name="android:textColor">@color/fc6</item>
-        <item name="android:textColorHint">@color/btn_light_disable_login</item>
-        <item name="android:layout_width">fill_parent</item>
-        <item name="android:layout_height">fill_parent</item>
-        <item name="android:singleLine">true</item>
-    </style>
-
-
-    <style name="CommonLineHorizontal">
-        <item name="android:background">@color/dividing_line</item>
-        <item name="android:layout_width">fill_parent</item>
-        <item name="android:layout_height">@dimen/common_bg_frame_line</item>
-    </style>
-
-
-    <style name="cart_dialog"
-           parent="@android:style/Theme.Holo.Light.Dialog">
-        <item name="android:windowFrame">@null</item>
-        <item name="android:windowIsFloating">true</item>
-        <item name="android:windowIsTranslucent">true</item>
-        <item name="android:windowNoTitle">true</item>
-        <item name="android:background">@android:color/transparent</item>
-        <item name="android:windowBackground">@android:color/transparent</item>
-        <item name="android:backgroundDimEnabled">true</item>
-        <item name="android:backgroundDimAmount">0.6</item>
-    </style>
-
-    <style name="TextTitle" parent="@android:style/TextAppearance.Medium">
-        <item name="android:layout_width">wrap_content</item>
-        <item name="android:layout_height">wrap_content</item>
-        <item name="android:textColor">@color/font_2</item>
-        <item name="android:textSize">18sp</item>
-    </style>
-
-    <!--比较深黑色的字体-->
-
-    <style name="textLitteTitle" >
-        <item name="android:textSize">12sp</item>
-        <item name="android:textColor">@color/common_color_text_300</item>
-        <item name="android:layout_width">wrap_content</item>
-        <item name="android:layout_height">wrap_content</item>
-    </style>
-
-    <style name="TextTitleBule">
-        <item name="android:textSize">18sp</item>
-        <item name="android:textColor">@color/header5</item>
-        <item name="android:layout_width">wrap_content</item>
-        <item name="android:layout_height">wrap_content</item>
-    </style>
-
-    <style name="TextTitleBlack">
-        <item name="android:textSize">18sp</item>
-        <item name="android:textColor">@color/common_color_text_300</item>
-        <item name="android:layout_width">wrap_content</item>
-        <item name="android:layout_height">wrap_content</item>
-    </style>
-
-    <style name="textLitteContent">
-        <item name="android:textSize">12sp</item>
-        <item name="android:textColor">@color/common_color_layout_text</item>
-        <item name="android:layout_width">wrap_content</item>
-        <item name="android:layout_height">wrap_content</item>
-    </style>
-
-    <style name="ComTaskContentItemTitle" parent="@style/textLitteContent">
-        <item name="android:layout_width">match_parent</item>
-        <item name="android:drawablePadding">15dp</item>
-        <item name="android:paddingRight">20dp</item>
-        <item name="android:gravity">center_vertical</item>
-        <item name="android:textColor">@color/common_color_text_30</item>
-        <item name="android:paddingBottom">10dp</item>
-        <item name="android:paddingLeft">20dp</item>
-        <item name="android:textSize">15sp</item>
-        <item name="android:paddingTop">10dp</item>
-    </style>
-
-    <style name="ComTaskContentItemRight" parent="@style/textLitteContent">
-        <item name="android:layout_width">match_parent</item>
-        <item name="android:drawablePadding">15dp</item>
-        <item name="android:paddingRight">20dp</item>
-        <item name="android:gravity">center_vertical</item>
-        <item name="android:textColor">@color/common_color_text_300</item>
-        <item name="android:paddingBottom">10dp</item>
-        <item name="android:paddingLeft">20dp</item>
-        <item name="android:textSize">15sp</item>
-        <item name="android:paddingTop">10dp</item>
-    </style>
-
-
-    <style name="BottomDialog" parent="@style/Base.V7.Theme.AppCompat.Light.Dialog">
-        <item name="android:windowNoTitle">true</item>
-        <item name="android:windowBackground">@android:color/transparent</item>
-    </style>
-
-    <style name="BottomDialog.Animation" parent="Animation.AppCompat.Dialog">
-        <item name="android:windowEnterAnimation">@anim/translate_dialog_in</item>
-        <item name="android:windowExitAnimation">@anim/translate_dialog_out</item>
-    </style>
-
-    <style name="MyAlertDialogStyle"
-           parent="Theme.AppCompat.Dialog.Alert">
-        <item name="android:background">@drawable/dialog_bg</item>
-        <item name="android:textColorPrimary">@color/colorPrimary</item>
-    </style>
-
-    <!--//timeline 界面的背景-->
-
-    <style name="timelineButton">
-        <item name="android:background">@drawable/selector_btn_common</item>
-    </style>
-
-
-    <!--tagGroup的样式 集成-->
-    <style name="TagGroup">
-        <item name="android:layout_width">match_parent</item>
-        <item name="android:layout_height">wrap_content</item>
-        <item name="atg_isAppendMode">false</item>
-        <item name="atg_inputHint">@string/add_tag</item>
-        <item name="atg_borderColor">#49C120</item>
-        <item name="atg_textColor">#49C120</item>
-        <item name="atg_backgroundColor">#FFFFFF</item>
-        <item name="atg_dashBorderColor">#AAAAAA</item>
-        <item name="atg_inputHintColor">#80000000</item>
-        <item name="atg_inputTextColor">#DE000000</item>
-        <item name="atg_checkedBorderColor">#49C120</item>
-        <item name="atg_checkedTextColor">#FFFFFF</item>
-        <item name="atg_checkedMarkerColor">#FFFFFF</item>
-        <item name="atg_checkedBackgroundColor">#49C120</item>
-        <item name="atg_pressedBackgroundColor">#EDEDED</item>
-        <item name="atg_borderStrokeWidth">0.5dp</item>
-        <item name="atg_textSize">13sp</item>
-        <item name="atg_horizontalSpacing">8dp</item>
-        <item name="atg_verticalSpacing">4dp</item>
-        <item name="atg_horizontalPadding">12dp</item>
-        <item name="atg_verticalPadding">3dp</item>
-    </style>
-    <style name="TagGroup.Beauty_Red" parent="TagGroup">
-        <item name="atg_borderColor">#FF3D7F</item>
-        <item name="atg_textColor">#FF3D7F</item>
-        <item name="atg_checkedBorderColor">#FF3D7F</item>
-        <item name="atg_checkedBackgroundColor">#FF3D7F</item>
-    </style>
-    <style name="TagGroup.Beauty_Red.Inverse" parent="TagGroup">
-        <item name="atg_borderColor">#FF3D7F</item>
-        <item name="atg_textColor">#FFFFFF</item>
-        <item name="atg_backgroundColor">#FF3D7F</item>
-        <item name="atg_inputHintColor">#80FFFFFF</item>
-        <item name="atg_inputTextColor">#DEFFFFFF</item>
-        <item name="atg_checkedBorderColor">#FF3D7F</item>
-        <item name="atg_checkedTextColor">#FF3D7F</item>
-        <item name="atg_checkedMarkerColor">#FF3D7F</item>
-        <item name="atg_checkedBackgroundColor">#FFFFFF</item>
-        <item name="atg_pressedBackgroundColor">#FF99B1</item>
-    </style>
-    <style name="TagGroup.Large" parent="TagGroup">
-        <item name="atg_borderStrokeWidth">0.7dp</item>
-        <item name="atg_textSize">15sp</item>
-        <item name="atg_horizontalSpacing">9dp</item>
-        <item name="atg_verticalSpacing">5dp</item>
-        <item name="atg_horizontalPadding">14dp</item>
-        <item name="atg_verticalPadding">4dp</item>
-    </style>
-    <style name="TagGroup.Small" parent="TagGroup">
-        <item name="atg_textSize">10sp</item>
-        <item name="atg_horizontalSpacing">6dp</item>
-        <item name="atg_verticalSpacing">3dp</item>
-        <item name="atg_horizontalPadding">8dp</item>
-        <item name="atg_verticalPadding">2dp</item>
     </style>
 
 </resources>

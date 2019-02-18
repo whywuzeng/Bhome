@@ -6,15 +6,17 @@
     app:expandedTitleGravity="bottom|center_horizontal"
     app:expandedTitleMarginBottom="@dimen/len_16"
     app:layout_scrollFlags="scroll|exitUntilCollapsed|snap"
+    app:expandedTitleTextAppearance="@style/TextAppearance.Title"
+    app:collapsedTitleTextAppearance="@style/TextAppearance.Title"
     app:title="@string/app_name"
     app:toolbarId="@id/toolbar"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@color/trans">
 
-    <!--todo 这里主题有冲突-->
-    <!--app:expandedTitleTextAppearance="@style/TextAppearance.Title"-->
-    <!--app:collapsedTitleTextAppearance="@style/TextAppearance.Title"-->
+    <!--设置字体颜色和大小-->
+    <!--expandedTitleTextAppearance-->
+    <!--collapsedTitleTextAppearance-->
 
     <ImageView
         android:id="@+id/im_header"

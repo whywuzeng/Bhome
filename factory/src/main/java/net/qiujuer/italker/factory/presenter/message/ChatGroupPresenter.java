@@ -45,6 +45,14 @@ public class ChatGroupPresenter extends ChatPresenter<ChatContract.GroupView>
             // 没有显示的成员的数量
             long moreCount = memberCount - models.size();
             view.onInitGroupMembers(models, moreCount);
+
+            for (MemberUserModel model : models) {
+                if (null!=model.userId&&model.userId.equals(Account.getUserId()))
+                {
+                    view.onInitWaterMark(model);
+                }
+            }
+
         }
 
     }

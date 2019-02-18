@@ -32,7 +32,7 @@ import butterknife.BindView;
 /**
  * 群聊天界面实现
  */
-public class ChatGroupFragment extends ChatFragment<Group>
+public class ChatGroupFragment extends ChatFragment<Group,MemberUserModel>
         implements ChatContract.GroupView {
 
     @BindView(R2.id.im_header)
@@ -162,6 +162,7 @@ public class ChatGroupFragment extends ChatFragment<Group>
 
     }
 
+
     @Override
     public void showAdminOption(boolean isAdmin) {
         if (isAdmin) {
@@ -180,5 +181,10 @@ public class ChatGroupFragment extends ChatFragment<Group>
         }
     }
 
-
+    @Override
+    public void onInitWaterMark(MemberUserModel selfUser) {
+        if (listener!=null) {
+            listener.onSelfUserListener(selfUser);
+        }
+    }
 }

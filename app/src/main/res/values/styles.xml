@@ -18,6 +18,13 @@
         <item name="gLoadingStyle">@style/Genius.Widget.Loading</item>
         <item name="gImageViewStyle">@style/Genius.Widget.ImageView</item>
 
+        <item name="toolbarTitleSize">@dimen/font_18</item>
+        <item name="toolbarTitleColor">@color/white_alpha_224</item>
+        <item name="toolbarMenuIconColor">@color/white_alpha_224</item>
+
+        <!--背景色  应为主题的是黑色背景-->
+        <item name="android:windowBackground">@color/windowsBackground</item>
+
     </style>
 
     <!--自我测试  toolbar 溢出的样式 app:popupTheme style-->
@@ -54,7 +61,7 @@
         <!--ToolBar高度-->
         <item name="actionBarSize">@dimen/actionBarSize</item>
 
-        <!--todo 试试这个backgroundColoer 作用-->
+        <!-- 试试这个backgroundColoer 作用  因为主题的关系，导致整个界面为黑色，故在此要设置所有activity为白色-->
         <item name="backgroundColor">@color/common_color_parentlayout_bg</item>
 
         <!--那麼ActionMode就可以覆蓋在toolbar之上-->
@@ -532,5 +539,5 @@
         <item name="atg_verticalPadding">2dp</item>
     </style>
 
-
+    
 </resources>

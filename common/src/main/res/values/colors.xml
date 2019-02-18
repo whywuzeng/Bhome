@@ -27,4 +27,6 @@
     <color name="maskChatHeader">@color/black_alpha_48</color>
     <!--导航栏Icon遮罩色-->
     <color name="navIconTintLight">@color/white_alpha_240</color>
+    <!--主界面底部导航栏背景色-->
+    <color name="litte_strong_gray">#EEEEEE</color>
 </resources>
