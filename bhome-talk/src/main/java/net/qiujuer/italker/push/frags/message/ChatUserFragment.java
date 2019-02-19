@@ -90,6 +90,7 @@ public class ChatUserFragment extends ChatFragment<User,User>
 
 
         if (verticalOffset == 0) {
+
             // 完全展开
             view.setVisibility(View.VISIBLE);
             view.setScaleX(1);

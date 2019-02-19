@@ -8,6 +8,7 @@ import android.graphics.Path;
 import android.graphics.Shader;
 import android.graphics.drawable.BitmapDrawable;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 
 import net.qiujuer.genius.ui.Ui;
 
@@ -19,10 +20,12 @@ import net.qiujuer.genius.ui.Ui;
  * net.qiujuer.italker.utils
  */
 public class BitmapWaterMarkUtil {
+    private static final String TAG = "BitmapWaterMarkUtil";
 
     private static Bitmap BitmapWithText(String username, AppCompatActivity context){
 
         Bitmap bitmap = Bitmap.createBitmap((int) Ui.dipToPx(context.getResources(),240), (int) Ui.dipToPx(context.getResources(),240), Bitmap.Config.ARGB_8888);
+        Log.e(TAG, "BitmapWithText: "+"水印 bitmap 宽为："+(int) Ui.dipToPx(context.getResources(),240)+"bitmap 高为："+ (int) Ui.dipToPx(context.getResources(),240));
         Canvas canvas = new Canvas(bitmap);
         canvas.drawColor(Color.WHITE);
         Paint paint = new Paint();

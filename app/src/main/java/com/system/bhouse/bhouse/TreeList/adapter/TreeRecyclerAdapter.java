@@ -283,5 +283,11 @@ public abstract class TreeRecyclerAdapter extends RecyclerView.Adapter<RecyclerV
         }
     }
 
+    /**
+     * bindViewHolder 布局的调用.
+     * @param node
+     * @param holder
+     * @param position
+     */
     public abstract void onBindViewHolder(Node node,RecyclerView.ViewHolder holder,final int position);
 }

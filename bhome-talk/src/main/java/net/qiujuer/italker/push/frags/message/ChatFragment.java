@@ -44,7 +44,6 @@ import net.qiujuer.italker.push.R;
 import net.qiujuer.italker.push.R2;
 import net.qiujuer.italker.push.activities.MessageActivity;
 import net.qiujuer.italker.push.frags.panel.PanelFragment;
-import net.qiujuer.italker.utils.RecycleViewStackEndWithKeyBoard;
 import net.qiujuer.widget.airpanel.AirPanel;
 import net.qiujuer.widget.airpanel.Util;
 
@@ -138,6 +137,25 @@ public abstract class ChatFragment<InitModel,InitMaker>
                 Util.hideKeyboard(mContent);
             }
         });
+
+        mPanelBoss.setOnStateChangedListener(new AirPanel.OnStateChangedListener() {
+            @Override
+            public void onPanelStateChanged(boolean isOpen) {
+
+            }
+
+            @Override
+            public void onSoftKeyboardStateChanged(boolean isOpen) {
+                /**
+                 * 设置为  弹出软键盘会 重置setStackEnd true
+                 */
+                if (isOpen && !isNoFullScreen)
+                {
+                    linearLayoutManager.setStackFromEnd(true);
+                }
+            }
+        });
+
         mPanelFragment = (PanelFragment) getChildFragmentManager().findFragmentById(R.id.frag_panel);
         mPanelFragment.setup(this);
 
@@ -146,7 +164,8 @@ public abstract class ChatFragment<InitModel,InitMaker>
         initEditContent();
         initRecycleView();
 
-         linearLayoutManager = new LinearLayoutManager(getContext());
+        linearLayoutManager = new LinearLayoutManager(getContext());
+        //倒序
         linearLayoutManager.setStackFromEnd(true);
         // RecyclerView基本设置
         mRecyclerView.setLayoutManager(linearLayoutManager);
@@ -164,6 +183,7 @@ public abstract class ChatFragment<InitModel,InitMaker>
             }
         });
 
+        fixStackFromEnd(linearLayoutManager);
     }
 
     //scrollVerticallyBy mStackFromEnd
@@ -201,10 +221,6 @@ public abstract class ChatFragment<InitModel,InitMaker>
 
             }
         });
-        /**
-         * 设置为  弹出软键盘会 重置setStackEnd true
-         */
-        RecycleViewStackEndWithKeyBoard.assistActivity(getActivity(),linearLayoutManager);
     }
 
 
@@ -218,7 +234,6 @@ public abstract class ChatFragment<InitModel,InitMaker>
     @Override
     public void onResume() {
         super.onResume();
-        fixStackFromEnd(linearLayoutManager);
     }
 
     @Override
@@ -294,14 +309,11 @@ public abstract class ChatFragment<InitModel,InitMaker>
                     mContent.clearFocus();
                 }else if (newState == RecyclerView.SCROLL_STATE_IDLE) {//拖动完
 
-                     LinearLayoutManager manager = (LinearLayoutManager) recyclerView.getLayoutManager();
-
                     if (linearLayoutManager.getStackFromEnd() && isNoFullScreen) {
                         linearLayoutManager.setStackFromEnd(false);
                         /**
                          * 适配长界面 ，隐藏软键盘需要滑动到最底部  offset 偏离值.向上偏离  这里会和随机滑动有冲突
                          */
-//                      manager.scrollToPositionWithOffset(manager.findLastVisibleItemPosition(),2000);
                     }
                 }
             }
@@ -311,7 +323,6 @@ public abstract class ChatFragment<InitModel,InitMaker>
                 super.onScrolled(recyclerView, dx, dy);
             }
         });
-
     }
 
     // 初始化Toolbar
@@ -329,6 +340,8 @@ public abstract class ChatFragment<InitModel,InitMaker>
     //  给界面的Appbar设置一个监听，得到关闭与打开的时候的进度
     private void initAppbar() {
         mAppBarLayout.addOnOffsetChangedListener(this);
+        //appBarlayout 默认为关闭状态
+        mAppBarLayout.setExpanded(false);
     }
 
     // 初始化输入框监听
@@ -346,7 +359,8 @@ public abstract class ChatFragment<InitModel,InitMaker>
         mContent.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
-                if (hasFocus)
+                //如果不是全屏 就不需要滑到最后一行
+                if (hasFocus&& !isNoFullScreen)
                 {
                     linearLayoutManager.scrollToPositionWithOffset(linearLayoutManager.getItemCount()-1,0);
                 }

@@ -444,6 +444,7 @@
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.TransStatusBar" />
 
+
         <meta-data
             android:name="design_width"
             android:value="768">
