@@ -203,9 +203,6 @@
         <item name="android:layout_margin">6dp</item>
     </style>
 
-    <style name="CustomCheckboxTheme" parent="@android:style/Widget.CompoundButton.CheckBox">
-        <item name="android:button">@drawable/checkbox_style</item>
-    </style>
 
     <style name="DivideSectionBottom5">
         <item name="android:background">@mipmap/shadow_bottom</item>

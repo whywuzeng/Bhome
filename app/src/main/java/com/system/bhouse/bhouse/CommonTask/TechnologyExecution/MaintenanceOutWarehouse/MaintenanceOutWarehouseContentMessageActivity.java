@@ -25,7 +25,7 @@ import com.system.bhouse.bean.BProBOM;
 import com.system.bhouse.bhouse.CommonTask.BaseTaskFragment.BaseContentMessageActivity;
 import com.system.bhouse.bhouse.CommonTask.TechnologyExecution.MaintenanceOutWarehouse.Bean.MaintenanceOutWarehouseBean;
 import com.system.bhouse.bhouse.CommonTask.TechnologyExecution.MaintenanceOutWarehouse.Bean.MaintenanceOutWarehouseBeanSection;
-import com.system.bhouse.bhouse.CommonTask.TransportationManagement.adapter.BaseQuickAdapter;
+import net.qiujuer.italker.common.adapter.BaseQuickAdapter;
 import com.system.bhouse.bhouse.CommonTask.Widget.TimeLineItemTopBottomDecoration;
 import com.system.bhouse.bhouse.CommonTask.adapter.TreeWidget.TreeRecyclerAdapter;
 import com.system.bhouse.bhouse.CommonTask.adapter.TreeWidget.base.ViewHolder;

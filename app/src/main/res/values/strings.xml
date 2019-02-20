@@ -9,7 +9,6 @@
     <!--<string name="integral_deducate_1"><Data><![CDATA[共<font color="red">%s</font>个积分，  ]]></Data></string>-->
     <!--<string name="integral_deducate_2"><Data><![CDATA[抵<font color="red">%s</font>元]]></Data></string>-->
     <!--<string name="jifen_deducate"><Data><![CDATA[个积分，可抵<font color="red">%s</font>元]]></Data></string>-->
-    <string name="loading">正在加载...</string>
 
     <!-- MAIN -->
     <string name="xiaoshoufenxi">销售分析</string>

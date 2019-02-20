@@ -1,6 +1,6 @@
 package com.system.bhouse.bhouse.CommonTask.MaintainManagement.LoadingIntoWareHouseFragment.Fragment.Bean;
 
-import com.system.bhouse.bhouse.CommonTask.TransportationManagement.adapter.entity.SectionEntity;
+import net.qiujuer.italker.common.adapter.entity.SectionEntity;
 
 /**
  * Created by Administrator on 2018-08-22.

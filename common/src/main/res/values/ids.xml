@@ -6,4 +6,10 @@
     <item name="tag_recycler_holder" type="id" />
     <!--默认头像的drawable名字-->
     <item name="default_portrait" type="drawable" />
+
+    <item name="BaseQuickAdapter_viewholder_support" type="id"/>
+
+    <item name="BaseQuickAdapter_swiping_support" type="id"/>
+
+    <item name="BaseQuickAdapter_dragging_support" type="id"/>
 </resources>

@@ -24,7 +24,7 @@
 //import com.system.bhouse.bhouse.CommonTask.BaseTaskFragment.BaseContentMessageActivity;
 //import com.system.bhouse.bhouse.CommonTask.MaintainManagement.LoadingIntoWareHouseFragment.Fragment.Bean.LoadingIntoWareHouseBean;
 //import com.system.bhouse.bhouse.CommonTask.MaintainManagement.LoadingIntoWareHouseFragment.Fragment.Bean.LoadingIntoWareHouseBeanSection;
-//import com.system.bhouse.bhouse.CommonTask.TransportationManagement.adapter.BaseQuickAdapter;
+//import BaseQuickAdapter;
 //import com.system.bhouse.bhouse.CommonTask.Widget.TimeLineItemTopBottomDecoration;
 //import com.system.bhouse.bhouse.CommonTask.adapter.TreeWidget.TreeRecyclerAdapter;
 //import com.system.bhouse.bhouse.CommonTask.adapter.TreeWidget.base.ViewHolder;

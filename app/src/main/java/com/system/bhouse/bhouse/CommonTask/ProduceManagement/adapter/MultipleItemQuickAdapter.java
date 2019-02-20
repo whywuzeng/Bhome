@@ -5,7 +5,7 @@ import android.content.Context;
 import com.system.bhouse.bhouse.CommonTask.ProduceManagement.adapter.entity.MultipleItem;
 import com.system.bhouse.bhouse.CommonTask.ProduceManagement.adapter.entity.ProduceItemDataBean;
 import com.system.bhouse.bhouse.CommonTask.ProduceManagement.adapter.entity.SectionMultipleItem;
-import com.system.bhouse.bhouse.CommonTask.TransportationManagement.adapter.BaseViewHolder;
+import net.qiujuer.italker.common.adapter.BaseViewHolder;
 import com.system.bhouse.bhouse.R;
 
 import java.util.List;

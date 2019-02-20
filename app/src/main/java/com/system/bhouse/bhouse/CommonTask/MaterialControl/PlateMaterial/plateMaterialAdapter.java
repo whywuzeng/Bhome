@@ -2,8 +2,8 @@ package com.system.bhouse.bhouse.CommonTask.MaterialControl.PlateMaterial;
 
 import com.system.bhouse.bhouse.CommonTask.MaterialControl.PlateMaterial.StationCarBean.MyStation;
 import com.system.bhouse.bhouse.CommonTask.MaterialControl.PlateMaterial.StationCarBean.StationCarBean;
-import com.system.bhouse.bhouse.CommonTask.TransportationManagement.adapter.BaseSectionQuickAdapter;
-import com.system.bhouse.bhouse.CommonTask.TransportationManagement.adapter.BaseViewHolder;
+import net.qiujuer.italker.common.adapter.BaseSectionQuickAdapter;
+import net.qiujuer.italker.common.adapter.BaseViewHolder;
 import com.system.bhouse.bhouse.R;
 
 import java.util.List;

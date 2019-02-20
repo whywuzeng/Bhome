@@ -6,7 +6,7 @@ import android.support.annotation.Nullable;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 
-import com.system.bhouse.bhouse.CommonTask.TransportationManagement.adapter.BaseQuickAdapter;
+import net.qiujuer.italker.common.adapter.BaseQuickAdapter;
 
 import java.util.ArrayList;
 import java.util.List;

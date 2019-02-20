@@ -27,7 +27,7 @@ import com.system.bhouse.bhouse.CommonTask.ProduceManagement.adapter.entity.Mult
 import com.system.bhouse.bhouse.CommonTask.ProduceManagement.adapter.entity.ProduceItemDataBean;
 import com.system.bhouse.bhouse.CommonTask.ProduceManagement.adapter.entity.SectionMultipleItem;
 import com.system.bhouse.bhouse.CommonTask.TechnologyExecution.TechnologyExecutionActivity;
-import com.system.bhouse.bhouse.CommonTask.TransportationManagement.adapter.BaseQuickAdapter;
+import net.qiujuer.italker.common.adapter.BaseQuickAdapter;
 import com.system.bhouse.bhouse.R;
 import com.system.bhouse.bhouse.phone.activity.InformationActivity;
 import com.system.bhouse.bhouse.setup.WWCommon.WWBackActivity;

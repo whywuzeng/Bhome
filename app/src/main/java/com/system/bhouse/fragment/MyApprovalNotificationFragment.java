@@ -22,7 +22,7 @@ import com.scwang.smartrefresh.layout.header.ClassicsHeader;
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 import com.scwang.smartrefresh.layout.listener.OnRefreshLoadMoreListener;
 import com.system.bhouse.bhouse.CommonTask.TransportationManagement.TransportationManagementActivity_;
-import com.system.bhouse.bhouse.CommonTask.TransportationManagement.adapter.BaseQuickAdapter;
+import net.qiujuer.italker.common.adapter.BaseQuickAdapter;
 import com.system.bhouse.bhouse.CommonTask.adapter.animator.ScaleItemAnimator;
 import com.system.bhouse.bhouse.R;
 import com.system.bhouse.bhouse.phone.activity.InformationActivity;

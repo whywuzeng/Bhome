@@ -5,9 +5,6 @@
     <item name="layoutLoading" type="id"/>
 
 
-    <item name="BaseQuickAdapter_viewholder_support" type="id"/>
-    <item name="BaseQuickAdapter_swiping_support" type="id"/>
-    <item name="BaseQuickAdapter_dragging_support" type="id"/>
 
     <item name="positiveButton" type="id"/>
     <item name="negativeButton" type="id"/>

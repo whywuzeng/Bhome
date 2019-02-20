@@ -4,8 +4,8 @@ import android.view.ViewGroup;
 import android.widget.Filter;
 
 import com.system.bhouse.bhouse.CommonTask.TechnologyExecution.ModuleAssignMent.Bean.HeaderAndFooterSectionEntity;
-import com.system.bhouse.bhouse.CommonTask.TransportationManagement.adapter.BaseQuickAdapter;
-import com.system.bhouse.bhouse.CommonTask.TransportationManagement.adapter.BaseViewHolder;
+import net.qiujuer.italker.common.adapter.BaseQuickAdapter;
+import net.qiujuer.italker.common.adapter.BaseViewHolder;
 
 import java.util.ArrayList;
 import java.util.List;

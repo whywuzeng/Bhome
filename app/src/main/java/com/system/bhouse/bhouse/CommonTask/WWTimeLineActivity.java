@@ -13,8 +13,8 @@ import com.system.bhouse.bhouse.CommonTask.TechnologyExecution.selectploy.Select
 import com.system.bhouse.bhouse.CommonTask.TechnologyExecution.selectploy.SelectPloy;
 import com.system.bhouse.bhouse.CommonTask.TechnologyExecution.selectploy.UnSelectLineDotBg;
 import com.system.bhouse.bhouse.CommonTask.TechnologyExecution.selectploy.UnSelectPloy;
-import com.system.bhouse.bhouse.CommonTask.TransportationManagement.adapter.BaseQuickAdapter;
-import com.system.bhouse.bhouse.CommonTask.TransportationManagement.adapter.BaseViewHolder;
+import net.qiujuer.italker.common.adapter.BaseQuickAdapter;
+import net.qiujuer.italker.common.adapter.BaseViewHolder;
 import com.system.bhouse.bhouse.CommonTask.Widget.TimeLineItemTopBottomDecoration;
 import com.system.bhouse.bhouse.R;
 import com.system.bhouse.bhouse.setup.WWCommon.WWBackActivity;

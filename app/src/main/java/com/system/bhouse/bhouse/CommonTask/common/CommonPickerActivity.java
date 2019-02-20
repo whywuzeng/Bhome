@@ -15,12 +15,13 @@ import android.widget.TextView;
 import com.system.bhouse.bean.BProBOM;
 import com.system.bhouse.bhouse.CommonTask.MaintainManagement.LoadingIntoWareHouseFragment.Fragment.adpter.LoadingIntoSectionAdapter;
 import com.system.bhouse.bhouse.CommonTask.TransportationManagement.LoadingCarOrder.CommonSectionAdapter;
-import com.system.bhouse.bhouse.CommonTask.TransportationManagement.adapter.BaseQuickAdapter;
-import com.system.bhouse.bhouse.CommonTask.TransportationManagement.adapter.BaseSectionQuickAdapter;
 import com.system.bhouse.bhouse.CommonTask.TransportationManagement.entity.MySection;
 import com.system.bhouse.bhouse.CommonTask.Widget.LRecyclerView;
 import com.system.bhouse.bhouse.R;
 import com.system.bhouse.bhouse.setup.WWCommon.WWBackActivity;
+
+import net.qiujuer.italker.common.adapter.BaseQuickAdapter;
+import net.qiujuer.italker.common.adapter.BaseSectionQuickAdapter;
 
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.EActivity;

@@ -5,7 +5,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.system.bhouse.bhouse.CommonTask.TransportationManagement.adapter.BaseViewHolder;
+import net.qiujuer.italker.common.adapter.BaseViewHolder;
 import com.system.bhouse.bhouse.R;
 
 import java.util.ArrayList;

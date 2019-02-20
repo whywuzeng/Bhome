@@ -25,8 +25,8 @@ import com.system.bhouse.bhouse.CommonTask.TechnologyExecution.PeopleAssignment.
 import com.system.bhouse.bhouse.CommonTask.TechnologyExecution.StationCarAssignMent.StationCarAssignMentContentMessageActivity_;
 import com.system.bhouse.bhouse.CommonTask.TechnologyExecution.entity.RelatedDetailBean;
 import com.system.bhouse.bhouse.CommonTask.TechnologyExecution.entity.TechnologyBean;
-import com.system.bhouse.bhouse.CommonTask.TransportationManagement.adapter.BaseQuickAdapter;
-import com.system.bhouse.bhouse.CommonTask.TransportationManagement.adapter.BaseViewHolder;
+import net.qiujuer.italker.common.adapter.BaseQuickAdapter;
+import net.qiujuer.italker.common.adapter.BaseViewHolder;
 import com.system.bhouse.bhouse.CommonTask.Widget.TimeLineItemTopBottomDecoration;
 import com.system.bhouse.bhouse.R;
 import com.system.bhouse.config.Const;

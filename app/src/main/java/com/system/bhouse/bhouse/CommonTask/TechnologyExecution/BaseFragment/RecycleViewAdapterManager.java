@@ -3,7 +3,7 @@ package com.system.bhouse.bhouse.CommonTask.TechnologyExecution.BaseFragment;
 
 import android.support.v7.widget.LinearLayoutManager;
 
-import com.system.bhouse.bhouse.CommonTask.TransportationManagement.adapter.BaseQuickAdapter;
+import net.qiujuer.italker.common.adapter.BaseQuickAdapter;
 import com.system.bhouse.bhouse.R;
 
 /**

@@ -16,8 +16,8 @@ import com.system.bhouse.bhouse.CommonTask.MaintainManagement.LoadingIntoWareHou
 import com.system.bhouse.bhouse.CommonTask.MaintainManagement.LoadingIntoWareHouseFragment.Fragment.Bean.LoadingIntoPickBean;
 import com.system.bhouse.bhouse.CommonTask.MaintainManagement.LoadingIntoWareHouseFragment.Fragment.Bean.LoadingIntoPickBeanSection;
 import com.system.bhouse.bhouse.CommonTask.MaintainManagement.LoadingIntoWareHouseFragment.Fragment.adpter.LoadingIntoSectionAdapter;
-import com.system.bhouse.bhouse.CommonTask.TransportationManagement.adapter.BaseQuickAdapter;
-import com.system.bhouse.bhouse.CommonTask.TransportationManagement.adapter.BaseSectionQuickAdapter;
+import net.qiujuer.italker.common.adapter.BaseQuickAdapter;
+import net.qiujuer.italker.common.adapter.BaseSectionQuickAdapter;
 import com.system.bhouse.bhouse.CommonTask.Widget.LRecyclerView;
 import com.system.bhouse.bhouse.R;
 

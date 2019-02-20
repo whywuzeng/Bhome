@@ -8,11 +8,12 @@ import android.widget.TextView;
 import com.system.bhouse.base.TimeLineItemTopBottomDecoration;
 import com.system.bhouse.bhouse.CommonTask.ProduceManagement.adapter.BaseMultiItemQuickAdapter;
 import com.system.bhouse.bhouse.CommonTask.ProduceManagement.adapter.entity.MultipleItem;
-import com.system.bhouse.bhouse.CommonTask.TransportationManagement.adapter.BaseQuickAdapter;
-import com.system.bhouse.bhouse.CommonTask.TransportationManagement.adapter.BaseViewHolder;
 import com.system.bhouse.bhouse.R;
 import com.system.bhouse.bhouse.phone.activity.bean.ScanBean;
 import com.system.bhouse.bhouse.phone.activity.bean.ScanSectionMultipleiItem;
+
+import net.qiujuer.italker.common.adapter.BaseQuickAdapter;
+import net.qiujuer.italker.common.adapter.BaseViewHolder;
 
 import java.util.List;
 

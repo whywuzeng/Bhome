@@ -1,6 +1,6 @@
 package com.system.bhouse.bhouse.CommonTask.MaterialControl.PlateMaterial.StationCarBean;
 
-import com.system.bhouse.bhouse.CommonTask.TransportationManagement.adapter.entity.SectionEntity;
+import net.qiujuer.italker.common.adapter.entity.SectionEntity;
 
 /**
  * Created by Administrator on 2018-07-03.

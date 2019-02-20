@@ -6,7 +6,7 @@ import com.system.bhouse.base.StatusBean;
 import com.system.bhouse.bhouse.CommonTask.TechnologyExecution.ComponentTakeOff.Bean.ComponentTakeOffBeanSection;
 import com.system.bhouse.bhouse.CommonTask.TechnologyExecution.ModuleAssignMent.HeaderAndFooterSectionQuickAdapter;
 import com.system.bhouse.bhouse.CommonTask.TechnologyExecution.PeopleAssignment.BaseAssignViewHolder;
-import com.system.bhouse.bhouse.CommonTask.TransportationManagement.adapter.BaseViewHolder;
+import net.qiujuer.italker.common.adapter.BaseViewHolder;
 import com.system.bhouse.bhouse.R;
 
 import java.util.ArrayList;

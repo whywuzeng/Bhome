@@ -33,8 +33,8 @@ import com.system.bhouse.Common.filewidget.resoures.AttachmentTexTDetailActivity
 import com.system.bhouse.Common.filewidget.resoures.AttachmentsDownloadDetailActivity;
 import com.system.bhouse.Common.filewidget.save.FileSaveHelp;
 import com.system.bhouse.bhouse.CommonTask.TechnologyExecution.ModuleAssignMent.HeaderAndFooterSectionQuickAdapter;
-import com.system.bhouse.bhouse.CommonTask.TransportationManagement.adapter.BaseQuickAdapter;
-import com.system.bhouse.bhouse.CommonTask.TransportationManagement.adapter.BaseViewHolder;
+import net.qiujuer.italker.common.adapter.BaseQuickAdapter;
+import net.qiujuer.italker.common.adapter.BaseViewHolder;
 import com.system.bhouse.bhouse.R;
 import com.system.bhouse.bhouse.setup.utils.FileUtil;
 import com.system.bhouse.utils.TenUtils.GlideUtils;

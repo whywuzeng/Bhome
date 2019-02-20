@@ -6,9 +6,9 @@ import android.util.SparseIntArray;
 import android.view.ViewGroup;
 
 import com.system.bhouse.bhouse.CommonTask.ProduceManagement.adapter.entity.MultiItemEntity;
-import com.system.bhouse.bhouse.CommonTask.TransportationManagement.adapter.BaseQuickAdapter;
-import com.system.bhouse.bhouse.CommonTask.TransportationManagement.adapter.BaseViewHolder;
-import com.system.bhouse.bhouse.CommonTask.TransportationManagement.adapter.entity.IExpandable;
+import net.qiujuer.italker.common.adapter.BaseQuickAdapter;
+import net.qiujuer.italker.common.adapter.BaseViewHolder;
+import net.qiujuer.italker.common.adapter.entity.IExpandable;
 import java.util.List;
 
 /**

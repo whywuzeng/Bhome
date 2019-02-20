@@ -15,8 +15,8 @@ import android.widget.TextView;
 
 import com.system.bhouse.bhouse.CommonTask.MaterialControl.PlateMaterial.StationCarBean.MyStation;
 import com.system.bhouse.bhouse.CommonTask.MaterialControl.PlateMaterial.StationCarBean.StationCarBean;
-import com.system.bhouse.bhouse.CommonTask.TransportationManagement.adapter.BaseQuickAdapter;
-import com.system.bhouse.bhouse.CommonTask.TransportationManagement.adapter.BaseSectionQuickAdapter;
+import net.qiujuer.italker.common.adapter.BaseQuickAdapter;
+import net.qiujuer.italker.common.adapter.BaseSectionQuickAdapter;
 import com.system.bhouse.bhouse.CommonTask.Widget.LRecyclerView;
 import com.system.bhouse.bhouse.CommonTask.Widget.TimeLineItemTopBottomDecoration;
 import com.system.bhouse.bhouse.R;

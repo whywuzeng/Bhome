@@ -23,7 +23,7 @@ import com.system.bhouse.base.SubmitStatusBeanImpl;
 import com.system.bhouse.bhouse.CommonTask.BaseTaskFragment.BaseContentMessageActivity;
 import com.system.bhouse.bhouse.CommonTask.TechnologyExecution.ModuleAssignMent.Bean.ModuleAssignmentBean;
 import com.system.bhouse.bhouse.CommonTask.TechnologyExecution.ModuleAssignMent.Bean.ModuleAssignmentBeanSection;
-import com.system.bhouse.bhouse.CommonTask.TransportationManagement.adapter.BaseQuickAdapter;
+import net.qiujuer.italker.common.adapter.BaseQuickAdapter;
 import com.system.bhouse.bhouse.CommonTask.Widget.TimeLineItemTopBottomDecoration;
 import com.system.bhouse.bhouse.CommonTask.adapter.TreeWidget.TreeRecyclerAdapter;
 import com.system.bhouse.bhouse.CommonTask.adapter.TreeWidget.base.ViewHolder;

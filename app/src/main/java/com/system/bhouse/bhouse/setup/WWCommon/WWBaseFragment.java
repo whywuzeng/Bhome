@@ -21,7 +21,7 @@ import android.widget.TextView;
 
 import com.socks.library.KLog;
 import com.system.bhouse.base.Global;
-import com.system.bhouse.bhouse.CommonTask.TransportationManagement.adapter.BaseQuickAdapter;
+import net.qiujuer.italker.common.adapter.BaseQuickAdapter;
 import com.system.bhouse.bhouse.R;
 import com.system.bhouse.bhouse.setup.SingleToast;
 import com.system.bhouse.bhouse.setup.program.FootUpdate;

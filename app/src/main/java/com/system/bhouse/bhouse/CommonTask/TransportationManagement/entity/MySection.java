@@ -2,7 +2,7 @@ package com.system.bhouse.bhouse.CommonTask.TransportationManagement.entity;
 
 
 import com.system.bhouse.bean.BProBOM;
-import com.system.bhouse.bhouse.CommonTask.TransportationManagement.adapter.entity.SectionEntity;
+import net.qiujuer.italker.common.adapter.entity.SectionEntity;
 
 /**
  * https://github.com/CymChad/BaseRecyclerViewAdapterHelper

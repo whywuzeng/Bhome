@@ -3,8 +3,8 @@ package com.system.bhouse.bhouse.CommonTask.TransportationManagement.LoadingCarO
 import android.text.TextUtils;
 
 import com.system.bhouse.bean.BProBOM;
-import com.system.bhouse.bhouse.CommonTask.TransportationManagement.adapter.BaseSectionQuickAdapter;
-import com.system.bhouse.bhouse.CommonTask.TransportationManagement.adapter.BaseViewHolder;
+import net.qiujuer.italker.common.adapter.BaseSectionQuickAdapter;
+import net.qiujuer.italker.common.adapter.BaseViewHolder;
 import com.system.bhouse.bhouse.CommonTask.TransportationManagement.entity.MySection;
 import com.system.bhouse.bhouse.R;
 

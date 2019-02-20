@@ -1,6 +1,6 @@
 package com.system.bhouse.bhouse.setup.notification.adapter;
 
-import com.system.bhouse.bhouse.CommonTask.TransportationManagement.adapter.BaseViewHolder;
+import net.qiujuer.italker.common.adapter.BaseViewHolder;
 import com.system.bhouse.bhouse.R;
 import com.system.bhouse.bhouse.setup.notification.bean.XGNotification;
 import com.system.bhouse.bhouse.setup.notification.bean.XGNotificationSectionEntity;

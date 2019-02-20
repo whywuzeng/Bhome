@@ -2,9 +2,9 @@ package com.system.bhouse.bhouse.setup.notification.adapter;
 
 import android.view.ViewGroup;
 
-import com.system.bhouse.bhouse.CommonTask.TransportationManagement.adapter.BaseQuickAdapter;
-import com.system.bhouse.bhouse.CommonTask.TransportationManagement.adapter.BaseViewHolder;
-import com.system.bhouse.bhouse.CommonTask.TransportationManagement.adapter.entity.SectionEntity;
+import net.qiujuer.italker.common.adapter.BaseQuickAdapter;
+import net.qiujuer.italker.common.adapter.BaseViewHolder;
+import net.qiujuer.italker.common.adapter.entity.SectionEntity;
 
 import java.util.List;
 
